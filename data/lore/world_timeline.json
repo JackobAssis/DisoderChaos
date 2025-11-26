@@ -1,0 +1,144 @@
+{
+  "world_timeline": {
+    "era_ancient": {
+      "name": "Era Antiga - The Great Unity",
+      "duration": "Cerca de 10.000 anos atrás",
+      "description": "O mundo era uno, uma vasta terra conectada onde todas as criaturas viviam em harmonia. A magia fluía naturalmente através de ley lines que conectavam todos os pontos do mundo.",
+      "events": [
+        {
+          "year": -10000,
+          "event": "Formação do Mundo Unificado",
+          "description": "O mundo nasce como uma única massa de terra com magia equilibrada."
+        },
+        {
+          "year": -8000,
+          "event": "Surgimento das Primeiras Civilizações",
+          "description": "As raças inteligentes começam a formar sociedades organizadas."
+        },
+        {
+          "year": -5000,
+          "event": "Descoberta da Manipulação de Ley Lines",
+          "description": "Magos antigos aprendem a canalizar e manipular a energia mágica do mundo."
+        }
+      ]
+    },
+    "era_fracture": {
+      "name": "Era da Fratura - The Great Sundering",
+      "duration": "3.000 anos atrás até presente",
+      "description": "Um cataclismo mágico despedaçou o mundo em fragmentos flutuantes no vazio. O evento ficou conhecido como 'The Great Sundering' e deu origem ao fenômeno do Disorder.",
+      "events": [
+        {
+          "year": -3000,
+          "event": "The Great Sundering",
+          "description": "Experimento mágico catastrófico despedaça o mundo em fragmentos. O tecido da realidade se rompe, criando o Disorder."
+        },
+        {
+          "year": -2800,
+          "event": "Formação dos Primeiros Rifts",
+          "description": "Portais instáveis conectam alguns fragmentos, permitindo viagem limitada."
+        },
+        {
+          "year": -2500,
+          "event": "Surgimento das Facções",
+          "description": "Grupos organizados emergem com diferentes filosofias sobre como lidar com o Disorder."
+        },
+        {
+          "year": -1000,
+          "event": "Descoberta do Fragmento Zero",
+          "description": "Um fragmento estável é encontrado e se torna o centro de civilização."
+        },
+        {
+          "year": -500,
+          "event": "Guerra dos Rifts",
+          "description": "Conflito massivo pelo controle dos rifts estáveis entre fragmentos."
+        },
+        {
+          "year": -100,
+          "event": "Estabelecimento do Concílio dos Fragmentos",
+          "description": "As facções formam uma aliança tênue para explorar novos fragmentos."
+        },
+        {
+          "year": 0,
+          "event": "Era Presente - Chegada do Jogador",
+          "description": "Novos exploradores chegam ao Fragmento Zero para enfrentar o Disorder."
+        }
+      ]
+    }
+  },
+  "disorder_phenomenon": {
+    "name": "Disorder",
+    "type": "Fenômeno Mágico/Dimensional",
+    "description": "O Disorder é uma força caótica que permeia todos os fragmentos, causando instabilidade na realidade. Manifesta-se de diferentes formas dependendo do fragmento.",
+    "characteristics": [
+      "Distorce o espaço e tempo localmente",
+      "Cria mutações em criaturas e plantas",
+      "Gera anomalias mágicas imprevisíveis",
+      "Intensifica emoções e instintos primitivos",
+      "Corrói estruturas físicas e mágicas ao longo do tempo"
+    ],
+    "manifestations": {
+      "temporal_storms": "Tempestades que alteram o fluxo do tempo",
+      "reality_tears": "Fendas na realidade que conectam fragmentos aleatórios",
+      "chaos_zones": "Áreas onde as leis da física são instáveis",
+      "disorder_corruption": "Mutação gradual de seres vivos expostos",
+      "magic_surges": "Explosões súbitas de energia mágica descontrolada"
+    },
+    "stability_levels": {
+      "stable": {
+        "level": 1,
+        "description": "Disorder mínimo, como no Fragmento Zero"
+      },
+      "unstable": {
+        "level": 2,
+        "description": "Disorder moderado, efeitos ocasionais"
+      },
+      "chaotic": {
+        "level": 3,
+        "description": "Disorder alto, efeitos constantes"
+      },
+      "corrupted": {
+        "level": 4,
+        "description": "Disorder severo, alterações permanentes"
+      },
+      "void": {
+        "level": 5,
+        "description": "Disorder total, realidade completamente instável"
+      }
+    }
+  },
+  "fragments_system": {
+    "description": "O mundo despedaçado consiste em fragmentos flutuantes no vazio, cada um com suas próprias características únicas.",
+    "fragment_types": {
+      "safe_hub": {
+        "type": "Safe Hub",
+        "description": "Fragmentos com baixo Disorder, seguros para habitação",
+        "example": "Fragmento Zero - Hub principal"
+      },
+      "exploration": {
+        "type": "Exploration Zone",
+        "description": "Fragmentos com Disorder moderado, adequados para aventuras"
+      },
+      "hostile": {
+        "type": "Hostile Territory", 
+        "description": "Fragmentos com alto Disorder, extremamente perigosos"
+      },
+      "pvp_zone": {
+        "type": "Free Conflict Zone",
+        "description": "Fragmentos onde todas as facções competem por recursos"
+      },
+      "mystery": {
+        "type": "Anomalous Fragment",
+        "description": "Fragmentos com propriedades únicas e inexplicáveis"
+      }
+    },
+    "rift_system": {
+      "description": "Rifts são portais que conectam fragmentos, mas são instáveis devido ao Disorder.",
+      "rift_types": {
+        "stable": "Conexões permanentes entre fragmentos específicos",
+        "temporary": "Rifts que aparecem e desaparecem aleatoriamente",
+        "one_way": "Portais que só permitem viagem em uma direção",
+        "keyed": "Rifts que requerem itens ou condições específicas"
+      }
+    }
+  }
+}

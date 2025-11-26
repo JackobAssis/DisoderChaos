@@ -1,0 +1,90 @@
+[
+  {
+    "id": "slash",
+    "name": "Slash",
+    "description": "A basic melee attack with weapon.",
+    "type": "physical",
+    "power": 10,
+    "cost": 0,
+    "range": "melee",
+    "cooldown": 1.0
+  },
+  {
+    "id": "shield_bash",
+    "name": "Shield Bash",
+    "description": "Strike with shield, chance to stun.",
+    "type": "physical",
+    "power": 8,
+    "cost": 5,
+    "range": "melee",
+    "cooldown": 3.0,
+    "effects": ["stun"]
+  },
+  {
+    "id": "war_cry",
+    "name": "War Cry",
+    "description": "Increase damage for short duration.",
+    "type": "buff",
+    "power": 0,
+    "cost": 10,
+    "range": "self",
+    "cooldown": 30.0,
+    "effects": ["damage_boost"]
+  },
+  {
+    "id": "backstab",
+    "name": "Backstab",
+    "description": "High damage attack from behind.",
+    "type": "physical",
+    "power": 20,
+    "cost": 8,
+    "range": "melee",
+    "cooldown": 2.0,
+    "requirements": ["behind_target"]
+  },
+  {
+    "id": "stealth",
+    "name": "Stealth",
+    "description": "Become invisible for short time.",
+    "type": "buff",
+    "power": 0,
+    "cost": 15,
+    "range": "self",
+    "cooldown": 20.0,
+    "effects": ["invisible"]
+  },
+  {
+    "id": "fireball",
+    "name": "Fireball",
+    "description": "Launch explosive fire projectile.",
+    "type": "magical",
+    "power": 15,
+    "cost": 12,
+    "range": "ranged",
+    "cooldown": 2.5,
+    "element": "fire"
+  },
+  {
+    "id": "ice_shard",
+    "name": "Ice Shard",
+    "description": "Fast ice projectile that slows target.",
+    "type": "magical",
+    "power": 12,
+    "cost": 10,
+    "range": "ranged",
+    "cooldown": 2.0,
+    "element": "ice",
+    "effects": ["slow"]
+  },
+  {
+    "id": "magic_shield",
+    "name": "Magic Shield",
+    "description": "Temporary magical protection.",
+    "type": "buff",
+    "power": 0,
+    "cost": 8,
+    "range": "self",
+    "cooldown": 15.0,
+    "effects": ["magic_defense"]
+  }
+]

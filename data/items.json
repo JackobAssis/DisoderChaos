@@ -1,0 +1,172 @@
+[
+  {
+    "id": "minor_potion",
+    "type": "consumable",
+    "name": "Minor Healing Potion",
+    "description": "Restores a small amount of health.",
+    "heal": 20,
+    "rarity": "common",
+    "value": 5
+  },
+  {
+    "id": "mana_potion",
+    "type": "consumable", 
+    "name": "Mana Potion",
+    "description": "Restores magical energy.",
+    "mana_restore": 30,
+    "rarity": "common",
+    "value": 8
+  },
+  {
+    "id": "bronze_sword",
+    "type": "weapon",
+    "name": "Bronze Sword",
+    "description": "A simple bronze blade.",
+    "damage": 8,
+    "durability": 100,
+    "rarity": "common",
+    "value": 15,
+    "requirements": {"strength": 5}
+  },
+  {
+    "id": "leather_armor",
+    "type": "armor",
+    "name": "Leather Armor",
+    "description": "Basic protection from leather.",
+    "defense": 5,
+    "durability": 80,
+    "rarity": "common",
+    "value": 12
+  },
+  {
+    "id": "bronze_coin",
+    "type": "currency",
+    "name": "Bronze Coin",
+    "description": "Basic currency of the realm.",
+    "value": 1,
+    "rarity": "common"
+  },
+  {
+    "id": "silver_coin",
+    "type": "currency",
+    "name": "Silver Coin", 
+    "description": "Valuable silver currency.",
+    "value": 10,
+    "rarity": "uncommon"
+  },
+  {
+    "id": "gold_coin",
+    "type": "currency",
+    "name": "Gold Coin",
+    "description": "Precious gold currency.",
+    "value": 100,
+    "rarity": "rare"
+  },
+  {
+    "id": "wood",
+    "type": "material",
+    "name": "Wood",
+    "description": "Common crafting material.",
+    "value": 2,
+    "rarity": "common"
+  },
+  {
+    "id": "stone",
+    "type": "material",
+    "name": "Stone",
+    "description": "Sturdy building material.",
+    "value": 3,
+    "rarity": "common"
+  },
+  {
+    "id": "crystal",
+    "type": "material",
+    "name": "Magic Crystal",
+    "description": "Crystallized magical energy.",
+    "value": 25,
+    "rarity": "uncommon"
+  },
+  {
+    "id": "slime_gel",
+    "type": "material",
+    "name": "Slime Gel",
+    "description": "Sticky gel from a defeated slime.",
+    "value": 3,
+    "rarity": "common"
+  },
+  {
+    "id": "wolf_fang",
+    "type": "material",
+    "name": "Wolf Fang",
+    "description": "Sharp fang from a wild wolf.",
+    "value": 8,
+    "rarity": "common"
+  },
+  {
+    "id": "wolf_pelt",
+    "type": "material",
+    "name": "Wolf Pelt",
+    "description": "Warm fur from a wolf.",
+    "value": 12,
+    "rarity": "common"
+  },
+  {
+    "id": "corrupted_bark",
+    "type": "material",
+    "name": "Corrupted Bark",
+    "description": "Bark infused with dark magic.",
+    "value": 20,
+    "rarity": "uncommon"
+  },
+  {
+    "id": "nature_essence",
+    "type": "material",
+    "name": "Nature Essence",
+    "description": "Pure essence of natural magic.",
+    "value": 35,
+    "rarity": "rare"
+  },
+  {
+    "id": "bone_fragment",
+    "type": "material",
+    "name": "Bone Fragment",
+    "description": "Fragment from an undead creature.",
+    "value": 5,
+    "rarity": "common"
+  },
+  {
+    "id": "rusty_sword",
+    "type": "weapon",
+    "name": "Rusty Sword",
+    "description": "An old, worn blade with reduced effectiveness.",
+    "damage": 6,
+    "durability": 50,
+    "rarity": "common",
+    "value": 10,
+    "requirements": {"strength": 4}
+  },
+  {
+    "id": "stone_core",
+    "type": "material",
+    "name": "Stone Core",
+    "description": "Magical core from a stone golem.",
+    "value": 40,
+    "rarity": "rare"
+  },
+  {
+    "id": "crystal_shard",
+    "type": "material",
+    "name": "Crystal Shard",
+    "description": "Sharp fragment of magical crystal.",
+    "value": 15,
+    "rarity": "uncommon"
+  },
+  {
+    "id": "spider_venom",
+    "type": "material",
+    "name": "Spider Venom",
+    "description": "Potent poison from crystal spiders.",
+    "value": 18,
+    "rarity": "uncommon"
+  }
+]

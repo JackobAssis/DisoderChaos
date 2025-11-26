@@ -1,0 +1,118 @@
+{
+  "opening_cinematic": {
+    "title": "Despertar no Caos",
+    "duration": "3-4 minutos",
+    "scenes": [
+      {
+        "scene_id": 1,
+        "type": "flashback",
+        "duration": 30,
+        "visuals": "Mundo unificado em sua glória antiga",
+        "narration": "Há muito tempo, o mundo era uno. Vastas planícies se estendiam além do horizonte, conectadas por rios de magia pura...",
+        "audio": "Música épica e serena",
+        "purpose": "Estabelecer o estado original do mundo"
+      },
+      {
+        "scene_id": 2,
+        "type": "catastrophe",
+        "duration": 45,
+        "visuals": "The Great Sundering - mundo se despedaçando",
+        "narration": "Mas a ambição destruiu a perfeição. Em uma tentativa de controlar a própria essência da criação, os antigos despedaçaram a realidade...",
+        "audio": "Música dramática, sons de destruição",
+        "purpose": "Mostrar o cataclismo que criou os fragmentos"
+      },
+      {
+        "scene_id": 3,
+        "type": "present_day",
+        "duration": 60,
+        "visuals": "Fragmentos flutuando no vazio, rifts conectando-os",
+        "narration": "Agora, milênios depois, os sobreviventes vivem em fragmentos flutuantes de realidade. O Disorder permeia tudo, corrompendo e transformando...",
+        "audio": "Música misteriosa e tensa",
+        "purpose": "Apresentar o mundo atual"
+      },
+      {
+        "scene_id": 4,
+        "type": "factions_intro",
+        "duration": 75,
+        "visuals": "Montagem mostrando cada facção",
+        "narration": "Cinco facções emergem das cinzas: A Ordem busca purificação, os Buscadores abraçam o caos, os Andarilhos valorizam a liberdade, o Pacto constrói o futuro, e nas sombras... outros conspiram.",
+        "audio": "Tema musical único para cada facção",
+        "purpose": "Introduzir as facções principais"
+      },
+      {
+        "scene_id": 5,
+        "type": "player_awakening",
+        "duration": 30,
+        "visuals": "Player despertando no Fragmento Zero",
+        "narration": "Você desperta no Fragmento Zero, último bastião de estabilidade. O destino dos fragmentos - e talvez do próprio mundo - agora repousa em suas mãos.",
+        "audio": "Música de esperança crescendo",
+        "purpose": "Introduzir o jogador na história"
+      }
+    ],
+    "player_choices": {
+      "after_cinematic": {
+        "choice_1": {
+          "text": "\"Buscarei restaurar a ordem antiga\"",
+          "effect": "Reputação inicial positiva com Eternal Flame",
+          "starting_fragment": "fragment_zero_military_district"
+        },
+        "choice_2": {
+          "text": "\"O caos traz oportunidades infinitas\"",
+          "effect": "Reputação inicial positiva com Void Seekers",
+          "starting_fragment": "fragment_zero_scholar_district"
+        },
+        "choice_3": {
+          "text": "\"Prefiro forjar meu próprio caminho\"",
+          "effect": "Reputação neutra com todas as facções",
+          "starting_fragment": "fragment_zero_market_district"
+        },
+        "choice_4": {
+          "text": "\"A tecnologia é nossa salvação\"",
+          "effect": "Reputação inicial positiva com Iron Pact",
+          "starting_fragment": "fragment_zero_industrial_district"
+        }
+      }
+    }
+  },
+  "fragment_zero_intro": {
+    "name": "Fragmento Zero - Nexus da Esperança",
+    "description": "O último fragmento verdadeiramente estável, serving como hub central para todas as facções.",
+    "districts": {
+      "central_plaza": {
+        "description": "Praça central neutra onde todas as facções podem interagir",
+        "npcs": ["Herald of Fragments", "Neutral Merchant", "Rift Keeper"],
+        "function": "Tutorial inicial e orientação"
+      },
+      "military_district": {
+        "controlled_by": "eternal_flame",
+        "description": "Quartéis e templos da Ordem da Chama Eterna",
+        "npcs": ["Commander Aldric", "Purification Priest", "Holy Weaponsmith"],
+        "function": "Quests de ordem e purificação"
+      },
+      "scholar_district": {
+        "controlled_by": "void_seekers",
+        "description": "Laboratórios e bibliotecas dos Buscadores do Vazio",
+        "npcs": ["Researcher Vex", "Mutation Specialist", "Chaos Theorist"],
+        "function": "Quests de pesquisa e experimentos"
+      },
+      "market_district": {
+        "controlled_by": "free_wanderers", 
+        "description": "Mercado aberto e pousadas dos Andarilhos Livres",
+        "npcs": ["Caravan Master Elara", "Info Broker", "Refugee Coordinator"],
+        "function": "Comércio e informações"
+      },
+      "industrial_district": {
+        "controlled_by": "iron_pact",
+        "description": "Fábricas e oficinas do Pacto de Ferro",
+        "npcs": ["Engineer Cogsworth", "Automaton Foreman", "Resource Manager"],
+        "function": "Crafting e tecnologia"
+      },
+      "underground": {
+        "controlled_by": "shadow_court",
+        "description": "Túneis e becos secretos da Corte das Sombras",
+        "npcs": ["Mysterious Contact", "Fence", "Information Dealer"],
+        "function": "Atividades ilícitas e secretas"
+      }
+    }
+  }
+}

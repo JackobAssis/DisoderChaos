@@ -1,0 +1,561 @@
+{
+  "version": "1.0",
+  "dialogue_trees": {
+    "kael_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "conditional",
+          "conditions": [
+            {
+              "type": "faction_reputation",
+              "faction": "eternal_flame",
+              "operator": ">=",
+              "value": 50,
+              "next": "greeting_friendly"
+            },
+            {
+              "type": "faction_reputation",
+              "faction": "eternal_flame",
+              "operator": ">=",
+              "value": 0,
+              "next": "greeting_neutral"
+            },
+            {
+              "type": "default",
+              "next": "greeting_hostile"
+            }
+          ]
+        },
+        "greeting_friendly": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Salve, campeão! É sempre um prazer ver um aliado da Chama Eterna. Como posso ajudá-lo em sua missão?",
+          "options": [
+            {"text": "Preciso de uma nova missão", "next": "quest_menu"},
+            {"text": "Quero treinar minhas habilidades", "next": "training_menu"},
+            {"text": "Me fale sobre a Chama Eterna", "next": "faction_info"},
+            {"text": "Até logo", "next": "farewell_friendly"}
+          ]
+        },
+        "greeting_neutral": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Saudações, viajante. Vejo que você não se opõe aos nossos ideais. Talvez possamos trabalhar juntos.",
+          "options": [
+            {"text": "Que tipo de trabalho?", "next": "quest_menu"},
+            {"text": "Posso treinar aqui?", "next": "training_menu"},
+            {"text": "O que é a Chama Eterna?", "next": "faction_info"},
+            {"text": "Preciso ir", "next": "farewell_neutral"}
+          ]
+        },
+        "greeting_hostile": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Você não é bem-vindo aqui, seguidor do caos. Fale rápido ou se retire.",
+          "options": [
+            {"text": "Vim em paz", "next": "peace_attempt"},
+            {"text": "Apenas quero informações", "next": "info_request"},
+            {"text": "Já vou embora", "next": "farewell_hostile"}
+          ]
+        },
+        "quest_menu": {
+          "type": "quest_check",
+          "available_quests": ["eternal_flame_patrol", "cleanse_corruption", "artifact_recovery"],
+          "completed_quests": ["training_complete"],
+          "text": "Temos algumas missões que podem interessar a você:",
+          "no_quests_text": "No momento não temos missões disponíveis para seu nível.",
+          "options": [
+            {"text": "Voltar", "next": "greeting"}
+          ]
+        },
+        "training_menu": {
+          "type": "training",
+          "requirements": {
+            "faction_reputation": {"eternal_flame": 0},
+            "level": 5
+          },
+          "skills": ["combat_mastery", "divine_magic", "leadership"],
+          "text": "Posso ensinar-lhe as artes da Chama Eterna. Que disciplina deseja aprender?",
+          "cost": {"gold": 100, "reputation": 5},
+          "options": [
+            {"text": "Voltar", "next": "greeting"}
+          ]
+        },
+        "faction_info": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "A Chama Eterna representa ordem e estabilidade neste mundo caótico. Lutamos para proteger os inocentes dos fragmentos corrompidos e restaurar a paz.",
+          "options": [
+            {"text": "Como posso ajudar?", "next": "join_faction"},
+            {"text": "Interessante", "next": "greeting"},
+            {"text": "Não é para mim", "next": "decline_faction"}
+          ]
+        },
+        "join_faction": {
+          "type": "faction_action",
+          "action": "improve_reputation",
+          "faction": "eternal_flame",
+          "amount": 10,
+          "text": "Excelente! Sua dedicação à ordem será recompensada. Bem-vindo à Chama Eterna.",
+          "options": [
+            {"text": "Obrigado", "next": "greeting"}
+          ]
+        },
+        "peace_attempt": {
+          "type": "conditional",
+          "conditions": [
+            {
+              "type": "skill_check",
+              "skill": "charisma",
+              "difficulty": 15,
+              "success": "peace_success",
+              "failure": "peace_failure"
+            }
+          ]
+        },
+        "peace_success": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Hmm... vejo sinceridade em suas palavras. Muito bem, falarei brevemente.",
+          "options": [
+            {"text": "Obrigado", "next": "greeting_neutral"}
+          ]
+        },
+        "peace_failure": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Suas palavras são vazias. Retire-se antes que eu chame os guardas.",
+          "options": [
+            {"text": "Está bem", "next": "farewell_hostile"}
+          ]
+        },
+        "farewell_friendly": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Que a Chama Eterna ilumine seu caminho, amigo. Volte sempre que precisar.",
+          "end": true
+        },
+        "farewell_neutral": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "Vá em paz, viajante. Talvez nossos caminhos se cruzem novamente.",
+          "end": true
+        },
+        "farewell_hostile": {
+          "type": "text",
+          "speaker": "kael",
+          "text": "E não volte tão cedo.",
+          "end": true
+        }
+      }
+    },
+    "nyx_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "text",
+          "speaker": "nyx",
+          "text": "*Uma figura encapuzada emerge das sombras* Ah... outro buscador dos segredos dos fragmentos. O vazio sussurra seu nome...",
+          "options": [
+            {"text": "Quem é você?", "next": "identity"},
+            {"text": "Que fragmentos?", "next": "fragment_info"},
+            {"text": "Isso soa sinistro...", "next": "fear_response"},
+            {"text": "[Recuar silenciosamente]", "next": "retreat"}
+          ]
+        },
+        "identity": {
+          "type": "text",
+          "speaker": "nyx",
+          "text": "Eu sou Nyx, serva do Vazio Eterno. Estudo os fragmentos corrompidos... e eles me estudam de volta. *risos sussurrados*",
+          "options": [
+            {"text": "O que você descobriu?", "next": "discoveries"},
+            {"text": "Isso é perigoso", "next": "danger_warning"},
+            {"text": "Posso aprender com você?", "next": "learning_request"}
+          ]
+        },
+        "fragment_info": {
+          "type": "text",
+          "speaker": "nyx",
+          "text": "Os fragmentos... ecos da Grande Sundering. Cada um carrega memórias do mundo que foi. E alguns... *sussurra* carregam muito mais.",
+          "options": [
+            {"text": "Que tipo de memórias?", "next": "memories_info"},
+            {"text": "Você os coleta?", "next": "collection_info"},
+            {"text": "Onde posso encontrá-los?", "next": "location_info"}
+          ]
+        },
+        "discoveries": {
+          "type": "text",
+          "speaker": "nyx",
+          "text": "O caos não é destruição... é potencial puro. Os fragmentos podem ser moldados, combinados, transformados. Quer ver?",
+          "options": [
+            {"text": "Sim, me mostre", "next": "demonstration"},
+            {"text": "Não, obrigado", "next": "decline_demo"},
+            {"text": "Isso é possível?", "next": "possibility_question"}
+          ]
+        },
+        "demonstration": {
+          "type": "shop",
+          "merchant_type": "void_fragments",
+          "special_items": ["corrupted_essence", "void_crystal", "chaos_shard"],
+          "text": "*Nyx revela uma coleção de fragmentos sombrios* Cada um tem sua própria... personalidade.",
+          "reputation_discount": {"void_seekers": 0.1},
+          "options": [
+            {"text": "Interessante", "next": "greeting"}
+          ]
+        },
+        "retreat": {
+          "type": "text",
+          "speaker": "nyx",
+          "text": "*Risos ecoam na escuridão enquanto você se afasta* O vazio lembrará de você...",
+          "end": true
+        }
+      }
+    },
+    "grix_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "text",
+          "speaker": "grix",
+          "text": "*Som de engrenagens e vapor* Ah, um visitante! Bem-vindo à minha oficina. Precisa de algum equipamento aprimorado com tecnologia de fragmentos?",
+          "options": [
+            {"text": "O que você faz aqui?", "next": "workshop_info"},
+            {"text": "Preciso de equipamentos", "next": "shop_menu"},
+            {"text": "Pode me ensinar sobre tecnologia?", "next": "tech_training"},
+            {"text": "Só estava olhando", "next": "browsing"}
+          ]
+        },
+        "workshop_info": {
+          "type": "text",
+          "speaker": "grix",
+          "text": "Sou engenheiro do Pacto de Ferro! Transformo fragmentos brutos em tecnologia útil. Armas, armaduras, ferramentas... se tem engrenagens, eu posso melhorar!",
+          "options": [
+            {"text": "Como funciona?", "next": "tech_explanation"},
+            {"text": "Que tipos de melhorias?", "next": "upgrade_types"},
+            {"text": "Posso ver sua loja?", "next": "shop_menu"}
+          ]
+        },
+        "shop_menu": {
+          "type": "shop",
+          "merchant_type": "tech_upgrades",
+          "special_services": ["weapon_enhancement", "armor_modification", "tool_crafting"],
+          "text": "Aqui estão os serviços que posso oferecer:",
+          "requirements": {"iron_pact_reputation": 0},
+          "options": [
+            {"text": "Voltar", "next": "greeting"}
+          ]
+        },
+        "tech_training": {
+          "type": "training",
+          "requirements": {
+            "faction_reputation": {"iron_pact": 25},
+            "intelligence": 12
+          },
+          "skills": ["engineering", "fragment_manipulation", "tech_crafting"],
+          "text": "Posso ensinar os segredos da engenharia de fragmentos, mas você precisa provar seu valor primeiro.",
+          "cost": {"gold": 200, "materials": ["iron_ingot", "fragment_core"]},
+          "options": [
+            {"text": "Talvez depois", "next": "greeting"}
+          ]
+        }
+      }
+    },
+    "zara_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "text",
+          "speaker": "zara",
+          "text": "*Acena alegremente enquanto ajusta o equipamento de viagem* Olá, fellow wanderer! Sempre é bom ver alguém que aprecia a liberdade da estrada.",
+          "options": [
+            {"text": "Você conhece estas terras?", "next": "local_knowledge"},
+            {"text": "Preciso de transporte", "next": "transport_service"},
+            {"text": "O que são os Andarilhos Livres?", "next": "faction_explanation"},
+            {"text": "Só cumprimentando", "next": "casual_chat"}
+          ]
+        },
+        "local_knowledge": {
+          "type": "text",
+          "speaker": "zara",
+          "text": "Como a palma da minha mão! Conheço todos os caminhos secretos, rotas comerciais e lugares seguros para acampar. Quer algumas dicas?",
+          "options": [
+            {"text": "Locais perigosos?", "next": "danger_zones"},
+            {"text": "Rotas seguras?", "next": "safe_routes"},
+            {"text": "Tesouros escondidos?", "next": "treasure_hints"},
+            {"text": "Obrigado pela oferta", "next": "greeting"}
+          ]
+        },
+        "transport_service": {
+          "type": "transport",
+          "destinations": ["iron_workshop", "void_cavern", "fragment_library", "market_town"],
+          "costs": {"per_distance": 10, "base_fee": 5},
+          "requirements": {"free_wanderers_reputation": 0},
+          "text": "Claro! Para onde quer ir? Conheço atalhos para a maioria dos lugares.",
+          "options": [
+            {"text": "Mudei de ideia", "next": "greeting"}
+          ]
+        },
+        "faction_explanation": {
+          "type": "text",
+          "speaker": "zara",
+          "text": "Somos pessoas livres que rejeitam as correntes de facções e impérios. Vivemos pela estrada, ajudamos uns aos outros e protegemos nossa liberdade!",
+          "options": [
+            {"text": "Como posso me juntar?", "next": "join_wanderers"},
+            {"text": "Parece interessante", "next": "interest_response"},
+            {"text": "Não é para mim", "next": "decline_faction"}
+          ]
+        },
+        "join_wanderers": {
+          "type": "faction_action",
+          "action": "improve_reputation",
+          "faction": "free_wanderers",
+          "amount": 15,
+          "text": "Bem-vindo ao grupo! A liberdade é nossa única bandeira. Aqui está um mapa com nossos pontos de encontro.",
+          "reward": {"items": ["wanderer_map"], "gold": 50},
+          "options": [
+            {"text": "Obrigado!", "next": "greeting"}
+          ]
+        }
+      }
+    },
+    "vera_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "conditional",
+          "conditions": [
+            {
+              "type": "time_check",
+              "time_range": [22, 6],
+              "next": "night_greeting"
+            },
+            {
+              "type": "default",
+              "next": "day_greeting"
+            }
+          ]
+        },
+        "night_greeting": {
+          "type": "text",
+          "speaker": "vera",
+          "text": "*Uma voz suave emerge das sombras* Bem, bem... que interessante encontrar alguém aqui a esta hora. Você busca... informações?",
+          "options": [
+            {"text": "Que tipo de informações?", "next": "info_types"},
+            {"text": "Quem é você?", "next": "identity_reveal"},
+            {"text": "Talvez...", "next": "maybe_interested"},
+            {"text": "Não, obrigado", "next": "polite_decline"}
+          ]
+        },
+        "day_greeting": {
+          "type": "text",
+          "speaker": "vera",
+          "text": "*Sorri educadamente* Perdoe-me, mas prefiro conduzir negócios após o pôr do sol. Volte mais tarde se estiver... interessado em serviços especiais.",
+          "options": [
+            {"text": "Que tipo de serviços?", "next": "service_hint"},
+            {"text": "Voltarei à noite", "next": "night_promise"},
+            {"text": "Entendi", "next": "understanding"}
+          ]
+        },
+        "info_types": {
+          "type": "text",
+          "speaker": "vera",
+          "text": "*Sorri misteriosamente* Segredos de facções, localização de itens raros, fraquezas de inimigos... tudo tem um preço, é claro.",
+          "options": [
+            {"text": "Quanto custa?", "next": "pricing_info"},
+            {"text": "Como você obtém essas informações?", "next": "methods_question"},
+            {"text": "Preciso pensar", "next": "consider_offer"}
+          ]
+        },
+        "pricing_info": {
+          "type": "shop",
+          "merchant_type": "information_broker",
+          "special_items": ["faction_secrets", "enemy_weaknesses", "treasure_locations"],
+          "text": "*Sussurra* Aqui está o que posso oferecer... discretamente.",
+          "reputation_discount": {"shadow_court": 0.2},
+          "requirements": {"shadow_court_reputation": 25},
+          "options": [
+            {"text": "Interessante", "next": "greeting"}
+          ]
+        }
+      }
+    },
+    "magnus_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "text",
+          "speaker": "magnus",
+          "text": "*Levanta os olhos de um tomo antigo* Ah, um jovem buscador do conhecimento. Bem-vindo à minha biblioteca. Em que posso instruí-lo hoje?",
+          "options": [
+            {"text": "Sobre os fragmentos", "next": "fragment_lore"},
+            {"text": "História do mundo", "next": "world_history"},
+            {"text": "Quero treinar", "next": "magical_training"},
+            {"text": "Apenas curioso", "next": "general_curiosity"}
+          ]
+        },
+        "fragment_lore": {
+          "type": "text",
+          "speaker": "magnus",
+          "text": "*Abre um livro ilustrado* Os fragmentos são ecos da Grande Sundering, quando a realidade se partiu. Cada um carrega uma fração do poder original do mundo.",
+          "options": [
+            {"text": "Como eles funcionam?", "next": "fragment_mechanics"},
+            {"text": "São perigosos?", "next": "fragment_dangers"},
+            {"text": "Posso estudar mais?", "next": "advanced_study"},
+            {"text": "Fascinante", "next": "greeting"}
+          ]
+        },
+        "world_history": {
+          "type": "text",
+          "speaker": "magnus",
+          "text": "*Gesticula para mapas antigos* Nosso mundo já foi unificado, mas o Disorder mudou tudo. Agora temos facções, fragmentos e um futuro incerto...",
+          "options": [
+            {"text": "Como era antes?", "next": "ancient_times"},
+            {"text": "O que causou o Disorder?", "next": "disorder_origin"},
+            {"text": "Há esperança de restauração?", "next": "restoration_hope"}
+          ]
+        },
+        "magical_training": {
+          "type": "training",
+          "requirements": {
+            "intelligence": 15,
+            "level": 10
+          },
+          "skills": ["arcane_mastery", "fragment_study", "ancient_knowledge"],
+          "text": "Posso ensinar as artes arcanas e o estudo profundo dos fragmentos. Você tem a dedicação necessária?",
+          "cost": {"gold": 500, "time_days": 7},
+          "options": [
+            {"text": "Talvez depois", "next": "greeting"}
+          ]
+        },
+        "advanced_study": {
+          "type": "text",
+          "speaker": "magnus",
+          "text": "Certamente! Mas o conhecimento verdadeiro exige dedicação. Você está disposto a passar semanas estudando textos antigos?",
+          "options": [
+            {"text": "Sim, estou pronto", "next": "begin_study"},
+            {"text": "Preciso de mais tempo", "next": "study_delay"},
+            {"text": "Talvez seja demais para mim", "next": "study_decline"}
+          ]
+        }
+      }
+    },
+    "pip_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "text",
+          "speaker": "pip",
+          "text": "*Sorri entusiasmadamente* Olá, olá! Bem-vindo à loja ambulante de Pip! Tenho os melhores itens de três regiões diferentes! O que está procurando?",
+          "options": [
+            {"text": "O que você vende?", "next": "inventory_showcase"},
+            {"text": "Itens raros?", "next": "rare_items"},
+            {"text": "Preços especiais?", "next": "special_deals"},
+            {"text": "Só dando uma olhada", "next": "browsing"}
+          ]
+        },
+        "inventory_showcase": {
+          "type": "shop",
+          "merchant_type": "traveling_merchant",
+          "special_features": ["random_stock", "regional_items", "bulk_discounts"],
+          "text": "Aqui está minha seleção atual! O estoque muda toda semana!",
+          "rotating_stock": true,
+          "options": [
+            {"text": "Interessante seleção", "next": "greeting"}
+          ]
+        },
+        "rare_items": {
+          "type": "conditional",
+          "conditions": [
+            {
+              "type": "reputation_check",
+              "total_reputation": 100,
+              "next": "rare_available"
+            },
+            {
+              "type": "default",
+              "next": "rare_unavailable"
+            }
+          ]
+        },
+        "rare_available": {
+          "type": "text",
+          "speaker": "pip",
+          "text": "*Sussurra conspirativamente* Bem, você parece ser alguém de confiança... Tenho alguns itens especiais na carroça...",
+          "options": [
+            {"text": "Me mostre", "next": "secret_shop"},
+            {"text": "Talvez depois", "next": "greeting"}
+          ]
+        },
+        "rare_unavailable": {
+          "type": "text",
+          "speaker": "pip",
+          "text": "*Balança a cabeça* Ainda não, meu amigo. Preciso conhecer melhor meus clientes antes de mostrar as peças especiais!",
+          "options": [
+            {"text": "Entendo", "next": "greeting"}
+          ]
+        }
+      }
+    },
+    "thorne_dialogue": {
+      "root": "greeting",
+      "nodes": {
+        "greeting": {
+          "type": "text",
+          "speaker": "thorne",
+          "text": "*Ergue os olhos de relatórios militares* Cidadão. Em que posso ajudá-lo? Se está relatando atividade suspeita, fale diretamente.",
+          "options": [
+            {"text": "Quero servir a guarda", "next": "guard_recruitment"},
+            {"text": "Preciso de missões", "next": "official_quests"},
+            {"text": "Relatório de segurança", "next": "security_report"},
+            {"text": "Apenas cumprimentando", "next": "casual_interaction"}
+          ]
+        },
+        "guard_recruitment": {
+          "type": "conditional",
+          "conditions": [
+            {
+              "type": "level_check",
+              "minimum_level": 8,
+              "next": "recruitment_eligible"
+            },
+            {
+              "type": "default",
+              "next": "recruitment_ineligible"
+            }
+          ]
+        },
+        "recruitment_eligible": {
+          "type": "text",
+          "speaker": "thorne",
+          "text": "Hmm, você tem a aparência de alguém capaz. A guarda sempre precisa de pessoas competentes. Está disposto a fazer um juramento de proteção aos civis?",
+          "options": [
+            {"text": "Sim, farei o juramento", "next": "take_oath"},
+            {"text": "Que responsabilidades teria?", "next": "duties_explanation"},
+            {"text": "Preciso pensar", "next": "consider_offer"}
+          ]
+        },
+        "official_quests": {
+          "type": "quest_check",
+          "available_quests": ["bandit_patrol", "monster_clearing", "escort_mission"],
+          "requirements": {"city_guard_reputation": 10},
+          "text": "Temos algumas missões oficiais que podem interessar alguém de suas habilidades:",
+          "options": [
+            {"text": "Voltar", "next": "greeting"}
+          ]
+        },
+        "security_report": {
+          "type": "text",
+          "speaker": "thorne",
+          "text": "Fale. Que ameaças você observou? Bandidos? Criaturas de fragmentos corrompidos? Atividade factional suspeita?",
+          "options": [
+            {"text": "Bandidos na estrada", "next": "bandit_report"},
+            {"text": "Criaturas estranhas", "next": "creature_report"},
+            {"text": "Atividade suspeita", "next": "faction_report"},
+            {"text": "Falso alarme", "next": "false_report"}
+          ]
+        }
+      }
+    }
+  }
+}

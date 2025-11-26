@@ -1,0 +1,124 @@
+[
+  {
+    "id": "slime",
+    "name": "Slime",
+    "description": "A bouncy, gelatinous creature that absorbs nutrients from the environment.",
+    "max_hp": 25,
+    "attack": 4,
+    "defense": 1,
+    "speed": 50.0,
+    "detection_range": 100.0,
+    "attack_range": 25.0,
+    "exp_reward": 5,
+    "loot_table": [
+      {"item": "minor_potion", "chance": 0.3},
+      {"item": "bronze_coin", "chance": 0.8},
+      {"item": "slime_gel", "chance": 0.5}
+    ],
+    "ai_type": "passive",
+    "element": "neutral"
+  },
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "description": "A fierce predator that hunts in packs. Sharp fangs and keen senses.",
+    "max_hp": 40,
+    "attack": 7,
+    "defense": 2,
+    "speed": 120.0,
+    "detection_range": 150.0,
+    "attack_range": 30.0,
+    "exp_reward": 10,
+    "loot_table": [
+      {"item": "wolf_fang", "chance": 0.4},
+      {"item": "bronze_coin", "chance": 0.6},
+      {"item": "minor_potion", "chance": 0.2},
+      {"item": "wolf_pelt", "chance": 0.3}
+    ],
+    "ai_type": "aggressive",
+    "element": "neutral",
+    "special_abilities": ["howl"]
+  },
+  {
+    "id": "corrupted_treant",
+    "name": "Corrupted Treant",
+    "description": "An ancient tree spirit twisted by dark magic. Slow but powerful.",
+    "max_hp": 80,
+    "attack": 12,
+    "defense": 6,
+    "speed": 40.0,
+    "detection_range": 120.0,
+    "attack_range": 40.0,
+    "exp_reward": 25,
+    "loot_table": [
+      {"item": "corrupted_bark", "chance": 0.6},
+      {"item": "silver_coin", "chance": 0.4},
+      {"item": "nature_essence", "chance": 0.3}
+    ],
+    "ai_type": "guardian",
+    "element": "nature",
+    "special_abilities": ["root_entangle", "bark_shield"]
+  },
+  {
+    "id": "skeleton",
+    "name": "Skeleton Warrior",
+    "description": "Reanimated bones of a fallen warrior. Tireless and relentless.",
+    "max_hp": 35,
+    "attack": 8,
+    "defense": 4,
+    "speed": 80.0,
+    "detection_range": 140.0,
+    "attack_range": 35.0,
+    "exp_reward": 12,
+    "loot_table": [
+      {"item": "bone_fragment", "chance": 0.7},
+      {"item": "rusty_sword", "chance": 0.2},
+      {"item": "bronze_coin", "chance": 0.5}
+    ],
+    "ai_type": "aggressive",
+    "element": "undead",
+    "resistances": ["poison"],
+    "weaknesses": ["holy"]
+  },
+  {
+    "id": "stone_golem",
+    "name": "Stone Golem",
+    "description": "A massive construct of living stone. Slow but nearly indestructible.",
+    "max_hp": 120,
+    "attack": 15,
+    "defense": 10,
+    "speed": 30.0,
+    "detection_range": 100.0,
+    "attack_range": 45.0,
+    "exp_reward": 40,
+    "loot_table": [
+      {"item": "stone_core", "chance": 0.5},
+      {"item": "stone", "chance": 0.9},
+      {"item": "silver_coin", "chance": 0.6}
+    ],
+    "ai_type": "guardian",
+    "element": "earth",
+    "resistances": ["physical"],
+    "special_abilities": ["ground_slam", "stone_armor"]
+  },
+  {
+    "id": "crystal_spider",
+    "name": "Crystal Spider",
+    "description": "An arachnid infused with magical crystals. Fast and venomous.",
+    "max_hp": 30,
+    "attack": 6,
+    "defense": 2,
+    "speed": 140.0,
+    "detection_range": 160.0,
+    "attack_range": 28.0,
+    "exp_reward": 15,
+    "loot_table": [
+      {"item": "crystal_shard", "chance": 0.6},
+      {"item": "spider_venom", "chance": 0.4},
+      {"item": "crystal", "chance": 0.3}
+    ],
+    "ai_type": "ambush",
+    "element": "crystal",
+    "special_abilities": ["poison_bite", "web_trap"]
+  }
+]

@@ -1,0 +1,206 @@
+{
+  "factions": {
+    "order_of_the_eternal_flame": {
+      "id": "eternal_flame",
+      "name": "Ordem da Chama Eterna",
+      "type": "Religious/Military Order",
+      "ideology": "Purificação e Ordem",
+      "description": "Uma ordem militante que acredita que o Disorder pode ser purificado através da disciplina, fé e força. Buscam restaurar o mundo à sua forma original através da eliminação completa do caos.",
+      "goals": [
+        "Eliminar completamente o Disorder",
+        "Reunificar todos os fragmentos",
+        "Estabelecer ordem absoluta",
+        "Purificar todas as criaturas corrompidas"
+      ],
+      "methods": [
+        "Cruzadas contra zonas corrompidas",
+        "Treinamento militar rigoroso",
+        "Rituais de purificação",
+        "Construção de templos-fortaleza"
+      ],
+      "leadership": {
+        "title": "High Commander",
+        "current_leader": "Seraphina the Purifier",
+        "structure": "Hierarquia militar rígida"
+      },
+      "territories": [
+        "Fragmento Zero (parcial - distrito militar)",
+        "Sanctum Fragment - base principal",
+        "Fortress Fragment - outpost avançado"
+      ],
+      "reputation_system": {
+        "friendly": "Acesso a equipamentos sagrados e bênçãos",
+        "neutral": "Comércio básico disponível",
+        "hostile": "Atacado à vista como 'corrompido'"
+      }
+    },
+    "void_seekers": {
+      "id": "void_seekers",
+      "name": "Buscadores do Vazio",
+      "type": "Scholar/Mystic Cult",
+      "ideology": "Abraçar o Caos",
+      "description": "Estudiosos e místicos que acreditam que o Disorder é a evolução natural do mundo. Buscam compreender e se adaptar ao caos, vendo-o como uma força de mudança e crescimento infinitos.",
+      "goals": [
+        "Estudar e compreender o Disorder",
+        "Adaptar-se às mudanças caóticas",
+        "Descobrir os segredos do Great Sundering",
+        "Alcançar transcendência através do caos"
+      ],
+      "methods": [
+        "Expedições científicas a fragmentos perigosos",
+        "Experimentos com energia do Disorder",
+        "Coleta e catalogação de anomalias",
+        "Mutação controlada"
+      ],
+      "leadership": {
+        "title": "Void Oracle",
+        "current_leader": "Kythara the Transformed",
+        "structure": "Conselho de sábios mutados"
+      },
+      "territories": [
+        "Fragmento Zero (parcial - distrito dos estudiosos)",
+        "Nexus Fragment - laboratórios principais",
+        "Flux Fragment - campos de teste"
+      ],
+      "reputation_system": {
+        "friendly": "Acesso a conhecimento arcano e mutações benéficas",
+        "neutral": "Troca de informações limitada",
+        "hostile": "Usado como cobaia em experimentos"
+      }
+    },
+    "free_wanderers": {
+      "id": "free_wanderers",
+      "name": "Andarilhos Livres",
+      "type": "Nomadic Alliance",
+      "ideology": "Liberdade e Sobrevivência",
+      "description": "Uma aliança solta de exploradores, mercadores e sobreviventes que rejeitam tanto a ordem rígida quanto o caos destrutivo. Focam na adaptabilidade e liberdade pessoal.",
+      "goals": [
+        "Manter liberdade de movimento entre fragmentos",
+        "Estabelecer rotas comerciais seguras",
+        "Preservar conhecimento e cultura",
+        "Proteger os independentes"
+      ],
+      "methods": [
+        "Exploração e mapeamento de novos fragmentos",
+        "Estabelecimento de postos comerciais",
+        "Diplomacia entre facções",
+        "Resgate e evacuação de refugiados"
+      ],
+      "leadership": {
+        "title": "Path Speaker",
+        "current_leader": "Zara the Wayfinder",
+        "structure": "Conselho rotativo de líderes de caravana"
+      },
+      "territories": [
+        "Fragmento Zero (parcial - mercado central)",
+        "Haven Fragment - refúgio principal",
+        "Crossroads Fragment - hub comercial"
+      ],
+      "reputation_system": {
+        "friendly": "Descontos em comércio e informações de rotas",
+        "neutral": "Comércio padrão disponível",
+        "hostile": "Banido de estabelecimentos e caravanas"
+      }
+    },
+    "iron_pact": {
+      "id": "iron_pact",
+      "name": "Pacto de Ferro",
+      "type": "Industrial Syndicate",
+      "ideology": "Progresso Tecnológico",
+      "description": "Uma confederação de inventores, engenheiros e industriais que acreditam que a tecnologia é a chave para superar o Disorder. Constroem máquinas e estruturas para estabilizar fragmentos.",
+      "goals": [
+        "Desenvolver tecnologia anti-Disorder",
+        "Industrializar fragmentos estáveis",
+        "Criar pontes mecânicas entre fragmentos",
+        "Estabelecer supremacia tecnológica"
+      ],
+      "methods": [
+        "Construção de fábricas e refinarias",
+        "Desenvolvimento de autômatos e máquinas",
+        "Mineração intensiva de recursos",
+        "Engenharia de estabilização"
+      ],
+      "leadership": {
+        "title": "Chief Engineer",
+        "current_leader": "Magnus Ironwright",
+        "structure": "Consórcio de guildas especializadas"
+      },
+      "territories": [
+        "Fragmento Zero (parcial - distrito industrial)",
+        "Forge Fragment - complexo industrial principal",
+        "Steam Fragment - centro de pesquisa"
+      ],
+      "reputation_system": {
+        "friendly": "Acesso a tecnologia avançada e autômatos",
+        "neutral": "Comércio de equipamentos básicos",
+        "hostile": "Sabotagem de equipamentos e construções"
+      }
+    },
+    "shadow_court": {
+      "id": "shadow_court",
+      "name": "Corte das Sombras",
+      "type": "Criminal Organization",
+      "ideology": "Poder através da Manipulação",
+      "description": "Uma organização secreta de assassinos, espiões e contrabandistas que operam nas sombras de todos os fragmentos. Lucram com o caos e instabilidade, manipulando eventos para seu benefício.",
+      "goals": [
+        "Manter o status quo caótico",
+        "Controlar informações e recursos raros",
+        "Expandir rede de influência",
+        "Eliminar ameaças à sua operação"
+      ],
+      "methods": [
+        "Assassinato e espionagem",
+        "Contrabando entre fragmentos",
+        "Chantagem e manipulação",
+        "Sabotagem de outras facções"
+      ],
+      "leadership": {
+        "title": "Shadow Monarch",
+        "current_leader": "Unknown (The Faceless)",
+        "structure": "Células independentes hierárquicas"
+      },
+      "territories": [
+        "Fragmento Zero (parcial - submundo)",
+        "Twilight Fragment - base secreta",
+        "Maze Fragment - território controlado"
+      ],
+      "reputation_system": {
+        "friendly": "Acesso a mercado negro e serviços ilícitos",
+        "neutral": "Ignorado pelas operações",
+        "hostile": "Marcado para eliminação"
+      }
+    }
+  },
+  "faction_conflicts": {
+    "eternal_flame_vs_void_seekers": {
+      "type": "Ideological War",
+      "description": "Conflito fundamental entre ordem e caos",
+      "intensity": "High",
+      "recent_events": [
+        "Raid da Chama Eterna em laboratório dos Void Seekers",
+        "Sabotagem de Void Seeker em ritual de purificação",
+        "Guerra por controle do Unstable Fragment"
+      ]
+    },
+    "iron_pact_vs_free_wanderers": {
+      "type": "Economic Competition",
+      "description": "Disputa por rotas comerciais e recursos",
+      "intensity": "Medium",
+      "recent_events": [
+        "Bloqueio de rotas comerciais pelo Iron Pact",
+        "Sabotagem de Free Wanderers em fábricas",
+        "Negociação de trégua temporária"
+      ]
+    },
+    "shadow_court_vs_all": {
+      "type": "Hidden Manipulation",
+      "description": "A Corte manipula secretamente todas as outras facções",
+      "intensity": "Low (covert)",
+      "recent_events": [
+        "Assassinato de diplomata do Iron Pact",
+        "Roubo de artefatos da Eternal Flame",
+        "Venda de informações falsas aos Void Seekers"
+      ]
+    }
+  }
+}

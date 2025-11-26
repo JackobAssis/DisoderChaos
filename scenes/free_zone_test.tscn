@@ -1,0 +1,154 @@
+[gd_scene load_steps=4 format=3 uid="uid://be6n7wkw4v0wi"]
+
+[ext_resource type="PackedScene" uid="uid://bwcjxdlkjhyig" path="res://scenes/player.tscn" id="1_8xsmt"]
+[ext_resource type="Script" path="res://scripts/systems/pvp_zone_manager.gd" id="2_h5p7q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xqzb"]
+size = Vector2(100, 100)
+
+[node name="FreeZoneTest" type="Node2D"]
+
+[node name="PVPZoneManager" type="Node" parent="."]
+script = ExtResource("2_h5p7q")
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Ground" type="ColorRect" parent="Environment"]
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 500.0
+offset_bottom = 500.0
+color = Color(0.2, 0.6, 0.2, 1)
+
+[node name="PVPZone" type="Area2D" parent="Environment"]
+position = Vector2(200, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/PVPZone"]
+shape = SubResource("RectangleShape2D_1xqzb")
+
+[node name="VisualIndicator" type="ColorRect" parent="Environment/PVPZone"]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+color = Color(1, 0.2, 0.2, 0.3)
+
+[node name="Label" type="Label" parent="Environment/PVPZone/VisualIndicator"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+text = "PVP ZONE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SafeZone1" type="Area2D" parent="Environment"]
+position = Vector2(-200, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/SafeZone1"]
+shape = SubResource("RectangleShape2D_1xqzb")
+
+[node name="VisualIndicator" type="ColorRect" parent="Environment/SafeZone1"]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+color = Color(0.2, 0.8, 1, 0.3)
+
+[node name="Label" type="Label" parent="Environment/SafeZone1/VisualIndicator"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+text = "SAFE ZONE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TestDummies" type="Node2D" parent="."]
+
+[node name="Dummy1" type="CharacterBody2D" parent="TestDummies"]
+position = Vector2(250, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummies/Dummy1"]
+shape = SubResource("RectangleShape2D_1xqzb")
+
+[node name="Sprite2D" type="Sprite2D" parent="TestDummies/Dummy1"]
+modulate = Color(0.8, 0.4, 0.4, 1)
+
+[node name="HealthBar" type="ProgressBar" parent="TestDummies/Dummy1"]
+offset_left = -25.0
+offset_top = -60.0
+offset_right = 25.0
+offset_bottom = -45.0
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="Player" parent="." instance=ExtResource("1_8xsmt")]
+position = Vector2(0, 0)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PVPStatus" type="Label" parent="UI"]
+layout_mode = 0
+anchor_right = 1.0
+offset_bottom = 30.0
+text = "Status: Safe Zone"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Instructions" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = -10.0
+
+[node name="Title" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "PVP Zone Test Instructions:"
+add_theme_font_size_override("font_size", 16)
+
+[node name="Instruction1" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "• Move to red zone to enter PVP mode"
+add_theme_font_size_override("font_size", 12)
+
+[node name="Instruction2" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "• Attack dummy targets to test combat"
+add_theme_font_size_override("font_size", 12)
+
+[node name="Instruction3" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "• Return to blue zone for safety"
+add_theme_font_size_override("font_size", 12)
+
+[node name="Instruction4" type="Label" parent="UI/Instructions"]
+layout_mode = 2
+text = "• This simulates multiplayer PVP zones"
+add_theme_font_size_override("font_size", 12)
+
+[connection signal="body_entered" from="Environment/PVPZone" to="PVPZoneManager" method="_on_pvp_zone_entered"]
+[connection signal="body_exited" from="Environment/PVPZone" to="PVPZoneManager" method="_on_pvp_zone_exited"]
+[connection signal="body_entered" from="Environment/SafeZone1" to="PVPZoneManager" method="_on_safe_zone_entered"]
+[connection signal="body_exited" from="Environment/SafeZone1" to="PVPZoneManager" method="_on_safe_zone_exited"]

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "warrior",
+    "name": "Warrior",
+    "description": "Master of melee combat and heavy armor.",
+    "primary_attribute": "strength",
+    "base_hp": 120,
+    "base_mp": 40,
+    "skills": ["slash", "shield_bash", "war_cry"]
+  },
+  {
+    "id": "rogue",
+    "name": "Rogue",
+    "description": "Swift and deadly assassin with stealth abilities.",
+    "primary_attribute": "agility",
+    "base_hp": 80,
+    "base_mp": 60,
+    "skills": ["backstab", "stealth", "poison_blade"]
+  },
+  {
+    "id": "mage",
+    "name": "Mage",
+    "description": "Wielder of destructive magic and arcane knowledge.",
+    "primary_attribute": "intelligence",
+    "base_hp": 60,
+    "base_mp": 120,
+    "skills": ["fireball", "ice_shard", "magic_shield"]
+  }
+]

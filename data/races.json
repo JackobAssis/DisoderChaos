@@ -1,0 +1,30 @@
+[
+  {
+    "id": "human",
+    "name": "Human",
+    "description": "Balanced and adaptable. Masters of versatility.",
+    "attribute_bonus": {
+      "strength": 1,
+      "agility": 1,
+      "intelligence": 1
+    }
+  },
+  {
+    "id": "beastkin",
+    "name": "Beastkin",
+    "description": "Instinct driven and fierce. Natural hunters.",
+    "attribute_bonus": {
+      "agility": 2,
+      "willpower": 1
+    }
+  },
+  {
+    "id": "mystborn",
+    "name": "Mystborn",
+    "description": "Born from magical energies. Wielders of arcane power.",
+    "attribute_bonus": {
+      "intelligence": 2,
+      "willpower": 1
+    }
+  }
+]

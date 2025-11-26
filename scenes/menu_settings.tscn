@@ -1,0 +1,271 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct6k4l5m9n8op"]
+
+[ext_resource type="Script" path="res://scripts/ui/menu_settings.gd" id="1_h3k9t"]
+
+[node name="MenuSettings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_h3k9t")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="SettingsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+
+[node name="TitleLabel" type="Label" parent="SettingsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Game Settings"
+horizontal_alignment = 1
+add_theme_font_size_override("font_size", 24)
+
+[node name="HSeparator" type="HSeparator" parent="SettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SettingsContainer" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AudioSection" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="AudioLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+text = "Audio Settings"
+add_theme_font_size_override("font_size", 18)
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume:"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 80.0
+
+[node name="ValueLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MasterVolumeContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 0)
+text = "80%"
+
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MusicVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume:"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MusicVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 70.0
+
+[node name="ValueLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MusicVolumeContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 0)
+text = "70%"
+
+[node name="SFXVolumeContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/SFXVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX Volume:"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/SFXVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 90.0
+
+[node name="ValueLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/SFXVolumeContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 0)
+text = "90%"
+
+[node name="HSeparator2" type="HSeparator" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="VideoSection" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="VideoLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection"]
+layout_mode = 2
+text = "Video Settings"
+add_theme_font_size_override("font_size", 18)
+
+[node name="FullscreenContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/FullscreenContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fullscreen:"
+
+[node name="FullscreenCheckbox" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/FullscreenContainer"]
+layout_mode = 2
+
+[node name="ResolutionContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/ResolutionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resolution:"
+
+[node name="ResolutionOption" type="OptionButton" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/ResolutionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSyncContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/VSyncContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "VSync:"
+
+[node name="VSyncCheckbox" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/VSyncContainer"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HSeparator3" type="HSeparator" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="GameplaySection" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="GameplayLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+text = "Gameplay Settings"
+add_theme_font_size_override("font_size", 18)
+
+[node name="AutosaveContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/AutosaveContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Autosave Enabled:"
+
+[node name="AutosaveCheckbox" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/AutosaveContainer"]
+layout_mode = 2
+button_pressed = true
+
+[node name="AutosaveIntervalContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/AutosaveIntervalContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Autosave Interval (minutes):"
+
+[node name="AutosaveIntervalSpinBox" type="SpinBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/AutosaveIntervalContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 30.0
+value = 5.0
+
+[node name="DamageNumbersContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/DamageNumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Show Damage Numbers:"
+
+[node name="DamageNumbersCheckbox" type="CheckBox" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/DamageNumbersContainer"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HSeparator4" type="HSeparator" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="ControlsSection" type="VBoxContainer" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/ControlsSection"]
+layout_mode = 2
+text = "Controls"
+add_theme_font_size_override("font_size", 18)
+
+[node name="ControlsInfo" type="Label" parent="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/ControlsSection"]
+layout_mode = 2
+text = "Use Input Map settings to customize controls."
+add_theme_font_size_override("font_size", 12)
+
+[node name="ButtonContainer" type="HBoxContainer" parent="SettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="SettingsPanel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset to Defaults"
+
+[node name="HSeparator5" type="HSeparator" parent="SettingsPanel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(20, 0)
+
+[node name="ApplyButton" type="Button" parent="SettingsPanel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Apply"
+
+[node name="HSeparator6" type="HSeparator" parent="SettingsPanel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(20, 0)
+
+[node name="CloseButton" type="Button" parent="SettingsPanel/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
+
+[connection signal="value_changed" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MasterVolumeContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/MusicVolumeContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/AudioSection/SFXVolumeContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="toggled" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/FullscreenContainer/FullscreenCheckbox" to="." method="_on_fullscreen_checkbox_toggled"]
+[connection signal="item_selected" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/ResolutionContainer/ResolutionOption" to="." method="_on_resolution_option_item_selected"]
+[connection signal="toggled" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/VideoSection/VSyncContainer/VSyncCheckbox" to="." method="_on_vsync_checkbox_toggled"]
+[connection signal="toggled" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/AutosaveContainer/AutosaveCheckbox" to="." method="_on_autosave_checkbox_toggled"]
+[connection signal="value_changed" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/AutosaveIntervalContainer/AutosaveIntervalSpinBox" to="." method="_on_autosave_interval_spin_box_value_changed"]
+[connection signal="toggled" from="SettingsPanel/VBoxContainer/ScrollContainer/SettingsContainer/GameplaySection/DamageNumbersContainer/DamageNumbersCheckbox" to="." method="_on_damage_numbers_checkbox_toggled"]
+[connection signal="pressed" from="SettingsPanel/VBoxContainer/ButtonContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/VBoxContainer/ButtonContainer/ApplyButton" to="." method="_on_apply_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/VBoxContainer/ButtonContainer/CloseButton" to="." method="_on_close_button_pressed"]

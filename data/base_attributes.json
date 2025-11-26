@@ -1,0 +1,10 @@
+{
+  "attributes": [
+    "strength",
+    "agility", 
+    "vitality",
+    "intelligence",
+    "willpower",
+    "luck"
+  ]
+}

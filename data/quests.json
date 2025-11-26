@@ -1,0 +1,477 @@
+{
+  "quests": {
+    "tutorial_001": {
+      "id": "tutorial_001",
+      "name": "Despertar no Fragmento Zero",
+      "description": "Você desperta em um mundo despedaçado. Explore o Fragmento Zero e descubra seu propósito.",
+      "type": "main",
+      "category": "tutorial",
+      "level_requirement": 1,
+      "prerequisites": [],
+      "faction_requirements": {},
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "talk",
+          "target": "herald_of_fragments",
+          "description": "Fale com o Arauto dos Fragmentos na praça central",
+          "required_amount": 1,
+          "completed": false
+        },
+        {
+          "id": "obj_002", 
+          "type": "explore",
+          "target": "fragment_zero_districts",
+          "description": "Explore todos os 5 distritos do Fragmento Zero",
+          "required_amount": 5,
+          "completed": false
+        },
+        {
+          "id": "obj_003",
+          "type": "collect",
+          "target": "fragment_crystal",
+          "description": "Colete um cristal de fragmento",
+          "required_amount": 1,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 250,
+        "items": [
+          {"id": "starter_weapon", "quantity": 1},
+          {"id": "minor_healing_potion", "quantity": 3}
+        ],
+        "currency": 100,
+        "unlock_features": ["faction_selection", "first_rift_access"]
+      },
+      "failure_conditions": [],
+      "time_limit": null,
+      "repeatable": false
+    },
+    "faction_eternal_flame_001": {
+      "id": "faction_eternal_flame_001",
+      "name": "Purificação Inicial",
+      "description": "A Ordem da Chama Eterna precisa de sua ajuda para purificar uma área corrompida pelo Disorder.",
+      "type": "faction",
+      "category": "purification", 
+      "level_requirement": 2,
+      "prerequisites": ["tutorial_001"],
+      "faction_requirements": {
+        "eternal_flame": "neutral"
+      },
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "kill",
+          "target": "corrupted_slime",
+          "description": "Elimine 10 Slimes Corrompidos",
+          "required_amount": 10,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "use_item",
+          "target": "purification_crystal",
+          "description": "Use cristais de purificação em 3 pontos corrompidos",
+          "required_amount": 3,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 400,
+        "items": [
+          {"id": "blessed_sword", "quantity": 1},
+          {"id": "purification_potion", "quantity": 2}
+        ],
+        "currency": 150,
+        "faction_reputation": {
+          "eternal_flame": 100
+        }
+      },
+      "failure_conditions": [
+        {
+          "type": "player_death",
+          "penalty": "lose_progress"
+        }
+      ],
+      "time_limit": null,
+      "repeatable": false
+    },
+    "void_seekers_001": {
+      "id": "void_seekers_001",
+      "name": "Coleta de Amostras Caóticas",
+      "description": "Os Buscadores do Vazio precisam de amostras de criaturas afetadas pelo Disorder para seus estudos.",
+      "type": "faction",
+      "category": "research",
+      "level_requirement": 2,
+      "prerequisites": ["tutorial_001"],
+      "faction_requirements": {
+        "void_seekers": "neutral"
+      },
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "collect",
+          "target": "chaos_essence",
+          "description": "Colete 5 essências de caos de criaturas mutadas",
+          "required_amount": 5,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "survive",
+          "target": "chaos_exposure",
+          "description": "Sobreviva a 2 minutos de exposição direta ao Disorder",
+          "required_amount": 120,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 350,
+        "items": [
+          {"id": "chaos_staff", "quantity": 1},
+          {"id": "mutation_serum", "quantity": 1}
+        ],
+        "currency": 125,
+        "faction_reputation": {
+          "void_seekers": 100
+        }
+      },
+      "failure_conditions": [],
+      "time_limit": null,
+      "repeatable": true
+    },
+    "wanderer_001": {
+      "id": "wanderer_001",
+      "name": "Rota Comercial Segura",
+      "description": "Estabeleça uma rota comercial segura escoltando uma caravana através de um fragmento perigoso.",
+      "type": "faction",
+      "category": "escort",
+      "level_requirement": 3,
+      "prerequisites": ["tutorial_001"],
+      "faction_requirements": {
+        "free_wanderers": "neutral"
+      },
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "escort",
+          "target": "merchant_caravan",
+          "description": "Escorte a caravana através do Fragmento Selvagem",
+          "required_amount": 1,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "defend",
+          "target": "caravan_from_bandits",
+          "description": "Defenda a caravana de 3 ondas de bandidos",
+          "required_amount": 3,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 500,
+        "items": [
+          {"id": "traveler_boots", "quantity": 1},
+          {"id": "emergency_rations", "quantity": 5}
+        ],
+        "currency": 200,
+        "faction_reputation": {
+          "free_wanderers": 150
+        },
+        "unlock_features": ["trade_routes_map"]
+      },
+      "failure_conditions": [
+        {
+          "type": "escort_target_death",
+          "penalty": "quest_failure"
+        }
+      ],
+      "time_limit": 3600,
+      "repeatable": false
+    },
+    "iron_pact_001": {
+      "id": "iron_pact_001",
+      "name": "Componentes para Autômato",
+      "description": "O Pacto de Ferro precisa de materiais específicos para construir um autômato guardian.",
+      "type": "faction",
+      "category": "gathering",
+      "level_requirement": 2,
+      "prerequisites": ["tutorial_001"],
+      "faction_requirements": {
+        "iron_pact": "neutral"
+      },
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "collect",
+          "target": "refined_iron_ore",
+          "description": "Colete 10 minérios de ferro refinado",
+          "required_amount": 10,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "collect",
+          "target": "energy_crystal",
+          "description": "Colete 3 cristais de energia",
+          "required_amount": 3,
+          "completed": false
+        },
+        {
+          "id": "obj_003",
+          "type": "craft",
+          "target": "automaton_core",
+          "description": "Construa 1 núcleo de autômato",
+          "required_amount": 1,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 450,
+        "items": [
+          {"id": "engineer_hammer", "quantity": 1},
+          {"id": "blueprint_basic_automaton", "quantity": 1}
+        ],
+        "currency": 175,
+        "faction_reputation": {
+          "iron_pact": 120
+        }
+      },
+      "failure_conditions": [],
+      "time_limit": null,
+      "repeatable": true
+    },
+    "shadow_court_001": {
+      "id": "shadow_court_001", 
+      "name": "Informações Valiosas",
+      "description": "Um contato misterioso oferece riquezas em troca de informações sobre as outras facções.",
+      "type": "faction",
+      "category": "stealth",
+      "level_requirement": 4,
+      "prerequisites": ["tutorial_001"],
+      "faction_requirements": {
+        "shadow_court": "neutral"
+      },
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "infiltrate",
+          "target": "eternal_flame_meeting",
+          "description": "Infiltre-se em uma reunião da Chama Eterna sem ser detectado",
+          "required_amount": 1,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "steal",
+          "target": "faction_documents",
+          "description": "Roube documentos secretos de 2 facções diferentes",
+          "required_amount": 2,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 600,
+        "items": [
+          {"id": "shadow_cloak", "quantity": 1},
+          {"id": "poison_blade", "quantity": 1}
+        ],
+        "currency": 300,
+        "faction_reputation": {
+          "shadow_court": 200
+        }
+      },
+      "failure_conditions": [
+        {
+          "type": "detected_during_stealth",
+          "penalty": "faction_reputation_loss"
+        }
+      ],
+      "time_limit": null,
+      "repeatable": false
+    },
+    "boss_hunt_001": {
+      "id": "boss_hunt_001",
+      "name": "O Terror do Fragmento Sombrio",
+      "description": "Um boss poderoso aterroriza os habitantes do Fragmento Sombrio. Derrote-o para restaurar a paz.",
+      "type": "boss",
+      "category": "hunt",
+      "level_requirement": 8,
+      "prerequisites": ["faction_eternal_flame_001", "void_seekers_001", "wanderer_001"],
+      "faction_requirements": {},
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "kill_boss",
+          "target": "shadow_fragment_terror",
+          "description": "Derrote o Terror do Fragmento Sombrio",
+          "required_amount": 1,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 1500,
+        "items": [
+          {"id": "shadow_slayer_weapon", "quantity": 1},
+          {"id": "fragment_stabilizer", "quantity": 1}
+        ],
+        "currency": 500,
+        "faction_reputation": {
+          "eternal_flame": 50,
+          "void_seekers": 50,
+          "free_wanderers": 50,
+          "iron_pact": 50
+        },
+        "unlock_features": ["shadow_fragment_safe_travel"]
+      },
+      "failure_conditions": [
+        {
+          "type": "player_death",
+          "penalty": "respawn_at_checkpoint"
+        }
+      ],
+      "time_limit": null,
+      "repeatable": false
+    },
+    "daily_chaos_001": {
+      "id": "daily_chaos_001",
+      "name": "Contenção Diária do Caos",
+      "description": "O Disorder está se intensificando em várias áreas. Ajude a contê-lo.",
+      "type": "daily",
+      "category": "cleanup",
+      "level_requirement": 5,
+      "prerequisites": [],
+      "faction_requirements": {},
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "kill",
+          "target": "chaos_spawns",
+          "description": "Elimine 15 criaturas caóticas",
+          "required_amount": 15,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "collect",
+          "target": "disorder_essence",
+          "description": "Colete 8 essências de disorder",
+          "required_amount": 8,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 300,
+        "items": [
+          {"id": "random_rare_material", "quantity": 1}
+        ],
+        "currency": 150
+      },
+      "failure_conditions": [],
+      "time_limit": 86400,
+      "repeatable": true,
+      "reset_frequency": "daily"
+    },
+    "exploration_001": {
+      "id": "exploration_001",
+      "name": "Descoberta do Fragmento Perdido",
+      "description": "Rumores falam de um fragmento perdido recentemente descoberto. Explore-o e relate suas descobertas.",
+      "type": "exploration",
+      "category": "discovery",
+      "level_requirement": 6,
+      "prerequisites": ["boss_hunt_001"],
+      "faction_requirements": {},
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "explore",
+          "target": "lost_fragment",
+          "description": "Explore 80% do Fragmento Perdido",
+          "required_amount": 80,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "discover",
+          "target": "ancient_artifacts",
+          "description": "Descubra 3 artefatos antigos",
+          "required_amount": 3,
+          "completed": false
+        },
+        {
+          "id": "obj_003",
+          "type": "survive",
+          "target": "fragment_instability",
+          "description": "Sobreviva às instabilidades do fragmento por 10 minutos",
+          "required_amount": 600,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 800,
+        "items": [
+          {"id": "ancient_relic", "quantity": 1},
+          {"id": "fragment_map_piece", "quantity": 1}
+        ],
+        "currency": 250,
+        "unlock_features": ["lost_fragment_permanent_access"]
+      },
+      "failure_conditions": [],
+      "time_limit": null,
+      "repeatable": false
+    },
+    "weekly_siege_001": {
+      "id": "weekly_siege_001",
+      "name": "Defesa do Fragmento Zero",
+      "description": "Forças caóticas ameaçam invadir o Fragmento Zero. Junte-se à defesa!",
+      "type": "event",
+      "category": "siege_defense",
+      "level_requirement": 10,
+      "prerequisites": [],
+      "faction_requirements": {},
+      "objectives": [
+        {
+          "id": "obj_001",
+          "type": "defend",
+          "target": "fragment_zero_gates",
+          "description": "Defenda os portões por 5 ondas de inimigos",
+          "required_amount": 5,
+          "completed": false
+        },
+        {
+          "id": "obj_002",
+          "type": "kill",
+          "target": "chaos_generals",
+          "description": "Derrote 3 Generais do Caos",
+          "required_amount": 3,
+          "completed": false
+        }
+      ],
+      "rewards": {
+        "xp": 1200,
+        "items": [
+          {"id": "defender_medal", "quantity": 1},
+          {"id": "epic_random_weapon", "quantity": 1}
+        ],
+        "currency": 400,
+        "faction_reputation": {
+          "eternal_flame": 100,
+          "void_seekers": 50,
+          "free_wanderers": 75,
+          "iron_pact": 75
+        }
+      },
+      "failure_conditions": [
+        {
+          "type": "defense_point_destroyed",
+          "penalty": "reduced_rewards"
+        }
+      ],
+      "time_limit": 7200,
+      "repeatable": true,
+      "reset_frequency": "weekly"
+    }
+  }
+}

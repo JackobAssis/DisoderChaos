@@ -1,0 +1,50 @@
+[
+  {
+    "id": "root_forest",
+    "name": "Root Forest",
+    "description": "A twisted forest where ancient roots form the paths.",
+    "biome": "forest",
+    "difficulty": 1,
+    "connections": ["stone_passage"],
+    "enemy_pool": ["slime", "wolf", "corrupted_treant"],
+    "spawn_points": [
+      {"x": 100, "y": 100},
+      {"x": 200, "y": 150},
+      {"x": 300, "y": 200}
+    ],
+    "exit_position": {"x": 400, "y": 300},
+    "loot_table": ["minor_potion", "wood", "bronze_coin"]
+  },
+  {
+    "id": "stone_passage",
+    "name": "Stone Passage",
+    "description": "Ancient stone corridors filled with traps and guardians.",
+    "biome": "ruins",
+    "difficulty": 2,
+    "connections": ["root_forest", "crystal_caverns"],
+    "enemy_pool": ["skeleton", "stone_golem", "trap"],
+    "spawn_points": [
+      {"x": 50, "y": 50},
+      {"x": 150, "y": 100},
+      {"x": 250, "y": 150}
+    ],
+    "exit_position": {"x": 300, "y": 200},
+    "loot_table": ["minor_potion", "stone", "silver_coin"]
+  },
+  {
+    "id": "crystal_caverns",
+    "name": "Crystal Caverns",
+    "description": "Sparkling caverns that resonate with magical energy.",
+    "biome": "cave",
+    "difficulty": 3,
+    "connections": ["stone_passage"],
+    "enemy_pool": ["crystal_spider", "mana_elemental", "crystal_bat"],
+    "spawn_points": [
+      {"x": 80, "y": 80},
+      {"x": 180, "y": 120},
+      {"x": 280, "y": 160}
+    ],
+    "exit_position": {"x": 350, "y": 250},
+    "loot_table": ["mana_potion", "crystal", "gold_coin"]
+  }
+]

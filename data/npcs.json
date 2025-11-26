@@ -1,0 +1,276 @@
+{
+  "version": "1.0",
+  "npcs": {
+    "kael_flamekeeper": {
+      "id": "kael_flamekeeper",
+      "name": "Kael, o Guardião da Chama",
+      "description": "Um comandante veterano da Chama Eterna, responsável pela estação de guarda",
+      "faction": "eternal_flame",
+      "location": "eternal_flame_outpost",
+      "sprite_path": "res://assets/sprites/npcs/kael_flamekeeper.png",
+      "portrait_path": "res://assets/portraits/npcs/kael_portrait.png",
+      "voice_set": "gruff_male",
+      "personality": {
+        "traits": ["honorável", "determinado", "protetor"],
+        "alignment": "lawful_good",
+        "speech_pattern": "formal_military"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": true,
+        "merchant": false,
+        "transport": false
+      },
+      "dialogue_tree": "kael_dialogue",
+      "spawn_conditions": {
+        "time_range": [6, 22],
+        "weather": ["clear", "cloudy"],
+        "faction_reputation": {
+          "eternal_flame": -100
+        }
+      },
+      "interaction_radius": 3.0,
+      "movement_type": "patrol",
+      "patrol_points": [
+        {"x": 10, "y": 5},
+        {"x": 15, "y": 5},
+        {"x": 15, "y": 10},
+        {"x": 10, "y": 10}
+      ]
+    },
+    "nyx_voidwhisper": {
+      "id": "nyx_voidwhisper",
+      "name": "Nyx Sussurro do Vazio",
+      "description": "Uma misteriosa cultista que estuda os fragmentos corrompidos",
+      "faction": "void_seekers",
+      "location": "void_cavern",
+      "sprite_path": "res://assets/sprites/npcs/nyx_voidwhisper.png",
+      "portrait_path": "res://assets/portraits/npcs/nyx_portrait.png",
+      "voice_set": "whisper_female",
+      "personality": {
+        "traits": ["enigmática", "curiosa", "perigosa"],
+        "alignment": "chaotic_neutral",
+        "speech_pattern": "mystical_cryptic"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": false,
+        "merchant": true,
+        "transport": false
+      },
+      "dialogue_tree": "nyx_dialogue",
+      "spawn_conditions": {
+        "time_range": [20, 6],
+        "weather": ["any"],
+        "faction_reputation": {
+          "void_seekers": -50
+        }
+      },
+      "interaction_radius": 2.5,
+      "movement_type": "wander",
+      "wander_radius": 5.0
+    },
+    "grix_ironforge": {
+      "id": "grix_ironforge",
+      "name": "Grix Forjaferro",
+      "description": "Engenheiro especialista em tecnologia de fragmentos do Pacto de Ferro",
+      "faction": "iron_pact",
+      "location": "iron_workshop",
+      "sprite_path": "res://assets/sprites/npcs/grix_ironforge.png",
+      "portrait_path": "res://assets/portraits/npcs/grix_portrait.png",
+      "voice_set": "mechanical_dwarf",
+      "personality": {
+        "traits": ["inventivo", "pragmático", "workaholic"],
+        "alignment": "true_neutral",
+        "speech_pattern": "technical_jargon"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": true,
+        "merchant": true,
+        "transport": false
+      },
+      "dialogue_tree": "grix_dialogue",
+      "spawn_conditions": {
+        "time_range": [8, 18],
+        "weather": ["any"],
+        "faction_reputation": {
+          "iron_pact": -25
+        }
+      },
+      "interaction_radius": 4.0,
+      "movement_type": "stationary"
+    },
+    "zara_windrunner": {
+      "id": "zara_windrunner",
+      "name": "Zara Corridovento",
+      "description": "Guia experiente dos Andarilhos Livres, conhece todos os caminhos secretos",
+      "faction": "free_wanderers",
+      "location": "wanderer_camp",
+      "sprite_path": "res://assets/sprites/npcs/zara_windrunner.png",
+      "portrait_path": "res://assets/portraits/npcs/zara_portrait.png",
+      "voice_set": "adventurous_female",
+      "personality": {
+        "traits": ["aventureira", "independente", "leal"],
+        "alignment": "chaotic_good",
+        "speech_pattern": "casual_friendly"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": false,
+        "merchant": false,
+        "transport": true
+      },
+      "dialogue_tree": "zara_dialogue",
+      "spawn_conditions": {
+        "time_range": [0, 24],
+        "weather": ["any"],
+        "faction_reputation": {
+          "free_wanderers": 0
+        }
+      },
+      "interaction_radius": 3.5,
+      "movement_type": "schedule",
+      "schedule": {
+        "6": {"location": "camp_fire", "action": "cooking"},
+        "9": {"location": "training_ground", "action": "training"},
+        "14": {"location": "lookout_point", "action": "scouting"},
+        "18": {"location": "camp_fire", "action": "socializing"},
+        "22": {"location": "tent", "action": "resting"}
+      }
+    },
+    "vera_shadowweave": {
+      "id": "vera_shadowweave",
+      "name": "Vera Teciassombra",
+      "description": "Agente da Corte das Sombras especializada em informações e intriga",
+      "faction": "shadow_court",
+      "location": "hidden_alcove",
+      "sprite_path": "res://assets/sprites/npcs/vera_shadowweave.png",
+      "portrait_path": "res://assets/portraits/npcs/vera_portrait.png",
+      "voice_set": "seductive_female",
+      "personality": {
+        "traits": ["manipuladora", "inteligente", "sedutora"],
+        "alignment": "neutral_evil",
+        "speech_pattern": "diplomatic_veiled"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": false,
+        "merchant": true,
+        "transport": false
+      },
+      "dialogue_tree": "vera_dialogue",
+      "spawn_conditions": {
+        "time_range": [18, 6],
+        "weather": ["any"],
+        "faction_reputation": {
+          "shadow_court": 25
+        }
+      },
+      "interaction_radius": 2.0,
+      "movement_type": "stealth_patrol",
+      "stealth_points": [
+        {"x": 5, "y": 8, "visibility": 0.3},
+        {"x": 12, "y": 15, "visibility": 0.5},
+        {"x": 8, "y": 20, "visibility": 0.2}
+      ]
+    },
+    "elder_magnus": {
+      "id": "elder_magnus",
+      "name": "Ancião Magnus",
+      "description": "Sábio neutro que estuda os fragmentos há décadas",
+      "faction": "neutral",
+      "location": "fragment_library",
+      "sprite_path": "res://assets/sprites/npcs/elder_magnus.png",
+      "portrait_path": "res://assets/portraits/npcs/magnus_portrait.png",
+      "voice_set": "wise_elder",
+      "personality": {
+        "traits": ["sábio", "paciente", "neutro"],
+        "alignment": "true_neutral",
+        "speech_pattern": "scholarly_verbose"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": true,
+        "merchant": false,
+        "transport": false
+      },
+      "dialogue_tree": "magnus_dialogue",
+      "spawn_conditions": {
+        "time_range": [0, 24],
+        "weather": ["any"],
+        "faction_reputation": {}
+      },
+      "interaction_radius": 4.5,
+      "movement_type": "stationary"
+    },
+    "pip_tinkerton": {
+      "id": "pip_tinkerton",
+      "name": "Pip Tinkerton",
+      "description": "Jovem comerciante ambulante com itens únicos",
+      "faction": "merchant_guild",
+      "location": "market_square",
+      "sprite_path": "res://assets/sprites/npcs/pip_tinkerton.png",
+      "portrait_path": "res://assets/portraits/npcs/pip_portrait.png",
+      "voice_set": "cheerful_young",
+      "personality": {
+        "traits": ["otimista", "empreendedor", "tagarela"],
+        "alignment": "chaotic_neutral",
+        "speech_pattern": "enthusiastic_merchant"
+      },
+      "services": {
+        "quest_giver": false,
+        "trainer": false,
+        "merchant": true,
+        "transport": false
+      },
+      "dialogue_tree": "pip_dialogue",
+      "spawn_conditions": {
+        "time_range": [8, 20],
+        "weather": ["clear", "cloudy"],
+        "faction_reputation": {}
+      },
+      "interaction_radius": 3.0,
+      "movement_type": "merchant_route",
+      "route_points": [
+        {"location": "market_square", "stay_time": 120},
+        {"location": "tavern", "stay_time": 60},
+        {"location": "crossroads", "stay_time": 90}
+      ]
+    },
+    "captain_thorne": {
+      "id": "captain_thorne",
+      "name": "Capitã Thorne",
+      "description": "Comandante militar responsável pela segurança regional",
+      "faction": "city_guard",
+      "location": "guard_barracks",
+      "sprite_path": "res://assets/sprites/npcs/captain_thorne.png",
+      "portrait_path": "res://assets/portraits/npcs/thorne_portrait.png",
+      "voice_set": "authoritative_female",
+      "personality": {
+        "traits": ["disciplinada", "justa", "responsável"],
+        "alignment": "lawful_neutral",
+        "speech_pattern": "military_direct"
+      },
+      "services": {
+        "quest_giver": true,
+        "trainer": true,
+        "merchant": false,
+        "transport": false
+      },
+      "dialogue_tree": "thorne_dialogue",
+      "spawn_conditions": {
+        "time_range": [6, 22],
+        "weather": ["any"],
+        "faction_reputation": {}
+      },
+      "interaction_radius": 3.5,
+      "movement_type": "duty_patrol",
+      "duty_schedule": {
+        "morning": "office",
+        "afternoon": "training_grounds",
+        "evening": "city_walls"
+      }
+    }
+  }
+}
