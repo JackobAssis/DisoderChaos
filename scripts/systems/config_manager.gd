@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name ConfigManager
 # config_manager.gd - Comprehensive configuration management system
 
@@ -21,7 +21,7 @@ func _ready():
 	setup_autosave()
 
 func setup_default_settings():
-	"""Setup default configuration values"""
+# Setup default configuration values
 	default_settings = {
 		"audio": {
 			"master_volume": 80.0,
@@ -70,7 +70,7 @@ func setup_default_settings():
 	}
 
 func setup_autosave():
-	"""Setup autosave timer for settings"""
+# Setup autosave timer for settings
 	autosave_timer = Timer.new()
 	autosave_timer.timeout.connect(save_settings_if_dirty)
 	autosave_timer.wait_time = 10.0  # Save every 10 seconds if dirty
@@ -78,7 +78,7 @@ func setup_autosave():
 	add_child(autosave_timer)
 
 func load_settings():
-	"""Load settings from configuration file"""
+# Load settings from configuration file
 	var error = config.load(CONFIG_FILE_PATH)
 	
 	if error != OK:
@@ -90,14 +90,14 @@ func load_settings():
 		validate_loaded_settings()
 
 func apply_default_settings():
-	"""Apply default settings to config"""
+# Apply default settings to config
 	for section in default_settings:
 		for key in default_settings[section]:
 			var value = default_settings[section][key]
 			config.set_value(section, key, value)
 
 func validate_loaded_settings():
-	"""Validate loaded settings and fill missing ones with defaults"""
+# Validate loaded settings and fill missing ones with defaults
 	for section_name in default_settings:
 		for key in default_settings[section_name]:
 			if not config.has_section_key(section_name, key):
@@ -106,7 +106,7 @@ func validate_loaded_settings():
 				print("[ConfigManager] Added missing setting: ", section_name, ".", key, " = ", default_value)
 
 func save_settings():
-	"""Save current settings to file"""
+# Save current settings to file
 	var error = config.save(CONFIG_FILE_PATH)
 	
 	if error != OK:
@@ -118,12 +118,12 @@ func save_settings():
 	return true
 
 func save_settings_if_dirty():
-	"""Save settings only if they have been modified"""
+# Save settings only if they have been modified
 	if settings_dirty:
 		save_settings()
 
 func get_setting(section: String, key: String, default_value = null):
-	"""Get a setting value with optional default"""
+# Get a setting value with optional default
 	if not config.has_section_key(section, key):
 		if default_value != null:
 			return default_value
@@ -136,7 +136,7 @@ func get_setting(section: String, key: String, default_value = null):
 	return config.get_value(section, key)
 
 func set_setting(section: String, key: String, value):
-	"""Set a setting value"""
+# Set a setting value
 	config.set_value(section, key, value)
 	settings_dirty = true
 	
@@ -144,7 +144,7 @@ func set_setting(section: String, key: String, value):
 	apply_critical_setting(section, key, value)
 
 func apply_critical_setting(section: String, key: String, value):
-	"""Apply critical settings immediately without restart"""
+# Apply critical settings immediately without restart
 	match section:
 		"audio":
 			apply_audio_setting(key, value)
@@ -154,7 +154,7 @@ func apply_critical_setting(section: String, key: String, value):
 			apply_gameplay_setting(key, value)
 
 func apply_audio_setting(key: String, value):
-	"""Apply audio setting immediately"""
+# Apply audio setting immediately
 	match key:
 		"master_volume":
 			AudioServer.set_bus_volume_db(0, linear_to_db(value / 100.0))
@@ -168,7 +168,7 @@ func apply_audio_setting(key: String, value):
 				AudioServer.set_bus_volume_db(sfx_bus, linear_to_db(value / 100.0))
 
 func apply_video_setting(key: String, value):
-	"""Apply video setting immediately"""
+# Apply video setting immediately
 	match key:
 		"vsync":
 			if value:
@@ -179,14 +179,14 @@ func apply_video_setting(key: String, value):
 			Engine.max_fps = value
 
 func apply_gameplay_setting(key: String, value):
-	"""Apply gameplay setting immediately"""
+# Apply gameplay setting immediately
 	match key:
 		"autosave_interval":
 			if GameState.has_method("set_autosave_interval"):
 				GameState.set_autosave_interval(value * 60.0)  # Convert to seconds
 
 func get_section_settings(section: String) -> Dictionary:
-	"""Get all settings from a section"""
+# Get all settings from a section
 	var section_settings = {}
 	
 	if config.has_section(section):
@@ -196,30 +196,30 @@ func get_section_settings(section: String) -> Dictionary:
 	return section_settings
 
 func set_section_settings(section: String, settings: Dictionary):
-	"""Set multiple settings in a section"""
+# Set multiple settings in a section
 	for key in settings:
 		set_setting(section, key, settings[key])
 
 func reset_section_to_defaults(section: String):
-	"""Reset a specific section to default values"""
+# Reset a specific section to default values
 	if section in default_settings:
 		for key in default_settings[section]:
 			set_setting(section, key, default_settings[section][key])
 		print("[ConfigManager] Reset section to defaults: ", section)
 
 func reset_to_defaults():
-	"""Reset all settings to default values"""
+# Reset all settings to default values
 	apply_default_settings()
 	settings_dirty = true
 	save_settings()
 	print("[ConfigManager] All settings reset to defaults")
 
 func has_setting(section: String, key: String) -> bool:
-	"""Check if a setting exists"""
+# Check if a setting exists
 	return config.has_section_key(section, key)
 
 func remove_setting(section: String, key: String):
-	"""Remove a setting"""
+# Remove a setting
 	if config.has_section_key(section, key):
 		# ConfigFile doesn't have a direct remove method, so we recreate without the key
 		var section_keys = config.get_section_keys(section)
@@ -240,7 +240,7 @@ func remove_setting(section: String, key: String):
 		settings_dirty = true
 
 func export_settings() -> String:
-	"""Export settings to JSON string"""
+# Export settings to JSON string
 	var settings_dict = {}
 	
 	for section in config.get_sections():
@@ -249,7 +249,7 @@ func export_settings() -> String:
 	return JSON.stringify(settings_dict, "\t")
 
 func import_settings(json_string: String) -> bool:
-	"""Import settings from JSON string"""
+# Import settings from JSON string
 	var json = JSON.new()
 	var parse_result = json.parse(json_string)
 	
@@ -272,7 +272,7 @@ func import_settings(json_string: String) -> bool:
 	return true
 
 func backup_settings() -> bool:
-	"""Create a backup of current settings"""
+# Create a backup of current settings
 	var backup_path = CONFIG_FILE_PATH + ".backup"
 	var error = config.save(backup_path)
 	
@@ -284,7 +284,7 @@ func backup_settings() -> bool:
 	return true
 
 func restore_from_backup() -> bool:
-	"""Restore settings from backup"""
+# Restore settings from backup
 	var backup_path = CONFIG_FILE_PATH + ".backup"
 	
 	if not FileAccess.file_exists(backup_path):
@@ -307,7 +307,7 @@ func restore_from_backup() -> bool:
 
 # Settings validation
 func validate_setting(section: String, key: String, value) -> bool:
-	"""Validate a setting value"""
+# Validate a setting value
 	match section:
 		"audio":
 			return validate_audio_setting(key, value)
@@ -321,7 +321,7 @@ func validate_setting(section: String, key: String, value) -> bool:
 	return true  # Default: allow any value
 
 func validate_audio_setting(key: String, value) -> bool:
-	"""Validate audio settings"""
+# Validate audio settings
 	match key:
 		"master_volume", "music_volume", "sfx_volume", "voice_volume":
 			return typeof(value) == TYPE_FLOAT and value >= 0.0 and value <= 100.0
@@ -331,7 +331,7 @@ func validate_audio_setting(key: String, value) -> bool:
 	return true
 
 func validate_video_setting(key: String, value) -> bool:
-	"""Validate video settings"""
+# Validate video settings
 	match key:
 		"fullscreen", "vsync":
 			return typeof(value) == TYPE_BOOL
@@ -345,7 +345,7 @@ func validate_video_setting(key: String, value) -> bool:
 	return true
 
 func validate_gameplay_setting(key: String, value) -> bool:
-	"""Validate gameplay settings"""
+# Validate gameplay settings
 	match key:
 		"autosave_enabled", "show_damage_numbers", "show_xp_numbers", "show_loot_notifications":
 			return typeof(value) == TYPE_BOOL
@@ -357,7 +357,7 @@ func validate_gameplay_setting(key: String, value) -> bool:
 	return true
 
 func validate_controls_setting(key: String, value) -> bool:
-	"""Validate controls settings"""
+# Validate controls settings
 	match key:
 		"mouse_sensitivity":
 			return typeof(value) == TYPE_FLOAT and value >= 0.1 and value <= 5.0
@@ -368,11 +368,11 @@ func validate_controls_setting(key: String, value) -> bool:
 
 # Utility functions
 func get_config_file_path() -> String:
-	"""Get the full path to config file"""
+# Get the full path to config file
 	return CONFIG_FILE_PATH
 
 func get_config_file_size() -> int:
-	"""Get config file size in bytes"""
+# Get config file size in bytes
 	var file = FileAccess.open(CONFIG_FILE_PATH, FileAccess.READ)
 	if file:
 		var size = file.get_length()
@@ -381,7 +381,7 @@ func get_config_file_size() -> int:
 	return 0
 
 func print_current_settings():
-	"""Print all current settings to console (for debugging)"""
+# Print all current settings to console (for debugging)
 	print("[ConfigManager] Current Settings:")
 	for section in config.get_sections():
 		print("  [", section, "]")
@@ -395,7 +395,7 @@ signal settings_saved
 signal setting_changed(section: String, key: String, value)
 
 func emit_setting_changed(section: String, key: String, value):
-	"""Emit setting changed signal"""
+# Emit setting changed signal
 	setting_changed.emit(section, key, value)
 
 # TODO: Future enhancements

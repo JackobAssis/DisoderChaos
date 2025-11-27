@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name DialogueUI
 
@@ -58,10 +58,10 @@ func _ready():
 	setup_dialogue_ui()
 	setup_connections()
 	setup_animations()
-	print("[DialogueUI] Interface de Diálogo inicializada")
+	print("[DialogueUI] Interface de DiÃ¡logo inicializada")
 
 func setup_dialogue_ui():
-	"""Setup dialogue UI layout"""
+# Setup dialogue UI layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -75,7 +75,7 @@ func setup_dialogue_ui():
 	create_history_panel()
 
 func create_dialogue_panel():
-	"""Create main dialogue panel"""
+# Create main dialogue panel
 	dialogue_panel = Panel.new()
 	dialogue_panel.name = "DialoguePanel"
 	dialogue_panel.anchor_left = 0.1
@@ -101,7 +101,7 @@ func create_dialogue_panel():
 	dialogue_panel.add_theme_stylebox_override("panel", panel_style)
 
 func create_speaker_section():
-	"""Create speaker information section"""
+# Create speaker information section
 	speaker_panel = Panel.new()
 	speaker_panel.name = "SpeakerPanel"
 	speaker_panel.anchor_left = 0.05
@@ -154,7 +154,7 @@ func create_speaker_section():
 	speaker_container.add_child(speaker_name_label)
 
 func create_dialogue_section():
-	"""Create dialogue text section"""
+# Create dialogue text section
 	# Dialogue text container
 	var dialogue_container = VBoxContainer.new()
 	dialogue_container.name = "DialogueContainer"
@@ -219,7 +219,7 @@ func create_dialogue_section():
 	animate_continue_indicator()
 
 func create_choice_section():
-	"""Create choice buttons section"""
+# Create choice buttons section
 	choice_panel = Panel.new()
 	choice_panel.name = "ChoicePanel"
 	choice_panel.anchor_left = 0.02
@@ -259,7 +259,7 @@ func create_choice_section():
 	choice_scroll.add_child(choice_container)
 
 func create_history_panel():
-	"""Create dialogue history panel"""
+# Create dialogue history panel
 	history_panel = Panel.new()
 	history_panel.name = "HistoryPanel"
 	history_panel.anchor_left = 0.05
@@ -314,14 +314,14 @@ func create_history_panel():
 	history_scroll.add_child(history_container)
 
 func setup_connections():
-	"""Setup event connections"""
+# Setup event connections
 	if event_bus:
 		event_bus.connect("dialogue_started", _on_dialogue_started)
 		event_bus.connect("dialogue_ended", _on_dialogue_ended)
 		event_bus.connect("dialogue_choice_made", _on_choice_made)
 
 func setup_animations():
-	"""Setup animation systems"""
+# Setup animation systems
 	text_tween = Tween.new()
 	add_child(text_tween)
 	
@@ -332,16 +332,16 @@ func setup_animations():
 	add_child(panel_tween)
 
 func show():
-	"""Show dialogue UI with animation"""
+# Show dialogue UI with animation
 	super.show()
 	animate_show()
 
 func hide():
-	"""Hide dialogue UI with animation"""
+# Hide dialogue UI with animation
 	animate_hide()
 
 func animate_show():
-	"""Animate dialogue UI appearance"""
+# Animate dialogue UI appearance
 	if not panel_tween:
 		return
 	
@@ -354,7 +354,7 @@ func animate_show():
 	panel_tween.parallel().tween_property(speaker_panel, "position:x", 0, 0.3)
 
 func animate_hide():
-	"""Animate dialogue UI disappearance"""
+# Animate dialogue UI disappearance
 	if not panel_tween:
 		super.hide()
 		return
@@ -364,7 +364,7 @@ func animate_hide():
 	panel_tween.tween_callback(func(): super.hide())
 
 func animate_continue_indicator():
-	"""Animate continue indicator blinking"""
+# Animate continue indicator blinking
 	if not continue_indicator:
 		return
 	
@@ -374,7 +374,7 @@ func animate_continue_indicator():
 	indicator_tween.tween_property(continue_indicator, "modulate:a", 0.9, 1.0)
 
 func start_dialogue(dialogue_data: Dictionary):
-	"""Start a new dialogue"""
+# Start a new dialogue
 	current_dialogue = dialogue_data
 	
 	# Reset state
@@ -390,7 +390,7 @@ func start_dialogue(dialogue_data: Dictionary):
 		display_dialogue_node(start_node)
 
 func display_dialogue_node(node_id: String):
-	"""Display a specific dialogue node"""
+# Display a specific dialogue node
 	if not current_dialogue.has("nodes"):
 		end_dialogue()
 		return
@@ -416,7 +416,7 @@ func display_dialogue_node(node_id: String):
 	handle_node_options()
 
 func update_speaker_display():
-	"""Update speaker portrait and name"""
+# Update speaker portrait and name
 	var speaker_name = current_node.get("speaker", "Unknown")
 	speaker_name_label.text = speaker_name
 	
@@ -428,7 +428,7 @@ func update_speaker_display():
 		speaker_portrait.texture = null
 
 func display_text_animated(text: String):
-	"""Display text with typewriter animation"""
+# Display text with typewriter animation
 	current_text = text
 	displayed_text = ""
 	is_text_animating = true
@@ -443,7 +443,7 @@ func display_text_animated(text: String):
 	animate_text()
 
 func animate_text():
-	"""Animate text appearance character by character"""
+# Animate text appearance character by character
 	if not text_tween:
 		dialogue_text.text = current_text
 		is_text_animating = false
@@ -458,22 +458,22 @@ func animate_text():
 	text_tween.tween_callback(finish_text_animation)
 
 func update_text_display(char_count: int):
-	"""Update displayed text during animation"""
+# Update displayed text during animation
 	displayed_text = current_text.substr(0, char_count)
 	dialogue_text.text = displayed_text
 	
 	# Play typing sound effect
 	if event_bus and char_count % 3 == 0:  # Play sound every few characters
-		event_bus.emit_signal("play_ui_sound", "dialogue_type")
+		EventBus.play_sound("dialogue_type")
 
 func finish_text_animation():
-	"""Finish text animation"""
+# Finish text animation
 	dialogue_text.text = current_text
 	is_text_animating = false
 	continue_indicator.visible = true
 
 func skip_text_animation():
-	"""Skip text animation and show full text"""
+# Skip text animation and show full text
 	if is_text_animating:
 		if text_tween:
 			text_tween.kill()
@@ -482,7 +482,7 @@ func skip_text_animation():
 		continue_indicator.visible = true
 
 func handle_node_options():
-	"""Handle node choices or continuation"""
+# Handle node choices or continuation
 	var choices = current_node.get("choices", [])
 	
 	if choices.is_empty():
@@ -493,12 +493,12 @@ func handle_node_options():
 		show_choices(choices)
 
 func show_continue_option():
-	"""Show continue option for single-path dialogue"""
+# Show continue option for single-path dialogue
 	choice_panel.visible = false
 	continue_indicator.visible = true
 
 func show_choices(choices: Array):
-	"""Show choice buttons"""
+# Show choice buttons
 	clear_choices()
 	choice_panel.visible = true
 	continue_indicator.visible = false
@@ -513,7 +513,7 @@ func show_choices(choices: Array):
 	animate_choices_in()
 
 func create_choice_button(choice: Dictionary, index: int) -> Button:
-	"""Create a choice button"""
+# Create a choice button
 	var button = Button.new()
 	button.text = str(index + 1) + ". " + choice.get("text", "...")
 	button.custom_minimum_size = Vector2(0, 40)
@@ -533,7 +533,7 @@ func create_choice_button(choice: Dictionary, index: int) -> Button:
 	return button
 
 func style_choice_button(button: Button, available: bool):
-	"""Style choice button"""
+# Style choice button
 	var normal_style = StyleBoxFlat.new()
 	var hover_style = StyleBoxFlat.new()
 	var pressed_style = StyleBoxFlat.new()
@@ -578,7 +578,7 @@ func style_choice_button(button: Button, available: bool):
 	button.add_theme_font_size_override("font_size", 14)
 
 func is_choice_available(choice: Dictionary) -> bool:
-	"""Check if a choice is available based on conditions"""
+# Check if a choice is available based on conditions
 	var conditions = choice.get("conditions", [])
 	
 	for condition in conditions:
@@ -588,7 +588,7 @@ func is_choice_available(choice: Dictionary) -> bool:
 	return true
 
 func evaluate_condition(condition: Dictionary) -> bool:
-	"""Evaluate a dialogue condition"""
+# Evaluate a dialogue condition
 	var type = condition.get("type", "")
 	
 	match type:
@@ -617,7 +617,7 @@ func evaluate_condition(condition: Dictionary) -> bool:
 			return true
 
 func compare_values(value1, operator: String, value2) -> bool:
-	"""Compare two values based on operator"""
+# Compare two values based on operator
 	match operator:
 		"==": return value1 == value2
 		"!=": return value1 != value2
@@ -628,7 +628,7 @@ func compare_values(value1, operator: String, value2) -> bool:
 		_: return false
 
 func animate_choices_in():
-	"""Animate choice buttons appearing"""
+# Animate choice buttons appearing
 	if not choice_tween:
 		return
 	
@@ -643,14 +643,14 @@ func animate_choices_in():
 		choice_tween.parallel().tween_property(button, "scale", Vector2.ONE, 0.3)
 
 func clear_choices():
-	"""Clear all choice buttons"""
+# Clear all choice buttons
 	for button in choice_buttons:
 		if button:
 			button.queue_free()
 	choice_buttons.clear()
 
 func add_to_history(speaker: String, text: String):
-	"""Add dialogue to history"""
+# Add dialogue to history
 	dialogue_history.append({
 		"speaker": speaker,
 		"text": text,
@@ -662,7 +662,7 @@ func add_to_history(speaker: String, text: String):
 		dialogue_history.pop_front()
 
 func show_dialogue_history():
-	"""Show dialogue history panel"""
+# Show dialogue history panel
 	if show_history:
 		return
 	
@@ -671,12 +671,12 @@ func show_dialogue_history():
 	history_panel.visible = true
 
 func hide_dialogue_history():
-	"""Hide dialogue history panel"""
+# Hide dialogue history panel
 	show_history = false
 	history_panel.visible = false
 
 func refresh_history_display():
-	"""Refresh history panel content"""
+# Refresh history panel content
 	# Clear existing history
 	for child in history_container.get_children():
 		child.queue_free()
@@ -687,7 +687,7 @@ func refresh_history_display():
 		history_container.add_child(history_entry)
 
 func create_history_entry(entry: Dictionary) -> Control:
-	"""Create history entry widget"""
+# Create history entry widget
 	var entry_container = VBoxContainer.new()
 	entry_container.add_theme_constant_override("separation", 5)
 	
@@ -716,7 +716,7 @@ func create_history_entry(entry: Dictionary) -> Control:
 	return entry_container
 
 func end_dialogue():
-	"""End current dialogue"""
+# End current dialogue
 	current_dialogue.clear()
 	current_node.clear()
 	
@@ -729,18 +729,18 @@ func end_dialogue():
 
 # Event Handlers
 func _on_dialogue_started(dialogue_id: String):
-	"""Handle dialogue started event"""
+# Handle dialogue started event
 	if dialogue_system:
 		var dialogue_data = dialogue_system.get_dialogue(dialogue_id)
 		if dialogue_data:
 			start_dialogue(dialogue_data)
 
 func _on_dialogue_ended():
-	"""Handle dialogue ended event"""
+# Handle dialogue ended event
 	hide()
 
 func _on_choice_selected(choice_index: int):
-	"""Handle choice selection"""
+# Handle choice selection
 	if choice_index >= current_node.get("choices", []).size():
 		return
 	
@@ -763,21 +763,21 @@ func _on_choice_selected(choice_index: int):
 		event_bus.emit_signal("dialogue_choice_made", choice_index, choice)
 
 func _on_choice_made(choice_index: int, choice: Dictionary):
-	"""Handle choice made event"""
+# Handle choice made event
 	pass  # Already handled in _on_choice_selected
 
 func _on_choice_hovered(button: Button):
-	"""Handle choice hover"""
+# Handle choice hover
 	if event_bus:
-		event_bus.emit_signal("play_ui_sound", "button_hover")
+		EventBus.play_sound("button_hover")
 
 func execute_choice_actions(actions: Array):
-	"""Execute actions from dialogue choice"""
+# Execute actions from dialogue choice
 	for action in actions:
 		execute_dialogue_action(action)
 
 func execute_dialogue_action(action: Dictionary):
-	"""Execute a dialogue action"""
+# Execute a dialogue action
 	var type = action.get("type", "")
 	
 	match type:
@@ -805,7 +805,7 @@ func execute_dialogue_action(action: Dictionary):
 
 # Input Handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if not visible:
 		return
 	
@@ -832,7 +832,7 @@ func _input(event):
 			show_dialogue_history()
 
 func continue_dialogue():
-	"""Continue dialogue to next node"""
+# Continue dialogue to next node
 	var next_node = current_node.get("next_node", "")
 	if next_node == "END" or next_node == "":
 		end_dialogue()
@@ -841,7 +841,7 @@ func continue_dialogue():
 
 # Debug Functions
 func debug_start_test_dialogue():
-	"""Debug: Start test dialogue"""
+# Debug: Start test dialogue
 	var test_dialogue = {
 		"id": "test_dialogue",
 		"title": "Test Dialogue",

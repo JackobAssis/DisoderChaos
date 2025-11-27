@@ -1,4 +1,4 @@
-extends CharacterBody2D
+﻿extends CharacterBody2D
 
 class_name PlayerController
 
@@ -54,7 +54,7 @@ func _ready():
 	print("[PlayerController] Player initialized")
 
 func setup_player():
-	"""Initialize player components and stats"""
+# Initialize player components and stats
 	# Create placeholder sprite if none exists
 	if not sprite:
 		sprite = Sprite2D.new()
@@ -82,7 +82,7 @@ func setup_player():
 		equipment_system.initialize()
 
 func create_player_texture() -> ImageTexture:
-	"""Create placeholder player texture"""
+# Create placeholder player texture
 	var image = Image.create(32, 32, false, Image.FORMAT_RGB8)
 	image.fill(Color.BLUE)
 	var texture = ImageTexture.new()
@@ -90,7 +90,7 @@ func create_player_texture() -> ImageTexture:
 	return texture
 
 func connect_signals():
-	"""Connect relevant signals"""
+# Connect relevant signals
 	if player_stats:
 		player_stats.connect("health_changed", _on_health_changed)
 		player_stats.connect("stamina_changed", _on_stamina_changed)
@@ -101,7 +101,7 @@ func connect_signals():
 	event_bus.connect("healing_received", _on_healing_received)
 
 func _physics_process(delta):
-	"""Main physics update loop"""
+# Main physics update loop
 	if is_casting or is_interacting:
 		return
 	
@@ -114,7 +114,7 @@ func _physics_process(delta):
 	position_changed.emit(global_position)
 
 func handle_input():
-	"""Process player input"""
+# Process player input
 	# Movement input
 	input_vector = Vector2.ZERO
 	
@@ -145,7 +145,7 @@ func handle_input():
 		try_dodge()
 
 func update_movement(delta):
-	"""Update player movement and velocity"""
+# Update player movement and velocity
 	if input_vector != Vector2.ZERO:
 		is_moving = true
 		
@@ -169,14 +169,14 @@ func update_movement(delta):
 	move_and_slide()
 
 func update_stamina(delta):
-	"""Update stamina regeneration"""
+# Update stamina regeneration
 	if current_stamina < max_stamina and not is_running:
 		var regen_rate = 25.0  # Stamina per second
 		current_stamina = min(current_stamina + regen_rate * delta, max_stamina)
 		stamina_changed.emit(current_stamina, max_stamina)
 
 func update_animations():
-	"""Update player animations based on state"""
+# Update player animations based on state
 	if not animation_player:
 		return
 	
@@ -189,7 +189,7 @@ func update_animations():
 		animation_player.play("idle_" + get_direction_string())
 
 func get_direction_string() -> String:
-	"""Get direction string for animations"""
+# Get direction string for animations
 	var abs_x = abs(last_direction.x)
 	var abs_y = abs(last_direction.y)
 	
@@ -199,7 +199,7 @@ func get_direction_string() -> String:
 		return "down" if last_direction.y > 0 else "up"
 
 func try_interact():
-	"""Attempt interaction with nearby objects"""
+# Attempt interaction with nearby objects
 	if is_interacting or current_stamina < interaction_stamina_cost:
 		return
 	
@@ -221,14 +221,14 @@ func try_interact():
 			break
 
 func try_dodge():
-	"""Attempt dodge roll"""
+# Attempt dodge roll
 	if current_stamina < dodge_stamina_cost or is_casting:
 		return
 	
 	perform_dodge()
 
 func perform_dodge():
-	"""Perform dodge roll"""
+# Perform dodge roll
 	is_interacting = true  # Prevent other actions during dodge
 	consume_stamina(dodge_stamina_cost)
 	
@@ -245,16 +245,16 @@ func perform_dodge():
 	is_interacting = false
 
 func start_interaction():
-	"""Start interaction state"""
+# Start interaction state
 	is_interacting = true
 	velocity = Vector2.ZERO
 
 func end_interaction():
-	"""End interaction state"""
+# End interaction state
 	is_interacting = false
 
 func consume_stamina(amount: float):
-	"""Consume stamina amount"""
+# Consume stamina amount
 	current_stamina = max(current_stamina - amount, 0.0)
 	stamina_changed.emit(current_stamina, max_stamina)
 	
@@ -262,7 +262,7 @@ func consume_stamina(amount: float):
 		is_running = false  # Stop running when out of stamina
 
 func take_damage(amount: int, damage_type: String = "physical"):
-	"""Take damage"""
+# Take damage
 	if player_stats:
 		player_stats.take_damage(amount, damage_type)
 	else:
@@ -274,7 +274,7 @@ func take_damage(amount: int, damage_type: String = "physical"):
 			die()
 
 func heal(amount: int):
-	"""Heal player"""
+# Heal player
 	if player_stats:
 		player_stats.heal(amount)
 	else:
@@ -283,7 +283,7 @@ func heal(amount: int):
 		health_changed.emit(current_health, max_health)
 
 func die():
-	"""Handle player death"""
+# Handle player death
 	is_interacting = true  # Stop all actions
 	velocity = Vector2.ZERO
 	
@@ -294,7 +294,7 @@ func die():
 	print("[PlayerController] Player died")
 
 func sync_stats_with_player_stats():
-	"""Sync local stats with PlayerStats component"""
+# Sync local stats with PlayerStats component
 	if not player_stats:
 		return
 	
@@ -305,70 +305,70 @@ func sync_stats_with_player_stats():
 
 # Event handlers
 func _on_health_changed(new_health: int, max_health_value: int):
-	"""Handle health change from PlayerStats"""
+# Handle health change from PlayerStats
 	current_health = new_health
 	max_health = max_health_value
 	health_changed.emit(current_health, max_health)
 
 func _on_stamina_changed(new_stamina: float, max_stamina_value: float):
-	"""Handle stamina change from PlayerStats"""
+# Handle stamina change from PlayerStats
 	current_stamina = new_stamina
 	max_stamina = max_stamina_value
 	stamina_changed.emit(current_stamina, max_stamina)
 
 func _on_level_changed(new_level: int):
-	"""Handle level change from PlayerStats"""
+# Handle level change from PlayerStats
 	leveled_up.emit(new_level)
 	print("[PlayerController] Player leveled up to level %d" % new_level)
 
 func _on_damage_taken(amount: int, source: String):
-	"""Handle damage from event bus"""
+# Handle damage from event bus
 	take_damage(amount)
 
 func _on_healing_received(amount: int, source: String):
-	"""Handle healing from event bus"""
+# Handle healing from event bus
 	heal(amount)
 
 # Utility methods
 func get_player_position() -> Vector2:
-	"""Get player position"""
+# Get player position
 	return global_position
 
 func get_facing_direction() -> Vector2:
-	"""Get the direction player is facing"""
+# Get the direction player is facing
 	return last_direction
 
 func is_player() -> bool:
-	"""Helper method to identify this as player"""
+# Helper method to identify this as player
 	return true
 
 func get_current_health() -> int:
-	"""Get current health"""
+# Get current health
 	return current_health
 
 func get_max_health() -> int:
-	"""Get maximum health"""
+# Get maximum health
 	return max_health
 
 func get_current_stamina() -> float:
-	"""Get current stamina"""
+# Get current stamina
 	return current_stamina
 
 func get_max_stamina() -> float:
-	"""Get maximum stamina"""
+# Get maximum stamina
 	return max_stamina
 
 func get_player_stats() -> PlayerStats:
-	"""Get PlayerStats component"""
+# Get PlayerStats component
 	return player_stats
 
 func get_equipment_system() -> EquipmentSystem:
-	"""Get EquipmentSystem component"""
+# Get EquipmentSystem component
 	return equipment_system
 
 # Save/Load functionality
 func get_save_data() -> Dictionary:
-	"""Get player save data"""
+# Get player save data
 	var save_data = {
 		"position": {"x": global_position.x, "y": global_position.y},
 		"current_health": current_health,
@@ -385,7 +385,7 @@ func get_save_data() -> Dictionary:
 	return save_data
 
 func load_save_data(data: Dictionary):
-	"""Load player save data"""
+# Load player save data
 	if data.has("position"):
 		var pos = data.position
 		global_position = Vector2(pos.x, pos.y)
@@ -412,16 +412,16 @@ func load_save_data(data: Dictionary):
 
 # Debug methods
 func debug_heal_full():
-	"""Debug: Heal to full"""
+# Debug: Heal to full
 	heal(max_health)
 	current_stamina = max_stamina
 	stamina_changed.emit(current_stamina, max_stamina)
 
 func debug_damage(amount: int):
-	"""Debug: Take specific damage"""
+# Debug: Take specific damage
 	take_damage(amount)
 
 func debug_teleport(target_position: Vector2):
-	"""Debug: Teleport to position"""
+# Debug: Teleport to position
 	global_position = target_position
 	position_changed.emit(global_position)

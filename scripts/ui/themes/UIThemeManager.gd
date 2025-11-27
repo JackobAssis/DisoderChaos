@@ -1,17 +1,17 @@
-class_name UIThemeManager
+﻿class_name UIThemeManager
 extends Resource
 
-## Gerenciador de temas para UI dark fantasy/tecnológica
+## Gerenciador de temas para UI dark fantasy/tecnolÃ³gica
 ## Centraliza todas as cores, fontes e estilos do jogo
 
 # === CORES DA PALETA ===
 class Colors:
-	# Cores primárias - Dark Fantasy
+	# Cores primÃ¡rias - Dark Fantasy
 	const PRIMARY_DARK = Color(0.102, 0.102, 0.180)  # #1a1a2e
 	const PRIMARY_NAVY = Color(0.086, 0.129, 0.243)  # #16213e
 	const PRIMARY_BLUE = Color(0.059, 0.204, 0.376)  # #0f3460
 	
-	# Cores secundárias - Tecnológico
+	# Cores secundÃ¡rias - TecnolÃ³gico
 	const CYBER_CYAN = Color(0.0, 0.831, 1.0)        # #00d4ff
 	const TECH_ORANGE = Color(1.0, 0.420, 0.208)     # #ff6b35
 	
@@ -54,7 +54,7 @@ class Styles:
 	const SHADOW_BLUR = 8
 	const GLOW_SIZE = 6
 	
-	# Animações
+	# AnimaÃ§Ãµes
 	const FADE_DURATION = 0.3
 	const SLIDE_DURATION = 0.4
 	const HOVER_DURATION = 0.2
@@ -69,7 +69,7 @@ class Fonts:
 	const LARGE_SIZE = 32
 
 static func get_color(color_name: String) -> Color:
-	"""Retorna cor por nome para facilitar uso em scripts"""
+# Retorna cor por nome para facilitar uso em scripts
 	match color_name:
 		"primary_dark": return Colors.PRIMARY_DARK
 		"primary_navy": return Colors.PRIMARY_NAVY
@@ -96,7 +96,7 @@ static func create_button_style(
 	pressed_color: Color,
 	border_color: Color = Colors.CYBER_CYAN
 ) -> StyleBoxFlat:
-	"""Cria estilo padrão para botões"""
+# Cria estilo padrÃ£o para botÃµes
 	var style = StyleBoxFlat.new()
 	style.bg_color = normal_color
 	style.border_width_left = Styles.BORDER_WIDTH
@@ -115,7 +115,7 @@ static func create_panel_style(
 	bg_color: Color = Colors.BG_PANEL,
 	border_color: Color = Colors.CYBER_CYAN
 ) -> StyleBoxFlat:
-	"""Cria estilo padrão para painéis"""
+# Cria estilo padrÃ£o para painÃ©is
 	var style = StyleBoxFlat.new()
 	style.bg_color = bg_color
 	style.border_width_left = Styles.BORDER_WIDTH
@@ -134,7 +134,7 @@ static func create_progress_bar_style(
 	fill_color: Color,
 	background_color: Color = Colors.PRIMARY_DARK
 ) -> StyleBoxFlat:
-	"""Cria estilo para barras de progresso (HP, Mana, etc.)"""
+# Cria estilo para barras de progresso (HP, Mana, etc.)
 	var style = StyleBoxFlat.new()
 	style.bg_color = fill_color
 	style.border_width_left = 1
@@ -150,19 +150,19 @@ static func create_progress_bar_style(
 	return style
 
 static func apply_glow_effect(node: Control, color: Color = Colors.CYBER_CYAN):
-	"""Aplica efeito de brilho em um node"""
-	# Implementação de efeito glow via shader ou modulate
+# Aplica efeito de brilho em um node
+	# ImplementaÃ§Ã£o de efeito glow via shader ou modulate
 	var tween = node.create_tween()
 	tween.set_loops()
 	tween.tween_property(node, "modulate", color * 1.2, 1.0)
 	tween.tween_property(node, "modulate", color, 1.0)
 
 static func animate_scale_hover(node: Control):
-	"""Animação de escala no hover"""
+# AnimaÃ§Ã£o de escala no hover
 	var tween = node.create_tween()
 	tween.tween_property(node, "scale", Vector2.ONE * Styles.SCALE_HOVER, Styles.HOVER_DURATION)
 
 static func animate_scale_normal(node: Control):
-	"""Volta escala normal"""
+# Volta escala normal
 	var tween = node.create_tween()
 	tween.tween_property(node, "scale", Vector2.ONE, Styles.HOVER_DURATION)

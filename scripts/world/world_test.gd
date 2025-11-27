@@ -1,4 +1,4 @@
-extends Node2D
+﻿extends Node2D
 # world_test.gd - Test world scene with player and dungeon integration
 
 var player: PlayerController
@@ -13,7 +13,7 @@ func _ready():
 	setup_hud()
 
 func setup_world():
-	"""Setup world environment"""
+# Setup world environment
 	# Create world boundaries
 	create_world_boundaries()
 	
@@ -21,7 +21,7 @@ func setup_world():
 	setup_camera()
 
 func create_world_boundaries():
-	"""Create invisible boundaries for the world"""
+# Create invisible boundaries for the world
 	var boundary_thickness = 50
 	var world_size = Vector2(1000, 800)
 	
@@ -42,7 +42,7 @@ func create_world_boundaries():
 					Vector2(boundary_thickness, world_size.y + boundary_thickness * 2))
 
 func create_boundary(pos: Vector2, size: Vector2):
-	"""Create a single boundary wall"""
+# Create a single boundary wall
 	var boundary = StaticBody2D.new()
 	var collision = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
@@ -56,7 +56,7 @@ func create_boundary(pos: Vector2, size: Vector2):
 	add_child(boundary)
 
 func setup_camera():
-	"""Setup camera to follow player"""
+# Setup camera to follow player
 	var camera = Camera2D.new()
 	camera.enabled = true
 	camera.zoom = Vector2(1.2, 1.2)  # Slight zoom for better view
@@ -65,7 +65,7 @@ func setup_camera():
 	# Camera will be attached to player when spawned
 
 func spawn_player():
-	"""Spawn the player in the world"""
+# Spawn the player in the world
 	var player_scene = preload("res://scenes/player/Player.tscn")
 	player = player_scene.instantiate()
 	player.position = Vector2(100, 100)  # Starting position
@@ -78,7 +78,7 @@ func spawn_player():
 		camera.reparent(player)
 
 func setup_dungeon():
-	"""Setup the initial dungeon"""
+# Setup the initial dungeon
 	var dungeon_scene = preload("res://scenes/dungeons/DungeonBase.tscn")
 	dungeon = dungeon_scene.instantiate()
 	dungeon.position = Vector2.ZERO
@@ -89,7 +89,7 @@ func setup_dungeon():
 	dungeon.load_dungeon(starting_dungeon)
 
 func setup_hud():
-	"""Setup the game HUD"""
+# Setup the game HUD
 	hud = preload("res://scenes/ui/GameHUD.tscn").instantiate()
 	add_child(hud)
 	
@@ -97,13 +97,13 @@ func setup_hud():
 	move_child(hud, get_child_count() - 1)
 
 func _input(event):
-	"""Handle world-level input"""
+# Handle world-level input
 	if event.is_action_pressed("ui_cancel"):
 		# Show pause menu or return to main menu
 		show_pause_menu()
 
 func show_pause_menu():
-	"""Show pause menu"""
+# Show pause menu
 	# TODO: Implement proper pause menu
 	print("[WorldTest] Pause menu requested")
 

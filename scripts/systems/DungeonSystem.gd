@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name DungeonSystem
 
@@ -38,7 +38,7 @@ func _ready():
 	print("[DungeonSystem] Sistema de Dungeons inicializado")
 
 func setup_dungeon_system():
-	"""Initialize dungeon system and load fragment map"""
+# Initialize dungeon system and load fragment map
 	# Wait for data to be loaded
 	if not data_loader.is_fully_loaded():
 		await data_loader.all_data_loaded
@@ -47,13 +47,13 @@ func setup_dungeon_system():
 	load_player_progress()
 
 func connect_events():
-	"""Connect to relevant game events"""
+# Connect to relevant game events
 	event_bus.connect("player_moved", _on_player_moved)
 	event_bus.connect("entity_spawned", _on_entity_spawned)
 	event_bus.connect("entity_destroyed", _on_entity_destroyed)
 
 func build_fragment_map():
-	"""Build the fragment connection map from dungeon data"""
+# Build the fragment connection map from dungeon data
 	var dungeons_data = data_loader.get_all_dungeons()
 	
 	for dungeon_id in dungeons_data.keys():
@@ -69,7 +69,7 @@ func build_fragment_map():
 	print("[DungeonSystem] Fragment map built with %d dungeons" % fragment_map.size())
 
 func load_player_progress():
-	"""Load player's dungeon discovery progress"""
+# Load player's dungeon discovery progress
 	var save_data = game_state.get_dungeon_progress()
 	
 	if save_data.has("discovered_fragments"):
@@ -86,18 +86,18 @@ func load_player_progress():
 	print("[DungeonSystem] Loaded progress: %d discovered, %d unlocked" % [discovered_fragments.size(), unlocked_connections.size()])
 
 func load_dungeon(dungeon_id: String) -> bool:
-	"""Load a specific dungeon by ID"""
+# Load a specific dungeon by ID
 	print("[DungeonSystem] Loading dungeon: %s" % dungeon_id)
 	
 	# Check if dungeon exists
 	var dungeon_data = data_loader.get_dungeon(dungeon_id)
 	if not dungeon_data:
-		print("[DungeonSystem] ❌ Dungeon not found: %s" % dungeon_id)
+		print("[DungeonSystem] âŒ Dungeon not found: %s" % dungeon_id)
 		return false
 	
 	# Check entry requirements
 	if not check_entry_requirements(dungeon_id, dungeon_data):
-		print("[DungeonSystem] ❌ Entry requirements not met for: %s" % dungeon_id)
+		print("[DungeonSystem] âŒ Entry requirements not met for: %s" % dungeon_id)
 		return false
 	
 	# Unload current dungeon if any
@@ -107,7 +107,7 @@ func load_dungeon(dungeon_id: String) -> bool:
 	# Create dungeon instance
 	var dungeon_instance = create_dungeon_instance(dungeon_data)
 	if not dungeon_instance:
-		print("[DungeonSystem] ❌ Failed to create dungeon instance: %s" % dungeon_id)
+		print("[DungeonSystem] âŒ Failed to create dungeon instance: %s" % dungeon_id)
 		return false
 	
 	# Set as current dungeon
@@ -129,11 +129,11 @@ func load_dungeon(dungeon_id: String) -> bool:
 	dungeon_loaded.emit(dungeon_id)
 	player_entered_dungeon.emit(dungeon_id)
 	
-	print("[DungeonSystem] ✅ Dungeon loaded successfully: %s" % dungeon_id)
+	print("[DungeonSystem] âœ… Dungeon loaded successfully: %s" % dungeon_id)
 	return true
 
 func create_dungeon_instance(dungeon_data: Dictionary) -> Node2D:
-	"""Create a dungeon instance from data"""
+# Create a dungeon instance from data
 	var dungeon_scene = Node2D.new()
 	dungeon_scene.name = "Dungeon_" + dungeon_data.id
 	
@@ -158,7 +158,7 @@ func create_dungeon_instance(dungeon_data: Dictionary) -> Node2D:
 	return dungeon_scene
 
 func create_terrain_layer(dungeon_data: Dictionary) -> Node2D:
-	"""Create terrain from dungeon data"""
+# Create terrain from dungeon data
 	var terrain_layer = Node2D.new()
 	terrain_layer.name = "TerrainLayer"
 	
@@ -178,7 +178,7 @@ func create_terrain_layer(dungeon_data: Dictionary) -> Node2D:
 	return terrain_layer
 
 func create_terrain_tile(terrain_data: Dictionary, x: int, y: int, tile_size: int) -> Node2D:
-	"""Create individual terrain tile"""
+# Create individual terrain tile
 	var tile_type = get_tile_type(terrain_data, x, y)
 	
 	if tile_type == "empty":
@@ -204,7 +204,7 @@ func create_terrain_tile(terrain_data: Dictionary, x: int, y: int, tile_size: in
 	return tile
 
 func get_tile_type(terrain_data: Dictionary, x: int, y: int) -> String:
-	"""Get tile type at position"""
+# Get tile type at position
 	var tiles = terrain_data.get("tiles", [])
 	
 	# Simple pattern for now - can be enhanced with actual tile maps
@@ -214,7 +214,7 @@ func get_tile_type(terrain_data: Dictionary, x: int, y: int) -> String:
 		return "floor"
 
 func get_tile_texture(tile_type: String) -> Texture2D:
-	"""Get texture for tile type"""
+# Get texture for tile type
 	match tile_type:
 		"wall":
 			return create_placeholder_texture(Color.GRAY)
@@ -228,7 +228,7 @@ func get_tile_texture(tile_type: String) -> Texture2D:
 			return create_placeholder_texture(Color.WHITE)
 
 func create_placeholder_texture(color: Color) -> ImageTexture:
-	"""Create a placeholder texture with given color"""
+# Create a placeholder texture with given color
 	var image = Image.create(32, 32, false, Image.FORMAT_RGB8)
 	image.fill(color)
 	var texture = ImageTexture.new()
@@ -236,11 +236,11 @@ func create_placeholder_texture(color: Color) -> ImageTexture:
 	return texture
 
 func is_tile_solid(tile_type: String) -> bool:
-	"""Check if tile type is solid"""
+# Check if tile type is solid
 	return tile_type in ["wall", "rock", "tree"]
 
 func create_decoration_layer(dungeon_data: Dictionary) -> Node2D:
-	"""Create decorative elements"""
+# Create decorative elements
 	var decoration_layer = Node2D.new()
 	decoration_layer.name = "DecorationLayer"
 	
@@ -254,7 +254,7 @@ func create_decoration_layer(dungeon_data: Dictionary) -> Node2D:
 	return decoration_layer
 
 func create_decoration(decoration_data: Dictionary) -> Node2D:
-	"""Create individual decoration object"""
+# Create individual decoration object
 	var decoration = Node2D.new()
 	decoration.name = decoration_data.get("name", "Decoration")
 	
@@ -268,7 +268,7 @@ func create_decoration(decoration_data: Dictionary) -> Node2D:
 	return decoration
 
 func setup_dungeon_environment(dungeon_data: Dictionary):
-	"""Setup environmental effects and lighting"""
+# Setup environmental effects and lighting
 	var environment = dungeon_data.get("environment", {})
 	
 	# Lighting
@@ -285,7 +285,7 @@ func setup_dungeon_environment(dungeon_data: Dictionary):
 		setup_ambient_sound(ambient)
 
 func setup_dungeon_lighting(lighting_type: String):
-	"""Setup dungeon lighting"""
+# Setup dungeon lighting
 	# This would integrate with a lighting system
 	match lighting_type:
 		"dark":
@@ -298,7 +298,7 @@ func setup_dungeon_lighting(lighting_type: String):
 			print("[DungeonSystem] Setting up normal lighting")
 
 func setup_climate_effects(climate_type: String):
-	"""Setup climate effects"""
+# Setup climate effects
 	# This would integrate with the climate system
 	match climate_type:
 		"cold":
@@ -311,11 +311,11 @@ func setup_climate_effects(climate_type: String):
 			print("[DungeonSystem] Normal climate")
 
 func setup_ambient_sound(sound_id: String):
-	"""Setup ambient sounds"""
+# Setup ambient sounds
 	print("[DungeonSystem] Setting up ambient sound: %s" % sound_id)
 
 func setup_dungeon_spawners(dungeon_data: Dictionary):
-	"""Setup enemy and item spawners"""
+# Setup enemy and item spawners
 	var spawners = dungeon_data.get("spawners", [])
 	active_spawners.clear()
 	
@@ -326,7 +326,7 @@ func setup_dungeon_spawners(dungeon_data: Dictionary):
 			current_dungeon_scene.get_node("EntityLayer").add_child(spawner)
 
 func create_spawner(spawner_data: Dictionary) -> Node2D:
-	"""Create an entity spawner"""
+# Create an entity spawner
 	var spawner = Node2D.new()
 	spawner.name = "Spawner_" + spawner_data.get("type", "generic")
 	
@@ -339,7 +339,7 @@ func create_spawner(spawner_data: Dictionary) -> Node2D:
 	return spawner
 
 func setup_dungeon_exits(dungeon_data: Dictionary):
-	"""Setup exits and connections to other dungeons"""
+# Setup exits and connections to other dungeons
 	var exits = dungeon_data.get("exits", [])
 	
 	for exit_data in exits:
@@ -348,7 +348,7 @@ func setup_dungeon_exits(dungeon_data: Dictionary):
 			current_dungeon_scene.get_node("EntityLayer").add_child(exit_portal)
 
 func create_exit_portal(exit_data: Dictionary) -> Area2D:
-	"""Create an exit portal to another dungeon"""
+# Create an exit portal to another dungeon
 	var portal = Area2D.new()
 	portal.name = "ExitPortal_" + exit_data.get("destination", "unknown")
 	
@@ -374,7 +374,7 @@ func create_exit_portal(exit_data: Dictionary) -> Area2D:
 	return portal
 
 func check_entry_requirements(dungeon_id: String, dungeon_data: Dictionary) -> bool:
-	"""Check if player meets dungeon entry requirements"""
+# Check if player meets dungeon entry requirements
 	var requirements = dungeon_data.get("entry_requirements", {})
 	
 	# Level requirement
@@ -401,7 +401,7 @@ func check_entry_requirements(dungeon_id: String, dungeon_data: Dictionary) -> b
 	return true
 
 func discover_fragment(fragment_id: String):
-	"""Mark a fragment as discovered"""
+# Mark a fragment as discovered
 	if fragment_id in discovered_fragments:
 		return
 	
@@ -416,7 +416,7 @@ func discover_fragment(fragment_id: String):
 	print("[DungeonSystem] Fragment discovered: %s" % fragment_id)
 
 func unlock_connection(from_fragment: String, to_fragment: String):
-	"""Unlock connection between fragments"""
+# Unlock connection between fragments
 	var connection_key = from_fragment + "->" + to_fragment
 	unlocked_connections[connection_key] = true
 	
@@ -424,7 +424,7 @@ func unlock_connection(from_fragment: String, to_fragment: String):
 	print("[DungeonSystem] Connection unlocked: %s" % connection_key)
 
 func unload_current_dungeon():
-	"""Unload the currently loaded dungeon"""
+# Unload the currently loaded dungeon
 	if not current_dungeon_scene:
 		return
 	
@@ -444,7 +444,7 @@ func unload_current_dungeon():
 	current_dungeon = {}
 
 func cleanup_dungeon_systems():
-	"""Cleanup dungeon-specific systems"""
+# Cleanup dungeon-specific systems
 	# Clear spawners
 	active_spawners.clear()
 	
@@ -456,22 +456,22 @@ func cleanup_dungeon_systems():
 
 # Event handlers
 func _on_player_moved(new_position: Vector2):
-	"""Handle player movement within dungeon"""
+# Handle player movement within dungeon
 	# This could trigger area-based events, spawns, etc.
 	pass
 
 func _on_entity_spawned(entity_id: String):
-	"""Handle entity spawn in dungeon"""
+# Handle entity spawn in dungeon
 	dungeon_entities.append(entity_id)
 
 func _on_entity_destroyed(entity_id: String):
-	"""Handle entity destruction in dungeon"""
+# Handle entity destruction in dungeon
 	var index = dungeon_entities.find(entity_id)
 	if index >= 0:
 		dungeon_entities.remove_at(index)
 
 func _on_exit_portal_entered(exit_data: Dictionary, body: Node2D):
-	"""Handle player entering exit portal"""
+# Handle player entering exit portal
 	if body.name == "Player" or body.has_method("is_player"):
 		var destination = exit_data.get("destination", "")
 		if destination != "":
@@ -480,15 +480,15 @@ func _on_exit_portal_entered(exit_data: Dictionary, body: Node2D):
 
 # Fragment map and connections
 func get_fragment_map() -> Dictionary:
-	"""Get the complete fragment map"""
+# Get the complete fragment map
 	return fragment_map
 
 func get_discovered_fragments() -> Array:
-	"""Get list of discovered fragments"""
+# Get list of discovered fragments
 	return discovered_fragments
 
 func get_available_connections(fragment_id: String) -> Array:
-	"""Get available connections from a fragment"""
+# Get available connections from a fragment
 	if not fragment_map.has(fragment_id):
 		return []
 	
@@ -503,13 +503,13 @@ func get_available_connections(fragment_id: String) -> Array:
 	return available
 
 func is_connection_unlocked(from_fragment: String, to_fragment: String) -> bool:
-	"""Check if connection between fragments is unlocked"""
+# Check if connection between fragments is unlocked
 	var connection_key = from_fragment + "->" + to_fragment
 	return unlocked_connections.get(connection_key, false)
 
 # Save/Load
 func save_progress():
-	"""Save dungeon progress"""
+# Save dungeon progress
 	var save_data = {
 		"discovered_fragments": discovered_fragments,
 		"unlocked_connections": unlocked_connections,
@@ -519,7 +519,7 @@ func save_progress():
 	game_state.save_dungeon_progress(save_data)
 
 func get_save_data() -> Dictionary:
-	"""Get dungeon system save data"""
+# Get dungeon system save data
 	return {
 		"current_dungeon_id": current_dungeon_id,
 		"discovered_fragments": discovered_fragments,
@@ -528,7 +528,7 @@ func get_save_data() -> Dictionary:
 	}
 
 func load_save_data(data: Dictionary):
-	"""Load dungeon system save data"""
+# Load dungeon system save data
 	if data.has("discovered_fragments"):
 		discovered_fragments = data.discovered_fragments
 	
@@ -544,26 +544,26 @@ func load_save_data(data: Dictionary):
 
 # Utility functions
 func get_current_dungeon_id() -> String:
-	"""Get current dungeon ID"""
+# Get current dungeon ID
 	return current_dungeon_id
 
 func is_in_dungeon() -> bool:
-	"""Check if player is currently in a dungeon"""
+# Check if player is currently in a dungeon
 	return current_dungeon_scene != null
 
 func get_dungeon_entities() -> Array:
-	"""Get all entities in current dungeon"""
+# Get all entities in current dungeon
 	return dungeon_entities
 
 # Debug functions
 func debug_unlock_all_fragments():
-	"""Debug: Unlock all fragments"""
+# Debug: Unlock all fragments
 	var all_dungeons = data_loader.get_all_dungeons()
 	for dungeon_id in all_dungeons.keys():
 		discover_fragment(dungeon_id)
 
 func debug_print_fragment_map():
-	"""Debug: Print fragment map"""
+# Debug: Print fragment map
 	print("[DungeonSystem] Fragment Map:")
 	for fragment_id in fragment_map.keys():
 		var fragment = fragment_map[fragment_id]

@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name QuestSystem
 
@@ -64,7 +64,7 @@ func _ready():
 	print("[QuestSystem] Sistema de Quests inicializado")
 
 func setup_quest_system():
-	"""Initialize quest system"""
+# Initialize quest system
 	# Wait for data to be loaded
 	if not data_loader.is_fully_loaded():
 		await data_loader.all_data_loaded
@@ -73,7 +73,7 @@ func setup_quest_system():
 	update_available_quests()
 
 func connect_events():
-	"""Connect to game events for quest tracking"""
+# Connect to game events for quest tracking
 	# Combat events
 	event_bus.connect("enemy_defeated", _on_enemy_defeated)
 	event_bus.connect("boss_defeated", _on_boss_defeated)
@@ -97,12 +97,12 @@ func connect_events():
 	event_bus.connect("object_interacted", _on_object_interacted)
 
 func load_all_quests():
-	"""Load all quest data"""
+# Load all quest data
 	all_quests = data_loader.get_all_quests()
 	print("[QuestSystem] Carregadas %d quests" % all_quests.size())
 
 func update_available_quests():
-	"""Update list of available quests based on requirements"""
+# Update list of available quests based on requirements
 	available_quests.clear()
 	
 	for quest_id in all_quests.keys():
@@ -111,7 +111,7 @@ func update_available_quests():
 			quest_available.emit(quest_id)
 
 func is_quest_available(quest_id: String) -> bool:
-	"""Check if quest is available to start"""
+# Check if quest is available to start
 	# Skip if already active, completed, or failed
 	if quest_id in active_quests or quest_id in completed_quests:
 		return false
@@ -159,18 +159,18 @@ func is_quest_available(quest_id: String) -> bool:
 	return true
 
 func start_quest(quest_id: String, quest_giver_id: String = "") -> bool:
-	"""Start a quest"""
+# Start a quest
 	if quest_id in active_quests:
-		print("[QuestSystem] Quest já está ativa: %s" % quest_id)
+		print("[QuestSystem] Quest jÃ¡ estÃ¡ ativa: %s" % quest_id)
 		return false
 	
 	if not is_quest_available(quest_id):
-		print("[QuestSystem] Quest não disponível: %s" % quest_id)
+		print("[QuestSystem] Quest nÃ£o disponÃ­vel: %s" % quest_id)
 		return false
 	
 	var quest_data = all_quests.get(quest_id, {})
 	if quest_data.is_empty():
-		print("[QuestSystem] Quest não encontrada: %s" % quest_id)
+		print("[QuestSystem] Quest nÃ£o encontrada: %s" % quest_id)
 		return false
 	
 	# Initialize quest
@@ -201,7 +201,7 @@ func start_quest(quest_id: String, quest_giver_id: String = "") -> bool:
 	return true
 
 func initialize_quest_objectives(quest_id: String, quest_data: Dictionary):
-	"""Initialize quest objectives tracking"""
+# Initialize quest objectives tracking
 	if not quest_data.has("objectives"):
 		return
 	
@@ -216,7 +216,7 @@ func initialize_quest_objectives(quest_id: String, quest_data: Dictionary):
 		}
 
 func setup_quest_timer(quest_id: String, quest_data: Dictionary):
-	"""Setup quest timer if quest is time-limited"""
+# Setup quest timer if quest is time-limited
 	if not quest_data.has("time_limit"):
 		return
 	
@@ -238,7 +238,7 @@ func setup_quest_timer(quest_id: String, quest_data: Dictionary):
 	quest_timers[quest_id].timer = timer
 
 func consume_quest_requirements(quest_data: Dictionary):
-	"""Consume items required to start quest"""
+# Consume items required to start quest
 	var requirements = quest_data.get("requirements", {})
 	
 	if requirements.has("consumed_items"):
@@ -248,7 +248,7 @@ func consume_quest_requirements(quest_data: Dictionary):
 			game_state.remove_item_from_inventory(item_id, count)
 
 func update_quest_objective(quest_id: String, objective_type: ObjectiveType, target_data: Dictionary):
-	"""Update quest objective progress"""
+# Update quest objective progress
 	if not active_quests.has(quest_id):
 		return
 	
@@ -264,7 +264,7 @@ func update_quest_objective(quest_id: String, objective_type: ObjectiveType, tar
 			update_objective_progress(quest_id, objective_id, objective, target_data)
 
 func matches_objective(objective: Dictionary, objective_type: ObjectiveType, target_data: Dictionary) -> bool:
-	"""Check if target matches objective"""
+# Check if target matches objective
 	var obj_type = get_objective_type(objective.get("type", ""))
 	
 	if obj_type != objective_type:
@@ -315,7 +315,7 @@ func matches_objective(objective: Dictionary, objective_type: ObjectiveType, tar
 			return false
 
 func get_objective_type(type_string: String) -> ObjectiveType:
-	"""Convert string to ObjectiveType enum"""
+# Convert string to ObjectiveType enum
 	match type_string.to_lower():
 		"kill":
 			return ObjectiveType.KILL
@@ -337,7 +337,7 @@ func get_objective_type(type_string: String) -> ObjectiveType:
 			return ObjectiveType.CUSTOM
 
 func update_objective_progress(quest_id: String, objective_id: String, objective: Dictionary, target_data: Dictionary):
-	"""Update progress for specific objective"""
+# Update progress for specific objective
 	var progress_data = objective_progress[quest_id][objective_id]
 	
 	if progress_data.completed:
@@ -358,7 +358,7 @@ func update_objective_progress(quest_id: String, objective_id: String, objective
 	check_quest_completion(quest_id)
 
 func check_custom_objective(objective: Dictionary, target_data: Dictionary) -> bool:
-	"""Check custom objective conditions"""
+# Check custom objective conditions
 	var condition = objective.get("condition", "")
 	
 	match condition:
@@ -383,7 +383,7 @@ func check_custom_objective(objective: Dictionary, target_data: Dictionary) -> b
 			return false
 
 func check_quest_completion(quest_id: String):
-	"""Check if all quest objectives are completed"""
+# Check if all quest objectives are completed
 	if not objective_progress.has(quest_id):
 		return
 	
@@ -397,7 +397,7 @@ func check_quest_completion(quest_id: String):
 		complete_quest(quest_id)
 
 func complete_quest(quest_id: String):
-	"""Complete a quest"""
+# Complete a quest
 	if not active_quests.has(quest_id):
 		return
 	
@@ -423,7 +423,7 @@ func complete_quest(quest_id: String):
 	update_available_quests()
 
 func fail_quest(quest_id: String, reason: String = ""):
-	"""Fail a quest"""
+# Fail a quest
 	if not active_quests.has(quest_id):
 		return
 	
@@ -449,13 +449,13 @@ func fail_quest(quest_id: String, reason: String = ""):
 	print("[QuestSystem] Quest falhada: %s (%s)" % [quest_id, reason])
 
 func turn_in_quest(quest_id: String, npc_id: String = "") -> Dictionary:
-	"""Turn in a completed quest for rewards"""
+# Turn in a completed quest for rewards
 	if not active_quests.has(quest_id):
 		return {}
 	
 	var quest_instance = active_quests[quest_id]
 	if quest_instance.state != QuestState.COMPLETED:
-		print("[QuestSystem] Quest não completada: %s" % quest_id)
+		print("[QuestSystem] Quest nÃ£o completada: %s" % quest_id)
 		return {}
 	
 	var quest_data = quest_instance.data
@@ -491,7 +491,7 @@ func turn_in_quest(quest_id: String, npc_id: String = "") -> Dictionary:
 	return awarded_rewards
 
 func award_quest_rewards(rewards: Dictionary) -> Dictionary:
-	"""Award quest rewards to player"""
+# Award quest rewards to player
 	var awarded = {}
 	
 	# Experience
@@ -526,7 +526,7 @@ func award_quest_rewards(rewards: Dictionary) -> Dictionary:
 	return awarded
 
 func cleanup_quest_timer(quest_id: String):
-	"""Clean up quest timer"""
+# Clean up quest timer
 	if quest_timers.has(quest_id):
 		var timer_data = quest_timers[quest_id]
 		if timer_data.timer:
@@ -535,52 +535,52 @@ func cleanup_quest_timer(quest_id: String):
 
 # Event handlers for quest tracking
 func _on_enemy_defeated(enemy_id: String, position: Vector2, player_level: int):
-	"""Track enemy defeats for kill objectives"""
+# Track enemy defeats for kill objectives
 	update_quest_objective(ObjectiveType.KILL, {"enemy_id": enemy_id, "amount": 1})
 
 func _on_boss_defeated(boss_id: String, position: Vector2, player_level: int):
-	"""Track boss defeats for kill objectives"""
+# Track boss defeats for kill objectives
 	update_quest_objective(ObjectiveType.KILL, {"enemy_id": boss_id, "amount": 1})
 
 func _on_item_collected(item_id: String, quantity: int):
-	"""Track item collection for collect objectives"""
+# Track item collection for collect objectives
 	update_quest_objective(ObjectiveType.COLLECT, {"item_id": item_id, "amount": quantity})
 
 func _on_item_crafted(item_id: String, quantity: int):
-	"""Track item crafting for craft objectives"""
+# Track item crafting for craft objectives
 	update_quest_objective(ObjectiveType.CRAFT_ITEM, {"item_id": item_id, "amount": quantity})
 
 func _on_npc_talked(npc_id: String):
-	"""Track NPC conversations for talk objectives"""
+# Track NPC conversations for talk objectives
 	update_quest_objective(ObjectiveType.TALK_TO_NPC, {"npc_id": npc_id, "amount": 1})
 
 func _on_dialogue_completed(npc_id: String, dialogue_id: String):
-	"""Track dialogue completion for talk objectives"""
+# Track dialogue completion for talk objectives
 	update_quest_objective(ObjectiveType.TALK_TO_NPC, {"npc_id": npc_id, "amount": 1})
 
 func _on_area_entered(area_id: String):
-	"""Track area entry for reach objectives"""
+# Track area entry for reach objectives
 	update_quest_objective(ObjectiveType.REACH_AREA, {"area_id": area_id, "amount": 1})
 
 func _on_location_discovered(location_id: String):
-	"""Track location discovery for reach objectives"""
+# Track location discovery for reach objectives
 	update_quest_objective(ObjectiveType.REACH_AREA, {"area_id": location_id, "amount": 1})
 
 func _on_player_level_changed(new_level: int):
-	"""Track level changes for level objectives"""
+# Track level changes for level objectives
 	update_quest_objective(ObjectiveType.LEVEL_UP, {"level": new_level, "amount": 1})
 
 func _on_object_interacted(object_id: String):
-	"""Track object interactions for interact objectives"""
+# Track object interactions for interact objectives
 	update_quest_objective(ObjectiveType.INTERACT, {"object_id": object_id, "amount": 1})
 
 func _on_quest_timer_expired(quest_id: String):
-	"""Handle quest timer expiration"""
+# Handle quest timer expiration
 	fail_quest(quest_id, "Time limit exceeded")
 
 # Utility functions
 func get_quest_progress(quest_id: String) -> Dictionary:
-	"""Get progress for specific quest"""
+# Get progress for specific quest
 	if not objective_progress.has(quest_id):
 		return {}
 	
@@ -597,7 +597,7 @@ func get_quest_progress(quest_id: String) -> Dictionary:
 	return progress
 
 func get_quest_by_category(category: String) -> Array:
-	"""Get quests by category"""
+# Get quests by category
 	var quests = []
 	
 	for quest_id in all_quests.keys():
@@ -608,7 +608,7 @@ func get_quest_by_category(category: String) -> Array:
 	return quests
 
 func get_active_quests_summary() -> Array:
-	"""Get summary of all active quests"""
+# Get summary of all active quests
 	var summary = []
 	
 	for quest_id in active_quests.keys():
@@ -628,15 +628,15 @@ func get_active_quests_summary() -> Array:
 	return summary
 
 func is_quest_completed(quest_id: String) -> bool:
-	"""Check if quest is completed"""
+# Check if quest is completed
 	return quest_id in completed_quests
 
 func is_quest_active(quest_id: String) -> bool:
-	"""Check if quest is active"""
+# Check if quest is active
 	return quest_id in active_quests
 
 func get_completed_quest_count() -> int:
-	"""Get number of completed quests"""
+# Get number of completed quests
 	return completed_quests.size()
 
 # Save/Load
@@ -651,7 +651,7 @@ func get_save_data() -> Dictionary:
 	}
 
 func serialize_active_quests() -> Dictionary:
-	"""Serialize active quests for saving"""
+# Serialize active quests for saving
 	var serialized = {}
 	
 	for quest_id in active_quests.keys():
@@ -667,7 +667,7 @@ func serialize_active_quests() -> Dictionary:
 	return serialized
 
 func serialize_quest_timers() -> Dictionary:
-	"""Serialize quest timers for saving"""
+# Serialize quest timers for saving
 	var serialized = {}
 	
 	for quest_id in quest_timers.keys():
@@ -680,7 +680,7 @@ func serialize_quest_timers() -> Dictionary:
 	return serialized
 
 func load_save_data(data: Dictionary):
-	"""Load quest save data"""
+# Load quest save data
 	completed_quests = data.get("completed_quests", [])
 	failed_quests = data.get("failed_quests", [])
 	turned_in_quests = data.get("turned_in_quests", [])
@@ -717,7 +717,7 @@ func load_save_data(data: Dictionary):
 	print("[QuestSystem] Dados de quest carregados")
 
 func restore_quest_timer(quest_id: String, timer_data: Dictionary):
-	"""Restore quest timer from save data"""
+# Restore quest timer from save data
 	var duration = timer_data.get("duration", 0)
 	var start_time = timer_data.get("start_time", {})
 	
@@ -747,24 +747,24 @@ func restore_quest_timer(quest_id: String, timer_data: Dictionary):
 		fail_quest(quest_id, "Time limit exceeded")
 
 func calculate_time_difference(start_time: Dictionary, end_time: Dictionary) -> float:
-	"""Calculate time difference in seconds"""
+# Calculate time difference in seconds
 	var start_unix = Time.get_unix_time_from_datetime_dict(start_time)
 	var end_unix = Time.get_unix_time_from_datetime_dict(end_time)
 	return end_unix - start_unix
 
 # Debug functions
 func debug_start_quest(quest_id: String):
-	"""Debug: Start quest without requirements"""
+# Debug: Start quest without requirements
 	if all_quests.has(quest_id):
 		start_quest(quest_id, "debug")
 
 func debug_complete_quest(quest_id: String):
-	"""Debug: Force complete quest"""
+# Debug: Force complete quest
 	if active_quests.has(quest_id):
 		complete_quest(quest_id)
 
 func debug_add_quest_progress(quest_id: String, objective_id: String, amount: int):
-	"""Debug: Add progress to quest objective"""
+# Debug: Add progress to quest objective
 	if objective_progress.has(quest_id) and objective_progress[quest_id].has(objective_id):
 		var progress_data = objective_progress[quest_id][objective_id]
 		progress_data.current = min(progress_data.current + amount, progress_data.target)

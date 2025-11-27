@@ -2,6 +2,16 @@
 
 A modular RPG/Action game built with Godot 4.x, featuring dynamic dungeons, character progression, and an expandable architecture.
 
+## 🚀 Execução Rápida
+
+```powershell
+# Abrir no editor Godot
+godot4.exe -e -p "d:\Arquivos DEV\DisoderChaos"
+
+# Rodar o jogo diretamente
+godot4.exe -p "d:\Arquivos DEV\DisoderChaos"
+```
+
 ## 🎯 Game Overview
 
 Disorder Chaos is a top-down RPG with action elements where players explore interconnected dungeons, fight enemies, collect loot, and progress their character. The game features a modular design that makes it easy to add new content, mechanics, and systems.
@@ -243,11 +253,74 @@ All game content is defined in JSON files, making it easy to:
 - Performance optimization for larger worlds
 - Visual effects and animation improvements
 
+## 🧪 Checklist de Validação
+
+### Main Menu
+- [ ] Main Menu inicia e mostra opções (Novo Jogo, Carregar, Opções, Créditos, Sair)
+- [ ] Botões respondem a hover e click com feedback visual/sonoro
+- [ ] Carregar Jogo abre UI de slots de save
+
+### In-Game
+- [ ] Novo Jogo entra na cena principal com HUD ativo
+- [ ] Movimento WASD funciona
+- [ ] ESC abre/fecha Pause Menu
+- [ ] HUD mostra HP/MP/XP e informações do personagem
+
+### Pause Menu
+- [ ] Pause → Inventário abre e fecha corretamente
+- [ ] Pause → Equipamentos abre e fecha corretamente
+- [ ] Pause → Crafting abre e fecha corretamente
+- [ ] Pause → Opções abre menu de configurações
+- [ ] Popup de confirmação ao clicar em "Sair" ou "Menu Principal"
+
+### Sistemas
+- [ ] Notificações aparecem na tela (info/success/warning/error)
+- [ ] Save/Load funciona via slots
+- [ ] Sistema de quests registra progresso
+- [ ] Sistema de combate calcula dano e status
+
+## 📐 EventBus API Padronizada
+
+Todas as comunicações UI utilizam a API unificada do EventBus:
+
+### Menus
+```gdscript
+EventBus.request_menu("inventory")
+EventBus.request_menu("equipment")
+EventBus.request_menu("crafting")
+EventBus.request_menu("options")
+```
+
+### Popups
+```gdscript
+EventBus.request_popup("confirmation", {
+    "title": "Confirmar Ação",
+    "message": "Tem certeza que deseja sair?",
+    "confirm_text": "Sim",
+    "cancel_text": "Não"
+})
+```
+
+### Notificações
+```gdscript
+EventBus.show_notification("Item adquirido!", "success")
+EventBus.show_notification("Atenção: HP baixo", "warning")
+EventBus.show_notification("Erro ao salvar", "error")
+```
+
+### Sons
+```gdscript
+EventBus.play_sound("button_click")
+EventBus.play_sound("button_hover")
+```
+
 ## 📄 File Documentation
 
 ### Key Scripts
 - `GameState.gd`: Global game state, player data, save/load
-- `EventBus.gd`: Event communication hub
+- `EventBus.gd`: Event communication hub with unified API
+- `UIManager.gd`: Orchestrates all UI systems (HUD, menus, popups)
+- `PopupManager.gd`: Manages notification and confirmation popups
 - `DataLoader.gd`: JSON data loading and management
 - `CombatSystem.gd`: Combat calculations and damage handling
 - `PlayerController.gd`: Player movement, combat, and interaction

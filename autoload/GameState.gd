@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 # GameState.gd - Global game state management
 # Manages player data, current dungeon, inventory, and world state
 
@@ -57,7 +57,7 @@ func _ready():
 
 # Player management functions
 func create_new_player(race_id: String, class_id: String, name: String = "Hero"):
-	"""Initialize a new player with selected race and class"""
+# Initialize a new player with selected race and class
 	print("[GameState] Creating new player: ", name)
 	
 	var race_data = DataLoader.get_race(race_id)
@@ -84,11 +84,11 @@ func create_new_player(race_id: String, class_id: String, name: String = "Hero")
 	return true
 
 func get_player_data():
-	"""Returns current player data"""
+# Returns current player data
 	return player_data
 
 func update_player_hp(amount: int):
-	"""Update player HP and emit signal if changed"""
+# Update player HP and emit signal if changed
 	var old_hp = player_data.current_hp
 	player_data.current_hp = clamp(player_data.current_hp + amount, 0, player_data.max_hp)
 	
@@ -99,7 +99,7 @@ func update_player_hp(amount: int):
 			EventBus.player_died.emit()
 
 func update_player_mp(amount: int):
-	"""Update player MP and emit signal if changed"""
+# Update player MP and emit signal if changed
 	var old_mp = player_data.current_mp
 	player_data.current_mp = clamp(player_data.current_mp + amount, 0, player_data.max_mp)
 	
@@ -107,7 +107,7 @@ func update_player_mp(amount: int):
 		EventBus.player_mp_changed.emit(player_data.current_mp, player_data.max_mp)
 
 func gain_experience(amount: int):
-	"""Add experience and handle level ups"""
+# Add experience and handle level ups
 	player_data.experience += amount
 	var required_exp = get_required_experience_for_level(player_data.level + 1)
 	
@@ -115,11 +115,11 @@ func gain_experience(amount: int):
 		level_up()
 
 func get_required_experience_for_level(level: int) -> int:
-	"""Calculate required experience for given level"""
+# Calculate required experience for given level
 	return level * 100 + (level - 1) * 50  # Simple progression formula
 
 func level_up():
-	"""Handle player leveling up"""
+# Handle player leveling up
 	player_data.level += 1
 	
 	# Increase max HP/MP
@@ -135,7 +135,7 @@ func level_up():
 
 # Inventory management
 func add_item_to_inventory(item_id: String, quantity: int = 1):
-	"""Add item to player inventory"""
+# Add item to player inventory
 	var existing_item = null
 	for item in player_data.inventory:
 		if item.id == item_id:
@@ -153,7 +153,7 @@ func add_item_to_inventory(item_id: String, quantity: int = 1):
 	EventBus.inventory_updated.emit(player_data.inventory)
 
 func remove_item_from_inventory(item_id: String, quantity: int = 1) -> bool:
-	"""Remove item from inventory, returns true if successful"""
+# Remove item from inventory, returns true if successful
 	for i in range(player_data.inventory.size()):
 		var item = player_data.inventory[i]
 		if item.id == item_id:
@@ -168,7 +168,7 @@ func remove_item_from_inventory(item_id: String, quantity: int = 1) -> bool:
 	return false
 
 func use_item(item_id: String) -> bool:
-	"""Use a consumable item"""
+# Use a consumable item
 	var item_data = DataLoader.get_item(item_id)
 	if not item_data or item_data.type != "consumable":
 		return false
@@ -187,7 +187,7 @@ func use_item(item_id: String) -> bool:
 
 # Dungeon management
 func change_dungeon(dungeon_id: String):
-	"""Change current dungeon"""
+# Change current dungeon
 	if dungeon_id == current_dungeon_id:
 		return
 	
@@ -198,20 +198,20 @@ func change_dungeon(dungeon_id: String):
 	EventBus.dungeon_changed.emit(dungeon_id)
 
 func get_current_dungeon_data():
-	"""Get data for current dungeon"""
+# Get data for current dungeon
 	return DataLoader.get_dungeon(current_dungeon_id)
 
 # Save/Load functions using SaveManager
 var save_manager: SaveManager
 
 func _init_save_manager():
-	"""Initialize the SaveManager if not already done"""
+# Initialize the SaveManager if not already done
 	if not save_manager:
 		save_manager = preload("res://scripts/save/SaveManager.gd").new()
 		add_child(save_manager)
 
 func save_game(slot: int = 0, use_compression: bool = true) -> bool:
-	"""Save current game state using SaveManager"""
+# Save current game state using SaveManager
 	_init_save_manager()
 	
 	# Prepare comprehensive save data
@@ -272,7 +272,7 @@ func save_game(slot: int = 0, use_compression: bool = true) -> bool:
 	return result.success
 
 func load_game(slot: int = 0) -> bool:
-	"""Load game state using SaveManager"""
+# Load game state using SaveManager
 	_init_save_manager()
 	
 	var result = save_manager.load_game(slot)
@@ -318,12 +318,12 @@ func load_game(slot: int = 0) -> bool:
 	return true
 
 func get_save_slots() -> Array:
-	"""Get information about all save slots"""
+# Get information about all save slots
 	_init_save_manager()
 	return save_manager.get_save_slots()
 
 func delete_save(slot: int) -> bool:
-	"""Delete a save file"""
+# Delete a save file
 	_init_save_manager()
 	var result = save_manager.delete_save(slot)
 	if result:
@@ -332,17 +332,17 @@ func delete_save(slot: int) -> bool:
 	return result
 
 func quick_save() -> bool:
-	"""Quick save to dedicated quick save slot"""
+# Quick save to dedicated quick save slot
 	return await save_game(999, true)  # Use slot 999 for quick saves
 
 func auto_save() -> bool:
-	"""Auto save if enabled in settings"""
+# Auto save if enabled in settings
 	if settings.auto_save:
 		return await save_game(998, true)  # Use slot 998 for auto saves
 	return false
 
 func backup_save(slot: int) -> bool:
-	"""Create backup of save file"""
+# Create backup of save file
 	_init_save_manager()
 	return save_manager.backup_save_file(slot)
 
@@ -358,7 +358,7 @@ func _on_item_collected(item_id: String):
 
 # Utility functions
 func reset_game():
-	"""Reset to new game state"""
+# Reset to new game state
 	player_data = {
 		"level": 1,
 		"experience": 0,

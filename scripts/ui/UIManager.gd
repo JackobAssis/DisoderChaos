@@ -1,4 +1,4 @@
-extends CanvasLayer
+﻿extends CanvasLayer
 
 class_name UIManager
 
@@ -66,7 +66,7 @@ func _ready():
 	print("[UIManager] Sistema de UI inicializado")
 
 func setup_ui_containers():
-	"""Setup main UI containers"""
+# Setup main UI containers
 	# HUD Container (always visible in game)
 	hud_container = Control.new()
 	hud_container.name = "HUDContainer"
@@ -89,7 +89,7 @@ func setup_ui_containers():
 	add_child(popup_container)
 
 func create_ui_theme():
-	"""Create the futuristic neon theme"""
+# Create the futuristic neon theme
 	ui_theme = Theme.new()
 	
 	# Create custom StyleBox for panels
@@ -117,7 +117,7 @@ func create_ui_theme():
 	style_loaded.emit()
 
 func create_button_styles():
-	"""Create button styles for the theme"""
+# Create button styles for the theme
 	# Normal button style
 	var button_normal = StyleBoxFlat.new()
 	button_normal.bg_color = darker_bg
@@ -168,7 +168,7 @@ func create_button_styles():
 	ui_theme.set_color("font_pressed_color", "Button", Color.WHITE)
 
 func create_progressbar_styles():
-	"""Create progress bar styles for HP, Stamina, XP"""
+# Create progress bar styles for HP, Stamina, XP
 	# Progress bar background
 	var progress_bg = StyleBoxFlat.new()
 	progress_bg.bg_color = Color.BLACK
@@ -193,12 +193,12 @@ func create_progressbar_styles():
 	ui_theme.set_stylebox("fill", "ProgressBar", progress_fill)
 
 func create_label_styles():
-	"""Create label styles"""
+# Create label styles
 	ui_theme.set_color("font_color", "Label", neon_green)
 	ui_theme.set_color("font_shadow_color", "Label", Color.BLACK)
 
 func load_ui_components():
-	"""Load all UI components"""
+# Load all UI components
 	# Wait for player stats reference
 	await get_tree().process_frame
 	player_stats = game_state.player_stats
@@ -232,7 +232,7 @@ func load_ui_components():
 	print("[UIManager] Todos os componentes de UI carregados")
 
 func load_main_hud():
-	"""Load the main HUD"""
+# Load the main HUD
 	var hud_scene = preload("res://scenes/ui/hud/MainHUD.tscn") if ResourceLoader.exists("res://scenes/ui/hud/MainHUD.tscn") else null
 	
 	if hud_scene:
@@ -247,7 +247,7 @@ func load_main_hud():
 	main_hud.initialize(player_stats)
 
 func load_minimap():
-	"""Load the minimap"""
+# Load the minimap
 	var minimap_scene = preload("res://scenes/ui/hud/Minimap.tscn") if ResourceLoader.exists("res://scenes/ui/hud/Minimap.tscn") else null
 	
 	if minimap_scene:
@@ -261,7 +261,7 @@ func load_minimap():
 	minimap.initialize()
 
 func load_inventory_ui():
-	"""Load inventory interface"""
+# Load inventory interface
 	inventory_ui = preload("res://scripts/ui/menus/InventoryUI.gd").new()
 	inventory_ui.name = "InventoryUI"
 	inventory_ui.theme = ui_theme
@@ -269,7 +269,7 @@ func load_inventory_ui():
 	menu_container.add_child(inventory_ui)
 
 func load_quest_journal():
-	"""Load quest journal"""
+# Load quest journal
 	quest_journal = preload("res://scripts/ui/menus/QuestJournal.gd").new()
 	quest_journal.name = "QuestJournal"
 	quest_journal.theme = ui_theme
@@ -277,7 +277,7 @@ func load_quest_journal():
 	menu_container.add_child(quest_journal)
 
 func load_pause_menu():
-	"""Load pause menu"""
+# Load pause menu
 	pause_menu = preload("res://scripts/ui/menus/PauseMenu.gd").new()
 	pause_menu.name = "PauseMenu"
 	pause_menu.theme = ui_theme
@@ -285,7 +285,7 @@ func load_pause_menu():
 	menu_container.add_child(pause_menu)
 
 func load_dialogue_ui():
-	"""Load dialogue interface"""
+# Load dialogue interface
 	dialogue_ui = preload("res://scripts/ui/menus/DialogueUI.gd").new()
 	dialogue_ui.name = "DialogueUI"
 	dialogue_ui.theme = ui_theme
@@ -293,7 +293,7 @@ func load_dialogue_ui():
 	popup_container.add_child(dialogue_ui)
 
 func load_crafting_ui():
-	"""Load crafting interface"""
+# Load crafting interface
 	crafting_ui = preload("res://scripts/ui/menus/CraftingUI.gd").new()
 	crafting_ui.name = "CraftingUI"
 	crafting_ui.theme = ui_theme
@@ -301,7 +301,7 @@ func load_crafting_ui():
 	menu_container.add_child(crafting_ui)
 
 func load_skill_tree_ui():
-	"""Load skill tree interface"""
+# Load skill tree interface
 	skill_tree_ui = preload("res://scripts/ui/menus/SkillTreeUI.gd").new()
 	skill_tree_ui.name = "SkillTreeUI"
 	skill_tree_ui.theme = ui_theme
@@ -309,7 +309,7 @@ func load_skill_tree_ui():
 	menu_container.add_child(skill_tree_ui)
 
 func load_boss_fight_ui():
-	"""Load boss fight interface"""
+# Load boss fight interface
 	boss_fight_ui = preload("res://scripts/ui/menus/BossFightUI.gd").new()
 	boss_fight_ui.name = "BossFightUI"
 	boss_fight_ui.theme = ui_theme
@@ -317,7 +317,7 @@ func load_boss_fight_ui():
 	hud_container.add_child(boss_fight_ui)  # Boss UI goes in HUD container
 
 func load_shop_ui():
-	"""Load shop interface"""
+# Load shop interface
 	shop_ui = preload("res://scripts/ui/menus/ShopUI.gd").new()
 	shop_ui.name = "ShopUI"
 	shop_ui.theme = ui_theme
@@ -325,7 +325,7 @@ func load_shop_ui():
 	menu_container.add_child(shop_ui)
 
 func connect_events():
-	"""Connect to game events"""
+# Connect to game events
 	event_bus.connect("dialogue_ui_show", _on_dialogue_show)
 	event_bus.connect("dialogue_ui_hide", _on_dialogue_hide)
 	event_bus.connect("player_health_changed", _on_player_health_changed)
@@ -342,11 +342,11 @@ func connect_events():
 	event_bus.connect("crafting_station_opened", _on_crafting_station_opened)
 
 func setup_input_handling():
-	"""Setup input handling for UI"""
+# Setup input handling for UI
 	set_process_unhandled_input(true)
 
 func _unhandled_input(event):
-	"""Handle UI input"""
+# Handle UI input
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause"):
 		if is_any_menu_open():
 			close_top_ui()
@@ -365,28 +365,28 @@ func _unhandled_input(event):
 
 # Additional event handlers for new systems
 func _on_boss_encounter_started(boss_id: String):
-	"""Handle boss encounter start"""
+# Handle boss encounter start
 	show_boss_fight_ui()
 
 func _on_boss_encounter_ended(victory: bool):
-	"""Handle boss encounter end"""
+# Handle boss encounter end
 	hide_boss_fight_ui()
 
 func _on_shop_opened(shop_id: String, npc_data: Dictionary = {}):
-	"""Handle shop opening"""
+# Handle shop opening
 	open_shop(shop_id, npc_data)
 
 func _on_shop_closed():
-	"""Handle shop closing"""
+# Handle shop closing
 	close_shop()
 
 func _on_crafting_station_opened(station_id: String):
-	"""Handle crafting station interaction"""
+# Handle crafting station interaction
 	open_crafting()
 
 # UI Toggle Functions
 func toggle_pause_menu():
-	"""Toggle pause menu"""
+# Toggle pause menu
 	if not components_loaded.get("pause_menu", false):
 		return
 	
@@ -396,7 +396,7 @@ func toggle_pause_menu():
 		open_pause_menu()
 
 func open_pause_menu():
-	"""Open pause menu"""
+# Open pause menu
 	if not components_loaded.get("pause_menu", false) or pause_menu.visible:
 		return
 	
@@ -408,7 +408,7 @@ func open_pause_menu():
 	event_bus.emit_signal("game_paused")
 
 func close_pause_menu():
-	"""Close pause menu"""
+# Close pause menu
 	if not pause_menu or not pause_menu.visible:
 		return
 	
@@ -420,7 +420,7 @@ func close_pause_menu():
 	event_bus.emit_signal("game_resumed")
 
 func toggle_inventory():
-	"""Toggle inventory"""
+# Toggle inventory
 	if not components_loaded.get("inventory_ui", false):
 		return
 	
@@ -430,7 +430,7 @@ func toggle_inventory():
 		open_inventory()
 
 func open_inventory():
-	"""Open inventory"""
+# Open inventory
 	if not components_loaded.get("inventory_ui", false) or inventory_ui.visible:
 		return
 	
@@ -439,7 +439,7 @@ func open_inventory():
 	ui_opened.emit("inventory")
 
 func close_inventory():
-	"""Close inventory"""
+# Close inventory
 	if not inventory_ui or not inventory_ui.visible:
 		return
 	
@@ -448,7 +448,7 @@ func close_inventory():
 	ui_closed.emit("inventory")
 
 func toggle_quest_journal():
-	"""Toggle quest journal"""
+# Toggle quest journal
 	if not components_loaded.get("quest_journal", false):
 		return
 	
@@ -458,7 +458,7 @@ func toggle_quest_journal():
 		open_quest_journal()
 
 func open_quest_journal():
-	"""Open quest journal"""
+# Open quest journal
 	if not components_loaded.get("quest_journal", false) or quest_journal.visible:
 		return
 	
@@ -467,7 +467,7 @@ func open_quest_journal():
 	ui_opened.emit("quest_journal")
 
 func close_quest_journal():
-	"""Close quest journal"""
+# Close quest journal
 	if not quest_journal or not quest_journal.visible:
 		return
 	
@@ -476,7 +476,7 @@ func close_quest_journal():
 	ui_closed.emit("quest_journal")
 
 func toggle_dialogue_ui():
-	"""Toggle dialogue UI"""
+# Toggle dialogue UI
 	if not components_loaded.get("dialogue_ui", false):
 		return
 	
@@ -487,7 +487,7 @@ func toggle_dialogue_ui():
 		pass
 
 func open_dialogue_ui():
-	"""Open dialogue UI"""
+# Open dialogue UI
 	if not components_loaded.get("dialogue_ui", false) or dialogue_ui.visible:
 		return
 	
@@ -496,7 +496,7 @@ func open_dialogue_ui():
 	ui_opened.emit("dialogue_ui")
 
 func close_dialogue_ui():
-	"""Close dialogue UI"""
+# Close dialogue UI
 	if not dialogue_ui or not dialogue_ui.visible:
 		return
 	
@@ -506,7 +506,7 @@ func close_dialogue_ui():
 
 # New UI Systems Toggle Functions
 func toggle_crafting():
-	"""Toggle crafting UI"""
+# Toggle crafting UI
 	if not components_loaded.get("crafting_ui", false):
 		return
 	
@@ -516,7 +516,7 @@ func toggle_crafting():
 		open_crafting()
 
 func open_crafting():
-	"""Open crafting UI"""
+# Open crafting UI
 	if not components_loaded.get("crafting_ui", false) or crafting_ui.visible:
 		return
 	
@@ -525,7 +525,7 @@ func open_crafting():
 	ui_opened.emit("crafting")
 
 func close_crafting():
-	"""Close crafting UI"""
+# Close crafting UI
 	if not crafting_ui or not crafting_ui.visible:
 		return
 	
@@ -534,7 +534,7 @@ func close_crafting():
 	ui_closed.emit("crafting")
 
 func toggle_skill_tree():
-	"""Toggle skill tree UI"""
+# Toggle skill tree UI
 	if not components_loaded.get("skill_tree_ui", false):
 		return
 	
@@ -544,7 +544,7 @@ func toggle_skill_tree():
 		open_skill_tree()
 
 func open_skill_tree():
-	"""Open skill tree UI"""
+# Open skill tree UI
 	if not components_loaded.get("skill_tree_ui", false) or skill_tree_ui.visible:
 		return
 	
@@ -553,7 +553,7 @@ func open_skill_tree():
 	ui_opened.emit("skill_tree")
 
 func close_skill_tree():
-	"""Close skill tree UI"""
+# Close skill tree UI
 	if not skill_tree_ui or not skill_tree_ui.visible:
 		return
 	
@@ -562,7 +562,7 @@ func close_skill_tree():
 	ui_closed.emit("skill_tree")
 
 func toggle_boss_fight():
-	"""Toggle boss fight UI"""
+# Toggle boss fight UI
 	if not components_loaded.get("boss_fight_ui", false):
 		return
 	
@@ -570,7 +570,7 @@ func toggle_boss_fight():
 	ui_toggled.emit("boss_fight", boss_fight_ui.visible)
 
 func show_boss_fight_ui():
-	"""Show boss fight UI"""
+# Show boss fight UI
 	if not components_loaded.get("boss_fight_ui", false):
 		return
 	
@@ -578,7 +578,7 @@ func show_boss_fight_ui():
 	ui_opened.emit("boss_fight")
 
 func hide_boss_fight_ui():
-	"""Hide boss fight UI"""
+# Hide boss fight UI
 	if not components_loaded.get("boss_fight_ui", false):
 		return
 	
@@ -586,7 +586,7 @@ func hide_boss_fight_ui():
 	ui_closed.emit("boss_fight")
 
 func toggle_shop():
-	"""Toggle shop UI"""
+# Toggle shop UI
 	if not components_loaded.get("shop_ui", false):
 		return
 	
@@ -597,7 +597,7 @@ func toggle_shop():
 		pass
 
 func open_shop(shop_id: String = "", npc_data: Dictionary = {}):
-	"""Open shop UI"""
+# Open shop UI
 	if not components_loaded.get("shop_ui", false) or shop_ui.visible:
 		return
 	
@@ -607,7 +607,7 @@ func open_shop(shop_id: String = "", npc_data: Dictionary = {}):
 	ui_opened.emit("shop")
 
 func close_shop():
-	"""Close shop UI"""
+# Close shop UI
 	if not shop_ui or not shop_ui.visible:
 		return
 	
@@ -616,23 +616,23 @@ func close_shop():
 	ui_closed.emit("shop")
 
 func toggle_minimap_fullscreen():
-	"""Toggle minimap fullscreen mode"""
+# Toggle minimap fullscreen mode
 	if components_loaded.get("minimap", false) and minimap:
 		minimap.toggle_fullscreen()
 
 # UI Stack Management
 func add_to_ui_stack(ui_element: Control):
-	"""Add UI element to stack"""
+# Add UI element to stack
 	if ui_element not in ui_stack:
 		ui_stack.append(ui_element)
 
 func remove_from_ui_stack(ui_element: Control):
-	"""Remove UI element from stack"""
+# Remove UI element from stack
 	if ui_element in ui_stack:
 		ui_stack.erase(ui_element)
 
 func close_top_ui():
-	"""Close the topmost UI element"""
+# Close the topmost UI element
 	if ui_stack.size() > 0:
 		var top_ui = ui_stack[-1]
 		if top_ui == pause_menu:
@@ -649,7 +649,7 @@ func close_top_ui():
 			close_shop()
 
 func close_all_menus():
-	"""Close all open menus"""
+# Close all open menus
 	close_inventory()
 	close_quest_journal()
 	close_pause_menu()
@@ -659,67 +659,67 @@ func close_all_menus():
 
 # Event Handlers
 func _on_dialogue_show(dialogue_data: Dictionary):
-	"""Show dialogue UI"""
+# Show dialogue UI
 	if dialogue_ui:
 		dialogue_ui.show_dialogue(dialogue_data)
 
 func _on_dialogue_hide():
-	"""Hide dialogue UI"""
+# Hide dialogue UI
 	if dialogue_ui:
 		dialogue_ui.hide_dialogue()
 
 func _on_player_health_changed(current_hp: int, max_hp: int):
-	"""Update health display"""
+# Update health display
 	if main_hud:
 		main_hud.update_health(current_hp, max_hp)
 
 func _on_player_stamina_changed(current_stamina: float, max_stamina: float):
-	"""Update stamina display"""
+# Update stamina display
 	if main_hud:
 		main_hud.update_stamina(current_stamina, max_stamina)
 
 func _on_experience_gained(amount: int, source: String):
-	"""Show XP gain notification"""
+# Show XP gain notification
 	if main_hud:
 		main_hud.show_xp_gain(amount)
 
 func _on_buff_applied(buff_id: String, duration: float):
-	"""Show buff application"""
+# Show buff application
 	if main_hud:
 		main_hud.add_buff_icon(buff_id, duration)
 
 func _on_buff_removed(buff_id: String):
-	"""Remove buff icon"""
+# Remove buff icon
 	if main_hud:
 		main_hud.remove_buff_icon(buff_id)
 
 # Utility Functions
 func get_ui_theme() -> Theme:
-	"""Get the UI theme"""
+# Get the UI theme
 	return ui_theme
 
 func is_any_menu_open() -> bool:
-	"""Check if any menu is open"""
+# Check if any menu is open
 	return ui_stack.size() > 0
 
 func is_component_loaded(component_name: String) -> bool:
-	"""Check if a component is loaded"""
+# Check if a component is loaded
 	return components_loaded.get(component_name, false)
 
 func get_neon_green_color() -> Color:
-	"""Get the neon green color"""
+# Get the neon green color
 	return neon_green
 
 func get_dark_background_color() -> Color:
-	"""Get the dark background color"""
+# Get the dark background color
 	return dark_bg
 
 func get_darker_background_color() -> Color:
-	"""Get the darker background color"""
+# Get the darker background color
 	return darker_bg
 
 func close_all_menus():
-	"""Close all open menus"""
+# Close all open menus
 	if pause_menu and pause_menu.visible:
 		close_pause_menu()
 	if inventory_ui and inventory_ui.visible:
@@ -731,7 +731,7 @@ func close_all_menus():
 
 # Debug Functions
 func debug_show_all_ui():
-	"""Debug: Show all UI components"""
+# Debug: Show all UI components
 	print("[UIManager] Debug: Showing all UI components")
 	if components_loaded.get("main_hud", false):
 		main_hud.debug_show_all_elements()
@@ -745,7 +745,7 @@ func debug_show_all_ui():
 		dialogue_ui.debug_start_test_dialogue()
 
 func debug_toggle_all_panels():
-	"""Debug: Toggle all menu panels"""
+# Debug: Toggle all menu panels
 	print("[UIManager] Debug: Toggling all panels")
 	toggle_inventory()
 	await get_tree().create_timer(0.5).timeout
@@ -754,16 +754,16 @@ func debug_toggle_all_panels():
 	toggle_pause_menu()
 
 func debug_test_ui_animations():
-	"""Debug: Test UI animations"""
+# Debug: Test UI animations
 	print("[UIManager] Debug: Testing UI animations")
 	if main_hud:
 		main_hud.debug_animate_all_bars()
 
 func debug_print_ui_status():
-	"""Debug: Print UI status"""
+# Debug: Print UI status
 	print("[UIManager] UI Component Status:")
 	for component in components_loaded:
-		var status = "✓ Loaded" if components_loaded[component] else "✗ Not Loaded"
+		var status = "âœ“ Loaded" if components_loaded[component] else "âœ— Not Loaded"
 		print("  %s: %s" % [component.capitalize(), status])
 	
 	print("[UIManager] Open Menus: %d" % ui_stack.size())
@@ -774,18 +774,18 @@ func debug_print_ui_status():
 
 # Debug Functions
 func debug_toggle_hud():
-	"""Debug: Toggle HUD visibility"""
+# Debug: Toggle HUD visibility
 	if main_hud:
 		main_hud.visible = not main_hud.visible
 
 func debug_show_all_uis():
-	"""Debug: Show all UI components"""
+# Debug: Show all UI components
 	open_inventory()
 	open_quest_journal()
 	open_pause_menu()
 
 func debug_style_test():
-	"""Debug: Test UI styles"""
+# Debug: Test UI styles
 	print("[UIManager] Testing UI styles...")
 	print("Neon Green: ", neon_green)
 	print("Dark BG: ", dark_bg)

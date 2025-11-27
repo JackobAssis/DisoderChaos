@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name GuildSystem
 
 signal guild_created(guild_id: String, guild_name: String, founder: Node)
@@ -19,12 +19,12 @@ var player_guild_membership: Dictionary = {}
 var alliance_data: Dictionary = {}
 var guild_activities: Dictionary = {}
 
-# Configurações
+# ConfiguraÃ§Ãµes
 var guild_system_enabled: bool = true
 var alliance_system_enabled: bool = true
 var max_guilds_per_player: int = 1
 
-# Referências
+# ReferÃªncias
 @onready var data_loader: DataLoader = DataLoader.new()
 @onready var event_bus: EventBus = EventBus
 
@@ -35,7 +35,7 @@ func _ready():
 	print("[GuildSystem] Sistema de guildas inicializado")
 
 func load_guild_system_data():
-	"""Carrega dados do sistema de guildas"""
+# Carrega dados do sistema de guildas
 	var data = data_loader.load_json_file("res://data/guilds/guild_system.json")
 	if data:
 		guild_system_data = data.guild_system
@@ -44,32 +44,32 @@ func load_guild_system_data():
 		push_error("[GuildSystem] Falha ao carregar dados de guildas")
 
 func connect_events():
-	"""Conecta aos eventos necessários"""
+# Conecta aos eventos necessÃ¡rios
 	event_bus.player_level_up.connect(_on_player_level_up)
 
 # ============================================================================
-# CRIAÇÃO E GERENCIAMENTO DE GUILDAS
+# CRIAÃ‡ÃƒO E GERENCIAMENTO DE GUILDAS
 # ============================================================================
 
 func can_create_guild(player: Node, guild_name: String) -> Dictionary:
-	"""Verifica se jogador pode criar guilda"""
+# Verifica se jogador pode criar guilda
 	var result = {"can_create": false, "reason": ""}
 	
 	if not guild_system_enabled:
 		result.reason = "Sistema de guildas desabilitado"
 		return result
 	
-	# Verificar se já está em guilda
+	# Verificar se jÃ¡ estÃ¡ em guilda
 	if is_player_in_guild(player):
-		result.reason = "Jogador já está em uma guilda"
+		result.reason = "Jogador jÃ¡ estÃ¡ em uma guilda"
 		return result
 	
 	var player_data = _get_player_data(player)
 	var requirements = guild_system_data.creation_requirements
 	
-	# Verificar nível
+	# Verificar nÃ­vel
 	if player_data.level < requirements.min_level:
-		result.reason = "Nível insuficiente (requerido: %d)" % requirements.min_level
+		result.reason = "NÃ­vel insuficiente (requerido: %d)" % requirements.min_level
 		return result
 	
 	# Verificar gold
@@ -79,22 +79,22 @@ func can_create_guild(player: Node, guild_name: String) -> Dictionary:
 	
 	# Verificar nome
 	if not _is_valid_guild_name(guild_name):
-		result.reason = "Nome de guilda inválido"
+		result.reason = "Nome de guilda invÃ¡lido"
 		return result
 	
-	# Verificar se nome já existe
+	# Verificar se nome jÃ¡ existe
 	if _guild_name_exists(guild_name):
-		result.reason = "Nome de guilda já existe"
+		result.reason = "Nome de guilda jÃ¡ existe"
 		return result
 	
 	result.can_create = true
 	return result
 
 func create_guild(player: Node, guild_name: String, guild_description: String = "") -> String:
-	"""Cria uma nova guilda"""
+# Cria uma nova guilda
 	var validation = can_create_guild(player, guild_name)
 	if not validation.can_create:
-		print("[GuildSystem] Não pode criar guilda: ", validation.reason)
+		print("[GuildSystem] NÃ£o pode criar guilda: ", validation.reason)
 		return ""
 	
 	var guild_id = _generate_guild_id()
@@ -149,13 +149,13 @@ func create_guild(player: Node, guild_name: String, guild_description: String = 
 	return guild_id
 
 func disband_guild(guild_id: String, requester: Node) -> bool:
-	"""Dissolve uma guilda"""
+# Dissolve uma guilda
 	if not active_guilds.has(guild_id):
 		return false
 	
 	var guild = active_guilds[guild_id]
 	
-	# Verificar se é o guild master
+	# Verificar se Ã© o guild master
 	if not _is_guild_master(requester, guild_id):
 		return false
 	
@@ -165,7 +165,7 @@ func disband_guild(guild_id: String, requester: Node) -> bool:
 		if player_guild_membership.has(member_id_int):
 			player_guild_membership.erase(member_id_int)
 	
-	# Remover de alianças
+	# Remover de alianÃ§as
 	_leave_all_alliances(guild_id)
 	
 	# Remover guilda
@@ -183,21 +183,21 @@ func disband_guild(guild_id: String, requester: Node) -> bool:
 # ============================================================================
 
 func can_invite_player(guild_id: String, inviter: Node, target_player: Node) -> Dictionary:
-	"""Verifica se pode convidar jogador"""
+# Verifica se pode convidar jogador
 	var result = {"can_invite": false, "reason": ""}
 	
 	if not active_guilds.has(guild_id):
-		result.reason = "Guilda não encontrada"
+		result.reason = "Guilda nÃ£o encontrada"
 		return result
 	
-	# Verificar permissões do convidador
+	# Verificar permissÃµes do convidador
 	if not _has_permission(inviter, guild_id, "invite_members"):
-		result.reason = "Sem permissão para convidar"
+		result.reason = "Sem permissÃ£o para convidar"
 		return result
 	
-	# Verificar se target já está em guilda
+	# Verificar se target jÃ¡ estÃ¡ em guilda
 	if is_player_in_guild(target_player):
-		result.reason = "Jogador já está em uma guilda"
+		result.reason = "Jogador jÃ¡ estÃ¡ em uma guilda"
 		return result
 	
 	var guild = active_guilds[guild_id]
@@ -206,17 +206,17 @@ func can_invite_player(guild_id: String, inviter: Node, target_player: Node) -> 
 	
 	# Verificar limite de membros
 	if current_members >= max_members:
-		result.reason = "Guilda está cheia"
+		result.reason = "Guilda estÃ¡ cheia"
 		return result
 	
 	result.can_invite = true
 	return result
 
 func invite_player_to_guild(guild_id: String, inviter: Node, target_player: Node) -> bool:
-	"""Convida jogador para guilda"""
+# Convida jogador para guilda
 	var validation = can_invite_player(guild_id, inviter, target_player)
 	if not validation.can_invite:
-		print("[GuildSystem] Não pode convidar: ", validation.reason)
+		print("[GuildSystem] NÃ£o pode convidar: ", validation.reason)
 		return false
 	
 	# Criar convite
@@ -235,7 +235,7 @@ func invite_player_to_guild(guild_id: String, inviter: Node, target_player: Node
 	return true
 
 func accept_guild_invite(player: Node, guild_id: String) -> bool:
-	"""Aceita convite de guilda"""
+# Aceita convite de guilda
 	if not active_guilds.has(guild_id):
 		return false
 	
@@ -264,7 +264,7 @@ func accept_guild_invite(player: Node, guild_id: String) -> bool:
 	return true
 
 func leave_guild(player: Node, guild_id: String = "") -> bool:
-	"""Sai da guilda"""
+# Sai da guilda
 	var player_id = player.get_instance_id()
 	
 	if guild_id == "":
@@ -278,9 +278,9 @@ func leave_guild(player: Node, guild_id: String = "") -> bool:
 	
 	var guild = active_guilds[guild_id]
 	
-	# Verificar se é guild master
+	# Verificar se Ã© guild master
 	if _is_guild_master(player, guild_id):
-		# Guild master não pode sair, deve transferir liderança ou dissolver
+		# Guild master nÃ£o pode sair, deve transferir lideranÃ§a ou dissolver
 		return false
 	
 	# Remover da guilda
@@ -294,11 +294,11 @@ func leave_guild(player: Node, guild_id: String = "") -> bool:
 	return true
 
 func kick_member(guild_id: String, kicker: Node, target_player_id: int) -> bool:
-	"""Expulsa membro da guilda"""
+# Expulsa membro da guilda
 	if not active_guilds.has(guild_id):
 		return false
 	
-	# Verificar permissões
+	# Verificar permissÃµes
 	if not _has_permission(kicker, guild_id, "kick_members"):
 		return false
 	
@@ -308,7 +308,7 @@ func kick_member(guild_id: String, kicker: Node, target_player_id: int) -> bool:
 	if not target_member_data:
 		return false
 	
-	# Não pode expulsar guild master ou rank superior
+	# NÃ£o pode expulsar guild master ou rank superior
 	var kicker_rank_level = _get_rank_level(kicker, guild_id)
 	var target_rank_level = _get_rank_level_by_rank(target_member_data.rank)
 	
@@ -332,11 +332,11 @@ func kick_member(guild_id: String, kicker: Node, target_player_id: int) -> bool:
 # ============================================================================
 
 func promote_member(guild_id: String, promoter: Node, target_player_id: int, new_rank: String) -> bool:
-	"""Promove membro"""
+# Promove membro
 	if not active_guilds.has(guild_id):
 		return false
 	
-	# Verificar permissões
+	# Verificar permissÃµes
 	var promoter_rank_level = _get_rank_level(promoter, guild_id)
 	var new_rank_level = _get_rank_level_by_rank(new_rank)
 	
@@ -365,11 +365,11 @@ func promote_member(guild_id: String, promoter: Node, target_player_id: int, new
 	return true
 
 func demote_member(guild_id: String, demoter: Node, target_player_id: int, new_rank: String) -> bool:
-	"""Rebaixa membro"""
+# Rebaixa membro
 	if not active_guilds.has(guild_id):
 		return false
 	
-	# Verificar permissões (similar ao promote)
+	# Verificar permissÃµes (similar ao promote)
 	var demoter_rank_level = _get_rank_level(demoter, guild_id)
 	var guild = active_guilds[guild_id]
 	var target_member = guild.members.get(str(target_player_id))
@@ -398,11 +398,11 @@ func demote_member(guild_id: String, demoter: Node, target_player_id: int, new_r
 # ============================================================================
 
 func start_guild_raid(guild_id: String, organizer: Node, boss_type: String) -> bool:
-	"""Inicia raid de guilda"""
+# Inicia raid de guilda
 	if not active_guilds.has(guild_id):
 		return false
 	
-	# Verificar permissões
+	# Verificar permissÃµes
 	if not _has_permission(organizer, guild_id, "start_guild_activities"):
 		return false
 	
@@ -420,7 +420,7 @@ func start_guild_raid(guild_id: String, organizer: Node, boss_type: String) -> b
 	
 	var guild = active_guilds[guild_id]
 	
-	# Verificar nível da guilda
+	# Verificar nÃ­vel da guilda
 	if guild.level < boss_data.required_guild_level:
 		return false
 	
@@ -452,7 +452,7 @@ func start_guild_raid(guild_id: String, organizer: Node, boss_type: String) -> b
 	return true
 
 func join_guild_activity(player: Node, activity_id: String) -> bool:
-	"""Participa de atividade de guilda"""
+# Participa de atividade de guilda
 	if not guild_activities.has(activity_id):
 		return false
 	
@@ -462,7 +462,7 @@ func join_guild_activity(player: Node, activity_id: String) -> bool:
 	if not player_guild:
 		return false
 	
-	# Verificar se atividade é da guilda do jogador
+	# Verificar se atividade Ã© da guilda do jogador
 	var guild = active_guilds[player_guild]
 	if not guild.activities.has(activity_id):
 		return false
@@ -471,7 +471,7 @@ func join_guild_activity(player: Node, activity_id: String) -> bool:
 	if activity.status != "recruiting":
 		return false
 	
-	# Verificar se já está participando
+	# Verificar se jÃ¡ estÃ¡ participando
 	if activity.participants.has(player.get_instance_id()):
 		return false
 	
@@ -482,53 +482,53 @@ func join_guild_activity(player: Node, activity_id: String) -> bool:
 	return true
 
 # ============================================================================
-# SISTEMA DE ALIANÇAS
+# SISTEMA DE ALIANÃ‡AS
 # ============================================================================
 
 func can_form_alliance(guild_ids: Array, alliance_name: String) -> Dictionary:
-	"""Verifica se pode formar aliança"""
+# Verifica se pode formar alianÃ§a
 	var result = {"can_form": false, "reason": ""}
 	
 	if not alliance_system_enabled:
-		result.reason = "Sistema de alianças desabilitado"
+		result.reason = "Sistema de alianÃ§as desabilitado"
 		return result
 	
 	var requirements = guild_system_data.alliance_system.creation_requirements
 	
-	# Verificar número mínimo de guildas
+	# Verificar nÃºmero mÃ­nimo de guildas
 	if guild_ids.size() < requirements.min_guilds:
-		result.reason = "Mínimo de %d guildas necessárias" % requirements.min_guilds
+		result.reason = "MÃ­nimo de %d guildas necessÃ¡rias" % requirements.min_guilds
 		return result
 	
-	# Verificar número máximo de guildas
+	# Verificar nÃºmero mÃ¡ximo de guildas
 	if guild_ids.size() > requirements.max_guilds:
-		result.reason = "Máximo de %d guildas permitidas" % requirements.max_guilds
+		result.reason = "MÃ¡ximo de %d guildas permitidas" % requirements.max_guilds
 		return result
 	
 	# Verificar se todas as guildas existem e atendem requisitos
 	for guild_id in guild_ids:
 		if not active_guilds.has(guild_id):
-			result.reason = "Guilda %s não encontrada" % guild_id
+			result.reason = "Guilda %s nÃ£o encontrada" % guild_id
 			return result
 		
 		var guild = active_guilds[guild_id]
 		if guild.level < requirements.min_guild_level:
-			result.reason = "Guilda %s nível insuficiente" % guild.name
+			result.reason = "Guilda %s nÃ­vel insuficiente" % guild.name
 			return result
 		
-		# Verificar se já está em outra aliança
+		# Verificar se jÃ¡ estÃ¡ em outra alianÃ§a
 		if guild.alliances.size() > 0:
-			result.reason = "Guilda %s já está em aliança" % guild.name
+			result.reason = "Guilda %s jÃ¡ estÃ¡ em alianÃ§a" % guild.name
 			return result
 	
 	result.can_form = true
 	return result
 
 func form_alliance(guild_ids: Array, alliance_name: String, founder_guild_id: String) -> String:
-	"""Forma uma aliança"""
+# Forma uma alianÃ§a
 	var validation = can_form_alliance(guild_ids, alliance_name)
 	if not validation.can_form:
-		print("[GuildSystem] Não pode formar aliança: ", validation.reason)
+		print("[GuildSystem] NÃ£o pode formar alianÃ§a: ", validation.reason)
 		return ""
 	
 	var alliance_id = _generate_alliance_id()
@@ -542,7 +542,7 @@ func form_alliance(guild_ids: Array, alliance_name: String, founder_guild_id: St
 		"territories": []
 	}
 	
-	# Adicionar aliança
+	# Adicionar alianÃ§a
 	alliance_data[alliance_id] = alliance_data
 	
 	# Atualizar guildas
@@ -553,28 +553,28 @@ func form_alliance(guild_ids: Array, alliance_name: String, founder_guild_id: St
 	# Emitir evento
 	alliance_formed.emit(alliance_id, guild_ids)
 	
-	print("[GuildSystem] Aliança formada: %s" % alliance_name)
+	print("[GuildSystem] AlianÃ§a formada: %s" % alliance_name)
 	return alliance_id
 
 # ============================================================================
-# FUNÇÕES AUXILIARES
+# FUNÃ‡Ã•ES AUXILIARES
 # ============================================================================
 
 func _get_player_data(player: Node) -> Dictionary:
-	"""Obtém dados do jogador"""
+# ObtÃ©m dados do jogador
 	if player.has_method("get_player_data"):
 		return player.get_player_data()
 	return GameState.get_player_data()
 
 func _is_valid_guild_name(name: String) -> bool:
-	"""Verifica se nome de guilda é válido"""
+# Verifica se nome de guilda Ã© vÃ¡lido
 	var requirements = guild_system_data.creation_requirements
 	var len = name.length()
 	
 	return len >= requirements.min_guild_name_length and len <= requirements.max_guild_name_length
 
 func _guild_name_exists(name: String) -> bool:
-	"""Verifica se nome já existe"""
+# Verifica se nome jÃ¡ existe
 	for guild_id in active_guilds:
 		var guild = active_guilds[guild_id]
 		if guild.name.to_lower() == name.to_lower():
@@ -582,19 +582,19 @@ func _guild_name_exists(name: String) -> bool:
 	return false
 
 func _generate_guild_id() -> String:
-	"""Gera ID único para guilda"""
+# Gera ID Ãºnico para guilda
 	return "guild_" + str(Time.get_time_dict_from_system().unix) + "_" + str(randi())
 
 func _generate_activity_id() -> String:
-	"""Gera ID único para atividade"""
+# Gera ID Ãºnico para atividade
 	return "activity_" + str(Time.get_time_dict_from_system().unix) + "_" + str(randi())
 
 func _generate_alliance_id() -> String:
-	"""Gera ID único para aliança"""
+# Gera ID Ãºnico para alianÃ§a
 	return "alliance_" + str(Time.get_time_dict_from_system().unix) + "_" + str(randi())
 
 func _charge_player_currency(player: Node, amount: int):
-	"""Cobra currency do jogador"""
+# Cobra currency do jogador
 	if player.has_method("remove_currency"):
 		player.remove_currency(amount)
 	else:
@@ -602,7 +602,7 @@ func _charge_player_currency(player: Node, amount: int):
 		GameState.update_currency(-amount)
 
 func _is_guild_master(player: Node, guild_id: String) -> bool:
-	"""Verifica se é guild master"""
+# Verifica se Ã© guild master
 	if not active_guilds.has(guild_id):
 		return false
 	
@@ -613,7 +613,7 @@ func _is_guild_master(player: Node, guild_id: String) -> bool:
 	return member_data and member_data.rank == "guild_master"
 
 func _has_permission(player: Node, guild_id: String, permission: String) -> bool:
-	"""Verifica se jogador tem permissão"""
+# Verifica se jogador tem permissÃ£o
 	if not active_guilds.has(guild_id):
 		return false
 	
@@ -631,7 +631,7 @@ func _has_permission(player: Node, guild_id: String, permission: String) -> bool
 	return rank_data.permissions.has(permission) or rank_data.permissions.has("all")
 
 func _get_rank_level(player: Node, guild_id: String) -> int:
-	"""Obtém nível do rank do jogador"""
+# ObtÃ©m nÃ­vel do rank do jogador
 	if not active_guilds.has(guild_id):
 		return 0
 	
@@ -645,12 +645,12 @@ func _get_rank_level(player: Node, guild_id: String) -> int:
 	return _get_rank_level_by_rank(member_data.rank)
 
 func _get_rank_level_by_rank(rank: String) -> int:
-	"""Obtém nível do rank"""
+# ObtÃ©m nÃ­vel do rank
 	var rank_data = guild_system_data.guild_ranks.get(rank)
 	return rank_data.level if rank_data else 0
 
 func _can_promote_to_rank(guild_id: String, rank: String) -> bool:
-	"""Verifica se pode promover para rank"""
+# Verifica se pode promover para rank
 	var guild = active_guilds[guild_id]
 	var rank_data = guild_system_data.guild_ranks.get(rank)
 	
@@ -667,7 +667,7 @@ func _can_promote_to_rank(guild_id: String, rank: String) -> bool:
 	return count < rank_data.max_count
 
 func _get_guild_max_members(guild_data: Dictionary) -> int:
-	"""Obtém limite máximo de membros da guilda"""
+# ObtÃ©m limite mÃ¡ximo de membros da guilda
 	var hall_upgrades = guild_data.get("hall_upgrades", {})
 	var main_hall_level = hall_upgrades.get("main_hall_level", 1)
 	
@@ -680,12 +680,12 @@ func _get_guild_max_members(guild_data: Dictionary) -> int:
 	return 25  # Default
 
 func _send_guild_invite(invite_data: Dictionary):
-	"""Envia convite de guilda (placeholder)"""
+# Envia convite de guilda (placeholder)
 	# Implementar sistema de convites aqui
 	pass
 
 func _guild_activity_on_cooldown(guild_id: String, activity_type: String) -> bool:
-	"""Verifica se atividade está em cooldown"""
+# Verifica se atividade estÃ¡ em cooldown
 	var guild = active_guilds[guild_id]
 	var current_time = Time.get_time_dict_from_system().unix
 	
@@ -698,7 +698,7 @@ func _guild_activity_on_cooldown(guild_id: String, activity_type: String) -> boo
 	return false
 
 func _leave_all_alliances(guild_id: String):
-	"""Remove guilda de todas as alianças"""
+# Remove guilda de todas as alianÃ§as
 	var guild = active_guilds[guild_id]
 	
 	for alliance_id in guild.alliances:
@@ -706,7 +706,7 @@ func _leave_all_alliances(guild_id: String):
 			var alliance = alliance_data[alliance_id]
 			alliance.member_guilds.erase(guild_id)
 			
-			# Se aliança ficou com menos de 2 guildas, dissolver
+			# Se alianÃ§a ficou com menos de 2 guildas, dissolver
 			if alliance.member_guilds.size() < 2:
 				alliance_data.erase(alliance_id)
 				alliance_disbanded.emit(alliance_id)
@@ -716,7 +716,7 @@ func _leave_all_alliances(guild_id: String):
 # ============================================================================
 
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
-	"""Quando jogador sobe de nível"""
+# Quando jogador sobe de nÃ­vel
 	# Contribuir XP para guilda
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
@@ -725,39 +725,39 @@ func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
 			award_guild_experience(guild_id, 100)
 
 # ============================================================================
-# API PÚBLICA
+# API PÃšBLICA
 # ============================================================================
 
 func is_player_in_guild(player: Node) -> bool:
-	"""Verifica se jogador está em guilda"""
+# Verifica se jogador estÃ¡ em guilda
 	return player_guild_membership.has(player.get_instance_id())
 
 func get_player_guild(player: Node) -> String:
-	"""Obtém guilda do jogador"""
+# ObtÃ©m guilda do jogador
 	return player_guild_membership.get(player.get_instance_id(), "")
 
 func get_guild_data(guild_id: String) -> Dictionary:
-	"""Obtém dados da guilda"""
+# ObtÃ©m dados da guilda
 	return active_guilds.get(guild_id, {})
 
 func get_guild_members(guild_id: String) -> Dictionary:
-	"""Obtém membros da guilda"""
+# ObtÃ©m membros da guilda
 	var guild = active_guilds.get(guild_id, {})
 	return guild.get("members", {})
 
 func award_guild_experience(guild_id: String, amount: int):
-	"""Concede XP para guilda"""
+# Concede XP para guilda
 	if not active_guilds.has(guild_id):
 		return
 	
 	var guild = active_guilds[guild_id]
 	guild.experience += amount
 	
-	# Verificar se subiu de nível
+	# Verificar se subiu de nÃ­vel
 	_check_guild_level_up(guild_id)
 
 func _check_guild_level_up(guild_id: String):
-	"""Verifica se guilda subiu de nível"""
+# Verifica se guilda subiu de nÃ­vel
 	var guild = active_guilds[guild_id]
 	var progression = guild_system_data.guild_progression
 	
@@ -768,4 +768,4 @@ func _check_guild_level_up(guild_id: String):
 		var required_xp = progression.level_requirements[required_xp_key]
 		if guild.experience >= required_xp:
 			guild.level = next_level
-			print("[GuildSystem] Guilda %s subiu para nível %d!" % [guild.name, next_level])
+			print("[GuildSystem] Guilda %s subiu para nÃ­vel %d!" % [guild.name, next_level])

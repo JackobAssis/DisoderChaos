@@ -1,4 +1,4 @@
-class_name PopupManager
+﻿class_name PopupManager
 extends Control
 
 ## Sistema central para gerenciar popups (mensagens, tutoriais, recompensas)
@@ -16,7 +16,7 @@ var popup_queue: Array[Dictionary] = []
 var current_popup: Control = null
 var is_popup_active: bool = false
 
-# Configurações
+# ConfiguraÃ§Ãµes
 var max_popup_duration: float = 10.0
 var auto_close_delay: float = 3.0
 
@@ -29,7 +29,7 @@ func _ready():
 	setup_connections()
 
 func setup_popup_manager():
-	"""Configura o sistema de popups"""
+# Configura o sistema de popups
 	# Container para popups
 	popup_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	popup_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -42,13 +42,58 @@ func setup_popup_manager():
 		EventBus.show_confirmation_popup.connect(show_confirmation)
 
 func setup_connections():
-	"""Conecta sinais"""
+# Conecta sinais
 	pass
+
+# === INTERFACE GENÉRICA ===
+
+func show_popup(popup_type: String, data: Dictionary):
+	# Interface genérica para aceitar chamadas do EventBus.popup_requested
+	match popup_type:
+		"message", "notification":
+			show_message(
+				data.get("title", ""),
+				data.get("message", data.get("text", "")),
+				data.get("type", "info"),
+				data.get("duration", 3.0)
+			)
+		"tutorial":
+			show_tutorial(
+				data.get("title", ""),
+				data.get("text", ""),
+				data.get("image", ""),
+				data.get("skippable", true)
+			)
+		"reward":
+			show_reward(
+				data.get("title", ""),
+				data.get("items", []),
+				data.get("xp", 0),
+				data.get("gold", 0)
+			)
+		"confirmation":
+			show_confirmation(
+				data.get("title", ""),
+				data.get("message", data.get("text", "")),
+				data.get("confirm_text", "Confirmar"),
+				data.get("cancel_text", "Cancelar"),
+				data.get("popup_id", "")
+			)
+		_:
+			print("[PopupManager] Tipo desconhecido: ", popup_type)
+
+func has_active_popups() -> bool:
+	return is_popup_active or not popup_queue.is_empty()
+
+func hide_popup(popup_type: String):
+	# Fechar popup ativo se for do tipo especificado
+	if current_popup:
+		close_current_popup("hide_requested")
 
 # === TIPOS DE POPUP ===
 
 func show_message(title: String, text: String, type: String = "info", duration: float = 3.0):
-	"""Mostra popup de mensagem simples"""
+# Mostra popup de mensagem simples
 	var popup_data = {
 		"type": "message",
 		"title": title,
@@ -60,7 +105,7 @@ func show_message(title: String, text: String, type: String = "info", duration: 
 	queue_popup(popup_data)
 
 func show_tutorial(title: String, text: String, image_path: String = "", skip_button: bool = true):
-	"""Mostra popup de tutorial"""
+# Mostra popup de tutorial
 	var popup_data = {
 		"type": "tutorial", 
 		"title": title,
@@ -72,7 +117,7 @@ func show_tutorial(title: String, text: String, image_path: String = "", skip_bu
 	queue_popup(popup_data)
 
 func show_reward(title: String, items: Array[Dictionary], xp: int = 0, gold: int = 0):
-	"""Mostra popup de recompensas"""
+# Mostra popup de recompensas
 	var popup_data = {
 		"type": "reward",
 		"title": title,
@@ -84,7 +129,7 @@ func show_reward(title: String, items: Array[Dictionary], xp: int = 0, gold: int
 	queue_popup(popup_data)
 
 func show_confirmation(title: String, text: String, confirm_text: String = "Confirmar", cancel_text: String = "Cancelar", popup_id: String = ""):
-	"""Mostra popup de confirmação"""
+# Mostra popup de confirmaÃ§Ã£o
 	var popup_data = {
 		"type": "confirmation",
 		"title": title,
@@ -99,12 +144,12 @@ func show_confirmation(title: String, text: String, confirm_text: String = "Conf
 # === QUEUE MANAGEMENT ===
 
 func queue_popup(popup_data: Dictionary):
-	"""Adiciona popup à fila"""
+# Adiciona popup Ã  fila
 	popup_queue.append(popup_data)
 	process_queue()
 
 func process_queue():
-	"""Processa próximo popup na fila"""
+# Processa prÃ³ximo popup na fila
 	if is_popup_active or popup_queue.is_empty():
 		return
 	
@@ -112,7 +157,7 @@ func process_queue():
 	create_and_show_popup(popup_data)
 
 func create_and_show_popup(popup_data: Dictionary):
-	"""Cria e mostra popup baseado no tipo"""
+# Cria e mostra popup baseado no tipo
 	match popup_data.type:
 		"message":
 			current_popup = create_message_popup(popup_data)
@@ -132,10 +177,10 @@ func create_and_show_popup(popup_data: Dictionary):
 		is_popup_active = true
 		popup_shown.emit(popup_data.type, popup_data)
 
-# === CRIAÇÃO DE POPUPS ===
+# === CRIAÃ‡ÃƒO DE POPUPS ===
 
 func create_message_popup(data: Dictionary) -> Control:
-	"""Cria popup de mensagem"""
+# Cria popup de mensagem
 	var popup = Control.new()
 	popup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
@@ -163,14 +208,14 @@ func create_message_popup(data: Dictionary) -> Control:
 	vbox.offset_bottom = -20
 	panel.add_child(vbox)
 	
-	# Ícone baseado no tipo
+	# Ãcone baseado no tipo
 	var icon_container = HBoxContainer.new()
 	icon_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	var icon = create_message_icon(data.get("message_type", "info"))
 	icon_container.add_child(icon)
 	vbox.add_child(icon_container)
 	
-	# Título
+	# TÃ­tulo
 	var title = Label.new()
 	title.text = data.get("title", "Mensagem")
 	title.add_theme_color_override("font_color", get_message_color(data.get("message_type", "info")))
@@ -178,7 +223,7 @@ func create_message_popup(data: Dictionary) -> Control:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 	
-	# Espaçador
+	# EspaÃ§ador
 	vbox.add_child(Control.new())
 	
 	# Texto
@@ -207,7 +252,7 @@ func create_message_popup(data: Dictionary) -> Control:
 	return popup
 
 func create_tutorial_popup(data: Dictionary) -> Control:
-	"""Cria popup de tutorial"""
+# Cria popup de tutorial
 	var popup = Control.new()
 	popup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
@@ -245,7 +290,7 @@ func create_tutorial_popup(data: Dictionary) -> Control:
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(title)
 	
-	# Botão skip se permitido
+	# BotÃ£o skip se permitido
 	if data.get("skippable", true):
 		var skip_btn = Button.new()
 		skip_btn.text = "Pular"
@@ -278,7 +323,7 @@ func create_tutorial_popup(data: Dictionary) -> Control:
 	text_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.add_child(text_label)
 	
-	# Botão OK
+	# BotÃ£o OK
 	var ok_btn = Button.new()
 	ok_btn.text = "Entendi"
 	ok_btn.add_theme_stylebox_override("normal", 
@@ -293,7 +338,7 @@ func create_tutorial_popup(data: Dictionary) -> Control:
 	return popup
 
 func create_reward_popup(data: Dictionary) -> Control:
-	"""Cria popup de recompensas"""
+# Cria popup de recompensas
 	var popup = Control.new()
 	popup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
@@ -321,7 +366,7 @@ func create_reward_popup(data: Dictionary) -> Control:
 	vbox.offset_bottom = -25
 	panel.add_child(vbox)
 	
-	# Título
+	# TÃ­tulo
 	var title = Label.new()
 	title.text = data.get("title", "Recompensas Recebidas!")
 	title.add_theme_color_override("font_color", UIThemeManager.Colors.ACCENT_GOLD)
@@ -379,7 +424,7 @@ func create_reward_popup(data: Dictionary) -> Control:
 		
 		vbox.add_child(items_grid)
 	
-	# Botão OK
+	# BotÃ£o OK
 	var ok_btn = Button.new()
 	ok_btn.text = "Coletar"
 	ok_btn.add_theme_stylebox_override("normal", 
@@ -394,7 +439,7 @@ func create_reward_popup(data: Dictionary) -> Control:
 	return popup
 
 func create_confirmation_popup(data: Dictionary) -> Control:
-	"""Cria popup de confirmação"""
+# Cria popup de confirmaÃ§Ã£o
 	var popup = Control.new()
 	popup.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
@@ -422,7 +467,7 @@ func create_confirmation_popup(data: Dictionary) -> Control:
 	vbox.offset_bottom = -25
 	panel.add_child(vbox)
 	
-	# Título
+	# TÃ­tulo
 	var title = Label.new()
 	title.text = data.get("title", "Confirmar")
 	title.add_theme_color_override("font_color", UIThemeManager.Colors.WARNING_ORANGE)
@@ -430,7 +475,7 @@ func create_confirmation_popup(data: Dictionary) -> Control:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 	
-	# Espaçador
+	# EspaÃ§ador
 	vbox.add_child(Control.new())
 	
 	# Texto
@@ -441,7 +486,7 @@ func create_confirmation_popup(data: Dictionary) -> Control:
 	text_label.custom_minimum_size.y = 100
 	vbox.add_child(text_label)
 	
-	# Botões
+	# BotÃµes
 	var buttons_container = HBoxContainer.new()
 	buttons_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	
@@ -461,7 +506,7 @@ func create_confirmation_popup(data: Dictionary) -> Control:
 	)
 	buttons_container.add_child(cancel_btn)
 	
-	# Espaçador
+	# EspaÃ§ador
 	var spacer = Control.new()
 	spacer.custom_minimum_size.x = 20
 	buttons_container.add_child(spacer)
@@ -487,11 +532,11 @@ func create_confirmation_popup(data: Dictionary) -> Control:
 	return popup
 
 func create_reward_item(item: Dictionary) -> Control:
-	"""Cria visual de um item de recompensa"""
+# Cria visual de um item de recompensa
 	var container = VBoxContainer.new()
 	container.custom_minimum_size = Vector2(80, 80)
 	
-	# Ícone do item
+	# Ãcone do item
 	var icon = TextureRect.new()
 	icon.custom_minimum_size = Vector2(50, 50)
 	if item.has("icon"):
@@ -520,11 +565,11 @@ func create_reward_item(item: Dictionary) -> Control:
 # === HELPER FUNCTIONS ===
 
 func create_message_icon(type: String) -> TextureRect:
-	"""Cria ícone para tipo de mensagem"""
+# Cria Ã­cone para tipo de mensagem
 	var icon = TextureRect.new()
 	icon.custom_minimum_size = Vector2(32, 32)
 	
-	# TODO: Carregar ícones apropriados
+	# TODO: Carregar Ã­cones apropriados
 	match type:
 		"success":
 			icon.modulate = UIThemeManager.Colors.SUCCESS_GREEN
@@ -538,7 +583,7 @@ func create_message_icon(type: String) -> TextureRect:
 	return icon
 
 func get_message_color(type: String) -> Color:
-	"""Retorna cor para tipo de mensagem"""
+# Retorna cor para tipo de mensagem
 	match type:
 		"success": return UIThemeManager.Colors.SUCCESS_GREEN
 		"warning": return UIThemeManager.Colors.WARNING_ORANGE
@@ -546,7 +591,7 @@ func get_message_color(type: String) -> Color:
 		_: return UIThemeManager.Colors.INFO_BLUE
 
 func get_rarity_color(rarity: String) -> Color:
-	"""Retorna cor da raridade"""
+# Retorna cor da raridade
 	match rarity:
 		"legendary": return Color(1.0, 0.5, 0.0)
 		"epic": return Color(0.6, 0.3, 0.9)
@@ -555,13 +600,13 @@ func get_rarity_color(rarity: String) -> Color:
 		_: return UIThemeManager.Colors.TEXT_PRIMARY
 
 func generate_popup_id() -> String:
-	"""Gera ID único para popup"""
+# Gera ID Ãºnico para popup
 	return "popup_" + str(Time.get_unix_time_from_system())
 
 # === ANIMATION ===
 
 func animate_popup_in(popup: Control):
-	"""Animação de entrada do popup"""
+# AnimaÃ§Ã£o de entrada do popup
 	popup.modulate = Color.TRANSPARENT
 	popup.scale = Vector2(0.8, 0.8)
 	
@@ -570,14 +615,14 @@ func animate_popup_in(popup: Control):
 	tween.parallel().tween_property(popup, "scale", Vector2.ONE, 0.3)
 
 func animate_popup_out(popup: Control, callback: Callable):
-	"""Animação de saída do popup"""
+# AnimaÃ§Ã£o de saÃ­da do popup
 	var tween = create_tween()
 	tween.parallel().tween_property(popup, "modulate", Color.TRANSPARENT, 0.2)
 	tween.parallel().tween_property(popup, "scale", Vector2(0.8, 0.8), 0.2)
 	tween.tween_callback(callback)
 
 func close_current_popup(result: String):
-	"""Fecha popup atual"""
+# Fecha popup atual
 	if not current_popup:
 		return
 	
@@ -592,27 +637,27 @@ func close_current_popup(result: String):
 	)
 
 func get_popup_type_from_current() -> String:
-	"""Determina tipo do popup atual"""
-	# Método simples baseado no nome da classe ou metadata
+# Determina tipo do popup atual
+	# MÃ©todo simples baseado no nome da classe ou metadata
 	if current_popup:
-		return "unknown"  # TODO: Implementar identificação
+		return "unknown"  # TODO: Implementar identificaÃ§Ã£o
 	return ""
 
 # === PUBLIC INTERFACE ===
 
 func close_all_popups():
-	"""Fecha todos os popups"""
+# Fecha todos os popups
 	popup_queue.clear()
 	if current_popup:
 		close_current_popup("force_closed")
 
 func get_popup_count() -> int:
-	"""Retorna quantidade de popups na fila"""
+# Retorna quantidade de popups na fila
 	var count = popup_queue.size()
 	if is_popup_active:
 		count += 1
 	return count
 
 func is_any_popup_active() -> bool:
-	"""Verifica se há popup ativo"""
+# Verifica se hÃ¡ popup ativo
 	return is_popup_active

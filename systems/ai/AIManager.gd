@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name AIManager
 # AIManager.gd - Central management system for all AI entities
 # Coordinates AI behavior, handles global AI events, and integrates with game systems
@@ -67,7 +67,7 @@ func _ready():
 	print("[AIManager] AI management system ready")
 
 func setup_system_integration():
-	"""Setup integration with other game systems"""
+# Setup integration with other game systems
 	# Climate system integration
 	climate_manager = get_node_or_null("/root/ClimateManager")
 	if climate_manager:
@@ -90,7 +90,7 @@ func setup_system_integration():
 	save_manager = get_node_or_null("/root/GameState")
 
 func load_ai_configuration():
-	"""Load AI configuration from data files"""
+# Load AI configuration from data files
 	# This would load from JSON configuration files
 	ai_difficulty_modifier = 1.0
 	
@@ -105,7 +105,7 @@ func load_ai_configuration():
 	}
 
 func setup_faction_system():
-	"""Setup faction relationship system"""
+# Setup faction relationship system
 	# Initialize faction relationships (-1.0 = hostile, 0.0 = neutral, 1.0 = allied)
 	faction_relations = {
 		"player_enemies": -1.0,
@@ -117,7 +117,7 @@ func setup_faction_system():
 	}
 
 func initialize_ai_templates():
-	"""Initialize AI templates for easy spawning"""
+# Initialize AI templates for easy spawning
 	ai_templates = {
 		"goblin_warrior": {
 			"ai_type": "melee",
@@ -162,7 +162,7 @@ func initialize_ai_templates():
 	}
 
 func setup_performance_monitoring():
-	"""Setup performance monitoring system"""
+# Setup performance monitoring system
 	# Start performance monitoring
 	var timer = Timer.new()
 	timer.wait_time = 1.0  # Update stats every second
@@ -171,7 +171,7 @@ func setup_performance_monitoring():
 	add_child(timer)
 
 func _process(delta):
-	"""Main AI manager update loop"""
+# Main AI manager update loop
 	if not global_ai_enabled:
 		return
 	
@@ -186,7 +186,7 @@ func _process(delta):
 	update_global_ai_state(delta)
 
 func update_ai_entities(delta: float):
-	"""Update AI entities with performance optimization"""
+# Update AI entities with performance optimization
 	var start_time = Time.get_ticks_msec()
 	var time_budget = ai_performance_stats.frame_time_budget
 	var updated_count = 0
@@ -217,7 +217,7 @@ func update_ai_entities(delta: float):
 		optimize_ai_performance()
 
 func prioritize_ai_updates():
-	"""Prioritize AI updates based on importance and distance"""
+# Prioritize AI updates based on importance and distance
 	var player = get_tree().get_first_node_in_group("player")
 	if not player:
 		return
@@ -237,7 +237,7 @@ func prioritize_ai_updates():
 	)
 
 func update_single_ai(ai: AIController, delta: float):
-	"""Update a single AI entity"""
+# Update a single AI entity
 	if not ai or not is_instance_valid(ai):
 		return
 	
@@ -248,7 +248,7 @@ func update_single_ai(ai: AIController, delta: float):
 	# The AI manager just coordinates and applies global effects
 
 func apply_global_ai_modifiers(ai: AIController):
-	"""Apply global AI modifiers to individual AI"""
+# Apply global AI modifiers to individual AI
 	# Apply global alert level
 	if global_alert_level > 0.5:
 		ai.senses.alertness_level = lerp(1.0, 2.0, global_alert_level)
@@ -261,7 +261,7 @@ func apply_global_ai_modifiers(ai: AIController):
 		ai.combat_component.accuracy_modifier = ai_difficulty_modifier
 
 func update_global_ai_state(delta: float):
-	"""Update global AI state"""
+# Update global AI state
 	# Decay global alert level over time
 	if global_alert_level > 0.0:
 		global_alert_level -= delta * 0.2  # Alert decays over 5 seconds
@@ -271,7 +271,7 @@ func update_global_ai_state(delta: float):
 	update_active_ai_list()
 
 func update_active_ai_list():
-	"""Update list of active AI entities"""
+# Update list of active AI entities
 	active_ai.clear()
 	
 	for ai in registered_ai:
@@ -283,7 +283,7 @@ func update_active_ai_list():
 	ai_performance_stats.active_ai_count = active_ai.size()
 
 func should_ai_be_active(ai: AIController) -> bool:
-	"""Check if AI should be actively updating"""
+# Check if AI should be actively updating
 	var player = get_tree().get_first_node_in_group("player")
 	if not player:
 		return true  # No player, keep all AI active
@@ -299,7 +299,7 @@ func should_ai_be_active(ai: AIController) -> bool:
 	return distance <= activation_range
 
 func optimize_ai_performance():
-	"""Optimize AI performance when frame budget is exceeded"""
+# Optimize AI performance when frame budget is exceeded
 	print("[AIManager] Optimizing AI performance")
 	
 	# Reduce max active AI
@@ -311,7 +311,7 @@ func optimize_ai_performance():
 	ai_performance_stats.optimization_active = true
 
 func update_performance_stats():
-	"""Update performance statistics"""
+# Update performance statistics
 	ai_performance_stats.total_ai_count = registered_ai.size()
 	
 	# Reset optimization if performance is good
@@ -324,7 +324,7 @@ func update_performance_stats():
 
 # AI Registration and Management
 func register_ai(ai_controller: AIController):
-	"""Register an AI controller with the manager"""
+# Register an AI controller with the manager
 	if ai_controller not in registered_ai:
 		registered_ai.append(ai_controller)
 		
@@ -341,7 +341,7 @@ func register_ai(ai_controller: AIController):
 		print("[AIManager] Registered AI: ", ai_controller.entity.name if ai_controller.entity else "unknown")
 
 func unregister_ai(ai_controller: AIController):
-	"""Unregister an AI controller"""
+# Unregister an AI controller
 	if ai_controller in registered_ai:
 		registered_ai.erase(ai_controller)
 		active_ai.erase(ai_controller)
@@ -358,13 +358,13 @@ func unregister_ai(ai_controller: AIController):
 		print("[AIManager] Unregistered AI: ", ai_controller.entity.name if ai_controller.entity else "unknown")
 
 func connect_ai_signals(ai: AIController):
-	"""Connect to AI signals for coordination"""
+# Connect to AI signals for coordination
 	ai.target_acquired.connect(_on_ai_target_acquired.bind(ai))
 	ai.target_lost.connect(_on_ai_target_lost.bind(ai))
 	ai.state_changed.connect(_on_ai_state_changed.bind(ai))
 
 func disconnect_ai_signals(ai: AIController):
-	"""Disconnect from AI signals"""
+# Disconnect from AI signals
 	if ai.target_acquired.is_connected(_on_ai_target_acquired):
 		ai.target_acquired.disconnect(_on_ai_target_acquired)
 	if ai.target_lost.is_connected(_on_ai_target_lost):
@@ -374,7 +374,7 @@ func disconnect_ai_signals(ai: AIController):
 
 # AI Spawning
 func spawn_ai_from_template(template_name: String, position: Vector2, entity_scene: PackedScene) -> AIController:
-	"""Spawn AI from template configuration"""
+# Spawn AI from template configuration
 	if not template_name in ai_templates:
 		push_error("AI template not found: " + template_name)
 		return null
@@ -400,7 +400,7 @@ func spawn_ai_from_template(template_name: String, position: Vector2, entity_sce
 	return ai
 
 func create_ai_from_template(template: Dictionary, entity: Node2D) -> AIController:
-	"""Create AI controller from template"""
+# Create AI controller from template
 	var ai: AIController
 	
 	match template.ai_type:
@@ -429,7 +429,7 @@ func create_ai_from_template(template: Dictionary, entity: Node2D) -> AIControll
 	return ai
 
 func apply_behavior_config(ai: AIController, config: Dictionary):
-	"""Apply behavior configuration to AI"""
+# Apply behavior configuration to AI
 	for property in config:
 		if ai.has_method("set_" + property):
 			ai.call("set_" + property, config[property])
@@ -437,14 +437,14 @@ func apply_behavior_config(ai: AIController, config: Dictionary):
 			ai.set(property, config[property])
 
 func can_spawn_ai_type(ai_type: String) -> bool:
-	"""Check if more AI of this type can be spawned"""
+# Check if more AI of this type can be spawned
 	var current_count = get_ai_count_by_type(ai_type)
 	var limit = ai_spawn_limits.get(ai_type, 999)
 	
 	return current_count < limit
 
 func get_ai_count_by_type(ai_type: String) -> int:
-	"""Get count of AI entities by type"""
+# Get count of AI entities by type
 	var count = 0
 	for ai in registered_ai:
 		var type_name = AIController.AIType.keys()[ai.ai_type].to_lower()
@@ -453,7 +453,7 @@ func get_ai_count_by_type(ai_type: String) -> int:
 	return count
 
 func find_nearest_boss(position: Vector2) -> Node2D:
-	"""Find nearest boss entity for minions"""
+# Find nearest boss entity for minions
 	var nearest_boss = null
 	var nearest_distance = INF
 	
@@ -468,7 +468,7 @@ func find_nearest_boss(position: Vector2) -> Node2D:
 
 # Global AI Events
 func trigger_global_alert(alert_level: float, duration: float = 10.0):
-	"""Trigger global alert that affects all AI"""
+# Trigger global alert that affects all AI
 	global_alert_level = max(global_alert_level, alert_level)
 	global_alert_changed.emit(global_alert_level)
 	
@@ -483,29 +483,29 @@ func trigger_global_alert(alert_level: float, duration: float = 10.0):
 	print("[AIManager] Global alert triggered: ", alert_level)
 
 func set_ai_difficulty(modifier: float):
-	"""Set global AI difficulty modifier"""
+# Set global AI difficulty modifier
 	ai_difficulty_modifier = clamp(modifier, 0.1, 3.0)
 	print("[AIManager] AI difficulty set to: ", ai_difficulty_modifier)
 
 func pause_all_ai():
-	"""Pause all AI entities"""
+# Pause all AI entities
 	for ai in registered_ai:
 		ai.set_process(false)
 
 func resume_all_ai():
-	"""Resume all AI entities"""
+# Resume all AI entities
 	for ai in registered_ai:
 		ai.set_process(true)
 
 # Faction System
 func set_faction_relation(faction_a: String, faction_b: String, relation: float):
-	"""Set relationship between two factions"""
+# Set relationship between two factions
 	var key = faction_a + "_" + faction_b
 	faction_relations[key] = clamp(relation, -1.0, 1.0)
 	ai_faction_relations_changed.emit(faction_a, faction_b, relation)
 
 func get_faction_relation(faction_a: String, faction_b: String) -> float:
-	"""Get relationship between two factions"""
+# Get relationship between two factions
 	var key1 = faction_a + "_" + faction_b
 	var key2 = faction_b + "_" + faction_a
 	
@@ -518,22 +518,22 @@ func get_faction_relation(faction_a: String, faction_b: String) -> float:
 
 # Signal Handlers
 func _on_ai_target_acquired(ai: AIController, target: Node):
-	"""Handle AI acquiring target"""
+# Handle AI acquiring target
 	# Coordinate with nearby AI of same faction
 	alert_nearby_allies(ai, target)
 
 func _on_ai_target_lost(ai: AIController):
-	"""Handle AI losing target"""
+# Handle AI losing target
 	pass
 
 func _on_ai_state_changed(ai: AIController, from_state: AIController.AIState, to_state: AIController.AIState):
-	"""Handle AI state changes"""
+# Handle AI state changes
 	# Track global AI behavior patterns
 	if to_state == AIController.AIState.ATTACK:
 		trigger_global_alert(0.3, 5.0)  # Moderate alert when combat starts
 
 func _on_global_weather_changed(weather_type: String):
-	"""Handle global weather changes affecting AI"""
+# Handle global weather changes affecting AI
 	print("[AIManager] Weather changed to: ", weather_type, " - updating AI behavior")
 	
 	# Apply weather effects to all AI
@@ -543,7 +543,7 @@ func _on_global_weather_changed(weather_type: String):
 			pass
 
 func _on_day_night_changed(is_night: bool):
-	"""Handle day/night cycle affecting AI"""
+# Handle day/night cycle affecting AI
 	var light_modifier = 0.3 if is_night else 1.0
 	
 	for ai in registered_ai:
@@ -551,7 +551,7 @@ func _on_day_night_changed(is_night: bool):
 			ai.senses.current_light_level = light_modifier
 
 func _on_dynamic_event_triggered(event_type: String, event_data: Dictionary):
-	"""Handle dynamic events affecting AI"""
+# Handle dynamic events affecting AI
 	match event_type:
 		"monster_invasion":
 			trigger_global_alert(0.8, 30.0)
@@ -561,21 +561,21 @@ func _on_dynamic_event_triggered(event_type: String, event_data: Dictionary):
 			global_alert_level *= 0.3  # Calm down after area cleared
 
 func _on_area_event_started(area_name: String, event_type: String):
-	"""Handle area-specific events"""
+# Handle area-specific events
 	# Increase alert for AI in specific area
 	pass
 
 func _on_combat_started(participants: Array):
-	"""Handle combat start"""
+# Handle combat start
 	trigger_global_alert(0.4, 8.0)
 
 func _on_combat_ended(winner: String):
-	"""Handle combat end"""
+# Handle combat end
 	# Reduce alert when combat ends
 	global_alert_level *= 0.7
 
 func alert_nearby_allies(ai: AIController, target: Node):
-	"""Alert nearby allies about target"""
+# Alert nearby allies about target
 	var nearby_allies = []
 	
 	for other_ai in registered_ai:
@@ -593,7 +593,7 @@ func alert_nearby_allies(ai: AIController, target: Node):
 
 # Save/Load Integration
 func get_ai_manager_save_data() -> Dictionary:
-	"""Get AI manager save data"""
+# Get AI manager save data
 	var save_data = {
 		"global_alert_level": global_alert_level,
 		"ai_difficulty_modifier": ai_difficulty_modifier,
@@ -613,7 +613,7 @@ func get_ai_manager_save_data() -> Dictionary:
 	return save_data
 
 func load_ai_manager_save_data(data: Dictionary):
-	"""Load AI manager save data"""
+# Load AI manager save data
 	if "global_alert_level" in data:
 		global_alert_level = data.global_alert_level
 	if "ai_difficulty_modifier" in data:
@@ -625,7 +625,7 @@ func load_ai_manager_save_data(data: Dictionary):
 
 # Debug and Utilities
 func get_ai_statistics() -> Dictionary:
-	"""Get AI system statistics"""
+# Get AI system statistics
 	var stats = ai_performance_stats.duplicate()
 	stats["registered_ai"] = registered_ai.size()
 	stats["ai_by_type"] = {}
@@ -639,7 +639,7 @@ func get_ai_statistics() -> Dictionary:
 	return stats
 
 func debug_print_ai_info():
-	"""Print debug information about all AI"""
+# Print debug information about all AI
 	print("[AIManager] === AI Debug Info ===")
 	print("Total registered: ", registered_ai.size())
 	print("Active AI: ", active_ai.size())
@@ -653,7 +653,7 @@ func debug_print_ai_info():
 
 # Cleanup
 func _exit_tree():
-	"""Cleanup when AI manager is removed"""
+# Cleanup when AI manager is removed
 	for ai in registered_ai:
 		if is_instance_valid(ai):
 			unregister_ai(ai)

@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name AIController
 # AIController.gd - Advanced AI system for mobs and bosses
 # Supports behavior trees, state machines, perception, and dynamic priorities
@@ -110,7 +110,7 @@ func _ready():
 	print("[AIController] AI system ready for: ", entity.name)
 
 func setup_components():
-	"""Initialize AI components"""
+# Initialize AI components
 	# Find required components
 	health_component = entity.get_node_or_null("HealthComponent")
 	combat_component = entity.get_node_or_null("CombatComponent")
@@ -124,7 +124,7 @@ func setup_components():
 		push_error("AI entity requires MovementComponent")
 
 func setup_senses():
-	"""Initialize AI senses"""
+# Initialize AI senses
 	senses = preload("res://systems/ai/AISenses.gd").new()
 	add_child(senses)
 	senses.setup(entity, detection_range)
@@ -135,7 +135,7 @@ func setup_senses():
 	senses.sound_heard.connect(_on_sound_heard)
 
 func setup_behavior_tree():
-	"""Initialize behavior tree system"""
+# Initialize behavior tree system
 	behavior_tree = AIBehaviorTree.new()
 	add_child(behavior_tree)
 	
@@ -146,7 +146,7 @@ func setup_behavior_tree():
 	build_behavior_tree()
 
 func setup_state_machine():
-	"""Initialize state machine"""
+# Initialize state machine
 	state_machine = AIStateMachine.new()
 	add_child(state_machine)
 	
@@ -157,14 +157,14 @@ func setup_state_machine():
 	state_machine.state_changed.connect(_on_state_changed)
 
 func setup_target_selector():
-	"""Initialize target selection system"""
+# Initialize target selection system
 	target_selector = AITargetSelector.new()
 	add_child(target_selector)
 	
 	target_selector.setup(entity, senses)
 
 func connect_to_systems():
-	"""Connect to external game systems"""
+# Connect to external game systems
 	# Climate integration
 	climate_manager = get_node_or_null("/root/ClimateManager")
 	if climate_manager:
@@ -186,7 +186,7 @@ func connect_to_systems():
 		health_component.died.connect(_on_entity_died)
 
 func configure_ai_type():
-	"""Configure AI behavior based on type"""
+# Configure AI behavior based on type
 	match ai_type:
 		AIType.MELEE:
 			configure_melee_ai()
@@ -202,7 +202,7 @@ func configure_ai_type():
 			configure_boss_ai()
 
 func configure_melee_ai():
-	"""Configure melee fighter AI"""
+# Configure melee fighter AI
 	attack_range = 60.0
 	detection_range = 120.0
 	flee_threshold = 0.1  # Fight almost to death
@@ -213,7 +213,7 @@ func configure_melee_ai():
 	set_behavior_priority("defensive_position", Priority.MEDIUM)
 
 func configure_ranged_ai():
-	"""Configure ranged attacker AI"""
+# Configure ranged attacker AI
 	attack_range = 150.0
 	detection_range = 200.0
 	flee_threshold = 0.15
@@ -224,7 +224,7 @@ func configure_ranged_ai():
 	set_behavior_priority("kiting", Priority.MEDIUM)
 
 func configure_coward_ai():
-	"""Configure coward mob AI"""
+# Configure coward mob AI
 	attack_range = 40.0
 	detection_range = 100.0
 	flee_threshold = 0.5  # Flee when half health
@@ -235,7 +235,7 @@ func configure_coward_ai():
 	set_behavior_priority("cautious_attack", Priority.LOW)
 
 func configure_elite_ai():
-	"""Configure elite mob AI"""
+# Configure elite mob AI
 	attack_range = 80.0
 	detection_range = 180.0
 	flee_threshold = 0.0  # Never flee
@@ -246,7 +246,7 @@ func configure_elite_ai():
 	set_behavior_priority("area_control", Priority.MEDIUM)
 
 func configure_minion_ai():
-	"""Configure minion AI"""
+# Configure minion AI
 	attack_range = 50.0
 	detection_range = 100.0
 	flee_threshold = 0.3
@@ -257,7 +257,7 @@ func configure_minion_ai():
 	set_behavior_priority("simple_attack", Priority.MEDIUM)
 
 func configure_boss_ai():
-	"""Configure boss AI"""
+# Configure boss AI
 	attack_range = 100.0
 	detection_range = 300.0
 	flee_threshold = 0.0  # Bosses never flee
@@ -269,7 +269,7 @@ func configure_boss_ai():
 	set_behavior_priority("environmental_awareness", Priority.HIGH)
 
 func _process(delta):
-	"""Main AI update loop"""
+# Main AI update loop
 	if current_state == AIState.DEAD:
 		return
 	
@@ -293,7 +293,7 @@ func _process(delta):
 	apply_climate_effects(delta)
 
 func update_timers(delta):
-	"""Update various AI timers"""
+# Update various AI timers
 	state_timer += delta
 	
 	if aggro_timer > 0:
@@ -302,7 +302,7 @@ func update_timers(delta):
 			_on_aggro_timeout()
 
 func update_boss_behavior(delta):
-	"""Update boss-specific behavior"""
+# Update boss-specific behavior
 	if not phase_transition_triggered:
 		check_phase_transition()
 	
@@ -311,7 +311,7 @@ func update_boss_behavior(delta):
 		update_boss_tactics(delta)
 
 func check_phase_transition():
-	"""Check if boss should transition to next phase"""
+# Check if boss should transition to next phase
 	if not health_component:
 		return
 	
@@ -322,7 +322,7 @@ func check_phase_transition():
 		trigger_boss_phase_transition()
 
 func trigger_boss_phase_transition():
-	"""Trigger boss phase transition"""
+# Trigger boss phase transition
 	phase_transition_triggered = true
 	boss_phase += 1
 	
@@ -335,7 +335,7 @@ func trigger_boss_phase_transition():
 	configure_boss_phase(boss_phase)
 
 func configure_boss_phase(phase: int):
-	"""Configure boss behavior for specific phase"""
+# Configure boss behavior for specific phase
 	match phase:
 		1:
 			# Basic attacks, learning player patterns
@@ -351,7 +351,7 @@ func configure_boss_phase(phase: int):
 			set_behavior_priority("environmental_damage", Priority.HIGH)
 
 func update_boss_tactics(delta):
-	"""Update boss tactical behavior"""
+# Update boss tactical behavior
 	# Predict player movement
 	var predicted_position = predict_player_movement()
 	
@@ -362,7 +362,7 @@ func update_boss_tactics(delta):
 	update_boss_targeting(predicted_position, safe_positions)
 
 func predict_player_movement() -> Vector2:
-	"""Predict where player will be"""
+# Predict where player will be
 	if not current_target:
 		return Vector2.ZERO
 	
@@ -375,7 +375,7 @@ func predict_player_movement() -> Vector2:
 	return current_target.global_position + (target_velocity * prediction_time)
 
 func get_safe_positions() -> Array:
-	"""Get positions safe from environmental hazards"""
+# Get positions safe from environmental hazards
 	var safe_positions = []
 	var grid_size = 50.0
 	
@@ -389,20 +389,20 @@ func get_safe_positions() -> Array:
 	return safe_positions
 
 func is_position_safe(position: Vector2) -> bool:
-	"""Check if position is safe from hazards"""
+# Check if position is safe from hazards
 	# TODO: Check for environmental hazards, spell effects, etc.
 	# This would integrate with spell/hazard systems
 	return true
 
 func update_boss_targeting(predicted_pos: Vector2, safe_positions: Array):
-	"""Update boss targeting based on predictions and safety"""
+# Update boss targeting based on predictions and safety
 	# Choose attack based on predicted player position
 	# Prefer safe positions for boss positioning
 	pass
 
 # State Management
 func change_state(new_state: AIState):
-	"""Change AI state with proper transition"""
+# Change AI state with proper transition
 	if new_state == current_state:
 		return
 	
@@ -418,7 +418,7 @@ func change_state(new_state: AIState):
 	print("[AIController] State changed: ", AIState.keys()[previous_state], " -> ", AIState.keys()[current_state])
 
 func enter_state(state: AIState):
-	"""Execute logic when entering a state"""
+# Execute logic when entering a state
 	match state:
 		AIState.IDLE:
 			# Reset aggro, start idle behavior
@@ -450,7 +450,7 @@ func enter_state(state: AIState):
 			start_phase_transition()
 
 func exit_state(state: AIState):
-	"""Execute logic when exiting a state"""
+# Execute logic when exiting a state
 	match state:
 		AIState.ALERT:
 			senses.reset_alertness()
@@ -463,7 +463,7 @@ func exit_state(state: AIState):
 
 # Behavior Tree System
 func create_behavior_nodes():
-	"""Create behavior tree nodes"""
+# Create behavior tree nodes
 	behavior_nodes["selector"] = AISelector.new()
 	behavior_nodes["sequence"] = AISequence.new()
 	behavior_nodes["parallel"] = AIParallel.new()
@@ -482,7 +482,7 @@ func create_behavior_nodes():
 	behavior_nodes["call_for_help"] = AIAction.new("call_for_help", call_for_help)
 
 func build_behavior_tree():
-	"""Build the main behavior tree structure"""
+# Build the main behavior tree structure
 	var root = behavior_nodes["selector"]
 	
 	# High priority behaviors (flee, boss mechanics)
@@ -507,21 +507,21 @@ func build_behavior_tree():
 	behavior_tree.set_root(root)
 
 func create_flee_branch() -> AINode:
-	"""Create flee behavior branch"""
+# Create flee behavior branch
 	var flee_sequence = behavior_nodes["sequence"]
 	flee_sequence.add_child(behavior_nodes["low_health"])
 	flee_sequence.add_child(behavior_nodes["flee_from_target"])
 	return flee_sequence
 
 func create_boss_branch() -> AINode:
-	"""Create boss-specific behavior branch"""
+# Create boss-specific behavior branch
 	var boss_sequence = behavior_nodes["sequence"]
 	boss_sequence.add_child(behavior_nodes["is_boss"])
 	boss_sequence.add_child(AIAction.new("boss_behavior", execute_boss_behavior))
 	return boss_sequence
 
 func create_attack_branch() -> AINode:
-	"""Create attack behavior branch"""
+# Create attack behavior branch
 	var attack_sequence = behavior_nodes["sequence"]
 	attack_sequence.add_child(behavior_nodes["has_target"])
 	attack_sequence.add_child(behavior_nodes["in_range"])
@@ -529,19 +529,19 @@ func create_attack_branch() -> AINode:
 	return attack_sequence
 
 func create_pursuit_branch() -> AINode:
-	"""Create pursuit behavior branch"""
+# Create pursuit behavior branch
 	var pursuit_sequence = behavior_nodes["sequence"]
 	pursuit_sequence.add_child(behavior_nodes["has_target"])
 	pursuit_sequence.add_child(behavior_nodes["move_to_target"])
 	return pursuit_sequence
 
 func create_patrol_branch() -> AINode:
-	"""Create patrol behavior branch"""
+# Create patrol behavior branch
 	return behavior_nodes["patrol_area"]
 
 # Behavior Actions
 func move_to_target() -> bool:
-	"""Move towards current target"""
+# Move towards current target
 	if not current_target or not movement_component:
 		return false
 	
@@ -550,7 +550,7 @@ func move_to_target() -> bool:
 	return true
 
 func attack_target() -> bool:
-	"""Attack current target"""
+# Attack current target
 	if not current_target or not combat_component:
 		return false
 	
@@ -560,7 +560,7 @@ func attack_target() -> bool:
 		return combat_component.melee_attack(current_target)
 
 func flee_from_target() -> bool:
-	"""Flee from current target"""
+# Flee from current target
 	if not current_target or not movement_component:
 		return false
 	
@@ -570,7 +570,7 @@ func flee_from_target() -> bool:
 	return true
 
 func patrol_area() -> bool:
-	"""Patrol assigned area"""
+# Patrol assigned area
 	if not movement_component:
 		return false
 	
@@ -581,7 +581,7 @@ func patrol_area() -> bool:
 	return true
 
 func call_for_help() -> bool:
-	"""Call nearby allies for help"""
+# Call nearby allies for help
 	if ai_type != AIType.COWARD:
 		return false
 	
@@ -594,7 +594,7 @@ func call_for_help() -> bool:
 	return true
 
 func execute_boss_behavior() -> bool:
-	"""Execute boss-specific behavior"""
+# Execute boss-specific behavior
 	if ai_type != AIType.BOSS:
 		return false
 	
@@ -610,7 +610,7 @@ func execute_boss_behavior() -> bool:
 	return false
 
 func execute_boss_phase_1() -> bool:
-	"""Execute boss phase 1 behavior"""
+# Execute boss phase 1 behavior
 	# Basic attacks with pattern learning
 	if current_target:
 		learn_player_patterns()
@@ -618,7 +618,7 @@ func execute_boss_phase_1() -> bool:
 	return false
 
 func execute_boss_phase_2() -> bool:
-	"""Execute boss phase 2 behavior"""
+# Execute boss phase 2 behavior
 	# Special abilities and aggressive tactics
 	if current_target:
 		use_special_abilities()
@@ -626,7 +626,7 @@ func execute_boss_phase_2() -> bool:
 	return false
 
 func execute_boss_phase_3() -> bool:
-	"""Execute boss phase 3 behavior"""
+# Execute boss phase 3 behavior
 	# Desperate attacks with environmental damage
 	if current_target:
 		use_environmental_attacks()
@@ -635,7 +635,7 @@ func execute_boss_phase_3() -> bool:
 
 # Condition Checks
 func check_target_in_range() -> bool:
-	"""Check if target is in attack range"""
+# Check if target is in attack range
 	if not current_target:
 		return false
 	
@@ -643,7 +643,7 @@ func check_target_in_range() -> bool:
 	return distance <= attack_range
 
 func check_low_health() -> bool:
-	"""Check if entity has low health"""
+# Check if entity has low health
 	if not health_component:
 		return false
 	
@@ -652,15 +652,15 @@ func check_low_health() -> bool:
 
 # Priority System
 func set_behavior_priority(behavior_name: String, priority: int):
-	"""Set priority for a behavior"""
+# Set priority for a behavior
 	behavior_priorities[behavior_name] = priority
 
 func get_behavior_priority(behavior_name: String) -> int:
-	"""Get priority for a behavior"""
+# Get priority for a behavior
 	return behavior_priorities.get(behavior_name, Priority.LOW)
 
 func add_priority_modifier(modifier_name: String, value: int, duration: float = -1):
-	"""Add temporary priority modifier"""
+# Add temporary priority modifier
 	priority_modifiers[modifier_name] = {
 		"value": value,
 		"duration": duration,
@@ -668,7 +668,7 @@ func add_priority_modifier(modifier_name: String, value: int, duration: float = 
 	}
 
 func update_priority_modifiers(delta: float):
-	"""Update temporary priority modifiers"""
+# Update temporary priority modifiers
 	for modifier_name in priority_modifiers.keys():
 		var modifier = priority_modifiers[modifier_name]
 		if modifier.duration > 0:
@@ -678,7 +678,7 @@ func update_priority_modifiers(delta: float):
 
 # Helper Functions
 func get_nearby_allies(radius: float) -> Array:
-	"""Get nearby allied entities"""
+# Get nearby allied entities
 	var allies = []
 	var space_state = entity.get_world_2d().direct_space_state
 	
@@ -687,7 +687,7 @@ func get_nearby_allies(radius: float) -> Array:
 	return allies
 
 func learn_player_patterns():
-	"""Learn and adapt to player behavior patterns"""
+# Learn and adapt to player behavior patterns
 	if not current_target:
 		return
 	
@@ -696,61 +696,61 @@ func learn_player_patterns():
 	pass
 
 func use_special_abilities():
-	"""Use boss special abilities"""
+# Use boss special abilities
 	# Implementation depends on boss type and available abilities
 	pass
 
 func use_environmental_attacks():
-	"""Use environmental attacks"""
+# Use environmental attacks
 	# Implementation depends on environment and boss abilities
 	pass
 
 # State Behavior Functions
 func start_patrol_behavior():
-	"""Start patrol behavior"""
+# Start patrol behavior
 	pass
 
 func start_attack_behavior():
-	"""Start attack behavior"""
+# Start attack behavior
 	pass
 
 func stop_attack_behavior():
-	"""Stop attack behavior"""
+# Stop attack behavior
 	pass
 
 func start_flee_behavior():
-	"""Start flee behavior"""
+# Start flee behavior
 	change_state(AIState.FLEE)
 
 func stop_flee_behavior():
-	"""Stop flee behavior"""
+# Stop flee behavior
 	pass
 
 func start_protect_behavior():
-	"""Start protect behavior"""
+# Start protect behavior
 	pass
 
 func disable_ai_temporarily():
-	"""Temporarily disable AI"""
+# Temporarily disable AI
 	set_process(false)
 
 func enable_ai():
-	"""Re-enable AI"""
+# Re-enable AI
 	set_process(true)
 
 func start_phase_transition():
-	"""Start boss phase transition"""
+# Start boss phase transition
 	# Play transition effects, disable normal behavior temporarily
 	pass
 
 func setup_state_transitions():
-	"""Setup state machine transitions"""
+# Setup state machine transitions
 	# This would be expanded with proper state machine implementation
 	pass
 
 # Apply external effects
 func apply_climate_effects(delta: float):
-	"""Apply climate effects to AI behavior"""
+# Apply climate effects to AI behavior
 	if not climate_manager:
 		return
 	
@@ -771,7 +771,7 @@ func apply_climate_effects(delta: float):
 
 # Signal Handlers
 func _on_target_detected(target: Node):
-	"""Handle target detection"""
+# Handle target detection
 	current_target = target
 	last_known_target_position = target.global_position
 	
@@ -781,7 +781,7 @@ func _on_target_detected(target: Node):
 	target_acquired.emit(target)
 
 func _on_target_lost():
-	"""Handle target loss"""
+# Handle target loss
 	if current_target:
 		change_state(AIState.PATROL)
 	
@@ -789,18 +789,18 @@ func _on_target_lost():
 	target_lost.emit()
 
 func _on_sound_heard(sound_position: Vector2, sound_type: String):
-	"""Handle sound detection"""
+# Handle sound detection
 	if current_state == AIState.IDLE:
 		change_state(AIState.ALERT)
 		# Move towards sound
 		last_known_target_position = sound_position
 
 func _on_state_changed(from_state: AIState, to_state: AIState):
-	"""Handle state change"""
+# Handle state change
 	print("[AIController] State transition: ", AIState.keys()[from_state], " -> ", AIState.keys()[to_state])
 
 func _on_damage_taken(damage: int, attacker: Node):
-	"""Handle taking damage"""
+# Handle taking damage
 	if attacker and not current_target:
 		current_target = attacker
 		change_state(AIState.ALERT)
@@ -812,11 +812,11 @@ func _on_damage_taken(damage: int, attacker: Node):
 			change_state(AIState.FLEE)
 
 func _on_attack_executed():
-	"""Handle attack execution"""
+# Handle attack execution
 	behavior_executed.emit("attack")
 
 func _on_health_changed(current_health: int, max_health: int):
-	"""Handle health change"""
+# Handle health change
 	var health_percentage = current_health / float(max_health)
 	
 	# Check for phase transitions (bosses)
@@ -828,22 +828,22 @@ func _on_health_changed(current_health: int, max_health: int):
 		change_state(AIState.FLEE)
 
 func _on_entity_died():
-	"""Handle entity death"""
+# Handle entity death
 	change_state(AIState.DEAD)
 	set_process(false)
 
 func _on_aggro_timeout():
-	"""Handle aggro timeout"""
+# Handle aggro timeout
 	if current_state == AIState.PURSUE and not senses.can_see_target(current_target):
 		change_state(AIState.PATROL)
 
 func _on_weather_changed(weather_type: String):
-	"""Handle weather changes"""
+# Handle weather changes
 	print("[AIController] Weather changed to: ", weather_type)
 	# Apply weather effects to AI behavior
 
 func _on_dynamic_event(event_type: String, event_data: Dictionary):
-	"""Handle dynamic events"""
+# Handle dynamic events
 	match event_type:
 		"reinforcements_called":
 			# Increase aggression
@@ -855,7 +855,7 @@ func _on_dynamic_event(event_type: String, event_data: Dictionary):
 
 # Save/Load Integration
 func get_save_data() -> Dictionary:
-	"""Get AI data for saving"""
+# Get AI data for saving
 	return {
 		"current_state": current_state,
 		"boss_phase": boss_phase,
@@ -865,7 +865,7 @@ func get_save_data() -> Dictionary:
 	}
 
 func load_save_data(data: Dictionary):
-	"""Load AI data from save"""
+# Load AI data from save
 	if "current_state" in data:
 		current_state = data.current_state
 	if "boss_phase" in data:
@@ -879,7 +879,7 @@ func load_save_data(data: Dictionary):
 
 # Debug Functions
 func debug_print_state():
-	"""Print current AI state for debugging"""
+# Print current AI state for debugging
 	print("[AIController DEBUG] Entity: ", entity.name)
 	print("  State: ", AIState.keys()[current_state])
 	print("  Target: ", current_target.name if current_target else "None")
@@ -888,7 +888,7 @@ func debug_print_state():
 
 # Cleanup
 func _exit_tree():
-	"""Cleanup when AI controller is removed"""
+# Cleanup when AI controller is removed
 	if senses:
 		senses.queue_free()
 	if behavior_tree:

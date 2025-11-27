@@ -1,7 +1,7 @@
-class_name AdvancedInventoryUI
+﻿class_name AdvancedInventoryUI
 extends Control
 
-## Sistema avançado de inventário com grid responsivo e drag & drop
+## Sistema avanÃ§ado de inventÃ¡rio com grid responsivo e drag & drop
 
 @onready var grid_container: GridContainer = $Background/MainContainer/InventoryGrid
 @onready var filter_container: HBoxContainer = $Background/MainContainer/HeaderContainer/FilterContainer
@@ -16,7 +16,7 @@ extends Control
 @onready var consumable_filter: Button = $Background/MainContainer/HeaderContainer/FilterContainer/ConsumableButton
 @onready var misc_filter: Button = $Background/MainContainer/HeaderContainer/FilterContainer/MiscButton
 
-# Ordenação
+# OrdenaÃ§Ã£o
 @onready var sort_name_btn: Button = $Background/MainContainer/HeaderContainer/SortContainer/NameButton
 @onready var sort_type_btn: Button = $Background/MainContainer/HeaderContainer/SortContainer/TypeButton
 @onready var sort_rarity_btn: Button = $Background/MainContainer/HeaderContainer/SortContainer/RarityButton
@@ -30,7 +30,7 @@ extends Control
 @onready var item_description: RichTextLabel = $Background/ItemInfoPanel/VBox/Description
 @onready var item_stats: VBoxContainer = $Background/ItemInfoPanel/VBox/StatsContainer
 
-# Sistema de inventário
+# Sistema de inventÃ¡rio
 var inventory_data: InventorySystem
 var slot_size: Vector2 = Vector2(64, 64)
 var grid_size: Vector2i = Vector2i(10, 8)  # 10x8 grid
@@ -40,7 +40,7 @@ var inventory_slots: Array[InventorySlot] = []
 var dragging_item: InventorySlot = null
 var drag_preview: Control = null
 
-# Filtros e ordenação
+# Filtros e ordenaÃ§Ã£o
 var current_filter: String = "all"
 var current_sort: String = "name"
 var sort_ascending: bool = true
@@ -57,13 +57,13 @@ func _ready():
 	setup_inventory_system()
 
 func setup_ui_theme():
-	"""Aplica tema dark fantasy"""
+# Aplica tema dark fantasy
 	# Background principal
 	var bg = $Background as ColorRect
 	if bg:
 		bg.color = UIThemeManager.Colors.BG_POPUP
 	
-	# Panel de informações
+	# Panel de informaÃ§Ãµes
 	item_info_panel.add_theme_stylebox_override("panel", 
 		UIThemeManager.create_panel_style(UIThemeManager.Colors.BG_PANEL))
 	
@@ -71,7 +71,7 @@ func setup_ui_theme():
 	grid_container.add_theme_stylebox_override("panel", 
 		UIThemeManager.create_panel_style(UIThemeManager.Colors.PRIMARY_DARK))
 	
-	# Botões de filtro
+	# BotÃµes de filtro
 	var filter_buttons = [all_filter, weapon_filter, armor_filter, consumable_filter, misc_filter]
 	for btn in filter_buttons:
 		if btn:
@@ -83,7 +83,7 @@ func setup_ui_theme():
 				))
 			btn.add_theme_color_override("font_color", UIThemeManager.Colors.TEXT_PRIMARY)
 	
-	# Botões de ordenação
+	# BotÃµes de ordenaÃ§Ã£o
 	var sort_buttons = [sort_name_btn, sort_type_btn, sort_rarity_btn, sort_value_btn]
 	for btn in sort_buttons:
 		if btn:
@@ -106,7 +106,7 @@ func setup_ui_theme():
 	item_rarity_label.add_theme_color_override("font_color", UIThemeManager.Colors.TECH_ORANGE)
 
 func setup_connections():
-	"""Conecta todos os sinais"""
+# Conecta todos os sinais
 	# Filtros
 	all_filter.pressed.connect(func(): apply_filter("all"))
 	weapon_filter.pressed.connect(func(): apply_filter("weapon"))
@@ -114,7 +114,7 @@ func setup_connections():
 	consumable_filter.pressed.connect(func(): apply_filter("consumable"))
 	misc_filter.pressed.connect(func(): apply_filter("misc"))
 	
-	# Ordenação
+	# OrdenaÃ§Ã£o
 	sort_name_btn.pressed.connect(func(): apply_sort("name"))
 	sort_type_btn.pressed.connect(func(): apply_sort("type"))
 	sort_rarity_btn.pressed.connect(func(): apply_sort("rarity"))
@@ -123,14 +123,14 @@ func setup_connections():
 	# Search
 	search_input.text_changed.connect(_on_search_changed)
 	
-	# Sistema de inventário
+	# Sistema de inventÃ¡rio
 	if EventBus:
 		EventBus.inventory_item_added.connect(_on_inventory_item_added)
 		EventBus.inventory_item_removed.connect(_on_inventory_item_removed)
 		EventBus.inventory_updated.connect(_on_inventory_updated)
 
 func setup_grid():
-	"""Configura grid de slots"""
+# Configura grid de slots
 	grid_container.columns = grid_size.x
 	
 	# Cria todos os slots
@@ -141,7 +141,7 @@ func setup_grid():
 			grid_container.add_child(slot)
 
 func create_inventory_slot(position: Vector2i) -> InventorySlot:
-	"""Cria um slot de inventário"""
+# Cria um slot de inventÃ¡rio
 	var slot = InventorySlot.new()
 	slot.setup(position, slot_size)
 	slot.custom_minimum_size = slot_size
@@ -157,17 +157,17 @@ func create_inventory_slot(position: Vector2i) -> InventorySlot:
 	return slot
 
 func setup_inventory_system():
-	"""Conecta com o sistema de inventário"""
+# Conecta com o sistema de inventÃ¡rio
 	inventory_data = InventorySystem.new()
 	inventory_data.setup(grid_size.x * grid_size.y)
 	refresh_inventory()
 
-# === FILTROS E ORDENAÇÃO ===
+# === FILTROS E ORDENAÃ‡ÃƒO ===
 func apply_filter(filter_type: String):
-	"""Aplica filtro aos itens"""
+# Aplica filtro aos itens
 	current_filter = filter_type
 	
-	# Atualiza visual dos botões
+	# Atualiza visual dos botÃµes
 	var filter_buttons = [all_filter, weapon_filter, armor_filter, consumable_filter, misc_filter]
 	for btn in filter_buttons:
 		btn.modulate = Color.WHITE
@@ -182,17 +182,17 @@ func apply_filter(filter_type: String):
 	refresh_inventory()
 
 func apply_sort(sort_type: String):
-	"""Aplica ordenação aos itens"""
+# Aplica ordenaÃ§Ã£o aos itens
 	if current_sort == sort_type:
 		sort_ascending = !sort_ascending
 	else:
 		current_sort = sort_type
 		sort_ascending = true
 	
-	# Atualiza visual dos botões
+	# Atualiza visual dos botÃµes
 	var sort_buttons = [sort_name_btn, sort_type_btn, sort_rarity_btn, sort_value_btn]
 	for btn in sort_buttons:
-		btn.text = btn.text.replace(" ↑", "").replace(" ↓", "")
+		btn.text = btn.text.replace(" â†‘", "").replace(" â†“", "")
 	
 	var active_button: Button
 	match sort_type:
@@ -202,43 +202,43 @@ func apply_sort(sort_type: String):
 		"value": active_button = sort_value_btn
 	
 	if active_button:
-		active_button.text += " ↑" if sort_ascending else " ↓"
+		active_button.text += " â†‘" if sort_ascending else " â†“"
 	
 	refresh_inventory()
 
 func _on_search_changed(new_text: String):
-	"""Atualiza filtro de busca"""
+# Atualiza filtro de busca
 	search_text = new_text.to_lower()
 	refresh_inventory()
 
 # === DRAG & DROP ===
 func _on_drag_started(slot: InventorySlot):
-	"""Inicia drag de um item"""
+# Inicia drag de um item
 	if not slot.has_item():
 		return
 	
 	dragging_item = slot
 	create_drag_preview(slot)
 	
-	# Destaca slots válidos
+	# Destaca slots vÃ¡lidos
 	highlight_valid_drop_zones(slot.item_data)
 
 func create_drag_preview(slot: InventorySlot):
-	"""Cria preview visual do drag"""
+# Cria preview visual do drag
 	drag_preview = Control.new()
 	drag_preview.z_index = 1000
 	
-	# Ícone do item
+	# Ãcone do item
 	var icon = TextureRect.new()
 	icon.texture = slot.item_icon.texture
 	icon.size = slot_size * 0.8  # Ligeiramente menor
-	icon.modulate = Color(1, 1, 1, 0.8)  # Translúcido
+	icon.modulate = Color(1, 1, 1, 0.8)  # TranslÃºcido
 	drag_preview.add_child(icon)
 	
 	get_tree().current_scene.add_child(drag_preview)
 
 func _on_drop_attempted(from_slot: InventorySlot, to_slot: InventorySlot):
-	"""Tenta fazer drop de um item"""
+# Tenta fazer drop de um item
 	if not dragging_item or not to_slot:
 		return
 	
@@ -255,7 +255,7 @@ func _on_drop_attempted(from_slot: InventorySlot, to_slot: InventorySlot):
 	cleanup_drag()
 
 func cleanup_drag():
-	"""Limpa estado de drag"""
+# Limpa estado de drag
 	if drag_preview:
 		drag_preview.queue_free()
 		drag_preview = null
@@ -264,7 +264,7 @@ func cleanup_drag():
 	clear_drop_zone_highlights()
 
 func highlight_valid_drop_zones(item_data: Dictionary):
-	"""Destaca zonas válidas para drop"""
+# Destaca zonas vÃ¡lidas para drop
 	for slot in inventory_slots:
 		if can_drop_item_in_slot(item_data, slot):
 			slot.modulate = UIThemeManager.Colors.SUCCESS_GREEN * 1.2
@@ -272,48 +272,48 @@ func highlight_valid_drop_zones(item_data: Dictionary):
 			slot.modulate = Color(0.5, 0.5, 0.5, 0.5)
 
 func clear_drop_zone_highlights():
-	"""Remove destaque das zonas de drop"""
+# Remove destaque das zonas de drop
 	for slot in inventory_slots:
 		slot.modulate = Color.WHITE
 
 func can_drop_item_in_slot(item_data: Dictionary, slot: InventorySlot) -> bool:
-	"""Verifica se item pode ser dropado no slot"""
+# Verifica se item pode ser dropado no slot
 	return not slot.has_item() or slot.can_stack_with(item_data)
 
 # === MOUSE TRACKING ===
 func _input(event):
-	"""Gerencia drag preview seguindo mouse"""
+# Gerencia drag preview seguindo mouse
 	if drag_preview and event is InputEventMouseMotion:
 		drag_preview.global_position = event.global_position - slot_size * 0.4
 
 # === SLOT EVENTS ===
 func _on_slot_clicked(slot: InventorySlot):
-	"""Click normal em slot"""
+# Click normal em slot
 	if slot.has_item():
 		show_item_info(slot.item_data)
 
 func _on_slot_right_clicked(slot: InventorySlot):
-	"""Right click em slot"""
+# Right click em slot
 	if slot.has_item():
 		item_right_clicked.emit(slot.item_data.id, slot)
 		show_context_menu(slot)
 
 func _on_item_hovered(slot: InventorySlot):
-	"""Mouse over item"""
+# Mouse over item
 	if slot.has_item():
 		show_item_tooltip(slot.item_data, slot.global_position)
 
 func _on_item_unhovered(slot: InventorySlot):
-	"""Mouse deixa item"""
+# Mouse deixa item
 	hide_item_tooltip()
 
 # === ITEM INFO ===
 func show_item_info(item_data: Dictionary):
-	"""Mostra informações detalhadas do item"""
+# Mostra informaÃ§Ãµes detalhadas do item
 	if not item_data:
 		return
 	
-	# Ícone
+	# Ãcone
 	if item_data.has("icon"):
 		item_icon.texture = load(item_data.icon) if item_data.icon is String else item_data.icon
 	
@@ -330,8 +330,8 @@ func show_item_info(item_data: Dictionary):
 	item_rarity_label.text = rarity.capitalize()
 	item_rarity_label.add_theme_color_override("font_color", rarity_color)
 	
-	# Descrição
-	item_description.text = item_data.get("description", "Nenhuma descrição disponível.")
+	# DescriÃ§Ã£o
+	item_description.text = item_data.get("description", "Nenhuma descriÃ§Ã£o disponÃ­vel.")
 	
 	# Stats
 	update_item_stats(item_data)
@@ -340,7 +340,7 @@ func show_item_info(item_data: Dictionary):
 	item_info_panel.visible = true
 
 func update_item_stats(item_data: Dictionary):
-	"""Atualiza stats do item"""
+# Atualiza stats do item
 	# Limpa stats antigas
 	for child in item_stats.get_children():
 		child.queue_free()
@@ -366,7 +366,7 @@ func update_item_stats(item_data: Dictionary):
 		item_stats.add_child(stat_container)
 
 func get_rarity_color(rarity: String) -> Color:
-	"""Retorna cor baseada na raridade"""
+# Retorna cor baseada na raridade
 	match rarity:
 		"legendary": return Color(1.0, 0.5, 0.0)  # Dourado
 		"epic": return Color(0.6, 0.3, 0.9)       # Roxo
@@ -375,7 +375,7 @@ func get_rarity_color(rarity: String) -> Color:
 		_: return UIThemeManager.Colors.TEXT_PRIMARY  # Comum = branco
 
 func show_context_menu(slot: InventorySlot):
-	"""Mostra menu de contexto do item"""
+# Mostra menu de contexto do item
 	# Implementar menu de contexto (usar, dropar, etc.)
 	pass
 
@@ -383,7 +383,7 @@ func show_context_menu(slot: InventorySlot):
 var tooltip_popup: Control
 
 func show_item_tooltip(item_data: Dictionary, position: Vector2):
-	"""Mostra tooltip rápido do item"""
+# Mostra tooltip rÃ¡pido do item
 	hide_item_tooltip()
 	
 	tooltip_popup = Control.new()
@@ -405,26 +405,26 @@ func show_item_tooltip(item_data: Dictionary, position: Vector2):
 	get_tree().current_scene.add_child(tooltip_popup)
 
 func hide_item_tooltip():
-	"""Esconde tooltip"""
+# Esconde tooltip
 	if tooltip_popup:
 		tooltip_popup.queue_free()
 		tooltip_popup = null
 
 # === INVENTORY UPDATES ===
 func _on_inventory_item_added(item_data: Dictionary, position: Vector2i):
-	"""Item adicionado ao inventário"""
+# Item adicionado ao inventÃ¡rio
 	refresh_slot(position)
 
 func _on_inventory_item_removed(position: Vector2i):
-	"""Item removido do inventário"""
+# Item removido do inventÃ¡rio
 	refresh_slot(position)
 
 func _on_inventory_updated():
-	"""Inventário foi atualizado"""
+# InventÃ¡rio foi atualizado
 	refresh_inventory()
 
 func refresh_inventory():
-	"""Atualiza toda a visualização do inventário"""
+# Atualiza toda a visualizaÃ§Ã£o do inventÃ¡rio
 	var filtered_items = get_filtered_items()
 	var sorted_items = sort_items(filtered_items)
 	
@@ -442,7 +442,7 @@ func refresh_inventory():
 			slot.set_item(item, texture)
 
 func refresh_slot(position: Vector2i):
-	"""Atualiza um slot específico"""
+# Atualiza um slot especÃ­fico
 	var slot_index = position.y * grid_size.x + position.x
 	if slot_index >= 0 and slot_index < inventory_slots.size():
 		var slot = inventory_slots[slot_index]
@@ -455,7 +455,7 @@ func refresh_slot(position: Vector2i):
 			slot.clear_item()
 
 func get_filtered_items() -> Array[Dictionary]:
-	"""Retorna itens filtrados"""
+# Retorna itens filtrados
 	var items = inventory_data.get_all_items()
 	var filtered: Array[Dictionary] = []
 	
@@ -473,7 +473,7 @@ func get_filtered_items() -> Array[Dictionary]:
 	return filtered
 
 func sort_items(items: Array[Dictionary]) -> Array[Dictionary]:
-	"""Ordena itens conforme critério atual"""
+# Ordena itens conforme critÃ©rio atual
 	var sorted = items.duplicate()
 	
 	sorted.sort_custom(func(a, b):
@@ -489,7 +489,7 @@ func sort_items(items: Array[Dictionary]) -> Array[Dictionary]:
 	return sorted
 
 func get_sort_value(item: Dictionary):
-	"""Retorna valor para ordenação"""
+# Retorna valor para ordenaÃ§Ã£o
 	match current_sort:
 		"name": return item.get("name", "")
 		"type": return item.get("type", "")
@@ -498,7 +498,7 @@ func get_sort_value(item: Dictionary):
 		_: return item.get("name", "")
 
 func get_rarity_order(rarity: String) -> int:
-	"""Retorna ordem numérica da raridade"""
+# Retorna ordem numÃ©rica da raridade
 	match rarity:
 		"legendary": return 5
 		"epic": return 4
@@ -509,17 +509,17 @@ func get_rarity_order(rarity: String) -> int:
 
 # === PUBLIC METHODS ===
 func add_item(item_data: Dictionary) -> bool:
-	"""Adiciona item ao inventário"""
+# Adiciona item ao inventÃ¡rio
 	return inventory_data.add_item(item_data)
 
 func remove_item(item_id: String, quantity: int = 1) -> bool:
-	"""Remove item do inventário"""
+# Remove item do inventÃ¡rio
 	return inventory_data.remove_item(item_id, quantity)
 
 func has_item(item_id: String) -> bool:
-	"""Verifica se tem item"""
+# Verifica se tem item
 	return inventory_data.has_item(item_id)
 
 func get_item_count(item_id: String) -> int:
-	"""Retorna quantidade de um item"""
+# Retorna quantidade de um item
 	return inventory_data.get_item_count(item_id)

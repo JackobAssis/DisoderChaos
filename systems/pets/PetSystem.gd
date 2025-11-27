@@ -1,8 +1,8 @@
-# Sistema de Pets - Disorder Chaos
+﻿# Sistema de Pets - Disorder Chaos
 extends System
 class_name PetSystem
 
-## Sistema ECS responsável por gerenciar a lógica dos pets
+## Sistema ECS responsÃ¡vel por gerenciar a lÃ³gica dos pets
 ## Processa todas as entidades com PetComponent
 
 signal pet_system_ready()
@@ -23,7 +23,7 @@ func _ready():
 	EventBus.area_entered.connect(_on_area_entered)
 	EventBus.area_exited.connect(_on_area_exited)
 	
-	# Carregar configurações
+	# Carregar configuraÃ§Ãµes
 	_load_global_config()
 	
 	pet_system_ready.emit()
@@ -53,7 +53,7 @@ func add_entity(entity: Entity):
 	if entity not in pet_entities:
 		pet_entities.append(entity)
 		
-		# Carregar pets se necessário
+		# Carregar pets se necessÃ¡rio
 		if pet_component.available_pets.is_empty():
 			pet_component.load_pets_from_file()
 		
@@ -82,7 +82,7 @@ func _process_pet_entity(entity: Entity, delta: float):
 	# Verificar se pet deve ser auto-dispensado
 	_check_auto_dismiss_conditions(entity, pet_component)
 	
-	# Processar comportamentos específicos do pet ativo
+	# Processar comportamentos especÃ­ficos do pet ativo
 	if pet_component.has_active_pet():
 		var active_pet = pet_component.active_pet
 		_process_pet_behaviors(entity, active_pet, delta)
@@ -133,14 +133,14 @@ func give_pet_xp_to_entity(entity: Entity, xp_amount: int):
 	if pet_component:
 		pet_component.give_pet_xp(xp_amount)
 
-## Obtém pets de uma entidade
+## ObtÃ©m pets de uma entidade
 func get_entity_pets(entity: Entity) -> Array[Pet]:
 	var pet_component = entity.get_component("PetComponent")
 	if pet_component:
 		return pet_component.available_pets
 	return []
 
-## Obtém pet ativo de uma entidade
+## ObtÃ©m pet ativo de uma entidade
 func get_entity_active_pet(entity: Entity) -> Pet:
 	var pet_component = entity.get_component("PetComponent")
 	if pet_component:
@@ -154,7 +154,7 @@ func entity_has_active_pet(entity: Entity) -> bool:
 		return pet_component.has_active_pet()
 	return false
 
-## Carrega configurações globais
+## Carrega configuraÃ§Ãµes globais
 func _load_global_config():
 	var file = FileAccess.open("res://data/pets/pets.json", FileAccess.READ)
 	if file:
@@ -166,14 +166,14 @@ func _load_global_config():
 			ai_update_rate = config.get("ai_update_rate", 0.2)
 			follow_update_rate = config.get("follow_update_rate", 0.1)
 
-## Verifica condições automáticas de dismiss
+## Verifica condiÃ§Ãµes automÃ¡ticas de dismiss
 func _check_auto_dismiss_conditions(entity: Entity, pet_component: PetComponent):
 	if not pet_component.has_active_pet():
 		return
 	
 	var active_pet = pet_component.active_pet
 	
-	# Verificar se entrou em área PVP (se configurado)
+	# Verificar se entrou em Ã¡rea PVP (se configurado)
 	if _is_entity_in_pvp_area(entity):
 		var file = FileAccess.open("res://data/pets/pets.json", FileAccess.READ)
 		if file:
@@ -184,9 +184,9 @@ func _check_auto_dismiss_conditions(entity: Entity, pet_component: PetComponent)
 				var auto_dismiss = json_data["global_config"].get("auto_dismiss_in_pvp", true)
 				if auto_dismiss:
 					pet_component.dismiss_active_pet()
-					_show_notification(entity, "Pet dispensado automaticamente - Área PVP")
+					_show_notification(entity, "Pet dispensado automaticamente - Ãrea PVP")
 
-## Processa comportamentos específicos do pet
+## Processa comportamentos especÃ­ficos do pet
 func _process_pet_behaviors(entity: Entity, pet: Pet, delta: float):
 	if not pet or not pet.is_active:
 		return
@@ -204,7 +204,7 @@ func _process_pet_behaviors(entity: Entity, pet: Pet, delta: float):
 
 ## Processa pet de ataque
 func _process_attack_pet(entity: Entity, pet: Pet, delta: float):
-	# Verificar se há inimigos próximos
+	# Verificar se hÃ¡ inimigos prÃ³ximos
 	var enemies = _find_enemies_near_entity(entity, 200.0)
 	
 	if enemies.size() > 0:
@@ -219,13 +219,13 @@ func _process_support_pet(entity: Entity, pet: Pet, delta: float):
 	if health_component:
 		var health_percent = health_component.current_health / health_component.max_health
 		
-		# Usar cura automática se vida estiver baixa
+		# Usar cura automÃ¡tica se vida estiver baixa
 		if health_percent < 0.5:
 			_use_pet_heal_ability(pet)
 
 ## Processa pet coletor
 func _process_collector_pet(entity: Entity, pet: Pet, delta: float):
-	# Procurar itens próximos
+	# Procurar itens prÃ³ximos
 	var items = _find_items_near_entity(entity, 150.0)
 	
 	if items.size() > 0:
@@ -236,7 +236,7 @@ func _process_passive_pet(entity: Entity, pet: Pet, delta: float):
 	# Aplicar buffs passivos continuamente
 	_apply_passive_buffs(entity, pet)
 
-## Verifica se entidade está em área PVP
+## Verifica se entidade estÃ¡ em Ã¡rea PVP
 func _is_entity_in_pvp_area(entity: Entity) -> bool:
 	var area_component = entity.get_component("AreaComponent")
 	if area_component and area_component.has_method("get_current_area"):
@@ -251,7 +251,7 @@ func _is_entity_in_pvp_area(entity: Entity) -> bool:
 	
 	return false
 
-## Encontra inimigos próximos a uma entidade
+## Encontra inimigos prÃ³ximos a uma entidade
 func _find_enemies_near_entity(entity: Entity, radius: float) -> Array:
 	var enemies = []
 	
@@ -264,7 +264,7 @@ func _find_enemies_near_entity(entity: Entity, radius: float) -> Array:
 	
 	return enemies
 
-## Encontra itens próximos a uma entidade
+## Encontra itens prÃ³ximos a uma entidade
 func _find_items_near_entity(entity: Entity, radius: float) -> Array:
 	var items = []
 	
@@ -273,7 +273,7 @@ func _find_items_near_entity(entity: Entity, radius: float) -> Array:
 	
 	return items
 
-## Obtém inimigo mais próximo
+## ObtÃ©m inimigo mais prÃ³ximo
 func _get_closest_enemy(pet_node: Node, enemies: Array) -> Node:
 	if enemies.is_empty() or not pet_node:
 		return null
@@ -317,11 +317,11 @@ func _collect_items_with_pet(pet: Pet, items: Array):
 
 ## Aplica buffs passivos
 func _apply_passive_buffs(entity: Entity, pet: Pet):
-	# Buffs passivos são aplicados pela própria classe Pet
-	# Este método pode ser expandido para coordenar buffs múltiplos
+	# Buffs passivos sÃ£o aplicados pela prÃ³pria classe Pet
+	# Este mÃ©todo pode ser expandido para coordenar buffs mÃºltiplos
 	pass
 
-## Obtém dados de habilidade
+## ObtÃ©m dados de habilidade
 func _get_ability_data(ability_id: String) -> Dictionary:
 	var file = FileAccess.open("res://data/pets/pets.json", FileAccess.READ)
 	if file:
@@ -333,7 +333,7 @@ func _get_ability_data(ability_id: String) -> Dictionary:
 	
 	return {}
 
-## Mostra notificação para a entidade
+## Mostra notificaÃ§Ã£o para a entidade
 func _show_notification(entity: Entity, message: String):
 	print("[Pet Notification] ", entity.name, ": ", message)
 	EventBus.notification_triggered.emit(entity, message, "pet")
@@ -342,7 +342,7 @@ func _show_notification(entity: Entity, message: String):
 func _on_pet_summoned(entity: Entity, pet: Pet):
 	print("Pet summoned: ", pet.name, " by ", entity.name)
 	
-	# Efeitos especiais de invocação
+	# Efeitos especiais de invocaÃ§Ã£o
 	EventBus.effect_triggered.emit(entity, "pet_summon_" + pet.type)
 
 func _on_pet_dismissed(entity: Entity, pet: Pet):
@@ -354,27 +354,27 @@ func _on_pet_level_up(entity: Entity, pet: Pet, new_level: int):
 	# Efeito visual de level up
 	EventBus.effect_triggered.emit(entity, "pet_levelup")
 	
-	# Notificação para o jogador
-	_show_notification(entity, pet.name + " subiu para nível " + str(new_level) + "!")
+	# NotificaÃ§Ã£o para o jogador
+	_show_notification(entity, pet.name + " subiu para nÃ­vel " + str(new_level) + "!")
 
 func _on_area_entered(entity: Entity, area_name: String):
 	if not entity_has_active_pet(entity):
 		return
 	
-	# Verificar se é área restrita para pets
+	# Verificar se Ã© Ã¡rea restrita para pets
 	if area_name in ["dungeon_boss_room", "safe_zone"]:
 		var pet_component = entity.get_component("PetComponent")
 		if pet_component and pet_component.active_pet:
 			pet_component.dismiss_active_pet()
-			_show_notification(entity, "Pet dispensado automaticamente - Área restrita")
+			_show_notification(entity, "Pet dispensado automaticamente - Ãrea restrita")
 
 func _on_area_exited(entity: Entity, area_name: String):
-	# Placeholder para lógica de saída de área
+	# Placeholder para lÃ³gica de saÃ­da de Ã¡rea
 	pass
 
-## Métodos de gerenciamento global
+## MÃ©todos de gerenciamento global
 func dismiss_all_pets_in_area(area_name: String):
-	"""Dispensa todos os pets em uma área específica"""
+# Dispensa todos os pets em uma Ã¡rea especÃ­fica
 	for entity in pet_entities:
 		var area_component = entity.get_component("AreaComponent")
 		if area_component and area_component.has_method("get_current_area"):
@@ -382,7 +382,7 @@ func dismiss_all_pets_in_area(area_name: String):
 				dismiss_pet_for_entity(entity)
 
 func apply_global_pet_effect(effect_name: String, data: Dictionary):
-	"""Aplica efeito global a todos os pets ativos"""
+# Aplica efeito global a todos os pets ativos
 	for entity in pet_entities:
 		var pet_component = entity.get_component("PetComponent")
 		if pet_component and pet_component.has_active_pet():
@@ -395,13 +395,13 @@ func _apply_global_effect_to_pet(pet: Pet, effect_name: String, data: Dictionary
 			var xp_bonus = data.get("amount", 0)
 			pet.gain_xp(xp_bonus)
 		"stat_boost":
-			# Implementar boost temporário de stats
+			# Implementar boost temporÃ¡rio de stats
 			pass
 		"ability_reset":
 			# Resetar cooldowns de habilidades
 			pet.last_ability_use.clear()
 
-## Obter estatísticas do sistema
+## Obter estatÃ­sticas do sistema
 func get_system_stats() -> Dictionary:
 	var active_pets = 0
 	var total_pet_level = 0
@@ -425,7 +425,7 @@ func get_system_stats() -> Dictionary:
 		"global_cooldown": global_pet_cooldown
 	}
 
-## Métodos de debug
+## MÃ©todos de debug
 func debug_print_pet_info(entity: Entity):
 	var pet_component = entity.get_component("PetComponent")
 	if pet_component == null:
@@ -441,7 +441,7 @@ func debug_print_system_stats():
 		print("  ", key, ": ", stats[key])
 	print("============================")
 
-## Cleanup quando o sistema é removido
+## Cleanup quando o sistema Ã© removido
 func _exit_tree():
 	# Dispensar todos os pets
 	for entity in pet_entities:

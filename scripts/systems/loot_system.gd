@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name LootSystem
 # loot_system.gd - Advanced loot generation and management system
 
@@ -23,7 +23,7 @@ func _ready():
 	print("[LootSystem] Loot system initialized")
 
 func drop_loot_from_enemy(enemy_id: String, player: Node, enemy_position: Vector2) -> Array:
-	"""Generate and drop loot from defeated enemy"""
+# Generate and drop loot from defeated enemy
 	var enemy_data = DataLoader.get_enemy_data(enemy_id)
 	if not enemy_data:
 		print("[LootSystem] No enemy data found for: ", enemy_id)
@@ -74,7 +74,7 @@ func drop_loot_from_enemy(enemy_id: String, player: Node, enemy_position: Vector
 	return dropped_items
 
 func generate_bonus_loot(enemy_data: Dictionary, player_luck: int) -> Dictionary:
-	"""Generate bonus loot based on enemy type and player luck"""
+# Generate bonus loot based on enemy type and player luck
 	var enemy_element = enemy_data.get("element", "neutral")
 	var enemy_difficulty = enemy_data.get("max_hp", 40)
 	
@@ -98,7 +98,7 @@ func generate_bonus_loot(enemy_data: Dictionary, player_luck: int) -> Dictionary
 	}
 
 func select_loot_rarity(player_luck: int, enemy_difficulty: int) -> String:
-	"""Select loot rarity based on player luck and enemy strength"""
+# Select loot rarity based on player luck and enemy strength
 	var modified_weights = rarity_weights.duplicate()
 	
 	# Increase rare item chances based on luck
@@ -119,7 +119,7 @@ func select_loot_rarity(player_luck: int, enemy_difficulty: int) -> String:
 	return weighted_random_selection(modified_weights)
 
 func weighted_random_selection(weights: Dictionary) -> String:
-	"""Select item using weighted random selection"""
+# Select item using weighted random selection
 	var total_weight = 0.0
 	for weight in weights.values():
 		total_weight += weight
@@ -135,7 +135,7 @@ func weighted_random_selection(weights: Dictionary) -> String:
 	return "common"  # Fallback
 
 func create_loot_pickup(loot_item: Dictionary, position: Vector2, player: Node):
-	"""Create visual loot pickup in the world"""
+# Create visual loot pickup in the world
 	# TODO: Create actual loot pickup objects in the world
 	# For now, just show notification
 	var item_data = DataLoader.get_item(loot_item.item_id)
@@ -144,16 +144,16 @@ func create_loot_pickup(loot_item: Dictionary, position: Vector2, player: Node):
 		if loot_item.quantity > 1:
 			message += " x" + str(loot_item.quantity)
 		
-		EventBus.ui_notification_shown.emit(message, "success")
+		EventBus.show_notification(message, "success")
 		EventBus.item_collected.emit(loot_item.item_id)
 
 func add_item_to_player_inventory(loot_item: Dictionary, player: Node):
-	"""Add loot item to player inventory"""
+# Add loot item to player inventory
 	if player and player.has_method("add_item_to_inventory"):
 		player.add_item_to_inventory(loot_item.item_id, loot_item.quantity)
 
 func generate_currency_loot(base_amount: int, player_luck: int) -> Dictionary:
-	"""Generate currency loot with luck modifier"""
+# Generate currency loot with luck modifier
 	var luck_multiplier = 1.0 + (player_luck - 10) * 0.05
 	var final_amount = int(base_amount * luck_multiplier * randf_range(0.8, 1.2))
 	
@@ -172,7 +172,7 @@ func generate_currency_loot(base_amount: int, player_luck: int) -> Dictionary:
 	}
 
 func generate_material_loot(enemy_element: String) -> Array:
-	"""Generate element-specific material loot"""
+# Generate element-specific material loot
 	var materials = []
 	
 	match enemy_element:
@@ -208,7 +208,7 @@ func generate_material_loot(enemy_element: String) -> Array:
 	}]
 
 func calculate_loot_modifier(player_level: int, enemy_level: int) -> float:
-	"""Calculate loot quantity modifier based on level difference"""
+# Calculate loot quantity modifier based on level difference
 	var level_diff = enemy_level - player_level
 	
 	if level_diff >= 5:
@@ -223,7 +223,7 @@ func calculate_loot_modifier(player_level: int, enemy_level: int) -> float:
 		return 1.0  # Normal loot
 
 func drop_container_loot(container_type: String, player: Node, position: Vector2) -> Array:
-	"""Generate loot from containers (chests, barrels, etc.)"""
+# Generate loot from containers (chests, barrels, etc.)
 	var loot_items = []
 	
 	match container_type:
@@ -246,7 +246,7 @@ func drop_container_loot(container_type: String, player: Node, position: Vector2
 	return loot_items
 
 func generate_chest_loot(min_rarity: String, max_items: int, player: Node) -> Array:
-	"""Generate loot for treasure chests"""
+# Generate loot for treasure chests
 	var loot_items = []
 	var num_items = randi_range(1, max_items)
 	
@@ -264,7 +264,7 @@ func generate_chest_loot(min_rarity: String, max_items: int, player: Node) -> Ar
 	return loot_items
 
 func generate_barrel_loot(player: Node) -> Array:
-	"""Generate loot for barrels (consumables and materials)"""
+# Generate loot for barrels (consumables and materials)
 	var barrel_items = ["minor_potion", "mana_potion", "wood", "bronze_coin"]
 	var selected_item = barrel_items[randi() % barrel_items.size()]
 	
@@ -274,7 +274,7 @@ func generate_barrel_loot(player: Node) -> Array:
 	}]
 
 func generate_crate_loot(player: Node) -> Array:
-	"""Generate loot for crates (materials and equipment)"""
+# Generate loot for crates (materials and equipment)
 	var crate_items = ["wood", "stone", "bronze_coin", "rusty_sword", "leather_armor"]
 	var selected_item = crate_items[randi() % crate_items.size()]
 	
@@ -284,7 +284,7 @@ func generate_crate_loot(player: Node) -> Array:
 	}]
 
 func select_chest_rarity(min_rarity: String) -> String:
-	"""Select rarity for chest loot with minimum guarantee"""
+# Select rarity for chest loot with minimum guarantee
 	var available_rarities = []
 	var rarity_order = ["common", "uncommon", "rare", "epic", "legendary", "mythic"]
 	var min_index = rarity_order.find(min_rarity)
@@ -306,7 +306,7 @@ func select_chest_rarity(min_rarity: String) -> String:
 
 # Utility functions for external use
 func get_loot_value(loot_items: Array) -> int:
-	"""Calculate total value of loot items"""
+# Calculate total value of loot items
 	var total_value = 0
 	for loot_item in loot_items:
 		var item_data = DataLoader.get_item(loot_item.item_id)
@@ -315,7 +315,7 @@ func get_loot_value(loot_items: Array) -> int:
 	return total_value
 
 func format_loot_summary(loot_items: Array) -> String:
-	"""Create formatted string of loot items"""
+# Create formatted string of loot items
 	if loot_items.is_empty():
 		return "No loot found"
 	
@@ -323,7 +323,7 @@ func format_loot_summary(loot_items: Array) -> String:
 	for loot_item in loot_items:
 		var item_data = DataLoader.get_item(loot_item.item_id)
 		if item_data:
-			summary += "• " + item_data.name
+			summary += "â€¢ " + item_data.name
 			if loot_item.quantity > 1:
 				summary += " x" + str(loot_item.quantity)
 			summary += "\n"

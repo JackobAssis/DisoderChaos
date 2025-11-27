@@ -1,7 +1,7 @@
-class_name AdvancedCraftingUI
+﻿class_name AdvancedCraftingUI
 extends Control
 
-## Sistema avançado de crafting com preview, materiais e chance de sucesso
+## Sistema avanÃ§ado de crafting com preview, materiais e chance de sucesso
 
 @onready var recipe_list: ItemList = $Background/MainContainer/RecipePanel/RecipeList
 @onready var recipe_search: LineEdit = $Background/MainContainer/RecipePanel/SearchInput
@@ -13,17 +13,17 @@ extends Control
 @onready var result_name: Label = $Background/MainContainer/PreviewPanel/ResultPreview/Name
 @onready var result_stats: VBoxContainer = $Background/MainContainer/PreviewPanel/ResultPreview/Stats
 
-# Materiais necessários
+# Materiais necessÃ¡rios
 @onready var materials_container: VBoxContainer = $Background/MainContainer/MaterialsPanel/MaterialsList
 @onready var craft_button: Button = $Background/MainContainer/MaterialsPanel/CraftButton
 
-# Chance de sucesso e informações
+# Chance de sucesso e informaÃ§Ãµes
 @onready var success_bar: ProgressBar = $Background/MainContainer/CraftingInfo/SuccessChance/ProgressBar
 @onready var success_label: Label = $Background/MainContainer/CraftingInfo/SuccessChance/Label
 @onready var craft_time_label: Label = $Background/MainContainer/CraftingInfo/CraftTime
 @onready var xp_reward_label: Label = $Background/MainContainer/CraftingInfo/XPReward
 
-# Estação de crafting
+# EstaÃ§Ã£o de crafting
 @onready var station_icon: TextureRect = $Background/MainContainer/StationInfo/Icon
 @onready var station_name: Label = $Background/MainContainer/StationInfo/Name
 @onready var station_level: Label = $Background/MainContainer/StationInfo/Level
@@ -40,7 +40,7 @@ var categories: Dictionary = {
 	"all": "Todos",
 	"weapons": "Armas", 
 	"armor": "Armaduras",
-	"consumables": "Consumíveis",
+	"consumables": "ConsumÃ­veis",
 	"materials": "Materiais",
 	"special": "Especiais"
 }
@@ -57,13 +57,13 @@ func _ready():
 	refresh_recipes()
 
 func setup_ui_theme():
-	"""Aplica tema dark fantasy"""
+# Aplica tema dark fantasy
 	# Background principal
 	var bg = $Background as ColorRect
 	if bg:
 		bg.color = UIThemeManager.Colors.BG_POPUP
 	
-	# Painéis
+	# PainÃ©is
 	var panels = [$Background/MainContainer/RecipePanel, 
 				  $Background/MainContainer/PreviewPanel,
 				  $Background/MainContainer/MaterialsPanel,
@@ -84,7 +84,7 @@ func setup_ui_theme():
 		UIThemeManager.create_panel_style(UIThemeManager.Colors.PRIMARY_DARK))
 	recipe_search.add_theme_color_override("font_color", UIThemeManager.Colors.TEXT_PRIMARY)
 	
-	# Botão de craft
+	# BotÃ£o de craft
 	craft_button.add_theme_stylebox_override("normal", 
 		UIThemeManager.create_button_style(
 			UIThemeManager.Colors.SUCCESS_GREEN,
@@ -100,7 +100,7 @@ func setup_ui_theme():
 		UIThemeManager.create_progress_bar_style(UIThemeManager.Colors.PRIMARY_DARK))
 
 func setup_connections():
-	"""Conecta todos os sinais"""
+# Conecta todos os sinais
 	recipe_list.item_selected.connect(_on_recipe_selected)
 	recipe_search.text_changed.connect(_on_search_changed)
 	craft_button.pressed.connect(_on_craft_pressed)
@@ -111,7 +111,7 @@ func setup_connections():
 		EventBus.inventory_changed.connect(_on_inventory_changed)
 
 func setup_categories():
-	"""Cria botões de categoria"""
+# Cria botÃµes de categoria
 	for category_id in categories:
 		var btn = Button.new()
 		btn.text = categories[category_id]
@@ -125,7 +125,7 @@ func setup_categories():
 		category_buttons.add_child(btn)
 
 func load_crafting_data():
-	"""Carrega dados de crafting do arquivo JSON"""
+# Carrega dados de crafting do arquivo JSON
 	var file = FileAccess.open("res://data/crafting/recipes.json", FileAccess.READ)
 	if file:
 		var json_text = file.get_as_text()
@@ -139,17 +139,17 @@ func load_crafting_data():
 		else:
 			print("Erro ao carregar recipes.json: ", json.get_error_message())
 	else:
-		print("Arquivo recipes.json não encontrado!")
+		print("Arquivo recipes.json nÃ£o encontrado!")
 
 func set_category(category: String):
-	"""Define categoria ativa"""
+# Define categoria ativa
 	current_category = category
 	
-	# Atualiza visual dos botões
+	# Atualiza visual dos botÃµes
 	for btn in category_buttons.get_children():
 		btn.modulate = Color.WHITE
 	
-	# Destaca botão ativo
+	# Destaca botÃ£o ativo
 	var active_index = categories.keys().find(category)
 	if active_index >= 0 and active_index < category_buttons.get_child_count():
 		category_buttons.get_child(active_index).modulate = UIThemeManager.Colors.CYBER_CYAN
@@ -157,7 +157,7 @@ func set_category(category: String):
 	refresh_recipes()
 
 func refresh_recipes():
-	"""Atualiza lista de receitas"""
+# Atualiza lista de receitas
 	recipe_list.clear()
 	
 	if not crafting_data.has("recipes"):
@@ -181,12 +181,12 @@ func refresh_recipes():
 		if not can_see_recipe(recipe):
 			continue
 		
-		# Adiciona à lista
+		# Adiciona Ã  lista
 		var display_name = recipe.get("name", recipe_id)
 		var level_req = recipe.get("level_requirement", 1)
 		
 		if level_req > player_crafting_level:
-			display_name += " (Nível " + str(level_req) + ")"
+			display_name += " (NÃ­vel " + str(level_req) + ")"
 			recipe_list.add_item(display_name, null, false)  # Desabilitado
 		else:
 			recipe_list.add_item(display_name)
@@ -196,17 +196,17 @@ func refresh_recipes():
 		recipe_list.set_item_metadata(item_index, recipe_id)
 
 func can_see_recipe(recipe: Dictionary) -> bool:
-	"""Verifica se player pode ver esta receita"""
+# Verifica se player pode ver esta receita
 	# Verifica descoberta da receita
 	if recipe.get("requires_discovery", false):
 		return false  # TODO: Implementar sistema de descoberta
 	
-	# Verifica nível mínimo para visualizar
+	# Verifica nÃ­vel mÃ­nimo para visualizar
 	var min_level = recipe.get("visibility_level", 1)
 	return player_crafting_level >= min_level
 
 func _on_recipe_selected(index: int):
-	"""Receita foi selecionada"""
+# Receita foi selecionada
 	var recipe_id = recipe_list.get_item_metadata(index)
 	if recipe_id and crafting_data.recipes.has(recipe_id):
 		current_recipe = crafting_data.recipes[recipe_id]
@@ -215,7 +215,7 @@ func _on_recipe_selected(index: int):
 		recipe_selected.emit(current_recipe)
 
 func update_preview():
-	"""Atualiza preview da receita"""
+# Atualiza preview da receita
 	if current_recipe.is_empty():
 		clear_preview()
 		return
@@ -226,10 +226,10 @@ func update_preview():
 	update_station_info()
 
 func update_result_preview():
-	"""Atualiza preview do item resultado"""
+# Atualiza preview do item resultado
 	var result = current_recipe.get("result", {})
 	
-	# Ícone
+	# Ãcone
 	if result.has("icon"):
 		result_icon.texture = load(result.icon) if result.icon is String else result.icon
 	
@@ -242,14 +242,14 @@ func update_result_preview():
 	update_result_stats(result)
 
 func update_result_stats(result: Dictionary):
-	"""Atualiza stats do item resultado"""
+# Atualiza stats do item resultado
 	# Limpa stats antigas
 	for child in result_stats.get_children():
 		child.queue_free()
 	
 	var stats = result.get("stats", {})
 	if not stats.is_empty():
-		# Título
+		# TÃ­tulo
 		var title = Label.new()
 		title.text = "Atributos:"
 		title.add_theme_color_override("font_color", UIThemeManager.Colors.CYBER_CYAN)
@@ -272,7 +272,7 @@ func update_result_stats(result: Dictionary):
 			
 			result_stats.add_child(stat_container)
 	
-	# Descrição
+	# DescriÃ§Ã£o
 	if result.has("description"):
 		var desc_label = Label.new()
 		desc_label.text = result.description
@@ -282,7 +282,7 @@ func update_result_stats(result: Dictionary):
 		result_stats.add_child(desc_label)
 
 func update_materials_list():
-	"""Atualiza lista de materiais necessários"""
+# Atualiza lista de materiais necessÃ¡rios
 	# Limpa materiais antigos
 	for child in materials_container.get_children():
 		child.queue_free()
@@ -297,15 +297,15 @@ func update_materials_list():
 		if not has_enough_material(material):
 			can_craft = false
 	
-	# Atualiza botão de craft
+	# Atualiza botÃ£o de craft
 	craft_button.disabled = not can_craft
 	craft_button.text = "Criar" if can_craft else "Materiais Insuficientes"
 
 func create_material_row(material: Dictionary) -> HBoxContainer:
-	"""Cria linha para um material"""
+# Cria linha para um material
 	var container = HBoxContainer.new()
 	
-	# Ícone do material
+	# Ãcone do material
 	var icon = TextureRect.new()
 	icon.custom_minimum_size = Vector2(32, 32)
 	if material.has("icon"):
@@ -334,18 +334,18 @@ func create_material_row(material: Dictionary) -> HBoxContainer:
 	return container
 
 func has_enough_material(material: Dictionary) -> bool:
-	"""Verifica se tem material suficiente"""
+# Verifica se tem material suficiente
 	var required = material.get("quantity", 1)
 	var available = get_material_count(material.get("id", ""))
 	return available >= required
 
 func get_material_count(item_id: String) -> int:
-	"""Retorna quantidade de material disponível"""
-	# TODO: Integrar com sistema de inventário
+# Retorna quantidade de material disponÃ­vel
+	# TODO: Integrar com sistema de inventÃ¡rio
 	return 10  # Placeholder
 
 func update_crafting_info():
-	"""Atualiza informações de crafting"""
+# Atualiza informaÃ§Ãµes de crafting
 	# Chance de sucesso
 	var base_chance = current_recipe.get("base_success_chance", 100)
 	var level_bonus = calculate_level_bonus()
@@ -373,23 +373,23 @@ func update_crafting_info():
 	xp_reward_label.add_theme_color_override("font_color", UIThemeManager.Colors.XP_YELLOW)
 
 func calculate_level_bonus() -> float:
-	"""Calcula bônus de nível"""
+# Calcula bÃ´nus de nÃ­vel
 	var recipe_level = current_recipe.get("level_requirement", 1)
 	var level_diff = player_crafting_level - recipe_level
-	return max(0, level_diff * 2)  # +2% por nível acima do necessário
+	return max(0, level_diff * 2)  # +2% por nÃ­vel acima do necessÃ¡rio
 
 func calculate_station_bonus() -> float:
-	"""Calcula bônus da estação de crafting"""
+# Calcula bÃ´nus da estaÃ§Ã£o de crafting
 	var required_station = current_recipe.get("required_station", "")
 	if required_station in available_stations:
-		return 10  # +10% com estação adequada
+		return 10  # +10% com estaÃ§Ã£o adequada
 	return 0
 
 func update_station_info():
-	"""Atualiza informações da estação"""
+# Atualiza informaÃ§Ãµes da estaÃ§Ã£o
 	var required_station = current_recipe.get("required_station", "workbench")
 	
-	# Ícone da estação
+	# Ãcone da estaÃ§Ã£o
 	var station_data = get_station_data(required_station)
 	if station_data.has("icon"):
 		station_icon.texture = load(station_data.icon)
@@ -397,16 +397,16 @@ func update_station_info():
 	# Nome
 	station_name.text = station_data.get("name", required_station.capitalize())
 	
-	# Nível
+	# NÃ­vel
 	var station_level_req = current_recipe.get("station_level", 1)
-	station_level.text = "Nível " + str(station_level_req)
+	station_level.text = "NÃ­vel " + str(station_level_req)
 	
 	# Cor baseada na disponibilidade
 	var color = UIThemeManager.Colors.SUCCESS_GREEN if required_station in available_stations else UIThemeManager.Colors.ERROR_RED
 	station_name.add_theme_color_override("font_color", color)
 
 func get_station_data(station_id: String) -> Dictionary:
-	"""Retorna dados da estação de crafting"""
+# Retorna dados da estaÃ§Ã£o de crafting
 	var stations = {
 		"workbench": {"name": "Bancada de Trabalho", "icon": "res://assets/icons/stations/workbench.png"},
 		"forge": {"name": "Forja", "icon": "res://assets/icons/stations/forge.png"},
@@ -417,7 +417,7 @@ func get_station_data(station_id: String) -> Dictionary:
 	return stations.get(station_id, {"name": station_id.capitalize(), "icon": ""})
 
 func clear_preview():
-	"""Limpa preview quando nenhuma receita está selecionada"""
+# Limpa preview quando nenhuma receita estÃ¡ selecionada
 	result_icon.texture = null
 	result_name.text = "Selecione uma receita"
 	result_name.add_theme_color_override("font_color", UIThemeManager.Colors.TEXT_SECONDARY)
@@ -432,14 +432,14 @@ func clear_preview():
 	craft_button.text = "Selecione uma receita"
 
 func _on_craft_pressed():
-	"""Botão de craft pressionado"""
+# BotÃ£o de craft pressionado
 	if current_recipe.is_empty():
 		return
 	
 	start_crafting()
 
 func start_crafting():
-	"""Inicia processo de crafting"""
+# Inicia processo de crafting
 	# Verifica materiais novamente
 	if not check_materials():
 		return
@@ -457,7 +457,7 @@ func start_crafting():
 		craft_failure()
 
 func check_materials() -> bool:
-	"""Verifica se ainda tem todos os materiais"""
+# Verifica se ainda tem todos os materiais
 	var materials = current_recipe.get("materials", [])
 	
 	for material in materials:
@@ -467,22 +467,22 @@ func check_materials() -> bool:
 	return true
 
 func consume_materials():
-	"""Consome materiais do inventário"""
+# Consome materiais do inventÃ¡rio
 	var materials = current_recipe.get("materials", [])
 	
 	for material in materials:
 		var item_id = material.get("id", "")
 		var quantity = material.get("quantity", 1)
-		# TODO: Remover do inventário
+		# TODO: Remover do inventÃ¡rio
 		print("Consumindo: ", quantity, "x ", item_id)
 
 func craft_success():
-	"""Crafting bem-sucedido"""
+# Crafting bem-sucedido
 	var result = current_recipe.get("result", {})
 	var quantity = result.get("quantity", 1)
 	
-	# Adiciona item ao inventário
-	# TODO: Integrar com inventário
+	# Adiciona item ao inventÃ¡rio
+	# TODO: Integrar com inventÃ¡rio
 	print("Crafting success: ", quantity, "x ", result.get("name", "Item"))
 	
 	# XP reward
@@ -496,8 +496,8 @@ func craft_success():
 	show_craft_success_effect()
 
 func craft_failure():
-	"""Crafting falhou"""
-	var reason = "Falha no processo de criação"
+# Crafting falhou
+	var reason = "Falha no processo de criaÃ§Ã£o"
 	
 	# Chance de retornar alguns materiais
 	var return_chance = 0.5
@@ -511,7 +511,7 @@ func craft_failure():
 	show_craft_failure_effect()
 
 func show_craft_success_effect():
-	"""Efeito visual de sucesso"""
+# Efeito visual de sucesso
 	var effect_label = Label.new()
 	effect_label.text = "SUCESSO!"
 	effect_label.position = craft_button.global_position
@@ -526,7 +526,7 @@ func show_craft_success_effect():
 	tween.tween_callback(effect_label.queue_free)
 
 func show_craft_failure_effect():
-	"""Efeito visual de falha"""
+# Efeito visual de falha
 	var effect_label = Label.new()
 	effect_label.text = "FALHOU!"
 	effect_label.position = craft_button.global_position
@@ -541,7 +541,7 @@ func show_craft_failure_effect():
 	tween.tween_callback(effect_label.queue_free)
 
 func get_rarity_color(rarity: String) -> Color:
-	"""Retorna cor da raridade"""
+# Retorna cor da raridade
 	match rarity:
 		"legendary": return Color(1.0, 0.5, 0.0)
 		"epic": return Color(0.6, 0.3, 0.9)
@@ -551,18 +551,18 @@ func get_rarity_color(rarity: String) -> Color:
 
 # === EVENT HANDLERS ===
 func _on_search_changed(text: String):
-	"""Busca foi alterada"""
+# Busca foi alterada
 	refresh_recipes()
 
 func _on_crafting_level_changed(new_level: int):
-	"""Nível de crafting do player mudou"""
+# NÃ­vel de crafting do player mudou
 	player_crafting_level = new_level
 	refresh_recipes()
 	if not current_recipe.is_empty():
 		update_crafting_info()
 
 func _on_station_available(station_id: String):
-	"""Nova estação de crafting disponível"""
+# Nova estaÃ§Ã£o de crafting disponÃ­vel
 	if station_id not in available_stations:
 		available_stations.append(station_id)
 		if not current_recipe.is_empty():
@@ -570,21 +570,21 @@ func _on_station_available(station_id: String):
 			update_crafting_info()
 
 func _on_inventory_changed():
-	"""Inventário foi alterado"""
+# InventÃ¡rio foi alterado
 	if not current_recipe.is_empty():
 		update_materials_list()
 
 # === PUBLIC INTERFACE ===
 func set_player_crafting_level(level: int):
-	"""Define nível de crafting do player"""
+# Define nÃ­vel de crafting do player
 	player_crafting_level = level
 	refresh_recipes()
 
 func add_available_station(station_id: String):
-	"""Adiciona estação disponível"""
+# Adiciona estaÃ§Ã£o disponÃ­vel
 	if station_id not in available_stations:
 		available_stations.append(station_id)
 
 func remove_available_station(station_id: String):
-	"""Remove estação disponível"""
+# Remove estaÃ§Ã£o disponÃ­vel
 	available_stations.erase(station_id)

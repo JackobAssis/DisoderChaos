@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 class_name PopupNotification
 # popup_notification.gd - Customizable popup notification system
 
@@ -80,7 +80,7 @@ func _ready():
 	setup_notification_ui()
 
 func setup_notification_ui():
-	"""Create the notification UI elements"""
+# Create the notification UI elements
 	# Set size and position
 	size = Vector2(250, 60)
 	
@@ -126,7 +126,7 @@ func setup_notification_ui():
 	vbox.add_child(progress_bar)
 
 func setup_notification(text: String, type: String = "info", duration: float = -1):
-	"""Setup notification with text and type"""
+# Setup notification with text and type
 	notification_type = type
 	label.text = text
 	
@@ -146,7 +146,7 @@ func setup_notification(text: String, type: String = "info", duration: float = -
 	start_entrance_animation()
 
 func apply_visual_style(config: Dictionary):
-	"""Apply visual styling based on notification type"""
+# Apply visual styling based on notification type
 	# Set text color
 	label.add_theme_color_override("font_color", config.color)
 	label.add_theme_color_override("font_shadow_color", Color.BLACK)
@@ -181,7 +181,7 @@ func apply_visual_style(config: Dictionary):
 		icon.visible = false
 
 func start_entrance_animation():
-	"""Start entrance animation"""
+# Start entrance animation
 	# Start from slightly transparent and smaller
 	modulate = Color(1, 1, 1, 0.8)
 	scale = Vector2(0.9, 0.9)
@@ -198,7 +198,7 @@ func start_entrance_animation():
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_delay(0.3)
 
 func _process(delta):
-	"""Update notification lifetime and effects"""
+# Update notification lifetime and effects
 	time_alive += delta
 	
 	# Update progress bar if visible
@@ -217,7 +217,7 @@ func _process(delta):
 		destroy_notification()
 
 func destroy_notification():
-	"""Destroy the notification with exit animation"""
+# Destroy the notification with exit animation
 	var tween = create_tween()
 	tween.set_parallel(true)
 	
@@ -229,17 +229,17 @@ func destroy_notification():
 	tween.tween_callback(queue_free).set_delay(0.3)
 
 func show_with_progress(text: String, type: String = "info", duration: float = -1):
-	"""Show notification with progress bar"""
+# Show notification with progress bar
 	setup_notification(text, type, duration)
 	progress_bar.visible = true
 	progress_bar.value = 100
 
 func extend_lifetime(additional_time: float):
-	"""Extend the notification lifetime"""
+# Extend the notification lifetime
 	lifetime += additional_time
 
 func update_text(new_text: String):
-	"""Update the notification text"""
+# Update the notification text
 	label.text = new_text
 	
 	# Slight flash effect to indicate update
@@ -248,7 +248,7 @@ func update_text(new_text: String):
 	tween.tween_property(label, "modulate", Color.WHITE, 0.1)
 
 func set_clickable(on_click: Callable):
-	"""Make the notification clickable"""
+# Make the notification clickable
 	var button = Button.new()
 	button.anchors_preset = Control.PRESET_FULL_RECT
 	button.flat = true
@@ -260,18 +260,18 @@ func set_clickable(on_click: Callable):
 	button.mouse_exited.connect(_on_hover_exited)
 
 func _on_hover_entered():
-	"""Handle mouse hover"""
+# Handle mouse hover
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1)
 
 func _on_hover_exited():
-	"""Handle mouse exit"""
+# Handle mouse exit
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 
 # Static factory methods for common notification types
 static func create_damage_number(damage: int, position: Vector2) -> PopupNotification:
-	"""Create a damage number popup"""
+# Create a damage number popup
 	var popup = PopupNotification.new()
 	popup.setup_notification(str(damage), "damage", 1.5)
 	popup.position = position
@@ -284,7 +284,7 @@ static func create_damage_number(damage: int, position: Vector2) -> PopupNotific
 	return popup
 
 static func create_heal_number(heal: int, position: Vector2) -> PopupNotification:
-	"""Create a heal number popup"""
+# Create a heal number popup
 	var popup = PopupNotification.new()
 	popup.setup_notification("+" + str(heal), "heal", 2.0)
 	popup.position = position
@@ -297,7 +297,7 @@ static func create_heal_number(heal: int, position: Vector2) -> PopupNotificatio
 	return popup
 
 static func create_item_pickup(item_name: String, quantity: int, position: Vector2) -> PopupNotification:
-	"""Create an item pickup popup"""
+# Create an item pickup popup
 	var popup = PopupNotification.new()
 	var text = item_name
 	if quantity > 1:
@@ -310,7 +310,7 @@ static func create_item_pickup(item_name: String, quantity: int, position: Vecto
 	return popup
 
 static func create_xp_gain(xp: int, position: Vector2) -> PopupNotification:
-	"""Create an XP gain popup"""
+# Create an XP gain popup
 	var popup = PopupNotification.new()
 	popup.setup_notification("+" + str(xp) + " XP", "xp", 2.0)
 	popup.position = position
@@ -319,7 +319,7 @@ static func create_xp_gain(xp: int, position: Vector2) -> PopupNotification:
 	return popup
 
 static func create_level_up(level: int, center_position: Vector2) -> PopupNotification:
-	"""Create a level up popup"""
+# Create a level up popup
 	var popup = PopupNotification.new()
 	popup.setup_notification("LEVEL UP!\nLevel " + str(level), "level_up", 6.0)
 	popup.position = center_position - popup.size / 2
@@ -328,7 +328,7 @@ static func create_level_up(level: int, center_position: Vector2) -> PopupNotifi
 	return popup
 
 static func create_quest_update(quest_text: String, position: Vector2) -> PopupNotification:
-	"""Create a quest update popup"""
+# Create a quest update popup
 	var popup = PopupNotification.new()
 	popup.setup_notification(quest_text, "info", 4.0)
 	popup.position = position
@@ -338,19 +338,19 @@ static func create_quest_update(quest_text: String, position: Vector2) -> PopupN
 
 # Utility functions
 func get_remaining_time() -> float:
-	"""Get remaining display time"""
+# Get remaining display time
 	return max(0, lifetime - time_alive)
 
 func is_fading() -> bool:
-	"""Check if notification is in fade state"""
+# Check if notification is in fade state
 	return time_alive >= (lifetime - fade_duration)
 
 func pause_timer():
-	"""Pause the notification timer"""
+# Pause the notification timer
 	set_process(false)
 
 func resume_timer():
-	"""Resume the notification timer"""
+# Resume the notification timer
 	set_process(true)
 
 # TODO: Future enhancements

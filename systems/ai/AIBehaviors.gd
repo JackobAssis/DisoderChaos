@@ -1,11 +1,11 @@
-extends Node
+﻿extends Node
 class_name AIBehaviors
 # AIBehaviors.gd - Ready-to-use AI behavior implementations
 # Pre-configured behaviors for different mob types and situations
 
 # Utility class for creating specific AI behaviors
 static func create_melee_fighter_ai(entity: Node2D) -> AIController:
-	"""Create AI for melee fighter mobs"""
+# Create AI for melee fighter mobs
 	var ai = AIController.new()
 	ai.ai_type = AIController.AIType.MELEE
 	ai.detection_range = 120.0
@@ -22,7 +22,7 @@ static func create_melee_fighter_ai(entity: Node2D) -> AIController:
 	return ai
 
 static func setup_melee_behavior_tree(ai: AIController):
-	"""Setup behavior tree for melee fighters"""
+# Setup behavior tree for melee fighters
 	var root = AISelector.new("melee_root")
 	
 	# High priority: flee if critically wounded
@@ -65,7 +65,7 @@ static func setup_melee_behavior_tree(ai: AIController):
 	ai.behavior_tree.set_root(root)
 
 static func setup_melee_state_machine(ai: AIController):
-	"""Setup state machine for melee fighters"""
+# Setup state machine for melee fighters
 	var fsm = AIStateMachine.create_basic_enemy_fsm(ai.entity)
 	
 	# Melee fighters are aggressive - shorter patrol, longer pursuit
@@ -76,7 +76,7 @@ static func setup_melee_state_machine(ai: AIController):
 	ai.state_machine = fsm
 
 static func execute_melee_attack(ai: AIController) -> bool:
-	"""Execute melee attack behavior"""
+# Execute melee attack behavior
 	if not ai.current_target or not ai.combat_component:
 		return false
 	
@@ -87,7 +87,7 @@ static func execute_melee_attack(ai: AIController) -> bool:
 	return ai.combat_component.melee_attack(ai.current_target)
 
 static func charge_at_target(ai: AIController, delta: float) -> bool:
-	"""Charge aggressively at target"""
+# Charge aggressively at target
 	if not ai.current_target or not ai.movement_component:
 		return false
 	
@@ -99,7 +99,7 @@ static func charge_at_target(ai: AIController, delta: float) -> bool:
 
 # Ranged Attacker AI
 static func create_ranged_attacker_ai(entity: Node2D) -> AIController:
-	"""Create AI for ranged attacker mobs"""
+# Create AI for ranged attacker mobs
 	var ai = AIController.new()
 	ai.ai_type = AIController.AIType.RANGED
 	ai.detection_range = 200.0
@@ -115,7 +115,7 @@ static func create_ranged_attacker_ai(entity: Node2D) -> AIController:
 	return ai
 
 static func setup_ranged_behavior_tree(ai: AIController):
-	"""Setup behavior tree for ranged attackers"""
+# Setup behavior tree for ranged attackers
 	var root = AISelector.new("ranged_root")
 	
 	# Flee if target too close
@@ -153,12 +153,12 @@ static func setup_ranged_behavior_tree(ai: AIController):
 	ai.behavior_tree.set_root(root)
 
 static func setup_ranged_state_machine(ai: AIController):
-	"""Setup state machine for ranged attackers"""
+# Setup state machine for ranged attackers
 	var fsm = AIStateMachine.create_basic_enemy_fsm(ai.entity)
 	ai.state_machine = fsm
 
 static func execute_ranged_attack(ai: AIController) -> bool:
-	"""Execute ranged attack behavior"""
+# Execute ranged attack behavior
 	if not ai.current_target or not ai.combat_component:
 		return false
 	
@@ -173,7 +173,7 @@ static func execute_ranged_attack(ai: AIController) -> bool:
 	return ai.combat_component.ranged_attack(ai.current_target)
 
 static func kite_away_from_target(ai: AIController, delta: float) -> bool:
-	"""Move away from target while maintaining range"""
+# Move away from target while maintaining range
 	if not ai.current_target or not ai.movement_component:
 		return false
 	
@@ -184,7 +184,7 @@ static func kite_away_from_target(ai: AIController, delta: float) -> bool:
 	return true
 
 static func move_to_optimal_range(ai: AIController, delta: float) -> bool:
-	"""Move to optimal attack range"""
+# Move to optimal attack range
 	if not ai.current_target or not ai.movement_component:
 		return false
 	
@@ -204,7 +204,7 @@ static func move_to_optimal_range(ai: AIController, delta: float) -> bool:
 
 # Coward Mob AI
 static func create_coward_mob_ai(entity: Node2D) -> AIController:
-	"""Create AI for coward mobs that flee easily"""
+# Create AI for coward mobs that flee easily
 	var ai = AIController.new()
 	ai.ai_type = AIController.AIType.COWARD
 	ai.detection_range = 100.0
@@ -220,7 +220,7 @@ static func create_coward_mob_ai(entity: Node2D) -> AIController:
 	return ai
 
 static func setup_coward_behavior_tree(ai: AIController):
-	"""Setup behavior tree for coward mobs"""
+# Setup behavior tree for coward mobs
 	var root = AISelector.new("coward_root")
 	
 	# Flee if health low or outnumbered
@@ -248,12 +248,12 @@ static func setup_coward_behavior_tree(ai: AIController):
 	ai.behavior_tree.set_root(root)
 
 static func setup_coward_state_machine(ai: AIController):
-	"""Setup state machine for coward mobs"""
+# Setup state machine for coward mobs
 	var fsm = AIStateMachine.create_coward_fsm(ai.entity)
 	ai.state_machine = fsm
 
 static func should_coward_flee(ai: AIController) -> bool:
-	"""Check if coward should flee"""
+# Check if coward should flee
 	if not ai.health_component:
 		return false
 	
@@ -271,7 +271,7 @@ static func should_coward_flee(ai: AIController) -> bool:
 	return false
 
 static func flee_and_call_for_help(ai: AIController, delta: float) -> bool:
-	"""Flee while calling for help"""
+# Flee while calling for help
 	if not ai.movement_component:
 		return false
 	
@@ -291,7 +291,7 @@ static func flee_and_call_for_help(ai: AIController, delta: float) -> bool:
 	return true
 
 static func is_safe_to_attack(ai: AIController) -> bool:
-	"""Check if it's safe for coward to attack"""
+# Check if it's safe for coward to attack
 	if not ai.current_target:
 		return false
 	
@@ -307,7 +307,7 @@ static func is_safe_to_attack(ai: AIController) -> bool:
 	return nearby_allies.size() >= target_allies.size()
 
 static func execute_coward_attack(ai: AIController) -> bool:
-	"""Execute quick, cautious attack"""
+# Execute quick, cautious attack
 	if not ai.current_target or not ai.combat_component:
 		return false
 	
@@ -323,7 +323,7 @@ static func execute_coward_attack(ai: AIController) -> bool:
 	return attack_result
 
 static func hide_from_threats(ai: AIController, delta: float) -> bool:
-	"""Hide from threats"""
+# Hide from threats
 	# Move to cover or away from line of sight
 	if ai.current_target and ai.movement_component:
 		# Find hiding spots (this would integrate with environment system)
@@ -335,7 +335,7 @@ static func hide_from_threats(ai: AIController, delta: float) -> bool:
 
 # Elite Mob AI
 static func create_elite_mob_ai(entity: Node2D) -> AIController:
-	"""Create AI for elite mobs with advanced tactics"""
+# Create AI for elite mobs with advanced tactics
 	var ai = AIController.new()
 	ai.ai_type = AIController.AIType.ELITE
 	ai.detection_range = 180.0
@@ -351,7 +351,7 @@ static func create_elite_mob_ai(entity: Node2D) -> AIController:
 	return ai
 
 static func setup_elite_behavior_tree(ai: AIController):
-	"""Setup behavior tree for elite mobs"""
+# Setup behavior tree for elite mobs
 	var root = AISelector.new("elite_root")
 	
 	# Tactical positioning
@@ -387,7 +387,7 @@ static func setup_elite_behavior_tree(ai: AIController):
 	ai.behavior_tree.set_root(root)
 
 static func setup_elite_state_machine(ai: AIController):
-	"""Setup state machine for elite mobs"""
+# Setup state machine for elite mobs
 	var fsm = AIStateMachine.create_basic_enemy_fsm(ai.entity)
 	
 	# Elite mobs have longer pursuit and more aggressive behavior
@@ -397,7 +397,7 @@ static func setup_elite_state_machine(ai: AIController):
 	ai.state_machine = fsm
 
 static func execute_tactical_positioning(ai: AIController, delta: float) -> bool:
-	"""Execute tactical positioning"""
+# Execute tactical positioning
 	if not ai.current_target or not ai.movement_component:
 		return false
 	
@@ -409,7 +409,7 @@ static func execute_tactical_positioning(ai: AIController, delta: float) -> bool
 	return true
 
 static func calculate_tactical_position(ai: AIController) -> Vector2:
-	"""Calculate optimal tactical position"""
+# Calculate optimal tactical position
 	if not ai.current_target:
 		return ai.entity.global_position
 	
@@ -426,7 +426,7 @@ static func calculate_tactical_position(ai: AIController) -> Vector2:
 	return left_flank if randf() > 0.5 else right_flank
 
 static func can_execute_combo(ai: AIController) -> bool:
-	"""Check if elite can execute combo attack"""
+# Check if elite can execute combo attack
 	if not ai.current_target or not ai.combat_component:
 		return false
 	
@@ -435,7 +435,7 @@ static func can_execute_combo(ai: AIController) -> bool:
 	return distance <= ai.attack_range and ai.state_timer > 3.0
 
 static func execute_combo_attack(ai: AIController) -> bool:
-	"""Execute combo attack sequence"""
+# Execute combo attack sequence
 	if not ai.current_target or not ai.combat_component:
 		return false
 	
@@ -453,13 +453,13 @@ static func execute_combo_attack(ai: AIController) -> bool:
 	return primary_hit
 
 static func should_control_area(ai: AIController) -> bool:
-	"""Check if elite should focus on area control"""
+# Check if elite should focus on area control
 	# Control area when multiple enemies present or when defending key position
 	var nearby_enemies = get_nearby_enemies(ai.entity, 150.0)
 	return nearby_enemies.size() > 1
 
 static func execute_area_control(ai: AIController, delta: float) -> bool:
-	"""Execute area control tactics"""
+# Execute area control tactics
 	# Move to central position to control multiple enemies
 	var nearby_enemies = get_nearby_enemies(ai.entity, 150.0)
 	if nearby_enemies.is_empty():
@@ -478,13 +478,13 @@ static func execute_area_control(ai: AIController, delta: float) -> bool:
 	return true
 
 static func elite_patrol_behavior(ai: AIController, delta: float) -> bool:
-	"""Elite patrol with awareness"""
+# Elite patrol with awareness
 	# Elite mobs patrol more systematically and check hiding spots
 	return patrol_area(ai, delta)  # Enhanced version would check corners, etc.
 
 # Minion AI (for boss fights)
 static func create_minion_ai(entity: Node2D, boss: Node2D) -> AIController:
-	"""Create AI for boss minions"""
+# Create AI for boss minions
 	var ai = AIController.new()
 	ai.ai_type = AIController.AIType.MINION
 	ai.detection_range = 120.0
@@ -500,7 +500,7 @@ static func create_minion_ai(entity: Node2D, boss: Node2D) -> AIController:
 	return ai
 
 static func setup_minion_behavior_tree(ai: AIController, boss: Node2D):
-	"""Setup behavior tree for minions"""
+# Setup behavior tree for minions
 	var root = AISelector.new("minion_root")
 	
 	# Protect boss is highest priority
@@ -528,12 +528,12 @@ static func setup_minion_behavior_tree(ai: AIController, boss: Node2D):
 	ai.behavior_tree.set_root(root)
 
 static func setup_minion_state_machine(ai: AIController):
-	"""Setup state machine for minions"""
+# Setup state machine for minions
 	var fsm = AIStateMachine.create_basic_enemy_fsm(ai.entity)
 	ai.state_machine = fsm
 
 static func is_boss_threatened(boss: Node2D) -> bool:
-	"""Check if boss is being threatened"""
+# Check if boss is being threatened
 	if not boss or not boss.has_method("get_health_percentage"):
 		return false
 	
@@ -542,7 +542,7 @@ static func is_boss_threatened(boss: Node2D) -> bool:
 	return health_pct < 0.5
 
 static func execute_boss_protection(ai: AIController, boss: Node2D, delta: float) -> bool:
-	"""Execute boss protection behavior"""
+# Execute boss protection behavior
 	if not boss or not ai.movement_component:
 		return false
 	
@@ -560,7 +560,7 @@ static func execute_boss_protection(ai: AIController, boss: Node2D, delta: float
 	return true
 
 static func execute_swarm_tactics(ai: AIController, delta: float) -> bool:
-	"""Execute swarm attack tactics"""
+# Execute swarm attack tactics
 	if not ai.current_target or not ai.movement_component:
 		return false
 	
@@ -581,7 +581,7 @@ static func execute_swarm_tactics(ai: AIController, delta: float) -> bool:
 	return true
 
 static func stay_near_master(ai: AIController, master: Node2D, delta: float) -> bool:
-	"""Stay near master/boss"""
+# Stay near master/boss
 	if not master or not ai.movement_component:
 		return false
 	
@@ -606,7 +606,7 @@ static func stay_near_master(ai: AIController, master: Node2D, delta: float) -> 
 
 # Utility functions
 static func face_target(entity: Node2D, target: Node2D):
-	"""Make entity face the target"""
+# Make entity face the target
 	if not entity or not target:
 		return
 	
@@ -619,7 +619,7 @@ static func face_target(entity: Node2D, target: Node2D):
 		entity.look_at(target.global_position)
 
 static func patrol_area(ai: AIController, delta: float) -> bool:
-	"""Basic patrol behavior"""
+# Basic patrol behavior
 	if not ai.movement_component:
 		return false
 	
@@ -645,7 +645,7 @@ static func patrol_area(ai: AIController, delta: float) -> bool:
 	return true
 
 static func get_nearby_enemies(entity: Node2D, radius: float) -> Array:
-	"""Get nearby enemy entities"""
+# Get nearby enemy entities
 	var enemies = []
 	var space_state = entity.get_world_2d().direct_space_state
 	
@@ -664,7 +664,7 @@ static func get_nearby_enemies(entity: Node2D, radius: float) -> Array:
 	return enemies
 
 static func get_nearby_allies(entity: Node2D, radius: float) -> Array:
-	"""Get nearby allied entities"""
+# Get nearby allied entities
 	var allies = []
 	
 	# This would check faction/team affiliation
@@ -681,7 +681,7 @@ static func get_nearby_allies(entity: Node2D, radius: float) -> Array:
 	return allies
 
 static func call_nearby_allies_for_help(ai: AIController):
-	"""Call nearby allies for assistance"""
+# Call nearby allies for assistance
 	var allies = get_nearby_allies(ai.entity, 150.0)
 	
 	for ally in allies:
@@ -689,7 +689,7 @@ static func call_nearby_allies_for_help(ai: AIController):
 			ally.receive_help_call(ai.current_target, ai.entity.global_position)
 
 static func get_hiding_direction(ai: AIController) -> Vector2:
-	"""Get direction toward hiding spot"""
+# Get direction toward hiding spot
 	# This would integrate with environment/cover system
 	# For now, return direction away from target with some randomness
 	if ai.current_target:

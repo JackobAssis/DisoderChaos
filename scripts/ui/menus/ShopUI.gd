@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name ShopUI
 
@@ -60,7 +60,7 @@ func _ready():
 	print("[ShopUI] Interface de Loja inicializada")
 
 func setup_shop_ui():
-	"""Setup shop UI layout"""
+# Setup shop UI layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -74,7 +74,7 @@ func setup_shop_ui():
 	create_buyback_panel()
 
 func create_main_layout():
-	"""Create main layout structure"""
+# Create main layout structure
 	main_container = HSplitContainer.new()
 	main_container.name = "MainContainer"
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -82,7 +82,7 @@ func create_main_layout():
 	add_child(main_container)
 
 func create_shop_panel():
-	"""Create shop display panel"""
+# Create shop display panel
 	shop_panel = Panel.new()
 	shop_panel.name = "ShopPanel"
 	
@@ -109,7 +109,7 @@ func create_shop_panel():
 	create_shop_categories(shop_layout)
 
 func create_shop_header(parent: Control):
-	"""Create shop header with name and description"""
+# Create shop header with name and description
 	shop_header = VBoxContainer.new()
 	shop_header.name = "ShopHeader"
 	shop_header.custom_minimum_size = Vector2(0, 80)
@@ -130,7 +130,7 @@ func create_shop_header(parent: Control):
 	shop_header.add_child(shop_description_label)
 
 func create_shop_categories(parent: Control):
-	"""Create shop categories tabs"""
+# Create shop categories tabs
 	shop_categories = TabContainer.new()
 	shop_categories.name = "ShopCategories"
 	shop_categories.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -158,7 +158,7 @@ func create_shop_categories(parent: Control):
 	services_scroll.add_child(shop_services_container)
 
 func create_player_panel():
-	"""Create player inventory and info panel"""
+# Create player inventory and info panel
 	player_panel = Panel.new()
 	player_panel.name = "PlayerPanel"
 	
@@ -188,7 +188,7 @@ func create_player_panel():
 	create_player_inventory(player_layout)
 
 func create_player_header(parent: Control):
-	"""Create player header with gold display"""
+# Create player header with gold display
 	var header_container = HBoxContainer.new()
 	header_container.name = "PlayerHeader"
 	header_container.custom_minimum_size = Vector2(0, 40)
@@ -212,7 +212,7 @@ func create_player_header(parent: Control):
 	header_container.add_child(player_gold_label)
 
 func create_transaction_area_in_player_panel(parent: Control):
-	"""Create transaction area within player panel"""
+# Create transaction area within player panel
 	transaction_panel = Panel.new()
 	transaction_panel.name = "TransactionPanel"
 	transaction_panel.custom_minimum_size = Vector2(0, 150)
@@ -287,11 +287,11 @@ func create_transaction_area_in_player_panel(parent: Control):
 	buttons_container.add_child(sell_button)
 
 func create_transaction_area():
-	"""Create main transaction area - using the one in player panel"""
+# Create main transaction area - using the one in player panel
 	pass
 
 func create_player_inventory(parent: Control):
-	"""Create player inventory display"""
+# Create player inventory display
 	player_inventory_panel = Panel.new()
 	player_inventory_panel.name = "PlayerInventory"
 	player_inventory_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -313,7 +313,7 @@ func create_player_inventory(parent: Control):
 	inv_scroll.add_child(player_items_grid)
 
 func create_buyback_panel():
-	"""Create buyback panel for recently sold items"""
+# Create buyback panel for recently sold items
 	buyback_panel = Panel.new()
 	buyback_panel.name = "BuybackPanel"
 	buyback_panel.anchor_left = 0.0
@@ -353,7 +353,7 @@ func create_buyback_panel():
 
 # Shop management functions
 func open_shop(shop_id: String, npc_data: Dictionary = {}):
-	"""Open shop with specified ID"""
+# Open shop with specified ID
 	var shop_config = load_shop_config(shop_id)
 	if shop_config.is_empty():
 		print("[ShopUI] Failed to load shop config: ", shop_id)
@@ -369,7 +369,7 @@ func open_shop(shop_id: String, npc_data: Dictionary = {}):
 	print("[ShopUI] Opened shop: ", shop_id)
 
 func load_shop_config(shop_id: String) -> Dictionary:
-	"""Load shop configuration"""
+# Load shop configuration
 	var shop_data = DataLoader.load_json_data("res://data/economy/shop_system.json")
 	if not shop_data or not shop_data.has("shop_types"):
 		return {}
@@ -381,7 +381,7 @@ func load_shop_config(shop_id: String) -> Dictionary:
 	return {}
 
 func setup_shop_display():
-	"""Setup shop information display"""
+# Setup shop information display
 	shop_name_label.text = current_shop_data.get("name", "Unknown Shop")
 	shop_description_label.text = current_shop_data.get("description", "No description")
 	
@@ -405,7 +405,7 @@ func setup_shop_display():
 			tab_scroll.add_child(tab_container)
 
 func generate_shop_inventory():
-	"""Generate shop inventory based on configuration"""
+# Generate shop inventory based on configuration
 	current_shop_inventory.clear()
 	
 	var shop_data = DataLoader.load_json_data("res://data/economy/shop_system.json")
@@ -426,12 +426,12 @@ func generate_shop_inventory():
 	populate_shop_items()
 
 func should_stock_item(item_info: Dictionary) -> bool:
-	"""Check if item should be in stock"""
+# Check if item should be in stock
 	var availability = item_info.get("availability", 1.0)
 	return randf() < availability
 
 func generate_stock_item(item_info: Dictionary) -> Dictionary:
-	"""Generate stock item with quantity and price"""
+# Generate stock item with quantity and price
 	var stock_range = item_info.get("stock", {"min": 1, "max": 1})
 	var quantity = randi_range(stock_range.min, stock_range.max)
 	
@@ -447,7 +447,7 @@ func generate_stock_item(item_info: Dictionary) -> Dictionary:
 	}
 
 func populate_shop_items():
-	"""Populate shop items in UI"""
+# Populate shop items in UI
 	clear_shop_items()
 	
 	for stock_item in current_shop_inventory:
@@ -455,12 +455,12 @@ func populate_shop_items():
 		shop_items_container.add_child(item_display)
 
 func clear_shop_items():
-	"""Clear shop items display"""
+# Clear shop items display
 	for child in shop_items_container.get_children():
 		child.queue_free()
 
 func create_shop_item_display(stock_item: Dictionary) -> Control:
-	"""Create shop item display"""
+# Create shop item display
 	var item_container = HBoxContainer.new()
 	item_container.custom_minimum_size = Vector2(0, 50)
 	item_container.add_theme_constant_override("separation", 10)
@@ -506,22 +506,22 @@ func create_shop_item_display(stock_item: Dictionary) -> Control:
 	return item_container
 
 func update_player_display():
-	"""Update player inventory and gold display"""
+# Update player inventory and gold display
 	update_player_gold()
 	populate_player_inventory()
 
 func update_player_gold():
-	"""Update player gold display"""
+# Update player gold display
 	var gold = get_player_gold()
 	player_gold_label.text = "Gold: " + str(gold)
 
 func get_player_gold() -> int:
-	"""Get player's current gold"""
+# Get player's current gold
 	# TODO: Integrate with player data system
 	return 1000  # Placeholder
 
 func populate_player_inventory():
-	"""Populate player inventory display"""
+# Populate player inventory display
 	clear_player_inventory()
 	
 	# Get player items
@@ -532,18 +532,18 @@ func populate_player_inventory():
 		player_slots.append(item_slot)
 
 func clear_player_inventory():
-	"""Clear player inventory display"""
+# Clear player inventory display
 	for slot in player_slots:
 		slot.queue_free()
 	player_slots.clear()
 
 func get_player_items() -> Array:
-	"""Get player's inventory items"""
+# Get player's inventory items
 	# TODO: Integrate with inventory system
 	return []  # Placeholder
 
 func create_player_item_slot(item_data: Dictionary) -> Control:
-	"""Create player item slot"""
+# Create player item slot
 	var slot = Button.new()
 	slot.custom_minimum_size = Vector2(50, 50)
 	slot.text = ""
@@ -563,7 +563,7 @@ func create_player_item_slot(item_data: Dictionary) -> Control:
 
 # Event handlers
 func _on_category_changed(tab: int):
-	"""Handle category tab change"""
+# Handle category tab change
 	if tab >= 0 and tab < shop_categories.get_tab_count():
 		var tab_name = shop_categories.get_tab_title(tab)
 		current_category = tab_name.to_lower()
@@ -572,7 +572,7 @@ func _on_category_changed(tab: int):
 			populate_shop_services()
 
 func populate_shop_services():
-	"""Populate shop services"""
+# Populate shop services
 	clear_shop_services()
 	
 	var services = current_shop_data.get("services", [])
@@ -581,12 +581,12 @@ func populate_shop_services():
 		shop_services_container.add_child(service_display)
 
 func clear_shop_services():
-	"""Clear shop services display"""
+# Clear shop services display
 	for child in shop_services_container.get_children():
 		child.queue_free()
 
 func create_service_display(service_id: String) -> Control:
-	"""Create service display"""
+# Create service display
 	var service_container = VBoxContainer.new()
 	service_container.add_theme_constant_override("separation", 5)
 	
@@ -604,24 +604,24 @@ func create_service_display(service_id: String) -> Control:
 	return service_container
 
 func _on_shop_item_selected(stock_item: Dictionary):
-	"""Handle shop item selection"""
+# Handle shop item selection
 	selected_shop_item = stock_item
 	selected_player_item.clear()
 	update_transaction_display()
 
 func _on_player_item_selected(item_data: Dictionary):
-	"""Handle player item selection"""
+# Handle player item selection
 	selected_player_item = item_data
 	selected_shop_item.clear()
 	update_transaction_display()
 
 func _on_service_selected(service_id: String):
-	"""Handle service selection"""
+# Handle service selection
 	# TODO: Implement service functionality
 	print("[ShopUI] Service selected: ", service_id)
 
 func update_transaction_display():
-	"""Update transaction area display"""
+# Update transaction area display
 	clear_transaction_info()
 	
 	if not selected_shop_item.is_empty():
@@ -630,7 +630,7 @@ func update_transaction_display():
 		display_sell_transaction()
 
 func clear_transaction_info():
-	"""Clear transaction info display"""
+# Clear transaction info display
 	for child in selected_item_info.get_children():
 		child.queue_free()
 	
@@ -639,7 +639,7 @@ func clear_transaction_info():
 	total_price_label.text = "Total: 0 gold"
 
 func display_buy_transaction():
-	"""Display buy transaction info"""
+# Display buy transaction info
 	var item_id = selected_shop_item.get("item_id", "")
 	var price = selected_shop_item.get("price", 0)
 	var stock = selected_shop_item.get("quantity", 0)
@@ -667,7 +667,7 @@ func display_buy_transaction():
 	update_total_price()
 
 func display_sell_transaction():
-	"""Display sell transaction info"""
+# Display sell transaction info
 	var item_id = selected_player_item.get("id", "")
 	var sell_price = calculate_sell_price(selected_player_item)
 	
@@ -693,18 +693,18 @@ func display_sell_transaction():
 	update_total_price()
 
 func calculate_sell_price(item_data: Dictionary) -> int:
-	"""Calculate sell price for item"""
+# Calculate sell price for item
 	var base_value = item_data.get("value", 10)
 	var buyback_percentage = 0.6  # 60% of base value
 	
 	return max(1, int(base_value * buyback_percentage))
 
 func _on_quantity_changed(value: float):
-	"""Handle quantity change"""
+# Handle quantity change
 	update_total_price()
 
 func update_total_price():
-	"""Update total price display"""
+# Update total price display
 	var quantity = int(quantity_selector.value)
 	
 	if not selected_shop_item.is_empty():
@@ -718,7 +718,7 @@ func update_total_price():
 		total_price_label.text = "Total: " + str(total) + " gold"
 
 func _on_buy_button_pressed():
-	"""Handle buy button press"""
+# Handle buy button press
 	if selected_shop_item.is_empty():
 		return
 	
@@ -731,7 +731,7 @@ func _on_buy_button_pressed():
 		execute_purchase(item_id, quantity, total_cost)
 
 func execute_purchase(item_id: String, quantity: int, total_cost: int):
-	"""Execute item purchase"""
+# Execute item purchase
 	# TODO: Integrate with inventory and currency systems
 	print("[ShopUI] Purchased: ", quantity, "x ", item_id, " for ", total_cost, " gold")
 	
@@ -746,7 +746,7 @@ func execute_purchase(item_id: String, quantity: int, total_cost: int):
 	event_bus.emit_signal("item_purchased", item_id, quantity, total_cost)
 
 func _on_sell_button_pressed():
-	"""Handle sell button press"""
+# Handle sell button press
 	if selected_player_item.is_empty():
 		return
 	
@@ -758,7 +758,7 @@ func _on_sell_button_pressed():
 	execute_sale(item_id, quantity, total_value)
 
 func execute_sale(item_id: String, quantity: int, total_value: int):
-	"""Execute item sale"""
+# Execute item sale
 	# TODO: Integrate with inventory and currency systems
 	print("[ShopUI] Sold: ", quantity, "x ", item_id, " for ", total_value, " gold")
 	
@@ -772,7 +772,7 @@ func execute_sale(item_id: String, quantity: int, total_value: int):
 	event_bus.emit_signal("item_sold", item_id, quantity, total_value)
 
 func update_shop_stock(item_id: String, quantity_change: int):
-	"""Update shop stock for item"""
+# Update shop stock for item
 	for i in range(current_shop_inventory.size()):
 		var stock_item = current_shop_inventory[i]
 		if stock_item.get("item_id", "") == item_id:
@@ -782,12 +782,12 @@ func update_shop_stock(item_id: String, quantity_change: int):
 			break
 
 func add_to_buyback(item_id: String, quantity: int, sell_value: int):
-	"""Add item to buyback system"""
+# Add item to buyback system
 	# TODO: Implement buyback system
 	print("[ShopUI] Added to buyback: ", item_id)
 
 func close_shop():
-	"""Close shop interface"""
+# Close shop interface
 	visible = false
 	current_shop_data.clear()
 	current_shop_inventory.clear()
@@ -799,7 +799,7 @@ func close_shop():
 
 # Styling functions
 func apply_button_style(button: Button, color: Color = neon_green):
-	"""Apply styled button theme"""
+# Apply styled button theme
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = color
@@ -816,7 +816,7 @@ func apply_button_style(button: Button, color: Color = neon_green):
 	button.add_theme_color_override("font_color", Color.WHITE)
 
 func apply_spinbox_style(spinbox: SpinBox):
-	"""Apply spinbox styling"""
+# Apply spinbox styling
 	var style = StyleBoxFlat.new()
 	style.bg_color = bg_color
 	style.border_color = neon_green
@@ -828,13 +828,13 @@ func apply_spinbox_style(spinbox: SpinBox):
 
 # Setup and connections
 func setup_connections():
-	"""Setup signal connections"""
+# Setup signal connections
 	if event_bus:
 		event_bus.connect("shop_opened", open_shop)
 		event_bus.connect("shop_closed", close_shop)
 
 # Input handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if visible and event.is_action_pressed("ui_cancel"):
 		close_shop()

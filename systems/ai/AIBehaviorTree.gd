@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name AIBehaviorTree
 # AIBehaviorTree.gd - Behavior tree system for AI
 # Implements behavior tree nodes and execution logic
@@ -25,14 +25,14 @@ func _ready():
 	print("[AIBehaviorTree] Behavior tree system initialized")
 
 func set_root(node: AINode):
-	"""Set the root node of the behavior tree"""
+# Set the root node of the behavior tree
 	root_node = node
 	if root_node:
 		root_node.set_blackboard(blackboard)
 	print("[AIBehaviorTree] Root node set: ", root_node.get_name() if root_node else "None")
 
 func update(delta: float) -> BehaviorResult:
-	"""Update the behavior tree"""
+# Update the behavior tree
 	if not root_node:
 		return BehaviorResult.FAILURE
 	
@@ -46,15 +46,15 @@ func update(delta: float) -> BehaviorResult:
 	return result
 
 func get_blackboard_value(key: String, default_value = null):
-	"""Get value from blackboard"""
+# Get value from blackboard
 	return blackboard.get(key, default_value)
 
 func set_blackboard_value(key: String, value):
-	"""Set value in blackboard"""
+# Set value in blackboard
 	blackboard[key] = value
 
 func reset():
-	"""Reset the behavior tree"""
+# Reset the behavior tree
 	if root_node:
 		root_node.reset()
 	current_execution_path.clear()
@@ -73,23 +73,23 @@ func _init(node_name: String = ""):
 	name = node_name
 
 func set_blackboard(bb: Dictionary):
-	"""Set the blackboard for this node and children"""
+# Set the blackboard for this node and children
 	blackboard = bb
 	for child in children:
 		child.set_blackboard(bb)
 
 func add_child(child: AINode):
-	"""Add a child node"""
+# Add a child node
 	child.parent = self
 	child.set_blackboard(blackboard)
 	children.append(child)
 
 func execute(delta: float) -> BehaviorResult:
-	"""Execute this node - override in subclasses"""
+# Execute this node - override in subclasses
 	return BehaviorResult.FAILURE
 
 func reset():
-	"""Reset this node - override in subclasses"""
+# Reset this node - override in subclasses
 	for child in children:
 		child.reset()
 
@@ -365,7 +365,7 @@ func reset():
 
 # Utility functions for creating common behavior patterns
 static func create_patrol_behavior(move_action: Callable, wait_time: float = 2.0) -> AINode:
-	"""Create a simple patrol behavior"""
+# Create a simple patrol behavior
 	var patrol_sequence = AISequence.new("patrol_sequence")
 	patrol_sequence.add_child(AIAction.new("move_to_patrol_point", move_action))
 	patrol_sequence.add_child(AIWait.new("wait_at_patrol_point", wait_time))
@@ -376,7 +376,7 @@ static func create_patrol_behavior(move_action: Callable, wait_time: float = 2.0
 	return patrol_repeater
 
 static func create_combat_behavior(has_target: Callable, in_range: Callable, attack: Callable, move: Callable) -> AINode:
-	"""Create a combat behavior tree"""
+# Create a combat behavior tree
 	var combat_selector = AISelector.new("combat_selector")
 	
 	# Attack sequence
@@ -396,7 +396,7 @@ static func create_combat_behavior(has_target: Callable, in_range: Callable, att
 	return combat_selector
 
 static func create_flee_behavior(should_flee: Callable, flee_action: Callable) -> AINode:
-	"""Create a flee behavior"""
+# Create a flee behavior
 	var flee_sequence = AISequence.new("flee_sequence")
 	flee_sequence.add_child(AICondition.new("should_flee", should_flee))
 	flee_sequence.add_child(AIAction.new("flee", flee_action, true))
@@ -404,7 +404,7 @@ static func create_flee_behavior(should_flee: Callable, flee_action: Callable) -
 	return flee_sequence
 
 static func create_boss_behavior(phase_check: Callable, phase_actions: Array) -> AINode:
-	"""Create a boss behavior tree with phase management"""
+# Create a boss behavior tree with phase management
 	var boss_selector = AISelector.new("boss_selector")
 	
 	for i in range(phase_actions.size()):

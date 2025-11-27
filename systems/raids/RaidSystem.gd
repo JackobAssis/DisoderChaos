@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name RaidSystem
 
 signal raid_instance_created(instance_id: String, raid_id: String, participants: Array)
@@ -17,7 +17,7 @@ var raid_groups: Dictionary = {}
 var player_raid_progress: Dictionary = {}
 var raid_lockouts: Dictionary = {}
 
-# Configurações
+# ConfiguraÃ§Ãµes
 var raid_system_enabled: bool = true
 var cross_server_raids: bool = false
 var max_concurrent_raids: int = 50
@@ -26,7 +26,7 @@ var max_concurrent_raids: int = 50
 var instance_cleanup_timer: Timer
 var lockout_reset_timer: Timer
 
-# Referências
+# ReferÃªncias
 @onready var data_loader: DataLoader = DataLoader.new()
 @onready var event_bus: EventBus = EventBus
 
@@ -38,7 +38,7 @@ func _ready():
 	print("[RaidSystem] Sistema de raids inicializado")
 
 func load_raid_system_data():
-	"""Carrega dados do sistema de raids"""
+# Carrega dados do sistema de raids
 	var data = data_loader.load_json_file("res://data/raids/raid_system.json")
 	if data:
 		raid_system_data = data.raid_system
@@ -47,7 +47,7 @@ func load_raid_system_data():
 		push_error("[RaidSystem] Falha ao carregar dados de raids")
 
 func setup_timers():
-	"""Configura timers do sistema"""
+# Configura timers do sistema
 	instance_cleanup_timer = Timer.new()
 	instance_cleanup_timer.wait_time = 300.0  # 5 minutos
 	instance_cleanup_timer.timeout.connect(_cleanup_expired_instances)
@@ -55,22 +55,22 @@ func setup_timers():
 	add_child(instance_cleanup_timer)
 	
 	lockout_reset_timer = Timer.new()
-	lockout_reset_timer.wait_time = 3600.0  # 1 hora (verificação)
+	lockout_reset_timer.wait_time = 3600.0  # 1 hora (verificaÃ§Ã£o)
 	lockout_reset_timer.timeout.connect(_check_lockout_resets)
 	lockout_reset_timer.autostart = true
 	add_child(lockout_reset_timer)
 
 func connect_events():
-	"""Conecta aos eventos necessários"""
+# Conecta aos eventos necessÃ¡rios
 	event_bus.player_level_up.connect(_on_player_level_up)
 	event_bus.combat_ended.connect(_on_combat_ended)
 
 # ============================================================================
-# CRIAÇÃO E GERENCIAMENTO DE INSTÂNCIAS
+# CRIAÃ‡ÃƒO E GERENCIAMENTO DE INSTÃ‚NCIAS
 # ============================================================================
 
 func create_raid_instance(raid_id: String, leader: Node, difficulty: String = "normal") -> String:
-	"""Cria uma nova instância de raid"""
+# Cria uma nova instÃ¢ncia de raid
 	if not raid_system_enabled:
 		print("[RaidSystem] Sistema de raids desabilitado")
 		return ""
@@ -79,20 +79,20 @@ func create_raid_instance(raid_id: String, leader: Node, difficulty: String = "n
 		print("[RaidSystem] Raid inexistente: ", raid_id)
 		return ""
 	
-	# Verificar se pode criar mais instâncias
+	# Verificar se pode criar mais instÃ¢ncias
 	if active_raid_instances.size() >= max_concurrent_raids:
-		print("[RaidSystem] Limite de instâncias atingido")
+		print("[RaidSystem] Limite de instÃ¢ncias atingido")
 		return ""
 	
-	# Verificar lockout do líder
+	# Verificar lockout do lÃ­der
 	if _is_player_locked_out(leader, raid_id, difficulty):
-		print("[RaidSystem] Líder em lockout para este raid")
+		print("[RaidSystem] LÃ­der em lockout para este raid")
 		return ""
 	
 	var raid_data = raid_system_data.raid_instances[raid_id]
 	var instance_id = _generate_instance_id()
 	
-	# Criar dados da instância
+	# Criar dados da instÃ¢ncia
 	var instance_data = {
 		"id": instance_id,
 		"raid_id": raid_id,
@@ -117,7 +117,7 @@ func create_raid_instance(raid_id: String, leader: Node, difficulty: String = "n
 	# Aplicar modificadores de dificuldade
 	_apply_difficulty_scaling(instance_data)
 	
-	# Salvar instância
+	# Salvar instÃ¢ncia
 	active_raid_instances[instance_id] = instance_data
 	
 	# Criar grupo de raid
@@ -132,36 +132,36 @@ func create_raid_instance(raid_id: String, leader: Node, difficulty: String = "n
 	# Emitir evento
 	raid_instance_created.emit(instance_id, raid_id, [leader])
 	
-	print("[RaidSystem] Instância criada: %s (%s - %s)" % [instance_id, raid_id, difficulty])
+	print("[RaidSystem] InstÃ¢ncia criada: %s (%s - %s)" % [instance_id, raid_id, difficulty])
 	return instance_id
 
 func join_raid_instance(instance_id: String, player: Node, role: String = "dps") -> bool:
-	"""Jogador entra em instância de raid"""
+# Jogador entra em instÃ¢ncia de raid
 	if not active_raid_instances.has(instance_id):
-		print("[RaidSystem] Instância não encontrada: ", instance_id)
+		print("[RaidSystem] InstÃ¢ncia nÃ£o encontrada: ", instance_id)
 		return false
 	
 	var instance = active_raid_instances[instance_id]
 	var raid_data = instance.raid_data
 	
-	# Verificar se instância aceita novos membros
+	# Verificar se instÃ¢ncia aceita novos membros
 	if instance.status != "forming":
-		print("[RaidSystem] Instância não aceita novos membros")
+		print("[RaidSystem] InstÃ¢ncia nÃ£o aceita novos membros")
 		return false
 	
 	# Verificar limite de participantes
 	if instance.participants.size() >= raid_data.type_data.max_players:
-		print("[RaidSystem] Instância lotada")
+		print("[RaidSystem] InstÃ¢ncia lotada")
 		return false
 	
-	# Verificar se jogador já está em raid
+	# Verificar se jogador jÃ¡ estÃ¡ em raid
 	if _is_player_in_raid(player):
-		print("[RaidSystem] Jogador já está em raid")
+		print("[RaidSystem] Jogador jÃ¡ estÃ¡ em raid")
 		return false
 	
 	# Verificar requisitos do raid
 	if not _meets_raid_requirements(player, instance):
-		print("[RaidSystem] Jogador não atende requisitos")
+		print("[RaidSystem] Jogador nÃ£o atende requisitos")
 		return false
 	
 	# Verificar lockout
@@ -179,11 +179,11 @@ func join_raid_instance(instance_id: String, player: Node, role: String = "dps")
 	# Emitir evento
 	player_joined_raid.emit(instance_id, player, role)
 	
-	print("[RaidSystem] Jogador %s entrou na instância %s como %s" % [player.name, instance_id, role])
+	print("[RaidSystem] Jogador %s entrou na instÃ¢ncia %s como %s" % [player.name, instance_id, role])
 	return true
 
 func leave_raid_instance(player: Node, reason: String = "voluntary") -> bool:
-	"""Jogador sai da instância de raid"""
+# Jogador sai da instÃ¢ncia de raid
 	var instance_id = _get_player_instance(player)
 	if instance_id == "":
 		return false
@@ -198,26 +198,26 @@ func leave_raid_instance(player: Node, reason: String = "voluntary") -> bool:
 	group.roles.erase(player_id_str)
 	group.ready_status.erase(player_id_str)
 	
-	# Verificar se era o líder
+	# Verificar se era o lÃ­der
 	if instance.leader == player:
 		if group.members.size() > 0:
-			# Transferir liderança
+			# Transferir lideranÃ§a
 			instance.leader = group.members[0]
 			group.leader = group.members[0]
 			group.loot_master = group.members[0]
 		else:
-			# Dissolver raid se não há mais membros
+			# Dissolver raid se nÃ£o hÃ¡ mais membros
 			_dissolve_raid_instance(instance_id)
 			return true
 	
 	# Emitir evento
 	player_left_raid.emit(instance_id, player, reason)
 	
-	print("[RaidSystem] Jogador %s saiu da instância %s (%s)" % [player.name, instance_id, reason])
+	print("[RaidSystem] Jogador %s saiu da instÃ¢ncia %s (%s)" % [player.name, instance_id, reason])
 	return true
 
 func start_raid_instance(instance_id: String) -> bool:
-	"""Inicia uma instância de raid"""
+# Inicia uma instÃ¢ncia de raid
 	if not active_raid_instances.has(instance_id):
 		return false
 	
@@ -226,25 +226,25 @@ func start_raid_instance(instance_id: String) -> bool:
 	
 	# Verificar se pode iniciar
 	if instance.status != "forming":
-		print("[RaidSystem] Instância não pode ser iniciada")
+		print("[RaidSystem] InstÃ¢ncia nÃ£o pode ser iniciada")
 		return false
 	
-	# Verificar número mínimo de jogadores
+	# Verificar nÃºmero mÃ­nimo de jogadores
 	var type_data = _get_raid_type_data(raid_data.type)
 	if instance.participants.size() < type_data.min_players:
 		print("[RaidSystem] Participantes insuficientes")
 		return false
 	
-	# Verificar se todos estão prontos
+	# Verificar se todos estÃ£o prontos
 	var group = raid_groups[instance_id]
 	for player_id in group.ready_status:
 		if not group.ready_status[player_id]:
-			print("[RaidSystem] Nem todos os jogadores estão prontos")
+			print("[RaidSystem] Nem todos os jogadores estÃ£o prontos")
 			return false
 	
-	# Verificar composição do grupo se necessário
+	# Verificar composiÃ§Ã£o do grupo se necessÃ¡rio
 	if not _validate_group_composition(instance_id):
-		print("[RaidSystem] Composição de grupo inválida")
+		print("[RaidSystem] ComposiÃ§Ã£o de grupo invÃ¡lida")
 		return false
 	
 	# Iniciar raid
@@ -264,11 +264,11 @@ func start_raid_instance(instance_id: String) -> bool:
 	return true
 
 # ============================================================================
-# SISTEMA DE BOSS E MECÂNICAS
+# SISTEMA DE BOSS E MECÃ‚NICAS
 # ============================================================================
 
 func trigger_boss_encounter(instance_id: String, boss_name: String) -> bool:
-	"""Inicia encounter com boss"""
+# Inicia encounter com boss
 	if not active_raid_instances.has(instance_id):
 		return false
 	
@@ -282,18 +282,18 @@ func trigger_boss_encounter(instance_id: String, boss_name: String) -> bool:
 			break
 	
 	if not boss_data:
-		print("[RaidSystem] Boss não encontrado: ", boss_name)
+		print("[RaidSystem] Boss nÃ£o encontrado: ", boss_name)
 		return false
 	
-	# Verificar se boss já foi derrotado
+	# Verificar se boss jÃ¡ foi derrotado
 	if instance.boss_kills.has(boss_name):
-		print("[RaidSystem] Boss já foi derrotado")
+		print("[RaidSystem] Boss jÃ¡ foi derrotado")
 		return false
 	
 	# Aplicar scaling de dificuldade ao boss
 	var scaled_boss = _scale_boss_for_difficulty(boss_data, instance.difficulty)
 	
-	# Aplicar scaling por número de jogadores se necessário
+	# Aplicar scaling por nÃºmero de jogadores se necessÃ¡rio
 	var type_data = _get_raid_type_data(instance.raid_data.type)
 	if type_data.has("difficulty_scaling") and type_data.difficulty_scaling == "dynamic":
 		scaled_boss = _scale_boss_for_player_count(scaled_boss, instance.participants.size())
@@ -315,7 +315,7 @@ func trigger_boss_encounter(instance_id: String, boss_name: String) -> bool:
 	return true
 
 func defeat_boss(instance_id: String, boss_name: String) -> bool:
-	"""Marca boss como derrotado e distribui loot"""
+# Marca boss como derrotado e distribui loot
 	if not active_raid_instances.has(instance_id):
 		return false
 	
@@ -335,7 +335,7 @@ func defeat_boss(instance_id: String, boss_name: String) -> bool:
 	var loot = _generate_boss_loot(instance, boss_name)
 	var distributed_loot = _distribute_loot(instance_id, loot)
 	
-	# Conceder achievements se aplicável
+	# Conceder achievements se aplicÃ¡vel
 	_check_boss_achievements(instance_id, boss_name, encounter_time)
 	
 	# Atualizar progresso
@@ -351,7 +351,7 @@ func defeat_boss(instance_id: String, boss_name: String) -> bool:
 	return true
 
 func wipe_raid(instance_id: String, cause: String = "combat") -> bool:
-	"""Processa wipe do raid"""
+# Processa wipe do raid
 	if not active_raid_instances.has(instance_id):
 		return false
 	
@@ -377,7 +377,7 @@ func wipe_raid(instance_id: String, cause: String = "combat") -> bool:
 	if type_data.respawn_allowed:
 		_respawn_raid_players(instance_id)
 	else:
-		# Se não permite respawn, raid falhou
+		# Se nÃ£o permite respawn, raid falhou
 		_fail_raid_instance(instance_id, "wipe_no_respawn")
 		return true
 	
@@ -392,7 +392,7 @@ func wipe_raid(instance_id: String, cause: String = "combat") -> bool:
 # ============================================================================
 
 func _generate_boss_loot(instance: Dictionary, boss_name: String) -> Array:
-	"""Gera loot para um boss derrotado"""
+# Gera loot para um boss derrotado
 	var loot = []
 	var difficulty = instance.difficulty
 	var loot_table = raid_system_data.loot_system.drop_tables[difficulty]
@@ -441,7 +441,7 @@ func _generate_boss_loot(instance: Dictionary, boss_name: String) -> Array:
 	return loot
 
 func _distribute_loot(instance_id: String, loot: Array) -> Array:
-	"""Distribui loot entre os participantes"""
+# Distribui loot entre os participantes
 	var instance = active_raid_instances[instance_id]
 	var group = raid_groups[instance_id]
 	var distributed = []
@@ -456,13 +456,13 @@ func _distribute_loot(instance_id: String, loot: Array) -> Array:
 		"master_looter":
 			distributed = _distribute_master_loot(instance, group, loot)
 	
-	# Registrar loot distribuído
+	# Registrar loot distribuÃ­do
 	instance.loot_distributed.append_array(distributed)
 	
 	return distributed
 
 func _distribute_personal_loot(instance: Dictionary, loot: Array) -> Array:
-	"""Distribui loot pessoal"""
+# Distribui loot pessoal
 	var distributed = []
 	
 	for participant in instance.participants:
@@ -479,11 +479,11 @@ func _distribute_personal_loot(instance: Dictionary, loot: Array) -> Array:
 	return distributed
 
 func _distribute_group_loot(instance: Dictionary, group: Dictionary, loot: Array) -> Array:
-	"""Distribui loot de grupo usando need/greed/pass"""
+# Distribui loot de grupo usando need/greed/pass
 	var distributed = []
 	
 	# Implementar sistema need/greed/pass
-	# Por agora, distribuição simples round-robin
+	# Por agora, distribuiÃ§Ã£o simples round-robin
 	var player_index = 0
 	
 	for loot_item in loot:
@@ -498,25 +498,25 @@ func _distribute_group_loot(instance: Dictionary, group: Dictionary, loot: Array
 	return distributed
 
 func _distribute_master_loot(instance: Dictionary, group: Dictionary, loot: Array) -> Array:
-	"""Distribui loot via master looter"""
+# Distribui loot via master looter
 	var distributed = []
 	var master_looter = group.loot_master
 	
-	# Master looter decide distribuição
+	# Master looter decide distribuiÃ§Ã£o
 	# Por agora, dar tudo para o master looter
 	for loot_item in loot:
 		loot_item.recipient = master_looter
-		loot_item.needs_distribution = true  # Marcado para distribuição manual
+		loot_item.needs_distribution = true  # Marcado para distribuiÃ§Ã£o manual
 		distributed.push_back(loot_item)
 	
 	return distributed
 
 func _give_item_to_player(player: Node, loot_item: Dictionary):
-	"""Entrega item para jogador"""
+# Entrega item para jogador
 	if player.has_method("receive_raid_loot"):
 		player.receive_raid_loot(loot_item)
 	else:
-		# Fallback - adicionar ao inventário
+		# Fallback - adicionar ao inventÃ¡rio
 		print("[RaidSystem] Loot entregue para %s: %s" % [player.name, loot_item])
 
 # ============================================================================
@@ -524,7 +524,7 @@ func _give_item_to_player(player: Node, loot_item: Dictionary):
 # ============================================================================
 
 func _apply_raid_lockouts(instance_id: String):
-	"""Aplica lockouts aos participantes"""
+# Aplica lockouts aos participantes
 	var instance = active_raid_instances[instance_id]
 	var reset_type = _get_reset_schedule(instance.raid_id, instance.difficulty)
 	
@@ -542,7 +542,7 @@ func _apply_raid_lockouts(instance_id: String):
 		}
 
 func _is_player_locked_out(player: Node, raid_id: String, difficulty: String) -> bool:
-	"""Verifica se jogador está em lockout"""
+# Verifica se jogador estÃ¡ em lockout
 	var player_id = player.get_instance_id()
 	var lockout_key = raid_id + "_" + difficulty
 	
@@ -559,7 +559,7 @@ func _is_player_locked_out(player: Node, raid_id: String, difficulty: String) ->
 	return current_time < lockout.locked_until
 
 func _update_raid_progress(instance_id: String, boss_name: String):
-	"""Atualiza progresso do raid para todos os participantes"""
+# Atualiza progresso do raid para todos os participantes
 	var instance = active_raid_instances[instance_id]
 	
 	for participant in instance.participants:
@@ -582,25 +582,25 @@ func _update_raid_progress(instance_id: String, boss_name: String):
 			progress.bosses_killed.push_back(boss_name)
 
 # ============================================================================
-# FUNÇÕES AUXILIARES
+# FUNÃ‡Ã•ES AUXILIARES
 # ============================================================================
 
 func _get_player_data(player: Node) -> Dictionary:
-	"""Obtém dados do jogador"""
+# ObtÃ©m dados do jogador
 	if player.has_method("get_player_data"):
 		return player.get_player_data()
 	return GameState.get_player_data()
 
 func _generate_instance_id() -> String:
-	"""Gera ID único para instância"""
+# Gera ID Ãºnico para instÃ¢ncia
 	return "raid_" + str(Time.get_time_dict_from_system().unix) + "_" + str(randi())
 
 func _get_raid_type_data(type: String) -> Dictionary:
-	"""Obtém dados do tipo de raid"""
+# ObtÃ©m dados do tipo de raid
 	return raid_system_data.raid_types.get(type, {})
 
 func _apply_difficulty_scaling(instance_data: Dictionary):
-	"""Aplica scaling de dificuldade"""
+# Aplica scaling de dificuldade
 	var difficulty = instance_data.difficulty
 	var scaling = raid_system_data.difficulty_levels.get(difficulty, {})
 	
@@ -615,16 +615,16 @@ func _apply_difficulty_scaling(instance_data: Dictionary):
 			boss.damage_scaled = int(boss.damage_base * scaling.damage_multiplier)
 
 func _meets_raid_requirements(player: Node, instance: Dictionary) -> bool:
-	"""Verifica se jogador atende requisitos"""
+# Verifica se jogador atende requisitos
 	var player_data = _get_player_data(player)
 	var raid_data = instance.raid_data
 	var difficulty_data = raid_system_data.difficulty_levels[instance.difficulty]
 	
-	# Verificar nível
+	# Verificar nÃ­vel
 	if player_data.level < difficulty_data.level_requirement:
 		return false
 	
-	# Verificar item level se aplicável
+	# Verificar item level se aplicÃ¡vel
 	if difficulty_data.has("required_item_level"):
 		var player_item_level = _get_player_item_level(player)
 		if player_item_level < difficulty_data.required_item_level:
@@ -633,17 +633,17 @@ func _meets_raid_requirements(player: Node, instance: Dictionary) -> bool:
 	return true
 
 func _get_player_item_level(player: Node) -> int:
-	"""Obtém item level médio do jogador"""
-	# Implementar cálculo de item level
+# ObtÃ©m item level mÃ©dio do jogador
+	# Implementar cÃ¡lculo de item level
 	return 50  # Placeholder
 
 func _validate_group_composition(instance_id: String) -> bool:
-	"""Valida composição do grupo"""
+# Valida composiÃ§Ã£o do grupo
 	var instance = active_raid_instances[instance_id]
 	var group = raid_groups[instance_id]
 	var type_data = _get_raid_type_data(instance.raid_data.type)
 	
-	# Se não requer composição específica, aceitar
+	# Se nÃ£o requer composiÃ§Ã£o especÃ­fica, aceitar
 	if not type_data.has("role_requirements"):
 		return true
 	
@@ -655,7 +655,7 @@ func _validate_group_composition(instance_id: String) -> bool:
 		if role_counts.has(role):
 			role_counts[role] += 1
 	
-	# Verificar requisitos mínimos
+	# Verificar requisitos mÃ­nimos
 	var requirements = raid_system_data.group_mechanics.role_requirements
 	
 	for role in requirements:
@@ -666,7 +666,7 @@ func _validate_group_composition(instance_id: String) -> bool:
 	return true
 
 func _is_player_in_raid(player: Node) -> bool:
-	"""Verifica se jogador está em algum raid"""
+# Verifica se jogador estÃ¡ em algum raid
 	var player_id = player.get_instance_id()
 	
 	for instance_id in active_raid_instances:
@@ -678,7 +678,7 @@ func _is_player_in_raid(player: Node) -> bool:
 	return false
 
 func _get_player_instance(player: Node) -> String:
-	"""Obtém instância atual do jogador"""
+# ObtÃ©m instÃ¢ncia atual do jogador
 	var player_id = player.get_instance_id()
 	
 	for instance_id in active_raid_instances:
@@ -690,14 +690,14 @@ func _get_player_instance(player: Node) -> String:
 	return ""
 
 func _teleport_players_to_raid(instance_id: String):
-	"""Teleporta jogadores para o raid"""
+# Teleporta jogadores para o raid
 	var instance = active_raid_instances[instance_id]
 	
 	# Implementar teleporte para raid
 	print("[RaidSystem] Teleportando jogadores para raid %s" % instance_id)
 
 func _respawn_raid_players(instance_id: String):
-	"""Respawna jogadores do raid"""
+# Respawna jogadores do raid
 	var instance = active_raid_instances[instance_id]
 	
 	for participant in instance.participants:
@@ -705,7 +705,7 @@ func _respawn_raid_players(instance_id: String):
 			participant.respawn_in_raid()
 
 func _fail_raid_instance(instance_id: String, reason: String):
-	"""Falha instância de raid"""
+# Falha instÃ¢ncia de raid
 	var instance = active_raid_instances[instance_id]
 	instance.status = "failed"
 	
@@ -715,22 +715,22 @@ func _fail_raid_instance(instance_id: String, reason: String):
 	print("[RaidSystem] Raid falhou: %s (%s)" % [instance_id, reason])
 
 func _teleport_players_out_of_raid(instance_id: String):
-	"""Teleporta jogadores para fora do raid"""
-	# Implementar teleporte de saída
+# Teleporta jogadores para fora do raid
+	# Implementar teleporte de saÃ­da
 	print("[RaidSystem] Teleportando jogadores para fora do raid %s" % instance_id)
 
 func _dissolve_raid_instance(instance_id: String):
-	"""Dissolve instância de raid"""
+# Dissolve instÃ¢ncia de raid
 	if active_raid_instances.has(instance_id):
 		active_raid_instances.erase(instance_id)
 	
 	if raid_groups.has(instance_id):
 		raid_groups.erase(instance_id)
 	
-	print("[RaidSystem] Instância dissolvida: %s" % instance_id)
+	print("[RaidSystem] InstÃ¢ncia dissolvida: %s" % instance_id)
 
 func _scale_boss_for_difficulty(boss_data: Dictionary, difficulty: String) -> Dictionary:
-	"""Escala boss para dificuldade"""
+# Escala boss para dificuldade
 	var scaled = boss_data.duplicate()
 	var scaling = raid_system_data.difficulty_levels[difficulty]
 	
@@ -740,10 +740,10 @@ func _scale_boss_for_difficulty(boss_data: Dictionary, difficulty: String) -> Di
 	return scaled
 
 func _scale_boss_for_player_count(boss_data: Dictionary, player_count: int) -> Dictionary:
-	"""Escala boss para número de jogadores"""
+# Escala boss para nÃºmero de jogadores
 	var scaled = boss_data.duplicate()
 	
-	# Scaling simples: +10% health e damage por jogador adicional acima do mínimo
+	# Scaling simples: +10% health e damage por jogador adicional acima do mÃ­nimo
 	var scaling_factor = 1.0 + (player_count - 1) * 0.1
 	
 	if scaled.has("health"):
@@ -752,7 +752,7 @@ func _scale_boss_for_player_count(boss_data: Dictionary, player_count: int) -> D
 	return scaled
 
 func _roll_loot_quality(quality_distribution: Dictionary) -> String:
-	"""Rola qualidade do loot"""
+# Rola qualidade do loot
 	var roll = randi() % 100
 	var cumulative = 0
 	
@@ -764,12 +764,12 @@ func _roll_loot_quality(quality_distribution: Dictionary) -> String:
 	return "common"
 
 func _get_reset_schedule(raid_id: String, difficulty: String) -> String:
-	"""Obtém schedule de reset para raid"""
-	# Implementar lógica de reset baseada no raid e dificuldade
+# ObtÃ©m schedule de reset para raid
+	# Implementar lÃ³gica de reset baseada no raid e dificuldade
 	return "weekly_reset"
 
 func _calculate_reset_time(reset_type: String) -> int:
-	"""Calcula próximo tempo de reset"""
+# Calcula prÃ³ximo tempo de reset
 	var current_time = Time.get_time_dict_from_system().unix
 	
 	match reset_type:
@@ -783,7 +783,7 @@ func _calculate_reset_time(reset_type: String) -> int:
 			return current_time + 604800
 
 func _check_boss_achievements(instance_id: String, boss_name: String, encounter_time: float):
-	"""Verifica achievements de boss"""
+# Verifica achievements de boss
 	# Implementar sistema de achievements
 	pass
 
@@ -792,7 +792,7 @@ func _check_boss_achievements(instance_id: String, boss_name: String, encounter_
 # ============================================================================
 
 func _cleanup_expired_instances():
-	"""Remove instâncias expiradas"""
+# Remove instÃ¢ncias expiradas
 	var current_time = Time.get_time_dict_from_system().unix
 	var instances_to_remove = []
 	
@@ -800,7 +800,7 @@ func _cleanup_expired_instances():
 		var instance = active_raid_instances[instance_id]
 		var creation_time = instance.created_at.unix
 		
-		# Remover instâncias antigas (4 horas)
+		# Remover instÃ¢ncias antigas (4 horas)
 		if current_time - creation_time > 14400:
 			instances_to_remove.push_back(instance_id)
 	
@@ -808,7 +808,7 @@ func _cleanup_expired_instances():
 		_dissolve_raid_instance(instance_id)
 
 func _check_lockout_resets():
-	"""Verifica e limpa lockouts expirados"""
+# Verifica e limpa lockouts expirados
 	var current_time = Time.get_time_dict_from_system().unix
 	
 	for player_id in raid_lockouts:
@@ -828,28 +828,28 @@ func _check_lockout_resets():
 # ============================================================================
 
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
-	"""Quando jogador sobe de nível"""
+# Quando jogador sobe de nÃ­vel
 	# Verificar se desbloqueou novos raids
 	pass
 
 func _on_combat_ended(winner: String):
-	"""Quando combate termina"""
+# Quando combate termina
 	# Verificar se foi boss de raid
 	pass
 
 # ============================================================================
-# API PÚBLICA
+# API PÃšBLICA
 # ============================================================================
 
 func get_available_raids(player: Node) -> Array:
-	"""Obtém raids disponíveis para o jogador"""
+# ObtÃ©m raids disponÃ­veis para o jogador
 	var available = []
 	var player_data = _get_player_data(player)
 	
 	for raid_id in raid_system_data.raid_instances:
 		var raid_data = raid_system_data.raid_instances[raid_id]
 		
-		# Verificar se atende requisitos básicos
+		# Verificar se atende requisitos bÃ¡sicos
 		if player_data.level >= raid_data.recommended_level:
 			available.push_back({
 				"id": raid_id,
@@ -859,17 +859,17 @@ func get_available_raids(player: Node) -> Array:
 	return available
 
 func get_player_raid_progress(player: Node) -> Dictionary:
-	"""Obtém progresso de raid do jogador"""
+# ObtÃ©m progresso de raid do jogador
 	var player_id = player.get_instance_id()
 	return player_raid_progress.get(player_id, {})
 
 func get_player_lockouts(player: Node) -> Dictionary:
-	"""Obtém lockouts do jogador"""
+# ObtÃ©m lockouts do jogador
 	var player_id = player.get_instance_id()
 	return raid_lockouts.get(player_id, {})
 
 func set_player_ready(player: Node, ready: bool) -> bool:
-	"""Define status de ready do jogador"""
+# Define status de ready do jogador
 	var instance_id = _get_player_instance(player)
 	if instance_id == "":
 		return false
@@ -884,7 +884,7 @@ func set_player_ready(player: Node, ready: bool) -> bool:
 	return false
 
 func change_player_role(instance_id: String, player: Node, new_role: String) -> bool:
-	"""Muda role do jogador na instância"""
+# Muda role do jogador na instÃ¢ncia
 	if not raid_groups.has(instance_id):
 		return false
 	
@@ -898,11 +898,11 @@ func change_player_role(instance_id: String, player: Node, new_role: String) -> 
 	return false
 
 func get_instance_info(instance_id: String) -> Dictionary:
-	"""Obtém informações da instância"""
+# ObtÃ©m informaÃ§Ãµes da instÃ¢ncia
 	return active_raid_instances.get(instance_id, {})
 
 func complete_raid_instance(instance_id: String, success: bool) -> bool:
-	"""Completa instância de raid"""
+# Completa instÃ¢ncia de raid
 	if not active_raid_instances.has(instance_id):
 		return false
 	
@@ -920,17 +920,17 @@ func complete_raid_instance(instance_id: String, success: bool) -> bool:
 	# Emitir evento
 	raid_completed.emit(instance_id, success, completion_time)
 	
-	# Cleanup após delay
+	# Cleanup apÃ³s delay
 	await get_tree().create_timer(30.0).timeout
 	_dissolve_raid_instance(instance_id)
 	
 	return true
 
 func _process_completion_rewards(instance_id: String):
-	"""Processa recompensas de completar raid"""
+# Processa recompensas de completar raid
 	var instance = active_raid_instances[instance_id]
 	
 	# Conceder currency bonus
 	# Conceder achievement progress
 	# Etc.
-	print("[RaidSystem] Processando recompensas de conclusão para %s" % instance_id)
+	print("[RaidSystem] Processando recompensas de conclusÃ£o para %s" % instance_id)

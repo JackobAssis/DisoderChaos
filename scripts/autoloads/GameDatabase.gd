@@ -1,7 +1,7 @@
-extends Node
+﻿extends Node
 
 ## Sistema central de dados JSON para balanceamento do jogo Disorder Chaos
-## Carrega e gerencia todos os dados de configuração do jogo
+## Carrega e gerencia todos os dados de configuraÃ§Ã£o do jogo
 
 # === DADOS CARREGADOS ===
 var classes: Dictionary = {}
@@ -39,7 +39,7 @@ func _ready():
 # === CARREGAMENTO DE DADOS ===
 
 func load_all_data():
-	"""Carrega todos os arquivos JSON de dados"""
+# Carrega todos os arquivos JSON de dados
 	loading_errors.clear()
 	
 	print("[GameDatabase] Carregando dados do jogo...")
@@ -68,14 +68,14 @@ func load_all_data():
 		data_loading_failed.emit(loading_errors)
 
 func load_json_file(path: String, data_type: String) -> Dictionary:
-	"""Carrega arquivo JSON individual"""
+# Carrega arquivo JSON individual
 	if not FileAccess.file_exists(path):
-		loading_errors.append("Arquivo não encontrado: " + path)
+		loading_errors.append("Arquivo nÃ£o encontrado: " + path)
 		return {}
 	
 	var file = FileAccess.open(path, FileAccess.READ)
 	if not file:
-		loading_errors.append("Não foi possível abrir: " + path)
+		loading_errors.append("NÃ£o foi possÃ­vel abrir: " + path)
 		return {}
 	
 	var json_text = file.get_as_text()
@@ -92,16 +92,16 @@ func load_json_file(path: String, data_type: String) -> Dictionary:
 	return json.data
 
 func validate_loaded_data():
-	"""Valida integridade dos dados carregados"""
-	# Valida referências entre dados
+# Valida integridade dos dados carregados
+	# Valida referÃªncias entre dados
 	validate_item_references()
 	validate_quest_references()
 	validate_crafting_references()
 	validate_loot_table_references()
 
 func validate_item_references():
-	"""Valida referências de itens"""
-	# Verifica se crafting recipes referenciam itens válidos
+# Valida referÃªncias de itens
+	# Verifica se crafting recipes referenciam itens vÃ¡lidos
 	for recipe_id in crafting_recipes.get("recipes", {}):
 		var recipe = crafting_recipes.recipes[recipe_id]
 		
@@ -117,7 +117,7 @@ func validate_item_references():
 			loading_errors.append("Receita " + recipe_id + " produz item inexistente: " + result_id)
 
 func validate_quest_references():
-	"""Valida referências de quests"""
+# Valida referÃªncias de quests
 	for quest_id in quests:
 		var quest = quests[quest_id]
 		
@@ -128,59 +128,59 @@ func validate_quest_references():
 				loading_errors.append("Quest " + quest_id + " oferece item inexistente: " + item_id)
 
 func validate_crafting_references():
-	"""Valida referências de crafting"""
+# Valida referÃªncias de crafting
 	for recipe_id in crafting_recipes.get("recipes", {}):
 		var recipe = crafting_recipes.recipes[recipe_id]
 		
-		# Valida estação de crafting
+		# Valida estaÃ§Ã£o de crafting
 		var station = recipe.get("required_station", "")
 		if station != "" and not economy.get("crafting_stations", {}).has(station):
-			loading_errors.append("Receita " + recipe_id + " requer estação inexistente: " + station)
+			loading_errors.append("Receita " + recipe_id + " requer estaÃ§Ã£o inexistente: " + station)
 
 func validate_loot_table_references():
-	"""Valida referências de loot tables"""
+# Valida referÃªncias de loot tables
 	for table_id in loot_tables:
 		var table = loot_tables[table_id]
 		
 		for drop in table.get("drops", []):
 			var item_id = drop.get("item_id", "")
 			if item_id != "" and not items.has(item_id):
-				loading_errors.append("Loot table " + table_id + " contém item inexistente: " + item_id)
+				loading_errors.append("Loot table " + table_id + " contÃ©m item inexistente: " + item_id)
 
 # === GETTERS DE DADOS ===
 
 func get_item(item_id: String) -> Dictionary:
-	"""Retorna dados de um item"""
+# Retorna dados de um item
 	return items.get(item_id, {})
 
 func get_mob(mob_id: String) -> Dictionary:
-	"""Retorna dados de um mob"""
+# Retorna dados de um mob
 	return mobs.get(mob_id, {})
 
 func get_class(class_id: String) -> Dictionary:
-	"""Retorna dados de uma classe"""
+# Retorna dados de uma classe
 	return classes.get(class_id, {})
 
 func get_skill(skill_id: String) -> Dictionary:
-	"""Retorna dados de uma skill"""
+# Retorna dados de uma skill
 	return skills.get(skill_id, {})
 
 func get_quest(quest_id: String) -> Dictionary:
-	"""Retorna dados de uma quest"""
+# Retorna dados de uma quest
 	return quests.get(quest_id, {})
 
 func get_loot_table(table_id: String) -> Dictionary:
-	"""Retorna loot table"""
+# Retorna loot table
 	return loot_tables.get(table_id, {})
 
 func get_crafting_recipe(recipe_id: String) -> Dictionary:
-	"""Retorna receita de crafting"""
+# Retorna receita de crafting
 	return crafting_recipes.get("recipes", {}).get(recipe_id, {})
 
-# === GETTERS ESPECÍFICOS ===
+# === GETTERS ESPECÃFICOS ===
 
 func get_items_by_type(item_type: String) -> Array[Dictionary]:
-	"""Retorna todos os itens de um tipo específico"""
+# Retorna todos os itens de um tipo especÃ­fico
 	var filtered_items: Array[Dictionary] = []
 	
 	for item_id in items:
@@ -193,7 +193,7 @@ func get_items_by_type(item_type: String) -> Array[Dictionary]:
 	return filtered_items
 
 func get_items_by_rarity(rarity: String) -> Array[Dictionary]:
-	"""Retorna todos os itens de uma raridade específica"""
+# Retorna todos os itens de uma raridade especÃ­fica
 	var filtered_items: Array[Dictionary] = []
 	
 	for item_id in items:
@@ -206,7 +206,7 @@ func get_items_by_rarity(rarity: String) -> Array[Dictionary]:
 	return filtered_items
 
 func get_mobs_by_level_range(min_level: int, max_level: int) -> Array[Dictionary]:
-	"""Retorna mobs dentro de uma faixa de nível"""
+# Retorna mobs dentro de uma faixa de nÃ­vel
 	var filtered_mobs: Array[Dictionary] = []
 	
 	for mob_id in mobs:
@@ -220,7 +220,7 @@ func get_mobs_by_level_range(min_level: int, max_level: int) -> Array[Dictionary
 	return filtered_mobs
 
 func get_quests_by_level(player_level: int) -> Array[Dictionary]:
-	"""Retorna quests apropriadas para o nível do player"""
+# Retorna quests apropriadas para o nÃ­vel do player
 	var available_quests: Array[Dictionary] = []
 	
 	for quest_id in quests:
@@ -236,7 +236,7 @@ func get_quests_by_level(player_level: int) -> Array[Dictionary]:
 	return available_quests
 
 func get_crafting_recipes_by_category(category: String) -> Array[Dictionary]:
-	"""Retorna receitas de crafting por categoria"""
+# Retorna receitas de crafting por categoria
 	var filtered_recipes: Array[Dictionary] = []
 	
 	for recipe_id in crafting_recipes.get("recipes", {}):
@@ -249,7 +249,7 @@ func get_crafting_recipes_by_category(category: String) -> Array[Dictionary]:
 	return filtered_recipes
 
 func get_skills_by_tree(tree_name: String) -> Array[Dictionary]:
-	"""Retorna skills de uma árvore específica"""
+# Retorna skills de uma Ã¡rvore especÃ­fica
 	var tree_skills: Array[Dictionary] = []
 	
 	for skill_id in skills:
@@ -264,22 +264,22 @@ func get_skills_by_tree(tree_name: String) -> Array[Dictionary]:
 # === ECONOMIA ===
 
 func get_item_base_price(item_id: String) -> int:
-	"""Retorna preço base de um item"""
+# Retorna preÃ§o base de um item
 	var item = get_item(item_id)
 	if item.has("base_price"):
 		return item.base_price
 	
-	# Fallback para cálculo baseado em raridade
+	# Fallback para cÃ¡lculo baseado em raridade
 	var rarity = item.get("rarity", "common")
 	var base_values = economy.get("base_prices", {})
 	return base_values.get(rarity, 1)
 
 func get_current_item_price(item_id: String, market_modifier: float = 1.0) -> int:
-	"""Retorna preço atual considerando fatores econômicos"""
+# Retorna preÃ§o atual considerando fatores econÃ´micos
 	var base_price = get_item_base_price(item_id)
 	var item = get_item(item_id)
 	
-	# Modificadores econômicos
+	# Modificadores econÃ´micos
 	var rarity_multiplier = economy.get("rarity_multipliers", {}).get(item.get("rarity", "common"), 1.0)
 	var type_multiplier = economy.get("type_multipliers", {}).get(item.get("type", "misc"), 1.0)
 	
@@ -287,14 +287,14 @@ func get_current_item_price(item_id: String, market_modifier: float = 1.0) -> in
 	return max(1, int(final_price))
 
 func get_shop_modifier(shop_type: String) -> float:
-	"""Retorna modificador de preço para tipo de loja"""
+# Retorna modificador de preÃ§o para tipo de loja
 	var shop_modifiers = economy.get("shop_modifiers", {})
 	return shop_modifiers.get(shop_type, 1.0)
 
 # === LOOT GENERATION ===
 
 func generate_loot(table_id: String) -> Array[Dictionary]:
-	"""Gera loot baseado em uma tabela"""
+# Gera loot baseado em uma tabela
 	var table = get_loot_table(table_id)
 	if table.is_empty():
 		return []
@@ -322,12 +322,12 @@ func generate_loot(table_id: String) -> Array[Dictionary]:
 # === UTILITIES ===
 
 func reload_data():
-	"""Recarrega todos os dados (útil para desenvolvimento)"""
+# Recarrega todos os dados (Ãºtil para desenvolvimento)
 	is_loaded = false
 	load_all_data()
 
 func get_data_summary() -> Dictionary:
-	"""Retorna resumo dos dados carregados"""
+# Retorna resumo dos dados carregados
 	return {
 		"items_count": items.size(),
 		"mobs_count": mobs.size(),
@@ -341,7 +341,7 @@ func get_data_summary() -> Dictionary:
 	}
 
 func search_items(search_term: String) -> Array[Dictionary]:
-	"""Busca itens por nome ou descrição"""
+# Busca itens por nome ou descriÃ§Ã£o
 	var results: Array[Dictionary] = []
 	var term = search_term.to_lower()
 	
@@ -358,7 +358,7 @@ func search_items(search_term: String) -> Array[Dictionary]:
 	return results
 
 func get_random_item_by_rarity(rarity: String) -> Dictionary:
-	"""Retorna item aleatório de uma raridade"""
+# Retorna item aleatÃ³rio de uma raridade
 	var items_of_rarity = get_items_by_rarity(rarity)
 	if items_of_rarity.is_empty():
 		return {}
@@ -369,25 +369,25 @@ func get_random_item_by_rarity(rarity: String) -> Dictionary:
 # === VALIDATION HELPERS ===
 
 func validate_item_id(item_id: String) -> bool:
-	"""Verifica se item ID existe"""
+# Verifica se item ID existe
 	return items.has(item_id)
 
 func validate_mob_id(mob_id: String) -> bool:
-	"""Verifica se mob ID existe"""
+# Verifica se mob ID existe
 	return mobs.has(mob_id)
 
 func validate_skill_id(skill_id: String) -> bool:
-	"""Verifica se skill ID existe"""
+# Verifica se skill ID existe
 	return skills.has(skill_id)
 
 func validate_quest_id(quest_id: String) -> bool:
-	"""Verifica se quest ID existe"""
+# Verifica se quest ID existe
 	return quests.has(quest_id)
 
 # === DEBUG FUNCTIONS ===
 
 func print_data_summary():
-	"""Imprime resumo dos dados para debug"""
+# Imprime resumo dos dados para debug
 	var summary = get_data_summary()
 	print("=== GAME DATABASE SUMMARY ===")
 	print("Loaded: ", summary.is_loaded)
@@ -405,7 +405,7 @@ func print_data_summary():
 			print("  - ", error)
 
 func export_data_to_json(file_path: String):
-	"""Exporta todos os dados para um arquivo JSON (backup/debug)"""
+# Exporta todos os dados para um arquivo JSON (backup/debug)
 	var all_data = {
 		"classes": classes,
 		"items": items,

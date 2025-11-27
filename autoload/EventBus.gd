@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 # EventBus.gd - Global event system for decoupled communication
 # All game events should be routed through this system
 
@@ -45,6 +45,8 @@ signal ui_menu_closed(menu_name)
 signal ui_button_pressed(button_name)
 signal ui_dialog_shown(text, speaker)
 signal ui_notification_shown(message, type)
+signal menu_requested(menu_name)
+signal popup_requested(popup_type, payload)
 
 # Game state events
 signal game_loaded()
@@ -97,19 +99,27 @@ func _ready():
 
 # Utility functions for common event patterns
 func show_damage_number(position: Vector2, damage: int, type: String = "normal"):
-	"""Request to show floating damage number"""
+# Request to show floating damage number
 	damage_number_requested.emit(position, damage, type)
 
 func show_notification(message: String, type: String = "info"):
-	"""Show a notification to the player"""
+# Show a notification to the player
 	ui_notification_shown.emit(message, type)
 
+func request_menu(menu_name: String):
+# Unified API to request opening a named menu
+	menu_requested.emit(menu_name)
+
+func request_popup(popup_type: String, payload: Dictionary):
+# Unified API to request a popup with contextual payload
+	popup_requested.emit(popup_type, payload)
+
 func play_sound(sound_id: String, global_position: Vector2 = Vector2.ZERO):
-	"""Request to play a sound effect"""
+# Request to play a sound effect
 	sound_play_requested.emit(sound_id, global_position)
 
 func log_combat_action(attacker_name: String, action: String, target_name: String = ""):
-	"""Log a combat action for UI display"""
+# Log a combat action for UI display
 	if target_name.is_empty():
 		combat_log_updated.emit(attacker_name + " " + action)
 	else:
@@ -134,7 +144,7 @@ signal item_sold(item_id, price)
 signal currency_changed(amount, type)
 
 func _input(event):
-	"""Handle global input events that need to be broadcasted"""
+# Handle global input events that need to be broadcasted
 	if event.is_action_pressed("ui_cancel"):
 		ui_escape_pressed.emit()
 
@@ -145,7 +155,7 @@ signal debug_command_entered(command, args)
 signal debug_value_changed(key, value)
 
 func debug_log(message: String):
-	"""Debug logging function"""
+# Debug logging function
 	if OS.is_debug_build():
 		print("[DEBUG] " + message)
 		debug_message_logged.emit(message)

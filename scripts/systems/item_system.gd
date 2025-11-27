@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name ItemSystem
 # item_system.gd - Advanced item management and usage system
 
@@ -25,7 +25,7 @@ func _ready():
 	setup_item_handlers()
 
 func setup_item_handlers():
-	"""Setup handlers for different item types"""
+# Setup handlers for different item types
 	item_handlers["consumable"] = use_consumable_item
 	item_handlers["weapon"] = equip_weapon_item
 	item_handlers["armor"] = equip_armor_item
@@ -35,21 +35,21 @@ func setup_item_handlers():
 	item_handlers["key"] = use_key_item
 
 func use_item(player: Node, item_id: String, quantity: int = 1) -> bool:
-	"""Use an item with the player"""
+# Use an item with the player
 	var item_data = get_item_data(item_id)
 	if not item_data:
-		EventBus.ui_notification_shown.emit("Unknown item: " + item_id, "error")
+		EventBus.show_notification("Unknown item: " + item_id, "error")
 		return false
 	
 	# Check if item is on cooldown
 	if is_item_on_cooldown(item_id):
 		var remaining = get_cooldown_remaining(item_id)
-		EventBus.ui_notification_shown.emit("Item on cooldown: " + str(int(remaining)) + "s", "warning")
+		EventBus.show_notification("Item on cooldown: " + str(int(remaining)) + "s", "warning")
 		return false
 	
 	# Check if player has the item
 	if not player_has_item(player, item_id, quantity):
-		EventBus.ui_notification_shown.emit("Not enough " + item_data.name, "error")
+		EventBus.show_notification("Not enough " + item_data.name, "error")
 		return false
 	
 	# Get item type handler
@@ -57,7 +57,7 @@ func use_item(player: Node, item_id: String, quantity: int = 1) -> bool:
 	var handler = item_handlers.get(item_type)
 	
 	if not handler:
-		EventBus.ui_notification_shown.emit("Cannot use " + item_data.name, "error")
+		EventBus.show_notification("Cannot use " + item_data.name, "error")
 		return false
 	
 	# Execute item usage
@@ -80,7 +80,7 @@ func use_item(player: Node, item_id: String, quantity: int = 1) -> bool:
 	return false
 
 func get_item_data(item_id: String) -> Dictionary:
-	"""Get item data with error handling"""
+# Get item data with error handling
 	var item_data = DataLoader.get_item(item_id)
 	if not item_data:
 		push_warning("[ItemSystem] Item data not found: " + item_id)
@@ -88,20 +88,20 @@ func get_item_data(item_id: String) -> Dictionary:
 	return item_data
 
 func player_has_item(player: Node, item_id: String, quantity: int) -> bool:
-	"""Check if player has sufficient quantity of item"""
+# Check if player has sufficient quantity of item
 	if player.has_method("has_item_in_inventory"):
 		return player.has_item_in_inventory(item_id, quantity)
 	return false
 
 func remove_item_from_player(player: Node, item_id: String, quantity: int) -> bool:
-	"""Remove item from player inventory"""
+# Remove item from player inventory
 	if player.has_method("remove_item_from_inventory"):
 		return player.remove_item_from_inventory(item_id, quantity)
 	return false
 
 # Item type handlers
 func use_consumable_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle consumable item usage"""
+# Handle consumable item usage
 	var item_name = item_data.get("name", "Unknown Item")
 	var effects_applied = 0
 	
@@ -115,7 +115,7 @@ func use_consumable_item(player: Node, item_data: Dictionary, quantity: int) -> 
 				var actual_heal = player.heal(heal_amount)
 				if actual_heal > 0:
 					success = true
-					EventBus.ui_notification_shown.emit("Healed " + str(actual_heal) + " HP", "success")
+					EventBus.show_notification("Healed " + str(actual_heal) + " HP", "success")
 		
 		# Mana restoration
 		if item_data.has("mana_restore"):
@@ -123,7 +123,7 @@ func use_consumable_item(player: Node, item_data: Dictionary, quantity: int) -> 
 			if player.has_method("restore_mana"):
 				player.restore_mana(mana_amount)
 				success = true
-				EventBus.ui_notification_shown.emit("Restored " + str(mana_amount) + " MP", "success")
+				EventBus.show_notification("Restored " + str(mana_amount) + " MP", "success")
 			elif player.has_method("update_player_mp"):
 				GameState.update_player_mp(mana_amount)
 				success = true
@@ -145,13 +145,13 @@ func use_consumable_item(player: Node, item_data: Dictionary, quantity: int) -> 
 			effects_applied += 1
 	
 	if effects_applied > 0:
-		EventBus.ui_notification_shown.emit("Used " + item_name + " x" + str(effects_applied), "info")
+		EventBus.show_notification("Used " + item_name + " x" + str(effects_applied), "info")
 		return true
 	
 	return false
 
 func equip_weapon_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle weapon equipment"""
+# Handle weapon equipment
 	if not player.has_method("equip_weapon"):
 		return false
 	
@@ -159,15 +159,15 @@ func equip_weapon_item(player: Node, item_data: Dictionary, quantity: int) -> bo
 	if item_data.has("requirements"):
 		if not check_item_requirements(player, item_data.requirements):
 			var req_text = format_requirements(item_data.requirements)
-			EventBus.ui_notification_shown.emit("Requirements not met: " + req_text, "warning")
+			EventBus.show_notification("Requirements not met: " + req_text, "warning")
 			return false
 	
 	player.equip_weapon(item_data.id)
-	EventBus.ui_notification_shown.emit("Equipped: " + item_data.name, "success")
+	EventBus.show_notification("Equipped: " + item_data.name, "success")
 	return true
 
 func equip_armor_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle armor equipment"""
+# Handle armor equipment
 	if not player.has_method("equip_armor"):
 		return false
 	
@@ -175,43 +175,43 @@ func equip_armor_item(player: Node, item_data: Dictionary, quantity: int) -> boo
 	if item_data.has("requirements"):
 		if not check_item_requirements(player, item_data.requirements):
 			var req_text = format_requirements(item_data.requirements)
-			EventBus.ui_notification_shown.emit("Requirements not met: " + req_text, "warning")
+			EventBus.show_notification("Requirements not met: " + req_text, "warning")
 			return false
 	
 	player.equip_armor(item_data.id)
-	EventBus.ui_notification_shown.emit("Equipped: " + item_data.name, "success")
+	EventBus.show_notification("Equipped: " + item_data.name, "success")
 	return true
 
 func equip_accessory_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle accessory equipment"""
+# Handle accessory equipment
 	# TODO: Implement accessory system
-	EventBus.ui_notification_shown.emit("Accessory system not yet implemented", "warning")
+	EventBus.show_notification("Accessory system not yet implemented", "warning")
 	return false
 
 func use_material_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle material item usage"""
+# Handle material item usage
 	# Materials are typically used in crafting
 	# For now, just show that they can't be used directly
-	EventBus.ui_notification_shown.emit(item_data.name + " is a crafting material", "info")
+	EventBus.show_notification(item_data.name + " is a crafting material", "info")
 	return false
 
 func use_currency_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle currency item usage"""
+# Handle currency item usage
 	# Currency is automatically added to player's currency pool
 	var value = item_data.get("value", 1) * quantity
 	GameState.player_data.currency += value
-	EventBus.ui_notification_shown.emit("Gained " + str(value) + " coins", "success")
+	EventBus.show_notification("Gained " + str(value) + " coins", "success")
 	return true
 
 func use_key_item(player: Node, item_data: Dictionary, quantity: int) -> bool:
-	"""Handle key item usage"""
+# Handle key item usage
 	# TODO: Implement key item system for unlocking doors/areas
-	EventBus.ui_notification_shown.emit("Key item: " + item_data.name, "info")
+	EventBus.show_notification("Key item: " + item_data.name, "info")
 	return false
 
 # Requirement checking
 func check_item_requirements(player: Node, requirements: Dictionary) -> bool:
-	"""Check if player meets item requirements"""
+# Check if player meets item requirements
 	if not player.has_method("get_stats"):
 		return false
 	
@@ -228,7 +228,7 @@ func check_item_requirements(player: Node, requirements: Dictionary) -> bool:
 	return true
 
 func format_requirements(requirements: Dictionary) -> String:
-	"""Format requirements as readable text"""
+# Format requirements as readable text
 	var req_parts = []
 	for attribute in requirements:
 		req_parts.append(attribute.capitalize() + " " + str(requirements[attribute]))
@@ -236,7 +236,7 @@ func format_requirements(requirements: Dictionary) -> String:
 
 # Buff system
 func apply_temporary_buff(player: Node, buff_data: Dictionary):
-	"""Apply temporary buff to player"""
+# Apply temporary buff to player
 	var buff_id = buff_data.get("id", "unknown")
 	var duration = buff_data.get("duration", 10.0)
 	var effects = buff_data.get("effects", {})
@@ -246,25 +246,25 @@ func apply_temporary_buff(player: Node, buff_data: Dictionary):
 
 # Cooldown system
 func is_item_on_cooldown(item_id: String) -> bool:
-	"""Check if item is on cooldown"""
+# Check if item is on cooldown
 	return item_id in item_cooldowns
 
 func get_cooldown_remaining(item_id: String) -> float:
-	"""Get remaining cooldown time for item"""
+# Get remaining cooldown time for item
 	if item_id in item_cooldowns:
 		return item_cooldowns[item_id]
 	return 0.0
 
 func start_item_cooldown(item_id: String, cooldown_time: float):
-	"""Start cooldown for an item"""
+# Start cooldown for an item
 	item_cooldowns[item_id] = cooldown_time
 
 func _process(delta):
-	"""Update item cooldowns"""
+# Update item cooldowns
 	update_cooldowns(delta)
 
 func update_cooldowns(delta):
-	"""Update all item cooldowns"""
+# Update all item cooldowns
 	var items_to_remove = []
 	
 	for item_id in item_cooldowns:
@@ -278,7 +278,7 @@ func update_cooldowns(delta):
 
 # Item stacking
 func get_max_stack_size(item_id: String) -> int:
-	"""Get maximum stack size for an item"""
+# Get maximum stack size for an item
 	var item_data = get_item_data(item_id)
 	if not item_data:
 		return 1
@@ -293,7 +293,7 @@ func get_max_stack_size(item_id: String) -> int:
 	return max_stack_sizes.get(item_type, 1)
 
 func can_items_stack(item_id1: String, item_id2: String) -> bool:
-	"""Check if two items can stack together"""
+# Check if two items can stack together
 	if item_id1 != item_id2:
 		return false
 	
@@ -301,7 +301,7 @@ func can_items_stack(item_id1: String, item_id2: String) -> bool:
 
 # Item comparison and sorting
 func compare_item_rarity(item_id1: String, item_id2: String) -> int:
-	"""Compare items by rarity for sorting"""
+# Compare items by rarity for sorting
 	var rarity_values = {
 		"common": 1,
 		"uncommon": 2,
@@ -323,7 +323,7 @@ func compare_item_rarity(item_id1: String, item_id2: String) -> int:
 	return value2 - value1  # Higher rarity first
 
 func compare_item_value(item_id1: String, item_id2: String) -> int:
-	"""Compare items by value for sorting"""
+# Compare items by value for sorting
 	var item1_data = get_item_data(item_id1)
 	var item2_data = get_item_data(item_id2)
 	
@@ -333,7 +333,7 @@ func compare_item_value(item_id1: String, item_id2: String) -> int:
 	return value2 - value1  # Higher value first
 
 func sort_inventory(inventory: Array, sort_type: String = "type") -> Array:
-	"""Sort inventory array by specified criteria"""
+# Sort inventory array by specified criteria
 	var sorted_inv = inventory.duplicate()
 	
 	match sort_type:
@@ -349,7 +349,7 @@ func sort_inventory(inventory: Array, sort_type: String = "type") -> Array:
 	return sorted_inv
 
 func compare_item_type(a, b):
-	"""Compare items by type for sorting"""
+# Compare items by type for sorting
 	var item_a = get_item_data(a.id)
 	var item_b = get_item_data(b.id)
 	
@@ -359,15 +359,15 @@ func compare_item_type(a, b):
 	return type_a < type_b
 
 func compare_by_rarity(a, b):
-	"""Compare items by rarity for sorting"""
+# Compare items by rarity for sorting
 	return compare_item_rarity(a.id, b.id) > 0
 
 func compare_by_value(a, b):
-	"""Compare items by value for sorting"""
+# Compare items by value for sorting
 	return compare_item_value(a.id, b.id) > 0
 
 func compare_by_name(a, b):
-	"""Compare items by name for sorting"""
+# Compare items by name for sorting
 	var item_a = get_item_data(a.id)
 	var item_b = get_item_data(b.id)
 	
@@ -378,7 +378,7 @@ func compare_by_name(a, b):
 
 # Utility functions
 func get_item_tooltip(item_id: String) -> String:
-	"""Generate tooltip text for an item"""
+# Generate tooltip text for an item
 	var item_data = get_item_data(item_id)
 	if not item_data:
 		return "Unknown Item"

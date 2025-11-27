@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name Minimap
 
@@ -54,13 +54,13 @@ func _ready():
 	print("[Minimap] Minimap inicializado")
 
 func initialize():
-	"""Initialize minimap system"""
+# Initialize minimap system
 	find_player_node()
 	setup_minimap_camera()
 	start_minimap_updates()
 
 func setup_minimap_ui():
-	"""Setup minimap UI components"""
+# Setup minimap UI components
 	# Set minimap position (top-right corner)
 	anchor_left = 1.0
 	anchor_right = 1.0
@@ -78,7 +78,7 @@ func setup_minimap_ui():
 	create_fog_overlay()
 
 func create_minimap_frame():
-	"""Create the circular minimap frame"""
+# Create the circular minimap frame
 	minimap_frame = Panel.new()
 	minimap_frame.name = "MinimapFrame"
 	minimap_frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -103,7 +103,7 @@ func create_minimap_frame():
 	minimap_frame.gui_input.connect(_on_minimap_input)
 
 func create_minimap_viewport():
-	"""Create viewport for minimap rendering"""
+# Create viewport for minimap rendering
 	minimap_viewport = SubViewport.new()
 	minimap_viewport.name = "MinimapViewport"
 	minimap_viewport.size = Vector2i(int(minimap_size.x), int(minimap_size.y))
@@ -117,7 +117,7 @@ func create_minimap_viewport():
 	minimap_viewport.add_child(minimap_camera)
 
 func create_player_icon():
-	"""Create player icon on minimap"""
+# Create player icon on minimap
 	player_icon = Control.new()
 	player_icon.name = "PlayerIcon"
 	player_icon.custom_minimum_size = Vector2(8, 8)
@@ -145,7 +145,7 @@ func create_player_icon():
 	minimap_frame.add_child(player_icon)
 
 func create_fog_overlay():
-	"""Create fog of war overlay"""
+# Create fog of war overlay
 	fog_of_war = Control.new()
 	fog_of_war.name = "FogOfWar"
 	fog_of_war.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -154,7 +154,7 @@ func create_fog_overlay():
 	minimap_frame.add_child(fog_of_war)
 
 func connect_events():
-	"""Connect to game events"""
+# Connect to game events
 	event_bus.connect("player_moved", _on_player_moved)
 	event_bus.connect("dungeon_changed", _on_dungeon_changed)
 	event_bus.connect("npc_spawned", _on_npc_spawned)
@@ -165,16 +165,16 @@ func connect_events():
 	event_bus.connect("item_collected", _on_item_collected)
 
 func find_player_node():
-	"""Find player node in scene"""
+# Find player node in scene
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player_node = players[0]
 		print("[Minimap] Player node encontrado: ", player_node.name)
 	else:
-		print("[Minimap] AVISO: Player node não encontrado")
+		print("[Minimap] AVISO: Player node nÃ£o encontrado")
 
 func setup_minimap_camera():
-	"""Setup minimap camera to follow player"""
+# Setup minimap camera to follow player
 	if not minimap_camera or not player_node:
 		return
 	
@@ -182,7 +182,7 @@ func setup_minimap_camera():
 	minimap_camera.zoom = Vector2.ONE * zoom_level
 
 func start_minimap_updates():
-	"""Start minimap update loop"""
+# Start minimap update loop
 	var timer = Timer.new()
 	timer.wait_time = 0.1  # Update 10 times per second
 	timer.timeout.connect(update_minimap)
@@ -190,7 +190,7 @@ func start_minimap_updates():
 	add_child(timer)
 
 func initialize_fog_of_war():
-	"""Initialize fog of war system"""
+# Initialize fog of war system
 	# Create fog grid
 	fog_grid = []
 	for x in range(fog_resolution):
@@ -200,7 +200,7 @@ func initialize_fog_of_war():
 
 # Core update functions
 func update_minimap():
-	"""Update minimap display"""
+# Update minimap display
 	if not player_node or not minimap_camera:
 		return
 	
@@ -214,7 +214,7 @@ func update_minimap():
 	update_icon_positions()
 
 func update_fog_exploration():
-	"""Update fog of war based on player position"""
+# Update fog of war based on player position
 	if not player_node:
 		return
 	
@@ -232,14 +232,14 @@ func update_fog_exploration():
 	fog_of_war.queue_redraw()
 
 func update_icon_positions():
-	"""Update positions of all minimap icons"""
+# Update positions of all minimap icons
 	update_npc_icons()
 	update_enemy_icons()
 	update_item_icons()
 	update_poi_icons()
 
 func update_npc_icons():
-	"""Update NPC icon positions"""
+# Update NPC icon positions
 	for npc_id in npc_icons.keys():
 		var icon = npc_icons[npc_id]
 		var npc_node = get_node_or_null(npc_id)
@@ -251,7 +251,7 @@ func update_npc_icons():
 			icon.visible = false
 
 func update_enemy_icons():
-	"""Update enemy icon positions"""
+# Update enemy icon positions
 	for enemy_id in enemy_icons.keys():
 		var icon = enemy_icons[enemy_id]
 		var enemy_node = get_node_or_null(enemy_id)
@@ -263,7 +263,7 @@ func update_enemy_icons():
 			icon.visible = false
 
 func update_item_icons():
-	"""Update item icon positions"""
+# Update item icon positions
 	for item_id in item_icons.keys():
 		var icon = item_icons[item_id]
 		var item_node = get_node_or_null(item_id)
@@ -275,7 +275,7 @@ func update_item_icons():
 			icon.visible = false
 
 func update_poi_icons():
-	"""Update point of interest icon positions"""
+# Update point of interest icon positions
 	for poi_id in poi_icons.keys():
 		var icon = poi_icons[poi_id]
 		# POIs are usually static, get position from data
@@ -288,7 +288,7 @@ func update_poi_icons():
 			icon.visible = false
 
 func world_to_minimap_position(world_pos: Vector2) -> Vector2:
-	"""Convert world position to minimap screen position"""
+# Convert world position to minimap screen position
 	if not player_node:
 		return Vector2.ZERO
 	
@@ -301,7 +301,7 @@ func world_to_minimap_position(world_pos: Vector2) -> Vector2:
 	return screen_pos
 
 func is_position_visible(world_pos: Vector2) -> bool:
-	"""Check if position should be visible on minimap"""
+# Check if position should be visible on minimap
 	if not player_node:
 		return false
 	
@@ -311,13 +311,13 @@ func is_position_visible(world_pos: Vector2) -> bool:
 	return distance <= view_range
 
 func get_poi_data(poi_id: String) -> Dictionary:
-	"""Get point of interest data"""
+# Get point of interest data
 	# TODO: Integrate with dungeon/world data
 	return {}
 
 # Icon management functions
 func add_npc_icon(npc_id: String, npc_position: Vector2):
-	"""Add NPC icon to minimap"""
+# Add NPC icon to minimap
 	if npc_icons.has(npc_id):
 		return
 	
@@ -326,7 +326,7 @@ func add_npc_icon(npc_id: String, npc_position: Vector2):
 	minimap_frame.add_child(icon)
 
 func add_enemy_icon(enemy_id: String, enemy_position: Vector2):
-	"""Add enemy icon to minimap"""
+# Add enemy icon to minimap
 	if enemy_icons.has(enemy_id):
 		return
 	
@@ -335,7 +335,7 @@ func add_enemy_icon(enemy_id: String, enemy_position: Vector2):
 	minimap_frame.add_child(icon)
 
 func add_item_icon(item_id: String, item_position: Vector2):
-	"""Add item icon to minimap"""
+# Add item icon to minimap
 	if item_icons.has(item_id):
 		return
 	
@@ -344,7 +344,7 @@ func add_item_icon(item_id: String, item_position: Vector2):
 	minimap_frame.add_child(icon)
 
 func add_poi_icon(poi_id: String, poi_position: Vector2, poi_type: String):
-	"""Add point of interest icon to minimap"""
+# Add point of interest icon to minimap
 	if poi_icons.has(poi_id):
 		return
 	
@@ -360,7 +360,7 @@ func add_poi_icon(poi_id: String, poi_position: Vector2, poi_type: String):
 	minimap_frame.add_child(icon)
 
 func create_minimap_icon(color: Color, size: int) -> Control:
-	"""Create a minimap icon"""
+# Create a minimap icon
 	var icon = Control.new()
 	icon.custom_minimum_size = Vector2(size, size)
 	icon.anchor_left = 0.5
@@ -387,38 +387,38 @@ func create_minimap_icon(color: Color, size: int) -> Control:
 	return icon
 
 func remove_npc_icon(npc_id: String):
-	"""Remove NPC icon from minimap"""
+# Remove NPC icon from minimap
 	if npc_icons.has(npc_id):
 		npc_icons[npc_id].queue_free()
 		npc_icons.erase(npc_id)
 
 func remove_enemy_icon(enemy_id: String):
-	"""Remove enemy icon from minimap"""
+# Remove enemy icon from minimap
 	if enemy_icons.has(enemy_id):
 		enemy_icons[enemy_id].queue_free()
 		enemy_icons.erase(enemy_id)
 
 func remove_item_icon(item_id: String):
-	"""Remove item icon from minimap"""
+# Remove item icon from minimap
 	if item_icons.has(item_id):
 		item_icons[item_id].queue_free()
 		item_icons.erase(item_id)
 
 # Zoom and navigation functions
 func zoom_in():
-	"""Zoom in on minimap"""
+# Zoom in on minimap
 	zoom_level = min(zoom_level * 1.5, max_zoom)
 	if minimap_camera:
 		minimap_camera.zoom = Vector2.ONE * zoom_level
 
 func zoom_out():
-	"""Zoom out on minimap"""
+# Zoom out on minimap
 	zoom_level = max(zoom_level / 1.5, min_zoom)
 	if minimap_camera:
 		minimap_camera.zoom = Vector2.ONE * zoom_level
 
 func toggle_fullscreen():
-	"""Toggle minimap fullscreen mode"""
+# Toggle minimap fullscreen mode
 	is_fullscreen = not is_fullscreen
 	
 	if is_fullscreen:
@@ -444,7 +444,7 @@ func toggle_fullscreen():
 
 # Drawing functions
 func _draw_fog_of_war():
-	"""Draw fog of war overlay"""
+# Draw fog of war overlay
 	var cell_size = minimap_size / fog_resolution
 	
 	for x in range(fog_resolution):
@@ -456,12 +456,12 @@ func _draw_fog_of_war():
 
 # Event handlers
 func _on_player_moved(new_position: Vector2):
-	"""Handle player movement"""
+# Handle player movement
 	# Update is handled in update_minimap()
 	pass
 
 func _on_dungeon_changed(dungeon_id: String):
-	"""Handle dungeon change"""
+# Handle dungeon change
 	current_dungeon = dungeon_id
 	# Clear all dynamic icons
 	clear_all_icons()
@@ -469,31 +469,31 @@ func _on_dungeon_changed(dungeon_id: String):
 	load_dungeon_pois(dungeon_id)
 
 func _on_npc_spawned(npc_id: String, position: Vector2):
-	"""Handle NPC spawn"""
+# Handle NPC spawn
 	add_npc_icon(npc_id, position)
 
 func _on_npc_despawned(npc_id: String):
-	"""Handle NPC despawn"""
+# Handle NPC despawn
 	remove_npc_icon(npc_id)
 
 func _on_enemy_spawned(enemy_id: String, position: Vector2):
-	"""Handle enemy spawn"""
+# Handle enemy spawn
 	add_enemy_icon(enemy_id, position)
 
 func _on_enemy_defeated(enemy_id: String):
-	"""Handle enemy defeat"""
+# Handle enemy defeat
 	remove_enemy_icon(enemy_id)
 
 func _on_item_dropped(item_id: String, position: Vector2):
-	"""Handle item drop"""
+# Handle item drop
 	add_item_icon(item_id, position)
 
 func _on_item_collected(item_id: String):
-	"""Handle item collection"""
+# Handle item collection
 	remove_item_icon(item_id)
 
 func _on_minimap_input(event: InputEvent):
-	"""Handle minimap input"""
+# Handle minimap input
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			# Calculate world position from click
@@ -513,7 +513,7 @@ func _on_minimap_input(event: InputEvent):
 			zoom_out()
 
 func minimap_to_world_position(minimap_pos: Vector2) -> Vector2:
-	"""Convert minimap position to world position"""
+# Convert minimap position to world position
 	if not player_node:
 		return Vector2.ZERO
 	
@@ -525,7 +525,7 @@ func minimap_to_world_position(minimap_pos: Vector2) -> Vector2:
 	return player_node.global_position + relative_pos
 
 func clear_all_icons():
-	"""Clear all dynamic icons"""
+# Clear all dynamic icons
 	for icon in npc_icons.values():
 		icon.queue_free()
 	for icon in enemy_icons.values():
@@ -538,7 +538,7 @@ func clear_all_icons():
 	item_icons.clear()
 
 func load_dungeon_pois(dungeon_id: String):
-	"""Load points of interest for current dungeon"""
+# Load points of interest for current dungeon
 	var dungeon_data = DataLoader.load_json_data("res://data/dungeons/" + dungeon_id + ".json")
 	if not dungeon_data:
 		return
@@ -553,7 +553,7 @@ func load_dungeon_pois(dungeon_id: String):
 			add_poi_icon(poi_id, position, type)
 
 func update_minimap():
-	"""Update minimap display"""
+# Update minimap display
 	if not player_node or not minimap_camera:
 		return
 	
@@ -567,7 +567,7 @@ func update_minimap():
 	update_icon_positions()
 
 func update_fog_of_war(player_pos: Vector2):
-	"""Update fog of war based on player position"""
+# Update fog of war based on player position
 	# Convert world position to fog grid coordinates
 	var grid_x = int((player_pos.x + 1000) / 2000.0 * fog_resolution)
 	var grid_y = int((player_pos.y + 1000) / 2000.0 * fog_resolution)
@@ -585,7 +585,7 @@ func update_fog_of_war(player_pos: Vector2):
 		fog_of_war.queue_redraw()
 
 func _draw_fog_of_war():
-	"""Draw fog of war overlay"""
+# Draw fog of war overlay
 	if not fog_of_war:
 		return
 	
@@ -598,7 +598,7 @@ func _draw_fog_of_war():
 				fog_of_war.draw_rect(rect, fog_color)
 
 func update_icon_positions():
-	"""Update positions of all icons"""
+# Update positions of all icons
 	if not player_node:
 		return
 	
@@ -625,21 +625,21 @@ func update_icon_positions():
 			icon.visible = is_position_in_minimap(minimap_pos)
 
 func world_to_minimap_pos(world_relative_pos: Vector2) -> Vector2:
-	"""Convert world position relative to player to minimap position"""
+# Convert world position relative to player to minimap position
 	var scale_factor = zoom_level * 0.1
 	var minimap_pos = world_relative_pos * scale_factor
 	minimap_pos += minimap_size * 0.5  # Center on minimap
 	return minimap_pos
 
 func is_position_in_minimap(pos: Vector2) -> bool:
-	"""Check if position is within minimap bounds"""
+# Check if position is within minimap bounds
 	var center = minimap_size * 0.5
 	var distance = pos.distance_to(center)
 	return distance <= minimap_radius
 
 # Icon Management
 func add_npc_icon(npc_id: String, position: Vector2):
-	"""Add NPC icon to minimap"""
+# Add NPC icon to minimap
 	if npc_icons.has(npc_id):
 		return
 	
@@ -649,14 +649,14 @@ func add_npc_icon(npc_id: String, position: Vector2):
 	minimap_frame.add_child(icon)
 
 func remove_npc_icon(npc_id: String):
-	"""Remove NPC icon from minimap"""
+# Remove NPC icon from minimap
 	if npc_icons.has(npc_id):
 		var icon = npc_icons[npc_id]
 		icon.queue_free()
 		npc_icons.erase(npc_id)
 
 func add_enemy_icon(enemy_id: String, position: Vector2):
-	"""Add enemy icon to minimap"""
+# Add enemy icon to minimap
 	if enemy_icons.has(enemy_id):
 		return
 	
@@ -666,14 +666,14 @@ func add_enemy_icon(enemy_id: String, position: Vector2):
 	minimap_frame.add_child(icon)
 
 func remove_enemy_icon(enemy_id: String):
-	"""Remove enemy icon from minimap"""
+# Remove enemy icon from minimap
 	if enemy_icons.has(enemy_id):
 		var icon = enemy_icons[enemy_id]
 		icon.queue_free()
 		enemy_icons.erase(enemy_id)
 
 func add_item_icon(item_id: String, position: Vector2):
-	"""Add item icon to minimap"""
+# Add item icon to minimap
 	if item_icons.has(item_id):
 		return
 	
@@ -683,14 +683,14 @@ func add_item_icon(item_id: String, position: Vector2):
 	minimap_frame.add_child(icon)
 
 func remove_item_icon(item_id: String):
-	"""Remove item icon from minimap"""
+# Remove item icon from minimap
 	if item_icons.has(item_id):
 		var icon = item_icons[item_id]
 		icon.queue_free()
 		item_icons.erase(item_id)
 
 func create_minimap_icon(color: Color, size: int) -> Control:
-	"""Create a minimap icon"""
+# Create a minimap icon
 	var icon = Control.new()
 	icon.custom_minimum_size = Vector2(size, size)
 	icon.anchor_left = 0.5
@@ -718,7 +718,7 @@ func create_minimap_icon(color: Color, size: int) -> Control:
 
 # Input Handling
 func _on_minimap_input(event: InputEvent):
-	"""Handle minimap input"""
+# Handle minimap input
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.pressed:
@@ -731,19 +731,19 @@ func _on_minimap_input(event: InputEvent):
 				zoom_out()
 
 func zoom_in():
-	"""Zoom in minimap"""
+# Zoom in minimap
 	zoom_level = min(zoom_level * 1.2, max_zoom)
 	if minimap_camera:
 		minimap_camera.zoom = Vector2.ONE * zoom_level
 
 func zoom_out():
-	"""Zoom out minimap"""
+# Zoom out minimap
 	zoom_level = max(zoom_level * 0.8, min_zoom)
 	if minimap_camera:
 		minimap_camera.zoom = Vector2.ONE * zoom_level
 
 func toggle_fullscreen():
-	"""Toggle fullscreen mode"""
+# Toggle fullscreen mode
 	is_fullscreen = not is_fullscreen
 	
 	if is_fullscreen:
@@ -767,7 +767,7 @@ func toggle_fullscreen():
 	update_minimap_frame_style()
 
 func update_minimap_frame_style():
-	"""Update minimap frame style"""
+# Update minimap frame style
 	if not minimap_frame:
 		return
 	
@@ -786,42 +786,42 @@ func update_minimap_frame_style():
 
 # Event Handlers
 func _on_player_moved(new_position: Vector2):
-	"""Handle player movement"""
+# Handle player movement
 	update_fog_of_war(new_position)
 
 func _on_dungeon_changed(dungeon_id: String):
-	"""Handle dungeon change"""
+# Handle dungeon change
 	current_dungeon = dungeon_id
 	clear_all_icons()
 	reset_fog_of_war()
 
 func _on_npc_spawned(npc_id: String, position: Vector2):
-	"""Handle NPC spawn"""
+# Handle NPC spawn
 	add_npc_icon(npc_id, position)
 
 func _on_npc_despawned(npc_id: String):
-	"""Handle NPC despawn"""
+# Handle NPC despawn
 	remove_npc_icon(npc_id)
 
 func _on_enemy_spawned(enemy_id: String, position: Vector2):
-	"""Handle enemy spawn"""
+# Handle enemy spawn
 	add_enemy_icon(enemy_id, position)
 
 func _on_enemy_defeated(enemy_id: String, position: Vector2, player_level: int):
-	"""Handle enemy defeat"""
+# Handle enemy defeat
 	remove_enemy_icon(enemy_id)
 
 func _on_item_dropped(item_id: String, position: Vector2):
-	"""Handle item drop"""
+# Handle item drop
 	add_item_icon(item_id, position)
 
 func _on_item_collected(item_id: String, quantity: int):
-	"""Handle item collection"""
+# Handle item collection
 	remove_item_icon(item_id)
 
 # Utility Functions
 func clear_all_icons():
-	"""Clear all minimap icons"""
+# Clear all minimap icons
 	for npc_id in npc_icons.keys():
 		remove_npc_icon(npc_id)
 	
@@ -832,7 +832,7 @@ func clear_all_icons():
 		remove_item_icon(item_id)
 
 func reset_fog_of_war():
-	"""Reset fog of war for new dungeon"""
+# Reset fog of war for new dungeon
 	for x in range(fog_resolution):
 		for y in range(fog_resolution):
 			fog_grid[x][y] = false
@@ -841,7 +841,7 @@ func reset_fog_of_war():
 		fog_of_war.queue_redraw()
 
 func get_npc_node(npc_id: String) -> Node2D:
-	"""Get NPC node by ID"""
+# Get NPC node by ID
 	var npcs = get_tree().get_nodes_in_group("npcs")
 	for npc in npcs:
 		if npc.has_method("get_npc_id") and npc.get_npc_id() == npc_id:
@@ -849,7 +849,7 @@ func get_npc_node(npc_id: String) -> Node2D:
 	return null
 
 func get_enemy_node(enemy_id: String) -> Node2D:
-	"""Get enemy node by ID"""
+# Get enemy node by ID
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in enemies:
 		if enemy.has_method("get_enemy_id") and enemy.get_enemy_id() == enemy_id:
@@ -858,7 +858,7 @@ func get_enemy_node(enemy_id: String) -> Node2D:
 
 # Save/Load Support
 func get_exploration_data() -> Dictionary:
-	"""Get exploration data for saving"""
+# Get exploration data for saving
 	return {
 		"dungeon": current_dungeon,
 		"explored_areas": explored_areas,
@@ -866,7 +866,7 @@ func get_exploration_data() -> Dictionary:
 	}
 
 func load_exploration_data(data: Dictionary):
-	"""Load exploration data from save"""
+# Load exploration data from save
 	if data.has("dungeon"):
 		current_dungeon = data.dungeon
 	
@@ -880,7 +880,7 @@ func load_exploration_data(data: Dictionary):
 
 # Debug Functions
 func debug_reveal_all():
-	"""Debug: Reveal entire map"""
+# Debug: Reveal entire map
 	for x in range(fog_resolution):
 		for y in range(fog_resolution):
 			fog_grid[x][y] = true
@@ -889,11 +889,11 @@ func debug_reveal_all():
 		fog_of_war.queue_redraw()
 
 func debug_hide_all():
-	"""Debug: Hide entire map"""
+# Debug: Hide entire map
 	reset_fog_of_war()
 
 func debug_add_test_icons():
-	"""Debug: Add test icons"""
+# Debug: Add test icons
 	add_npc_icon("test_npc", Vector2.ZERO)
 	add_enemy_icon("test_enemy", Vector2(100, 100))
 	add_item_icon("test_item", Vector2(-100, -100))

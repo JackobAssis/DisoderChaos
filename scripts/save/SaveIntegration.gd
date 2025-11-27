@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name SaveIntegration
 # SaveIntegration.gd - Integrates SaveManager with game systems
 # Handles auto-save triggers, system coordination, and save validation
@@ -38,7 +38,7 @@ func _ready():
 	print("[SaveIntegration] Save integration ready")
 
 func setup_auto_save_timer():
-	"""Setup the auto-save timer"""
+# Setup the auto-save timer
 	auto_save_timer = Timer.new()
 	auto_save_timer.wait_time = auto_save_interval
 	auto_save_timer.autostart = auto_save_enabled
@@ -48,7 +48,7 @@ func setup_auto_save_timer():
 	print("[SaveIntegration] Auto-save timer configured: ", auto_save_interval, "s interval")
 
 func connect_event_signals():
-	"""Connect to relevant EventBus signals for auto-save triggers"""
+# Connect to relevant EventBus signals for auto-save triggers
 	if auto_save_on_events:
 		# Player progression events
 		if save_on_level_up:
@@ -74,38 +74,38 @@ func connect_event_signals():
 
 # Auto-save trigger handlers
 func _on_auto_save_timer_timeout():
-	"""Handle periodic auto-save"""
+# Handle periodic auto-save
 	if auto_save_enabled and game_state:
 		print("[SaveIntegration] Triggering periodic auto-save")
 		EventBus.auto_save_triggered.emit()
 		await game_state.auto_save()
 
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
-	"""Handle auto-save on level up"""
+# Handle auto-save on level up
 	print("[SaveIntegration] Level up detected, triggering auto-save")
 	EventBus.auto_save_triggered.emit()
 	await game_state.auto_save()
 
 func _on_dungeon_changed(dungeon_id: String):
-	"""Handle auto-save on dungeon change"""
+# Handle auto-save on dungeon change
 	print("[SaveIntegration] Dungeon change detected: ", dungeon_id, ", triggering auto-save")
 	EventBus.auto_save_triggered.emit()
 	await game_state.auto_save()
 
 func _on_dungeon_completed(dungeon_id: String):
-	"""Handle auto-save on dungeon completion"""
+# Handle auto-save on dungeon completion
 	print("[SaveIntegration] Dungeon completed: ", dungeon_id, ", triggering auto-save")
 	EventBus.auto_save_triggered.emit()
 	await game_state.auto_save()
 
 func _on_quest_completed(quest_id: String):
-	"""Handle auto-save on quest completion"""
+# Handle auto-save on quest completion
 	print("[SaveIntegration] Quest completed: ", quest_id, ", triggering auto-save")
 	EventBus.auto_save_triggered.emit()
 	await game_state.auto_save()
 
 func _on_enemy_defeated(enemy_id: String, loot: Array):
-	"""Handle auto-save on significant enemy defeat"""
+# Handle auto-save on significant enemy defeat
 	# Only auto-save for boss enemies or important encounters
 	var enemy_data = DataLoader.get_enemy(enemy_id)
 	if enemy_data and ("boss" in enemy_data.get("tags", []) or enemy_data.get("level", 0) > 10):
@@ -114,7 +114,7 @@ func _on_enemy_defeated(enemy_id: String, loot: Array):
 		await game_state.auto_save()
 
 func _on_chest_opened(chest_id: String, contents: Array):
-	"""Handle auto-save on significant chest opening"""
+# Handle auto-save on significant chest opening
 	# Only auto-save for treasure chests with valuable items
 	var has_valuable_item = false
 	for item in contents:
@@ -129,7 +129,7 @@ func _on_chest_opened(chest_id: String, contents: Array):
 		await game_state.auto_save()
 
 func _on_item_equipped(item_id: String, slot: String):
-	"""Handle auto-save on equipment change"""
+# Handle auto-save on equipment change
 	# Only auto-save for weapon/armor changes, not accessories
 	if slot in ["weapon", "armor"]:
 		print("[SaveIntegration] Equipment changed: ", item_id, " in ", slot, ", triggering auto-save")
@@ -138,7 +138,7 @@ func _on_item_equipped(item_id: String, slot: String):
 
 # Manual save coordination
 func request_manual_save(slot: int = 0, force: bool = false) -> bool:
-	"""Request a manual save with frequency limiting"""
+# Request a manual save with frequency limiting
 	var current_time = Time.get_time_dict_from_system()
 	var current_timestamp = current_time.hour * 3600 + current_time.minute * 60 + current_time.second
 	
@@ -156,7 +156,7 @@ func request_manual_save(slot: int = 0, force: bool = false) -> bool:
 	return result
 
 func request_quick_save() -> bool:
-	"""Request a quick save"""
+# Request a quick save
 	print("[SaveIntegration] Quick save requested")
 	var result = await game_state.quick_save()
 	if result:
@@ -167,7 +167,7 @@ func request_quick_save() -> bool:
 
 # Configuration methods
 func set_auto_save_enabled(enabled: bool):
-	"""Enable or disable auto-save"""
+# Enable or disable auto-save
 	auto_save_enabled = enabled
 	if auto_save_timer:
 		if enabled:
@@ -178,7 +178,7 @@ func set_auto_save_enabled(enabled: bool):
 	print("[SaveIntegration] Auto-save ", "enabled" if enabled else "disabled")
 
 func set_auto_save_interval(interval: float):
-	"""Set auto-save interval in seconds"""
+# Set auto-save interval in seconds
 	auto_save_interval = max(60.0, interval)  # Minimum 1 minute
 	if auto_save_timer:
 		auto_save_timer.wait_time = auto_save_interval
@@ -186,7 +186,7 @@ func set_auto_save_interval(interval: float):
 	print("[SaveIntegration] Auto-save interval set to ", auto_save_interval, " seconds")
 
 func configure_auto_save_triggers(level_up: bool, dungeon_change: bool, quest_complete: bool, significant_progress: bool):
-	"""Configure which events trigger auto-save"""
+# Configure which events trigger auto-save
 	save_on_level_up = level_up
 	save_on_dungeon_change = dungeon_change
 	save_on_quest_complete = quest_complete
@@ -196,7 +196,7 @@ func configure_auto_save_triggers(level_up: bool, dungeon_change: bool, quest_co
 
 # Save system status
 func get_save_system_status() -> Dictionary:
-	"""Get current status of the save system"""
+# Get current status of the save system
 	return {
 		"auto_save_enabled": auto_save_enabled,
 		"auto_save_interval": auto_save_interval,
@@ -212,14 +212,14 @@ func get_save_system_status() -> Dictionary:
 
 # Backup and recovery
 func create_emergency_backup() -> bool:
-	"""Create an emergency backup of current game state"""
+# Create an emergency backup of current game state
 	if game_state:
 		print("[SaveIntegration] Creating emergency backup")
 		return await game_state.save_game(997, true)  # Use slot 997 for emergency backups
 	return false
 
 func validate_save_integrity(slot: int) -> Dictionary:
-	"""Validate the integrity of a save file"""
+# Validate the integrity of a save file
 	if not save_manager:
 		save_manager = game_state.save_manager if game_state else null
 	
@@ -230,13 +230,13 @@ func validate_save_integrity(slot: int) -> Dictionary:
 
 # Debug utilities
 func force_auto_save():
-	"""Force an immediate auto-save (debug function)"""
+# Force an immediate auto-save (debug function)
 	print("[SaveIntegration] [DEBUG] Forcing auto-save")
 	if game_state:
 		await game_state.auto_save()
 
 func print_save_stats():
-	"""Print save system statistics (debug function)"""
+# Print save system statistics (debug function)
 	var status = get_save_system_status()
 	print("[SaveIntegration] [DEBUG] Save System Status:")
 	print("  Auto-save enabled: ", status.auto_save_enabled)
@@ -247,7 +247,7 @@ func print_save_stats():
 
 # Cleanup
 func _exit_tree():
-	"""Cleanup when node is removed"""
+# Cleanup when node is removed
 	if auto_save_timer:
 		auto_save_timer.queue_free()
 	print("[SaveIntegration] Save integration cleanup completed")

@@ -1,18 +1,18 @@
-class_name OptionsMenu
+﻿class_name OptionsMenu
 extends Control
 
-## Menu de configurações com abas para Vídeo, Áudio e Controles
+## Menu de configuraÃ§Ãµes com abas para VÃ­deo, Ãudio e Controles
 
 @onready var tab_container: TabContainer = $Background/TabContainer
 
-# Aba Vídeo
+# Aba VÃ­deo
 @onready var resolution_option: OptionButton = $Background/TabContainer/Video/VBox/Resolution/OptionButton
 @onready var fullscreen_check: CheckBox = $Background/TabContainer/Video/VBox/Fullscreen/CheckBox
 @onready var vsync_check: CheckBox = $Background/TabContainer/Video/VBox/VSync/CheckBox
 @onready var quality_slider: HSlider = $Background/TabContainer/Video/VBox/Quality/HSlider
 @onready var brightness_slider: HSlider = $Background/TabContainer/Video/VBox/Brightness/HSlider
 
-# Aba Áudio
+# Aba Ãudio
 @onready var master_slider: HSlider = $Background/TabContainer/Audio/VBox/Master/HSlider
 @onready var music_slider: HSlider = $Background/TabContainer/Audio/VBox/Music/HSlider
 @onready var sfx_slider: HSlider = $Background/TabContainer/Audio/VBox/SFX/HSlider
@@ -24,12 +24,12 @@ extends Control
 @onready var mouse_sensitivity_slider: HSlider = $Background/TabContainer/Controls/VBox/Sensitivity/HSlider
 @onready var invert_y_check: CheckBox = $Background/TabContainer/Controls/VBox/InvertY/CheckBox
 
-# Botões principais
+# BotÃµes principais
 @onready var apply_btn: Button = $Background/ButtonsContainer/ApplyButton
 @onready var cancel_btn: Button = $Background/ButtonsContainer/CancelButton
 @onready var defaults_btn: Button = $Background/ButtonsContainer/DefaultsButton
 
-# Dados das configurações
+# Dados das configuraÃ§Ãµes
 var settings_data: Dictionary = {}
 var key_mappings: Dictionary = {}
 var resolution_options: Array[Vector2] = [
@@ -52,7 +52,7 @@ func _ready():
 	load_current_settings()
 
 func setup_ui_theme():
-	"""Aplica tema dark fantasy"""
+# Aplica tema dark fantasy
 	# Background
 	var bg = $Background as ColorRect
 	if bg:
@@ -62,7 +62,7 @@ func setup_ui_theme():
 	tab_container.add_theme_stylebox_override("panel", 
 		UIThemeManager.create_panel_style(UIThemeManager.Colors.BG_PANEL))
 	
-	# Botões
+	# BotÃµes
 	var buttons = [apply_btn, cancel_btn, defaults_btn]
 	for btn in buttons:
 		if btn:
@@ -82,7 +82,7 @@ func setup_ui_theme():
 			# Slider fill (parte preenchida)
 			slider.add_theme_stylebox_override("slider", 
 				UIThemeManager.create_progress_bar_style(UIThemeManager.Colors.CYBER_CYAN))
-			# Grabber (botão deslizante)
+			# Grabber (botÃ£o deslizante)
 			slider.add_theme_stylebox_override("grabber_area", 
 				UIThemeManager.create_button_style(
 					UIThemeManager.Colors.ACCENT_GOLD,
@@ -91,20 +91,20 @@ func setup_ui_theme():
 				))
 
 func setup_connections():
-	"""Conecta todos os controles"""
-	# Botões principais
+# Conecta todos os controles
+	# BotÃµes principais
 	apply_btn.pressed.connect(_on_apply_pressed)
 	cancel_btn.pressed.connect(_on_cancel_pressed)
 	defaults_btn.pressed.connect(_on_defaults_pressed)
 	
-	# Vídeo
+	# VÃ­deo
 	resolution_option.item_selected.connect(_on_resolution_changed)
 	fullscreen_check.toggled.connect(_on_fullscreen_toggled)
 	vsync_check.toggled.connect(_on_vsync_toggled)
 	quality_slider.value_changed.connect(_on_quality_changed)
 	brightness_slider.value_changed.connect(_on_brightness_changed)
 	
-	# Áudio
+	# Ãudio
 	master_slider.value_changed.connect(_on_master_volume_changed)
 	music_slider.value_changed.connect(_on_music_volume_changed)
 	sfx_slider.value_changed.connect(_on_sfx_volume_changed)
@@ -116,13 +116,13 @@ func setup_connections():
 	invert_y_check.toggled.connect(_on_invert_y_toggled)
 
 func setup_resolution_options():
-	"""Popula opções de resolução"""
+# Popula opÃ§Ãµes de resoluÃ§Ã£o
 	resolution_option.clear()
 	for res in resolution_options:
 		resolution_option.add_item("%dx%d" % [res.x, res.y])
 
 func setup_key_bindings():
-	"""Cria interface para configuração de teclas"""
+# Cria interface para configuraÃ§Ã£o de teclas
 	var action_names = {
 		"move_up": "Mover para Cima",
 		"move_down": "Mover para Baixo", 
@@ -133,7 +133,7 @@ func setup_key_bindings():
 		"attack": "Atacar",
 		"block": "Bloquear",
 		"use_item": "Usar Item",
-		"inventory": "Inventário",
+		"inventory": "InventÃ¡rio",
 		"character": "Personagem",
 		"pause": "Pausar",
 		"interact": "Interagir"
@@ -143,17 +143,17 @@ func setup_key_bindings():
 		create_key_binding_row(action, action_names[action])
 
 func create_key_binding_row(action: String, display_name: String):
-	"""Cria linha para configuração de tecla"""
+# Cria linha para configuraÃ§Ã£o de tecla
 	var row = HBoxContainer.new()
 	
-	# Label do nome da ação
+	# Label do nome da aÃ§Ã£o
 	var label = Label.new()
 	label.text = display_name
 	label.custom_minimum_size.x = 200
 	label.add_theme_color_override("font_color", UIThemeManager.Colors.TEXT_PRIMARY)
 	row.add_child(label)
 	
-	# Botão para mostrar tecla atual
+	# BotÃ£o para mostrar tecla atual
 	var key_button = Button.new()
 	key_button.custom_minimum_size = Vector2(150, 30)
 	update_key_button_text(key_button, action)
@@ -166,7 +166,7 @@ func create_key_binding_row(action: String, display_name: String):
 	key_button.pressed.connect(func(): start_key_rebinding(action, key_button))
 	row.add_child(key_button)
 	
-	# Botão reset
+	# BotÃ£o reset
 	var reset_button = Button.new()
 	reset_button.text = "Reset"
 	reset_button.custom_minimum_size = Vector2(80, 30)
@@ -183,7 +183,7 @@ func create_key_binding_row(action: String, display_name: String):
 	key_mappings[action] = key_button
 
 func update_key_button_text(button: Button, action: String):
-	"""Atualiza texto do botão com a tecla atual"""
+# Atualiza texto do botÃ£o com a tecla atual
 	var events = InputMap.action_get_events(action)
 	if events.size() > 0:
 		var event = events[0]
@@ -192,10 +192,10 @@ func update_key_button_text(button: Button, action: String):
 		elif event is InputEventMouseButton:
 			button.text = "Mouse " + str(event.button_index)
 	else:
-		button.text = "Não definido"
+		button.text = "NÃ£o definido"
 
 func start_key_rebinding(action: String, button: Button):
-	"""Inicia processo de redefinir tecla"""
+# Inicia processo de redefinir tecla
 	button.text = "Pressione uma tecla..."
 	button.disabled = true
 	
@@ -214,15 +214,15 @@ func start_key_rebinding(action: String, button: Button):
 	button.disabled = false
 
 func reset_key_binding(action: String, button: Button):
-	"""Reseta tecla para padrão"""
-	# Aqui você definiria as teclas padrão
+# Reseta tecla para padrÃ£o
+	# Aqui vocÃª definiria as teclas padrÃ£o
 	# Por simplicidade, apenas limpa
 	InputMap.action_erase_events(action)
 	update_key_button_text(button, action)
 
 func load_current_settings():
-	"""Carrega configurações atuais"""
-	# Vídeo
+# Carrega configuraÃ§Ãµes atuais
+	# VÃ­deo
 	var window = get_window()
 	if window:
 		var current_res = window.size
@@ -233,7 +233,7 @@ func load_current_settings():
 		
 		fullscreen_check.button_pressed = window.mode == Window.MODE_FULLSCREEN
 	
-	# Áudio (valores padrão)
+	# Ãudio (valores padrÃ£o)
 	master_slider.value = 100
 	music_slider.value = 80
 	sfx_slider.value = 90
@@ -248,92 +248,92 @@ func load_current_settings():
 
 # === VIDEO HANDLERS ===
 func _on_resolution_changed(index: int):
-	"""Muda resolução"""
+# Muda resoluÃ§Ã£o
 	var new_res = resolution_options[index]
 	get_window().size = new_res
 
 func _on_fullscreen_toggled(pressed: bool):
-	"""Alterna fullscreen"""
+# Alterna fullscreen
 	if pressed:
 		get_window().mode = Window.MODE_FULLSCREEN
 	else:
 		get_window().mode = Window.MODE_WINDOWED
 
 func _on_vsync_toggled(pressed: bool):
-	"""Alterna V-Sync"""
+# Alterna V-Sync
 	if pressed:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 
 func _on_quality_changed(value: float):
-	"""Muda qualidade gráfica"""
-	# Implementar mudança de qualidade baseada no valor
+# Muda qualidade grÃ¡fica
+	# Implementar mudanÃ§a de qualidade baseada no valor
 	print("Quality changed to: ", value)
 
 func _on_brightness_changed(value: float):
-	"""Muda brilho"""
-	# Implementar mudança de brilho
+# Muda brilho
+	# Implementar mudanÃ§a de brilho
 	print("Brightness changed to: ", value)
 
 # === AUDIO HANDLERS ===
 func _on_master_volume_changed(value: float):
-	"""Muda volume master"""
+# Muda volume master
 	var bus_index = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(value / 100.0))
 
 func _on_music_volume_changed(value: float):
-	"""Muda volume da música"""
+# Muda volume da mÃºsica
 	var bus_index = AudioServer.get_bus_index("Music")
 	if bus_index != -1:
 		AudioServer.set_bus_volume_db(bus_index, linear_to_db(value / 100.0))
 
 func _on_sfx_volume_changed(value: float):
-	"""Muda volume dos efeitos"""
+# Muda volume dos efeitos
 	var bus_index = AudioServer.get_bus_index("SFX")
 	if bus_index != -1:
 		AudioServer.set_bus_volume_db(bus_index, linear_to_db(value / 100.0))
 
 func _on_voice_volume_changed(value: float):
-	"""Muda volume das vozes"""
+# Muda volume das vozes
 	var bus_index = AudioServer.get_bus_index("Voice")
 	if bus_index != -1:
 		AudioServer.set_bus_volume_db(bus_index, linear_to_db(value / 100.0))
 
 func _on_mute_toggled(pressed: bool):
-	"""Muta/desmuta áudio"""
+# Muta/desmuta Ã¡udio
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), pressed)
 
 # === CONTROLS HANDLERS ===
 func _on_sensitivity_changed(value: float):
-	"""Muda sensibilidade do mouse"""
-	# Implementar mudança de sensibilidade
+# Muda sensibilidade do mouse
+	# Implementar mudanÃ§a de sensibilidade
 	print("Mouse sensitivity changed to: ", value)
 
 func _on_invert_y_toggled(pressed: bool):
-	"""Inverte eixo Y"""
-	# Implementar inversão do Y
+# Inverte eixo Y
+	# Implementar inversÃ£o do Y
 	print("Invert Y: ", pressed)
 
 # === BUTTON HANDLERS ===
 func _on_apply_pressed():
-	"""Aplica configurações"""
+# Aplica configuraÃ§Ãµes
 	save_settings()
 	settings_applied.emit(settings_data)
 	hide()
 
 func _on_cancel_pressed():
-	"""Cancela mudanças"""
+# Cancela mudanÃ§as
 	load_current_settings()  # Restaura valores anteriores
 	settings_cancelled.emit()
 	hide()
 
 func _on_defaults_pressed():
-	"""Volta para configurações padrão"""
+# Volta para configuraÃ§Ãµes padrÃ£o
 	reset_to_defaults()
 
 func save_settings():
-	"""Salva configurações no arquivo"""
+# Salva configuraÃ§Ãµes no arquivo
 	settings_data = {
 		"video": {
 			"resolution": resolution_options[resolution_option.selected],
@@ -362,15 +362,15 @@ func save_settings():
 		file.close()
 
 func reset_to_defaults():
-	"""Reseta todas as configurações para padrão"""
-	# Vídeo
+# Reseta todas as configuraÃ§Ãµes para padrÃ£o
+	# VÃ­deo
 	resolution_option.selected = 0
 	fullscreen_check.button_pressed = false
 	vsync_check.button_pressed = true
 	quality_slider.value = 75
 	brightness_slider.value = 50
 	
-	# Áudio
+	# Ãudio
 	master_slider.value = 100
 	music_slider.value = 80
 	sfx_slider.value = 90
@@ -381,11 +381,11 @@ func reset_to_defaults():
 	mouse_sensitivity_slider.value = 50
 	invert_y_check.button_pressed = false
 	
-	# Aplica as mudanças
+	# Aplica as mudanÃ§as
 	_on_apply_pressed()
 
 func show_menu():
-	"""Mostra menu com animação"""
+# Mostra menu com animaÃ§Ã£o
 	visible = true
 	modulate = Color.TRANSPARENT
 	scale = Vector2(0.8, 0.8)
@@ -395,7 +395,7 @@ func show_menu():
 	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.3)
 
 func hide():
-	"""Esconde menu com animação"""
+# Esconde menu com animaÃ§Ã£o
 	var tween = create_tween()
 	tween.parallel().tween_property(self, "modulate", Color.TRANSPARENT, 0.2)
 	tween.parallel().tween_property(self, "scale", Vector2(0.8, 0.8), 0.2)

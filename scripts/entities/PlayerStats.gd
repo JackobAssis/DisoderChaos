@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name PlayerStats
 
@@ -45,7 +45,7 @@ func _ready():
 	print("[PlayerStats] PlayerStats component initialized")
 
 func initialize_from_character_creation():
-	"""Initialize stats from character creation choices"""
+# Initialize stats from character creation choices
 	# Get character creation data from game state
 	var character_data = game_state.get_character_creation_data()
 	
@@ -53,7 +53,7 @@ func initialize_from_character_creation():
 		# Use default values for testing
 		selected_race_id = "human"
 		selected_class_id = "warrior"
-		print("[PlayerStats] ⚠️ No character creation data - using defaults")
+		print("[PlayerStats] âš ï¸ No character creation data - using defaults")
 	else:
 		selected_race_id = character_data.get("race_id", "human")
 		selected_class_id = character_data.get("class_id", "warrior")
@@ -75,10 +75,10 @@ func initialize_from_character_creation():
 	# Calculate vital statistics
 	calculate_vital_statistics()
 	
-	print("[PlayerStats] ✅ Stats initialized for %s %s (Level %d)" % [selected_race_id, selected_class_id, current_level])
+	print("[PlayerStats] âœ… Stats initialized for %s %s (Level %d)" % [selected_race_id, selected_class_id, current_level])
 
 func load_base_attributes():
-	"""Load base attribute values"""
+# Load base attribute values
 	var attributes_list = data_loader.get_attributes()
 	
 	# Initialize all attributes to base value
@@ -88,11 +88,11 @@ func load_base_attributes():
 	print("[PlayerStats] Loaded %d base attributes" % base_attributes.size())
 
 func apply_race_modifiers():
-	"""Apply racial attribute modifiers"""
+# Apply racial attribute modifiers
 	var race_data = data_loader.get_race(selected_race_id)
 	
 	if not race_data:
-		print("[PlayerStats] ⚠️ Race data not found: %s" % selected_race_id)
+		print("[PlayerStats] âš ï¸ Race data not found: %s" % selected_race_id)
 		return
 	
 	race_modifiers.clear()
@@ -104,11 +104,11 @@ func apply_race_modifiers():
 	print("[PlayerStats] Applied %s racial modifiers" % selected_race_id)
 
 func apply_class_modifiers():
-	"""Apply class attribute modifiers"""
+# Apply class attribute modifiers
 	var class_data = data_loader.get_class(selected_class_id)
 	
 	if not class_data:
-		print("[PlayerStats] ⚠️ Class data not found: %s" % selected_class_id)
+		print("[PlayerStats] âš ï¸ Class data not found: %s" % selected_class_id)
 		return
 	
 	class_modifiers.clear()
@@ -120,7 +120,7 @@ func apply_class_modifiers():
 	print("[PlayerStats] Applied %s class modifiers" % selected_class_id)
 
 func calculate_final_attributes():
-	"""Calculate final attribute values from all sources"""
+# Calculate final attribute values from all sources
 	final_attributes.clear()
 	
 	for attribute in base_attributes.keys():
@@ -146,7 +146,7 @@ func calculate_final_attributes():
 	print("[PlayerStats] Final attributes calculated")
 
 func calculate_vital_statistics():
-	"""Calculate health, stamina, mana from attributes"""
+# Calculate health, stamina, mana from attributes
 	# Health = Constitution * 10 + level * 5
 	var constitution = final_attributes.get("constitution", 10)
 	max_health = constitution * 10 + current_level * 5
@@ -173,17 +173,17 @@ func calculate_vital_statistics():
 
 # Attribute management
 func get_attribute_value(attribute_name: String) -> int:
-	"""Get final value of an attribute"""
+# Get final value of an attribute
 	return final_attributes.get(attribute_name, 10)
 
 func get_base_attribute(attribute_name: String) -> int:
-	"""Get base attribute value (before modifiers)"""
+# Get base attribute value (before modifiers)
 	return base_attributes.get(attribute_name, 10)
 
 func add_attribute_points(attribute_name: String, points: int):
-	"""Add points to an attribute (from leveling up)"""
+# Add points to an attribute (from leveling up)
 	if not base_attributes.has(attribute_name):
-		print("[PlayerStats] ⚠️ Unknown attribute: %s" % attribute_name)
+		print("[PlayerStats] âš ï¸ Unknown attribute: %s" % attribute_name)
 		return
 	
 	level_modifiers[attribute_name] = level_modifiers.get(attribute_name, 0) + points
@@ -196,7 +196,7 @@ func add_attribute_points(attribute_name: String, points: int):
 	print("[PlayerStats] Added %d points to %s" % [points, attribute_name])
 
 func update_equipment_modifiers(new_modifiers: Dictionary):
-	"""Update attribute modifiers from equipment"""
+# Update attribute modifiers from equipment
 	equipment_modifiers = new_modifiers.duplicate()
 	
 	# Recalculate everything
@@ -207,7 +207,7 @@ func update_equipment_modifiers(new_modifiers: Dictionary):
 
 # Health management
 func take_damage(amount: int, damage_type: String = "physical") -> bool:
-	"""Take damage and return true if still alive"""
+# Take damage and return true if still alive
 	# Apply damage reduction based on attributes/equipment
 	var actual_damage = calculate_actual_damage(amount, damage_type)
 	
@@ -224,7 +224,7 @@ func take_damage(amount: int, damage_type: String = "physical") -> bool:
 	return true
 
 func heal(amount: int) -> int:
-	"""Heal and return actual amount healed"""
+# Heal and return actual amount healed
 	var old_health = current_health
 	current_health = min(current_health + amount, max_health)
 	var actual_heal = current_health - old_health
@@ -236,7 +236,7 @@ func heal(amount: int) -> int:
 	return actual_heal
 
 func calculate_actual_damage(base_damage: int, damage_type: String) -> int:
-	"""Calculate actual damage after resistances"""
+# Calculate actual damage after resistances
 	var actual_damage = base_damage
 	
 	# Basic damage reduction from Constitution
@@ -250,7 +250,7 @@ func calculate_actual_damage(base_damage: int, damage_type: String) -> int:
 
 # Stamina management
 func consume_stamina(amount: float) -> bool:
-	"""Consume stamina and return true if successful"""
+# Consume stamina and return true if successful
 	if current_stamina < amount:
 		return false
 	
@@ -260,13 +260,13 @@ func consume_stamina(amount: float) -> bool:
 	return true
 
 func regenerate_stamina(amount: float):
-	"""Regenerate stamina"""
+# Regenerate stamina
 	current_stamina = min(current_stamina + amount, max_stamina)
 	stamina_changed.emit(current_stamina, max_stamina)
 
 # Mana management
 func consume_mana(amount: float) -> bool:
-	"""Consume mana and return true if successful"""
+# Consume mana and return true if successful
 	if current_mana < amount:
 		return false
 	
@@ -276,13 +276,13 @@ func consume_mana(amount: float) -> bool:
 	return true
 
 func regenerate_mana(amount: float):
-	"""Regenerate mana"""
+# Regenerate mana
 	current_mana = min(current_mana + amount, max_mana)
 	mana_changed.emit(current_mana, max_mana)
 
 # Experience and leveling
 func add_experience(amount: int):
-	"""Add experience points"""
+# Add experience points
 	current_experience += amount
 	experience_changed.emit(current_experience, experience_to_next_level)
 	
@@ -291,7 +291,7 @@ func add_experience(amount: int):
 		level_up()
 
 func level_up():
-	"""Level up the player"""
+# Level up the player
 	current_experience -= experience_to_next_level
 	current_level += 1
 	
@@ -316,7 +316,7 @@ func level_up():
 	# Notify event system
 	event_bus.emit_signal("player_leveled_up", current_level)
 	
-	print("[PlayerStats] ✨ LEVEL UP! Now level %d" % current_level)
+	print("[PlayerStats] âœ¨ LEVEL UP! Now level %d" % current_level)
 
 # Getters
 func get_current_health() -> int:
@@ -410,21 +410,21 @@ func load_save_data(data: Dictionary):
 
 # Debug methods
 func debug_add_experience(amount: int):
-	"""Debug: Add experience"""
+# Debug: Add experience
 	add_experience(amount)
 
 func debug_level_up():
-	"""Debug: Force level up"""
+# Debug: Force level up
 	level_up()
 
 func debug_max_attribute(attribute_name: String):
-	"""Debug: Max out an attribute"""
+# Debug: Max out an attribute
 	level_modifiers[attribute_name] = 20
 	calculate_final_attributes()
 	calculate_vital_statistics()
 
 func debug_print_stats():
-	"""Debug: Print all stats"""
+# Debug: Print all stats
 	print("[PlayerStats] === PLAYER STATS ===")
 	print("Race: %s, Class: %s, Level: %d" % [selected_race_id, selected_class_id, current_level])
 	print("Health: %d/%d" % [current_health, max_health])

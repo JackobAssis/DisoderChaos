@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name InventoryUI
 
@@ -63,10 +63,10 @@ var rarity_colors: Dictionary = {
 func _ready():
 	setup_inventory_ui()
 	setup_connections()
-	print("[InventoryUI] Interface de Inventário inicializada")
+	print("[InventoryUI] Interface de InventÃ¡rio inicializada")
 
 func setup_inventory_ui():
-	"""Setup inventory UI layout"""
+# Setup inventory UI layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -80,7 +80,7 @@ func setup_inventory_ui():
 	create_inventory_grid()
 
 func create_main_layout():
-	"""Create main layout structure"""
+# Create main layout structure
 	main_container = HSplitContainer.new()
 	main_container.name = "MainContainer"
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -88,7 +88,7 @@ func create_main_layout():
 	add_child(main_container)
 
 func create_inventory_panel():
-	"""Create main inventory panel"""
+# Create main inventory panel
 	inventory_panel = Panel.new()
 	inventory_panel.name = "InventoryPanel"
 	inventory_panel.custom_minimum_size = Vector2(600, 400)
@@ -109,7 +109,7 @@ func create_inventory_panel():
 	inventory_panel.add_theme_stylebox_override("panel", panel_style)
 
 func create_details_panel():
-	"""Create item details panel"""
+# Create item details panel
 	details_panel = Panel.new()
 	details_panel.name = "DetailsPanel"
 	details_panel.custom_minimum_size = Vector2(300, 400)
@@ -132,7 +132,7 @@ func create_details_panel():
 	setup_details_content()
 
 func setup_details_content():
-	"""Setup details panel content"""
+# Setup details panel content
 	var details_container = VBoxContainer.new()
 	details_container.name = "DetailsContainer"
 	details_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -189,7 +189,7 @@ func setup_details_content():
 	details_container.add_child(action_buttons_container)
 
 func create_header_controls():
-	"""Create header controls (search, sort, filter)"""
+# Create header controls (search, sort, filter)
 	var header = HBoxContainer.new()
 	header.name = "HeaderControls"
 	header.custom_minimum_size = Vector2(0, 40)
@@ -232,8 +232,8 @@ func create_header_controls():
 	sort_button.custom_minimum_size = Vector2(120, 30)
 	sort_button.add_item("Name A-Z")
 	sort_button.add_item("Name Z-A")
-	sort_button.add_item("Rarity ↑")
-	sort_button.add_item("Rarity ↓")
+	sort_button.add_item("Rarity â†‘")
+	sort_button.add_item("Rarity â†“")
 	sort_button.add_item("Type")
 	sort_button.item_selected.connect(_on_sort_changed)
 	style_option_button(sort_button)
@@ -254,7 +254,7 @@ func create_header_controls():
 	header.add_child(filter_rarity)
 
 func style_line_edit(line_edit: LineEdit):
-	"""Apply neon green style to line edit"""
+# Apply neon green style to line edit
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -276,7 +276,7 @@ func style_line_edit(line_edit: LineEdit):
 	line_edit.add_theme_color_override("font_placeholder_color", Color.GRAY)
 
 func style_option_button(option_button: OptionButton):
-	"""Apply neon green style to option button"""
+# Apply neon green style to option button
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -297,7 +297,7 @@ func style_option_button(option_button: OptionButton):
 	option_button.add_theme_color_override("font_color", Color.WHITE)
 
 func create_inventory_grid():
-	"""Create inventory grid of slots"""
+# Create inventory grid of slots
 	var scroll_container = ScrollContainer.new()
 	scroll_container.name = "GridScrollContainer"
 	scroll_container.anchor_top = 0.1  # Below header
@@ -319,7 +319,7 @@ func create_inventory_grid():
 	create_inventory_slots()
 
 func create_inventory_slots():
-	"""Create individual inventory slots"""
+# Create individual inventory slots
 	inventory_slots.clear()
 	
 	for i in range(grid_size.x * grid_size.y):
@@ -336,19 +336,19 @@ func create_inventory_slots():
 		inventory_grid.add_child(slot)
 
 func setup_connections():
-	"""Setup event connections"""
+# Setup event connections
 	if event_bus:
 		event_bus.connect("inventory_item_added", _on_item_added)
 		event_bus.connect("inventory_item_removed", _on_item_removed)
 		event_bus.connect("inventory_updated", refresh_inventory)
 
 func show():
-	"""Show inventory with animation"""
+# Show inventory with animation
 	super.show()
 	refresh_inventory()
 
 func refresh_inventory():
-	"""Refresh inventory display"""
+# Refresh inventory display
 	if not inventory_system:
 		return
 	
@@ -363,12 +363,12 @@ func refresh_inventory():
 			slot.set_item(item_data)
 
 func clear_all_slots():
-	"""Clear all inventory slots"""
+# Clear all inventory slots
 	for slot in inventory_slots:
 		slot.clear_item()
 
 func update_item_details(item_data):
-	"""Update details panel with item information"""
+# Update details panel with item information
 	if not item_data:
 		clear_item_details()
 		return
@@ -394,7 +394,7 @@ func update_item_details(item_data):
 	update_action_buttons(item_data)
 
 func clear_item_details():
-	"""Clear item details panel"""
+# Clear item details panel
 	item_preview.texture = null
 	item_name_label.text = ""
 	item_description_label.text = ""
@@ -408,7 +408,7 @@ func clear_item_details():
 		child.queue_free()
 
 func update_item_stats(item_data):
-	"""Update item stats display"""
+# Update item stats display
 	# Clear existing stats
 	for child in item_stats_container.get_children():
 		child.queue_free()
@@ -433,7 +433,7 @@ func update_item_stats(item_data):
 	add_info_line("Value", str(item_data.get("value", 0)) + "g")
 
 func add_stat_line(stat_name: String, stat_value):
-	"""Add a stat line to stats container"""
+# Add a stat line to stats container
 	var stat_container = HBoxContainer.new()
 	item_stats_container.add_child(stat_container)
 	
@@ -452,7 +452,7 @@ func add_stat_line(stat_name: String, stat_value):
 	stat_container.add_child(value_label)
 
 func add_info_line(label: String, value: String):
-	"""Add an info line to stats container"""
+# Add an info line to stats container
 	var info_container = HBoxContainer.new()
 	item_stats_container.add_child(info_container)
 	
@@ -471,7 +471,7 @@ func add_info_line(label: String, value: String):
 	info_container.add_child(value_node)
 
 func update_action_buttons(item_data):
-	"""Update action buttons based on item type"""
+# Update action buttons based on item type
 	# Clear existing buttons
 	for child in action_buttons_container.get_children():
 		child.queue_free()
@@ -496,7 +496,7 @@ func update_action_buttons(item_data):
 	action_buttons_container.add_child(drop_btn)
 
 func create_action_button(text: String) -> Button:
-	"""Create styled action button"""
+# Create styled action button
 	var button = Button.new()
 	button.text = text
 	button.custom_minimum_size = Vector2(80, 30)
@@ -536,7 +536,7 @@ func create_action_button(text: String) -> Button:
 
 # Event Handlers
 func _on_slot_clicked(slot: InventorySlot):
-	"""Handle slot click"""
+# Handle slot click
 	if selected_slot:
 		selected_slot.set_selected(false)
 	
@@ -549,24 +549,24 @@ func _on_slot_clicked(slot: InventorySlot):
 		clear_item_details()
 
 func _on_slot_hovered(slot: InventorySlot):
-	"""Handle slot hover"""
+# Handle slot hover
 	slot.set_hovered(true)
 	
 	if slot.item_data:
 		show_item_tooltip(slot.item_data, slot.global_position)
 
 func _on_slot_unhovered(slot: InventorySlot):
-	"""Handle slot unhover"""
+# Handle slot unhover
 	slot.set_hovered(false)
 	hide_item_tooltip()
 
 func _on_drag_started(slot: InventorySlot):
-	"""Handle drag start"""
+# Handle drag start
 	dragging_slot = slot
 	create_drag_preview(slot.item_data)
 
 func _on_drag_ended(slot: InventorySlot, target_slot: InventorySlot):
-	"""Handle drag end"""
+# Handle drag end
 	if dragging_slot and target_slot and dragging_slot != target_slot:
 		swap_items(dragging_slot, target_slot)
 	
@@ -574,7 +574,7 @@ func _on_drag_ended(slot: InventorySlot, target_slot: InventorySlot):
 	destroy_drag_preview()
 
 func swap_items(from_slot: InventorySlot, to_slot: InventorySlot):
-	"""Swap items between slots"""
+# Swap items between slots
 	var from_item = from_slot.item_data
 	var to_item = to_slot.item_data
 	
@@ -586,7 +586,7 @@ func swap_items(from_slot: InventorySlot, to_slot: InventorySlot):
 		inventory_system.swap_items(from_slot.slot_index, to_slot.slot_index)
 
 func create_drag_preview(item_data):
-	"""Create drag preview"""
+# Create drag preview
 	if not item_data:
 		return
 	
@@ -602,38 +602,38 @@ func create_drag_preview(item_data):
 	drag_preview.add_child(preview_texture)
 
 func destroy_drag_preview():
-	"""Destroy drag preview"""
+# Destroy drag preview
 	if drag_preview:
 		drag_preview.queue_free()
 		drag_preview = null
 
 func show_item_tooltip(item_data, position: Vector2):
-	"""Show item tooltip"""
+# Show item tooltip
 	# Create tooltip implementation
 	pass
 
 func hide_item_tooltip():
-	"""Hide item tooltip"""
+# Hide item tooltip
 	# Hide tooltip implementation
 	pass
 
 # Action Handlers
 func _on_equip_item(item_data):
-	"""Equip selected item"""
+# Equip selected item
 	if inventory_system:
 		inventory_system.equip_item(item_data.get("id"))
 
 func _on_use_item(item_data):
-	"""Use selected item"""
+# Use selected item
 	if inventory_system:
 		inventory_system.use_item(item_data.get("id"))
 
 func _on_drop_item(item_data):
-	"""Drop selected item"""
+# Drop selected item
 	show_drop_confirmation(item_data)
 
 func show_drop_confirmation(item_data):
-	"""Show drop confirmation dialog"""
+# Show drop confirmation dialog
 	var dialog = AcceptDialog.new()
 	dialog.title = "Drop Item"
 	dialog.dialog_text = "Drop " + item_data.get("name", "item") + "?"
@@ -643,25 +643,25 @@ func show_drop_confirmation(item_data):
 	dialog.popup_centered()
 
 func _confirm_drop_item(item_data):
-	"""Confirm item drop"""
+# Confirm item drop
 	if inventory_system:
 		inventory_system.drop_item(item_data.get("id"))
 
 # Filter and Sort Handlers
 func _on_search_changed(search_text: String):
-	"""Handle search text change"""
+# Handle search text change
 	filter_inventory_display()
 
 func _on_sort_changed(index: int):
-	"""Handle sort option change"""
+# Handle sort option change
 	sort_inventory_display(index)
 
 func _on_filter_changed(index: int):
-	"""Handle filter change"""
+# Handle filter change
 	filter_inventory_display()
 
 func filter_inventory_display():
-	"""Filter inventory display based on search and filters"""
+# Filter inventory display based on search and filters
 	var search_text = search_box.text.to_lower()
 	var filter_index = filter_rarity.selected
 	
@@ -689,7 +689,7 @@ func filter_inventory_display():
 		slot.visible = show_item
 
 func sort_inventory_display(sort_index: int):
-	"""Sort inventory display"""
+# Sort inventory display
 	if not inventory_system:
 		return
 	
@@ -714,7 +714,7 @@ func sort_inventory_display(sort_index: int):
 			inventory_slots[i].set_item(items[i])
 
 func get_rarity_value(item_data) -> int:
-	"""Get numeric value for rarity sorting"""
+# Get numeric value for rarity sorting
 	var rarity = item_data.get("rarity", "common").to_lower()
 	match rarity:
 		"common": return 0
@@ -727,16 +727,16 @@ func get_rarity_value(item_data) -> int:
 
 # System Event Handlers
 func _on_item_added(item_data):
-	"""Handle item added to inventory"""
+# Handle item added to inventory
 	refresh_inventory()
 
 func _on_item_removed(item_id):
-	"""Handle item removed from inventory"""
+# Handle item removed from inventory
 	refresh_inventory()
 
 # Input Handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if visible and event.is_action_pressed("ui_cancel"):
 		if ui_manager:
 			ui_manager.close_inventory()
@@ -747,7 +747,7 @@ func _input(event):
 
 # Debug Functions
 func debug_populate_test_items():
-	"""Debug: Populate with test items"""
+# Debug: Populate with test items
 	var test_items = [
 		{"name": "Iron Sword", "type": "weapon", "rarity": "common", "value": 50},
 		{"name": "Health Potion", "type": "consumable", "rarity": "common", "value": 25},
@@ -785,7 +785,7 @@ func _init():
 	setup_slot()
 
 func setup_slot():
-	"""Setup slot appearance"""
+# Setup slot appearance
 	custom_minimum_size = Vector2(64, 64)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	
@@ -821,7 +821,7 @@ func setup_slot():
 	add_child(stack_label)
 
 func set_item(new_item_data: Dictionary):
-	"""Set item data for this slot"""
+# Set item data for this slot
 	item_data = new_item_data
 	
 	if item_data.is_empty():
@@ -841,23 +841,23 @@ func set_item(new_item_data: Dictionary):
 		stack_label.visible = false
 
 func clear_item():
-	"""Clear item from slot"""
+# Clear item from slot
 	item_data.clear()
 	item_icon.texture = null
 	stack_label.visible = false
 
 func set_selected(selected: bool):
-	"""Set slot selection state"""
+# Set slot selection state
 	is_selected = selected
 	update_slot_style()
 
 func set_hovered(hovered: bool):
-	"""Set slot hover state"""
+# Set slot hover state
 	is_hovered = hovered
 	update_slot_style()
 
 func update_slot_style():
-	"""Update slot visual style"""
+# Update slot visual style
 	var style = StyleBoxFlat.new()
 	
 	if is_selected:
@@ -881,7 +881,7 @@ func update_slot_style():
 
 # Input handling
 func _gui_input(event):
-	"""Handle GUI input"""
+# Handle GUI input
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			slot_clicked.emit(self)
@@ -896,10 +896,10 @@ func _gui_input(event):
 			slot_unhovered.emit(self)
 
 func _can_drop_data(position, data):
-	"""Check if data can be dropped on this slot"""
+# Check if data can be dropped on this slot
 	return data is InventorySlot
 
 func _drop_data(position, data):
-	"""Handle data drop"""
+# Handle data drop
 	if data is InventorySlot:
 		drag_ended.emit(data, self)

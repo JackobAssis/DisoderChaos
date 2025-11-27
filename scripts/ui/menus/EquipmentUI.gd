@@ -1,12 +1,12 @@
-class_name EquipmentUI
+﻿class_name EquipmentUI
 extends Control
 
-## Interface de equipamentos com 10 slots específicos e preview 3D
+## Interface de equipamentos com 10 slots especÃ­ficos e preview 3D
 
 @onready var character_preview: SubViewport = $Background/MainContainer/CharacterPreview
 @onready var equipment_panel: Control = $Background/MainContainer/EquipmentPanel
 
-# Equipment slots - 10 slots específicos
+# Equipment slots - 10 slots especÃ­ficos
 @onready var weapon_slot: EquipmentSlot = $Background/MainContainer/EquipmentPanel/WeaponSlot
 @onready var helmet_slot: EquipmentSlot = $Background/MainContainer/EquipmentPanel/HelmetSlot
 @onready var chest_slot: EquipmentSlot = $Background/MainContainer/EquipmentPanel/ChestSlot
@@ -56,7 +56,7 @@ func _ready():
 	update_character_stats()
 
 func setup_ui_theme():
-	"""Aplica tema dark fantasy"""
+# Aplica tema dark fantasy
 	# Background principal
 	var bg = $Background as ColorRect
 	if bg:
@@ -73,7 +73,7 @@ func setup_ui_theme():
 			UIThemeManager.create_panel_style(UIThemeManager.Colors.PRIMARY_DARK))
 
 func setup_equipment_slots():
-	"""Configura todos os slots de equipamento"""
+# Configura todos os slots de equipamento
 	var slots = {
 		weapon_slot: "weapon",
 		helmet_slot: "helmet",
@@ -97,7 +97,7 @@ func setup_equipment_slots():
 			slot.item_unhovered.connect(_on_equipment_unhovered)
 
 func setup_3d_preview():
-	"""Configura preview 3D do personagem"""
+# Configura preview 3D do personagem
 	if not character_preview:
 		return
 	
@@ -116,11 +116,11 @@ func setup_3d_preview():
 	# Model do personagem (placeholder)
 	create_character_model()
 	
-	# Permite rotação com mouse
+	# Permite rotaÃ§Ã£o com mouse
 	character_preview.gui_input.connect(_on_preview_input)
 
 func create_character_model():
-	"""Cria modelo 3D do personagem"""
+# Cria modelo 3D do personagem
 	character_model = Node3D.new()
 	character_model.name = "CharacterModel"
 	
@@ -132,7 +132,7 @@ func create_character_model():
 	body.mesh.bottom_radius = 0.3
 	character_model.add_child(body)
 	
-	# Material básico
+	# Material bÃ¡sico
 	var material = StandardMaterial3D.new()
 	material.albedo_color = Color(0.8, 0.7, 0.6)  # Cor de pele
 	body.material_override = material
@@ -140,44 +140,44 @@ func create_character_model():
 	character_preview.add_child(character_model)
 
 func setup_connections():
-	"""Conecta com sistemas do jogo"""
+# Conecta com sistemas do jogo
 	if EventBus:
 		EventBus.equipment_changed.connect(_on_equipment_system_changed)
 		EventBus.player_stats_changed.connect(_on_player_stats_changed)
 
 func _on_preview_input(event: InputEvent):
-	"""Gerencia rotação da prévia 3D"""
+# Gerencia rotaÃ§Ã£o da prÃ©via 3D
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if character_model:
 			character_model.rotation_degrees.y += event.relative.x * 0.5
 
 # === EQUIPMENT HANDLING ===
 func _on_item_equipped(slot_type: String, item_data: Dictionary):
-	"""Item foi equipado em um slot"""
+# Item foi equipado em um slot
 	equipped_items[slot_type] = item_data
 	update_character_model()
 	update_character_stats()
 	item_equipped.emit(slot_type, item_data)
 
 func _on_item_unequipped(slot_type: String, item_data: Dictionary):
-	"""Item foi desequipado de um slot"""
+# Item foi desequipado de um slot
 	equipped_items.erase(slot_type)
 	update_character_model()
 	update_character_stats()
 	item_unequipped.emit(slot_type, item_data)
 
 func _on_equipment_hovered(slot: EquipmentSlot):
-	"""Mouse over em equipamento"""
+# Mouse over em equipamento
 	if slot.has_item():
 		show_equipment_tooltip(slot.item_data, slot.global_position)
 
 func _on_equipment_unhovered(slot: EquipmentSlot):
-	"""Mouse saiu do equipamento"""
+# Mouse saiu do equipamento
 	hide_equipment_tooltip()
 
 # === CHARACTER MODEL UPDATES ===
 func update_character_model():
-	"""Atualiza modelo 3D com equipamentos"""
+# Atualiza modelo 3D com equipamentos
 	if not character_model:
 		return
 	
@@ -192,7 +192,7 @@ func update_character_model():
 		add_equipment_visual(slot_type, item_data)
 
 func add_equipment_visual(slot_type: String, item_data: Dictionary):
-	"""Adiciona visual de equipamento no modelo 3D"""
+# Adiciona visual de equipamento no modelo 3D
 	if not item_data.has("model_3d"):
 		return
 	
@@ -210,7 +210,7 @@ func add_equipment_visual(slot_type: String, item_data: Dictionary):
 	character_model.add_child(instance)
 
 func position_equipment(equipment_node: Node3D, slot_type: String):
-	"""Posiciona equipamento no corpo"""
+# Posiciona equipamento no corpo
 	match slot_type:
 		"helmet":
 			equipment_node.position = Vector3(0, 1.7, 0)
@@ -228,13 +228,13 @@ func position_equipment(equipment_node: Node3D, slot_type: String):
 
 # === STATS CALCULATION ===
 func update_character_stats():
-	"""Atualiza estatísticas do personagem"""
+# Atualiza estatÃ­sticas do personagem
 	var total_stats = calculate_total_stats()
 	display_stats(total_stats)
 	stats_updated.emit(total_stats)
 
 func calculate_total_stats() -> Dictionary:
-	"""Calcula stats totais com equipamentos"""
+# Calcula stats totais com equipamentos
 	var base_stats = {
 		"attack": 10,
 		"defense": 5,
@@ -251,7 +251,7 @@ func calculate_total_stats() -> Dictionary:
 		"lightning_resistance": 0
 	}
 	
-	# Adiciona bônus dos equipamentos
+	# Adiciona bÃ´nus dos equipamentos
 	var total_stats = base_stats.duplicate()
 	
 	for slot_type in equipped_items:
@@ -267,7 +267,7 @@ func calculate_total_stats() -> Dictionary:
 	return total_stats
 
 func display_stats(stats: Dictionary):
-	"""Exibe estatísticas na UI"""
+# Exibe estatÃ­sticas na UI
 	# Limpa stats antigas
 	for child in stats_panel.get_children():
 		if child != total_stats_label:
@@ -277,8 +277,8 @@ func display_stats(stats: Dictionary):
 	add_stat_category("Combate")
 	add_stat_row("Ataque", stats.get("attack", 0), UIThemeManager.Colors.ERROR_RED)
 	add_stat_row("Defesa", stats.get("defense", 0), UIThemeManager.Colors.CYBER_CYAN)
-	add_stat_row("Chance Crítica", str(stats.get("critical_chance", 0)) + "%", UIThemeManager.Colors.ACCENT_GOLD)
-	add_stat_row("Dano Crítico", str(stats.get("critical_damage", 0)) + "%", UIThemeManager.Colors.ACCENT_GOLD)
+	add_stat_row("Chance CrÃ­tica", str(stats.get("critical_chance", 0)) + "%", UIThemeManager.Colors.ACCENT_GOLD)
+	add_stat_row("Dano CrÃ­tico", str(stats.get("critical_damage", 0)) + "%", UIThemeManager.Colors.ACCENT_GOLD)
 	
 	# Stats de recursos
 	add_stat_category("Recursos")
@@ -291,18 +291,18 @@ func display_stats(stats: Dictionary):
 	add_stat_row("Atk Speed", str(stats.get("attack_speed", 1.0)), UIThemeManager.Colors.TECH_ORANGE)
 	add_stat_row("Movimento", stats.get("movement_speed", 100), UIThemeManager.Colors.SUCCESS_GREEN)
 	
-	# Resistências
+	# ResistÃªncias
 	var has_resistances = false
 	for stat in stats:
 		if stat.ends_with("_resistance") and stats[stat] > 0:
 			if not has_resistances:
-				add_stat_category("Resistências")
+				add_stat_category("ResistÃªncias")
 				has_resistances = true
 			var resistance_name = stat.replace("_resistance", "").capitalize()
 			add_stat_row(resistance_name, str(stats[stat]) + "%", UIThemeManager.Colors.MANA_BLUE)
 
 func add_stat_category(name: String):
-	"""Adiciona categoria de stats"""
+# Adiciona categoria de stats
 	var spacer = Control.new()
 	spacer.custom_minimum_size.y = 10
 	stats_panel.add_child(spacer)
@@ -315,7 +315,7 @@ func add_stat_category(name: String):
 	stats_panel.add_child(label)
 
 func add_stat_row(stat_name: String, value, color: Color = UIThemeManager.Colors.TEXT_PRIMARY):
-	"""Adiciona linha de stat"""
+# Adiciona linha de stat
 	var container = HBoxContainer.new()
 	
 	var name_label = Label.new()
@@ -336,7 +336,7 @@ func add_stat_row(stat_name: String, value, color: Color = UIThemeManager.Colors
 var tooltip_popup: Control
 
 func show_equipment_tooltip(item_data: Dictionary, position: Vector2):
-	"""Mostra tooltip detalhado do equipamento"""
+# Mostra tooltip detalhado do equipamento
 	hide_equipment_tooltip()
 	
 	tooltip_popup = create_detailed_tooltip(item_data)
@@ -344,7 +344,7 @@ func show_equipment_tooltip(item_data: Dictionary, position: Vector2):
 	get_tree().current_scene.add_child(tooltip_popup)
 
 func create_detailed_tooltip(item_data: Dictionary) -> Control:
-	"""Cria tooltip detalhado"""
+# Cria tooltip detalhado
 	var tooltip = Control.new()
 	tooltip.z_index = 1000
 	
@@ -398,7 +398,7 @@ func create_detailed_tooltip(item_data: Dictionary) -> Control:
 		var separator2 = HSeparator.new()
 		container.add_child(separator2)
 	
-	# Descrição
+	# DescriÃ§Ã£o
 	if item_data.has("description"):
 		var desc_label = Label.new()
 		desc_label.text = item_data.description
@@ -414,13 +414,13 @@ func create_detailed_tooltip(item_data: Dictionary) -> Control:
 	return tooltip
 
 func hide_equipment_tooltip():
-	"""Esconde tooltip"""
+# Esconde tooltip
 	if tooltip_popup:
 		tooltip_popup.queue_free()
 		tooltip_popup = null
 
 func get_rarity_color(rarity: String) -> Color:
-	"""Retorna cor da raridade"""
+# Retorna cor da raridade
 	match rarity:
 		"legendary": return Color(1.0, 0.5, 0.0)
 		"epic": return Color(0.6, 0.3, 0.9)
@@ -430,7 +430,7 @@ func get_rarity_color(rarity: String) -> Color:
 
 # === EXTERNAL INTERFACE ===
 func equip_item(item_data: Dictionary, slot_type: String) -> bool:
-	"""Equipa item em slot específico"""
+# Equipa item em slot especÃ­fico
 	var slot = get_slot_by_type(slot_type)
 	if slot and can_equip_item(item_data, slot_type):
 		slot.set_item(item_data)
@@ -438,7 +438,7 @@ func equip_item(item_data: Dictionary, slot_type: String) -> bool:
 	return false
 
 func unequip_item(slot_type: String) -> Dictionary:
-	"""Desequipa item de um slot"""
+# Desequipa item de um slot
 	var slot = get_slot_by_type(slot_type)
 	if slot and slot.has_item():
 		var item_data = slot.item_data.duplicate()
@@ -447,7 +447,7 @@ func unequip_item(slot_type: String) -> Dictionary:
 	return {}
 
 func can_equip_item(item_data: Dictionary, slot_type: String) -> bool:
-	"""Verifica se item pode ser equipado no slot"""
+# Verifica se item pode ser equipado no slot
 	var required_type = slot_types.get(slot_type, "")
 	var item_type = item_data.get("type", "")
 	
@@ -458,7 +458,7 @@ func can_equip_item(item_data: Dictionary, slot_type: String) -> bool:
 	return item_type == required_type
 
 func get_slot_by_type(slot_type: String) -> EquipmentSlot:
-	"""Retorna slot por tipo"""
+# Retorna slot por tipo
 	match slot_type:
 		"weapon": return weapon_slot
 		"helmet": return helmet_slot
@@ -473,19 +473,19 @@ func get_slot_by_type(slot_type: String) -> EquipmentSlot:
 		_: return null
 
 func get_equipped_items() -> Dictionary:
-	"""Retorna todos os itens equipados"""
+# Retorna todos os itens equipados
 	return equipped_items.duplicate()
 
 func get_total_stats() -> Dictionary:
-	"""Retorna stats totais calculados"""
+# Retorna stats totais calculados
 	return calculate_total_stats()
 
 # === EVENT HANDLERS ===
 func _on_equipment_system_changed():
-	"""Sistema de equipamento foi atualizado"""
+# Sistema de equipamento foi atualizado
 	# Recarrega equipamentos do sistema
 	pass
 
 func _on_player_stats_changed(stats: PlayerStats):
-	"""Stats base do player mudaram"""
+# Stats base do player mudaram
 	update_character_stats()

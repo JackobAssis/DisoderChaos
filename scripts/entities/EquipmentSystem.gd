@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name EquipmentSystem
 
@@ -53,7 +53,7 @@ func _ready():
 	print("[EquipmentSystem] Equipment system initialized")
 
 func initialize():
-	"""Initialize equipment system"""
+# Initialize equipment system
 	# Clear all slots
 	for slot in EquipmentSlot.values():
 		equipped_items[slot_names[slot]] = null
@@ -67,22 +67,22 @@ func initialize():
 	print("[EquipmentSystem] %d equipment slots initialized" % equipped_items.size())
 
 func equip_item(item_id: String, slot: EquipmentSlot = -1) -> bool:
-	"""Equip an item to appropriate slot"""
+# Equip an item to appropriate slot
 	var item_data = data_loader.get_item(item_id)
 	if not item_data:
-		print("[EquipmentSystem] ❌ Item not found: %s" % item_id)
+		print("[EquipmentSystem] âŒ Item not found: %s" % item_id)
 		return false
 	
 	# Determine slot if not specified
 	if slot == -1:
 		slot = determine_item_slot(item_data)
 		if slot == -1:
-			print("[EquipmentSystem] ❌ Cannot determine slot for item: %s" % item_id)
+			print("[EquipmentSystem] âŒ Cannot determine slot for item: %s" % item_id)
 			return false
 	
 	# Check if item can be equipped in this slot
 	if not can_equip_in_slot(item_data, slot):
-		print("[EquipmentSystem] ❌ Item %s cannot be equipped in slot %s" % [item_id, slot_names[slot]])
+		print("[EquipmentSystem] âŒ Item %s cannot be equipped in slot %s" % [item_id, slot_names[slot]])
 		return false
 	
 	var slot_name = slot_names[slot]
@@ -104,11 +104,11 @@ func equip_item(item_id: String, slot: EquipmentSlot = -1) -> bool:
 	equipment_changed.emit(slot_name, item_data)
 	item_equipped.emit(item_id, slot_name)
 	
-	print("[EquipmentSystem] ✅ Equipped %s to %s" % [item_data.name, slot_name])
+	print("[EquipmentSystem] âœ… Equipped %s to %s" % [item_data.name, slot_name])
 	return true
 
 func unequip_item_from_slot(slot: EquipmentSlot) -> Dictionary:
-	"""Unequip item from slot and return item data"""
+# Unequip item from slot and return item data
 	var slot_name = slot_names[slot]
 	var current_item = equipped_items[slot_name]
 	
@@ -132,7 +132,7 @@ func unequip_item_from_slot(slot: EquipmentSlot) -> Dictionary:
 	return item_data
 
 func determine_item_slot(item_data: Dictionary) -> EquipmentSlot:
-	"""Determine appropriate slot for item based on type"""
+# Determine appropriate slot for item based on type
 	var item_type = item_data.get("type", "")
 	var subtype = item_data.get("subtype", "")
 	
@@ -177,7 +177,7 @@ func determine_item_slot(item_data: Dictionary) -> EquipmentSlot:
 	return -1  # No appropriate slot found
 
 func can_equip_in_slot(item_data: Dictionary, slot: EquipmentSlot) -> bool:
-	"""Check if item can be equipped in specific slot"""
+# Check if item can be equipped in specific slot
 	var item_type = item_data.get("type", "")
 	var subtype = item_data.get("subtype", "")
 	
@@ -212,7 +212,7 @@ func can_equip_in_slot(item_data: Dictionary, slot: EquipmentSlot) -> bool:
 	return false
 
 func recalculate_bonuses():
-	"""Recalculate all equipment bonuses"""
+# Recalculate all equipment bonuses
 	# Clear previous bonuses
 	total_attribute_modifiers.clear()
 	total_damage_bonus = 0
@@ -252,7 +252,7 @@ func recalculate_bonuses():
 	print("[EquipmentSystem] Bonuses recalculated")
 
 func get_equipped_item(slot: EquipmentSlot) -> Dictionary:
-	"""Get item equipped in slot"""
+# Get item equipped in slot
 	var slot_name = slot_names[slot]
 	var equipped_item = equipped_items.get(slot_name)
 	
@@ -262,7 +262,7 @@ func get_equipped_item(slot: EquipmentSlot) -> Dictionary:
 	return equipped_item.item_data
 
 func get_equipped_item_id(slot: EquipmentSlot) -> String:
-	"""Get ID of item equipped in slot"""
+# Get ID of item equipped in slot
 	var slot_name = slot_names[slot]
 	var equipped_item = equipped_items.get(slot_name)
 	
@@ -272,33 +272,33 @@ func get_equipped_item_id(slot: EquipmentSlot) -> String:
 	return equipped_item.item_id
 
 func is_slot_empty(slot: EquipmentSlot) -> bool:
-	"""Check if equipment slot is empty"""
+# Check if equipment slot is empty
 	var slot_name = slot_names[slot]
 	return equipped_items.get(slot_name) == null
 
 func get_total_damage_bonus() -> int:
-	"""Get total damage bonus from equipment"""
+# Get total damage bonus from equipment
 	return total_damage_bonus
 
 func get_total_defense_bonus() -> int:
-	"""Get total defense bonus from equipment"""
+# Get total defense bonus from equipment
 	return total_defense_bonus
 
 func get_attribute_modifiers() -> Dictionary:
-	"""Get all attribute modifiers from equipment"""
+# Get all attribute modifiers from equipment
 	return total_attribute_modifiers.duplicate()
 
 func get_special_effects() -> Array:
-	"""Get all special effects from equipment"""
+# Get all special effects from equipment
 	return total_special_effects.duplicate()
 
 func has_special_effect(effect_name: String) -> bool:
-	"""Check if player has specific special effect from equipment"""
+# Check if player has specific special effect from equipment
 	return effect_name in total_special_effects
 
 # Equipment sets functionality
 func check_equipment_sets() -> Array:
-	"""Check for complete equipment sets and return set bonuses"""
+# Check for complete equipment sets and return set bonuses
 	var completed_sets = []
 	var set_items = {}
 	
@@ -327,19 +327,19 @@ func check_equipment_sets() -> Array:
 	return completed_sets
 
 func get_set_required_pieces(set_name: String) -> int:
-	"""Get number of pieces required for set bonus"""
+# Get number of pieces required for set bonus
 	# This would come from a sets data file eventually
 	return 3  # Default to 3 pieces
 
 func apply_set_bonuses(completed_sets: Array):
-	"""Apply bonuses from completed equipment sets"""
+# Apply bonuses from completed equipment sets
 	for set_name in completed_sets:
 		# This would apply set-specific bonuses
 		print("[EquipmentSystem] Set bonus active: %s" % set_name)
 
 # Durability system (placeholder)
 func damage_equipment(damage_amount: int, slot: EquipmentSlot = -1):
-	"""Damage equipment durability"""
+# Damage equipment durability
 	# If no slot specified, damage random piece
 	if slot == -1:
 		var equipped_slots = []
@@ -356,7 +356,7 @@ func damage_equipment(damage_amount: int, slot: EquipmentSlot = -1):
 	print("[EquipmentSystem] Equipment in %s damaged for %d points" % [slot_names[slot], damage_amount])
 
 func repair_equipment(slot: EquipmentSlot) -> int:
-	"""Repair equipment and return cost"""
+# Repair equipment and return cost
 	# TODO: Implement repair system
 	var repair_cost = 100  # Placeholder
 	print("[EquipmentSystem] Equipment in %s repaired for %d gold" % [slot_names[slot], repair_cost])
@@ -364,7 +364,7 @@ func repair_equipment(slot: EquipmentSlot) -> int:
 
 # Save/Load functionality
 func get_save_data() -> Dictionary:
-	"""Get equipment save data"""
+# Get equipment save data
 	var save_data = {
 		"equipped_items": {},
 		"attribute_modifiers": total_attribute_modifiers,
@@ -383,7 +383,7 @@ func get_save_data() -> Dictionary:
 	return save_data
 
 func load_save_data(data: Dictionary):
-	"""Load equipment save data"""
+# Load equipment save data
 	if data.has("equipped_items"):
 		var equipped_items_data = data.equipped_items
 		
@@ -407,7 +407,7 @@ func load_save_data(data: Dictionary):
 
 # Utility functions
 func get_all_equipped_items() -> Dictionary:
-	"""Get all equipped items"""
+# Get all equipped items
 	var result = {}
 	
 	for slot_name in equipped_items.keys():
@@ -418,7 +418,7 @@ func get_all_equipped_items() -> Dictionary:
 	return result
 
 func get_equipment_power_level() -> int:
-	"""Calculate overall equipment power level"""
+# Calculate overall equipment power level
 	var power_level = 0
 	
 	for slot_name in equipped_items.keys():
@@ -431,17 +431,17 @@ func get_equipment_power_level() -> int:
 
 # Debug methods
 func debug_equip_item(item_id: String):
-	"""Debug: Equip item"""
+# Debug: Equip item
 	equip_item(item_id)
 
 func debug_unequip_all():
-	"""Debug: Unequip all items"""
+# Debug: Unequip all items
 	for slot in EquipmentSlot.values():
 		if not is_slot_empty(slot):
 			unequip_item_from_slot(slot)
 
 func debug_print_equipment():
-	"""Debug: Print all equipped items"""
+# Debug: Print all equipped items
 	print("[EquipmentSystem] === EQUIPPED ITEMS ===")
 	for slot_name in equipped_items.keys():
 		var equipped_item = equipped_items[slot_name]

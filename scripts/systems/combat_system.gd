@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name CombatSystem
 # combat_system.gd - Modular combat system for Disorder Chaos
 # Handles damage calculation, status effects, and combat flow
@@ -28,10 +28,8 @@ func _ready():
 
 # Main combat calculation function
 func calculate_damage(attacker: Node, target: Node, skill_id: String) -> Dictionary:
-	"""
-	Calculate damage from attacker to target using specified skill
-	Returns: {amount: int, is_critical: bool, damage_type: DamageType, blocked: bool}
-	"""
+	# Calculate damage from attacker to target using specified skill
+	# Returns: {amount: int, is_critical: bool, damage_type: DamageType, blocked: bool}
 	var skill_data = DataLoader.get_spell(skill_id)
 	if not skill_data:
 		push_error("Invalid skill ID: " + skill_id)
@@ -77,7 +75,7 @@ func calculate_damage(attacker: Node, target: Node, skill_id: String) -> Diction
 	}
 
 func calculate_physical_damage(base_damage: int, attacker_stats: Dictionary, target_stats: Dictionary) -> int:
-	"""Calculate physical damage with strength and armor"""
+# Calculate physical damage with strength and armor
 	var strength_bonus = attacker_stats.get("strength", 10) - 10
 	var armor_reduction = target_stats.get("armor", 0)
 	
@@ -87,7 +85,7 @@ func calculate_physical_damage(base_damage: int, attacker_stats: Dictionary, tar
 	return damage
 
 func calculate_magical_damage(base_damage: int, attacker_stats: Dictionary, target_stats: Dictionary) -> int:
-	"""Calculate magical damage with intelligence and magic resistance"""
+# Calculate magical damage with intelligence and magic resistance
 	var intelligence_bonus = attacker_stats.get("intelligence", 10) - 10
 	var magic_resistance = target_stats.get("magic_resistance", 0)
 	
@@ -97,21 +95,21 @@ func calculate_magical_damage(base_damage: int, attacker_stats: Dictionary, targ
 	return damage
 
 func check_critical_hit(attacker_stats: Dictionary) -> bool:
-	"""Check if attack is a critical hit"""
+# Check if attack is a critical hit
 	var luck_bonus = (attacker_stats.get("luck", 10) - 10) * 0.01  # 1% per luck point above 10
 	var crit_chance = CRITICAL_CHANCE_BASE + luck_bonus
 	
 	return randf() < crit_chance
 
 func check_dodge(target_stats: Dictionary) -> bool:
-	"""Check if attack is dodged"""
+# Check if attack is dodged
 	var agility_bonus = (target_stats.get("agility", 10) - 10) * 0.005  # 0.5% per agility point above 10
 	var dodge_chance = DODGE_CHANCE_BASE + agility_bonus
 	
 	return randf() < dodge_chance
 
 func get_entity_stats(entity: Node) -> Dictionary:
-	"""Extract stats from an entity (player or enemy)"""
+# Extract stats from an entity (player or enemy)
 	var stats = {}
 	
 	if entity.has_method("get_stats"):
@@ -133,7 +131,7 @@ func get_entity_stats(entity: Node) -> Dictionary:
 
 # Apply damage to target
 func apply_damage(target: Node, damage_info: Dictionary):
-	"""Apply calculated damage to target entity"""
+# Apply calculated damage to target entity
 	if not target or not target.has_method("take_damage"):
 		push_error("Target cannot take damage")
 		return
@@ -158,7 +156,7 @@ func apply_damage(target: Node, damage_info: Dictionary):
 		EventBus.damage_number_requested.emit(target.global_position, damage_info.amount, "normal")
 
 func apply_heal(target: Node, heal_amount: int):
-	"""Apply healing to target entity"""
+# Apply healing to target entity
 	if not target or not target.has_method("heal"):
 		push_error("Target cannot be healed")
 		return
@@ -171,7 +169,7 @@ func apply_heal(target: Node, heal_amount: int):
 
 # Status effect system
 func apply_status_effect(target: Node, effect_id: String, duration: float, source: Node = null):
-	"""Apply a status effect to target"""
+# Apply a status effect to target
 	if not target.has_method("add_status_effect"):
 		push_warning("Target does not support status effects")
 		return
@@ -182,7 +180,7 @@ func apply_status_effect(target: Node, effect_id: String, duration: float, sourc
 	EventBus.status_effect_applied.emit(target, effect_id, duration)
 
 func remove_status_effect(target: Node, effect_id: String):
-	"""Remove a status effect from target"""
+# Remove a status effect from target
 	if not target.has_method("remove_status_effect"):
 		return
 	
@@ -190,7 +188,7 @@ func remove_status_effect(target: Node, effect_id: String):
 	EventBus.status_effect_removed.emit(target, effect_id)
 
 func create_status_effect(effect_id: String, duration: float, source: Node = null) -> Dictionary:
-	"""Create a status effect data structure"""
+# Create a status effect data structure
 	return {
 		"id": effect_id,
 		"duration": duration,
@@ -201,7 +199,7 @@ func create_status_effect(effect_id: String, duration: float, source: Node = nul
 
 # Skill usage validation
 func can_use_skill(caster: Node, skill_id: String) -> bool:
-	"""Check if entity can use a skill"""
+# Check if entity can use a skill
 	var skill_data = DataLoader.get_spell(skill_id)
 	if not skill_data:
 		return false
@@ -225,7 +223,7 @@ func can_use_skill(caster: Node, skill_id: String) -> bool:
 	return true
 
 func check_skill_requirements(caster: Node, requirements: Dictionary) -> bool:
-	"""Check if caster meets skill requirements"""
+# Check if caster meets skill requirements
 	for requirement in requirements:
 		match requirement:
 			"behind_target":
@@ -240,7 +238,7 @@ func check_skill_requirements(caster: Node, requirements: Dictionary) -> bool:
 	return true
 
 func use_skill(caster: Node, skill_id: String, target: Node = null):
-	"""Execute a skill usage"""
+# Execute a skill usage
 	if not can_use_skill(caster, skill_id):
 		return false
 	
@@ -272,7 +270,7 @@ func use_skill(caster: Node, skill_id: String, target: Node = null):
 	return true
 
 func apply_skill_effects(target: Node, skill_data: Dictionary):
-	"""Apply non-damage skill effects"""
+# Apply non-damage skill effects
 	if not skill_data.has("effects"):
 		return
 	
@@ -282,7 +280,7 @@ func apply_skill_effects(target: Node, skill_data: Dictionary):
 
 # Utility functions
 func get_entity_name(entity: Node) -> String:
-	"""Get display name of entity"""
+# Get display name of entity
 	if not entity:
 		return "Unknown"
 	
@@ -295,7 +293,7 @@ func get_entity_name(entity: Node) -> String:
 
 # Area of Effect damage
 func apply_aoe_damage(center_position: Vector2, radius: float, damage: int, source: Node, exclude_source: bool = true):
-	"""Apply damage to all entities in an area"""
+# Apply damage to all entities in an area
 	var space_state = source.get_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
 	

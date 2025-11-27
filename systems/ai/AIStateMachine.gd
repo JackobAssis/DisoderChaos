@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name AIStateMachine
 # AIStateMachine.gd - Finite State Machine for AI behavior
 # Manages state transitions and state-specific behavior
@@ -21,13 +21,13 @@ func _ready():
 	print("[AIStateMachine] State machine initialized")
 
 func add_state(state: AIState):
-	"""Add a state to the state machine"""
+# Add a state to the state machine
 	states[state.state_name] = state
 	state.set_state_machine(self)
 	print("[AIStateMachine] Added state: ", state.state_name)
 
 func set_initial_state(state_name: String):
-	"""Set the initial state"""
+# Set the initial state
 	if state_name in states:
 		current_state = states[state_name]
 		current_state.enter()
@@ -35,7 +35,7 @@ func set_initial_state(state_name: String):
 		print("[AIStateMachine] Initial state set: ", state_name)
 
 func add_transition(from_state: String, to_state: String, condition: Callable):
-	"""Add a state transition"""
+# Add a state transition
 	if not from_state in states:
 		push_error("From state '" + from_state + "' not found")
 		return
@@ -48,12 +48,12 @@ func add_transition(from_state: String, to_state: String, condition: Callable):
 	print("[AIStateMachine] Added transition: ", from_state, " -> ", to_state)
 
 func add_global_transition(to_state: String, condition: Callable):
-	"""Add a global transition that can trigger from any state"""
+# Add a global transition that can trigger from any state
 	global_transitions[to_state] = condition
 	print("[AIStateMachine] Added global transition to: ", to_state)
 
 func update(delta: float):
-	"""Update the state machine"""
+# Update the state machine
 	if not is_active or not current_state:
 		return
 	
@@ -76,7 +76,7 @@ func update(delta: float):
 	current_state.update(delta)
 
 func transition_to(state_name: String):
-	"""Transition to a specific state"""
+# Transition to a specific state
 	if not state_name in states:
 		push_error("State '" + state_name + "' not found")
 		return
@@ -101,23 +101,23 @@ func transition_to(state_name: String):
 	print("[AIStateMachine] Transitioned to state: ", state_name)
 
 func force_state(state_name: String):
-	"""Force transition to state without checking conditions"""
+# Force transition to state without checking conditions
 	transition_to(state_name)
 
 func get_current_state_name() -> String:
-	"""Get current state name"""
+# Get current state name
 	return current_state.state_name if current_state else ""
 
 func get_state_time() -> float:
-	"""Get time spent in current state"""
+# Get time spent in current state
 	return state_timer
 
 func pause():
-	"""Pause the state machine"""
+# Pause the state machine
 	is_active = false
 
 func resume():
-	"""Resume the state machine"""
+# Resume the state machine
 	is_active = true
 
 # Base AIState class
@@ -133,15 +133,15 @@ func _init(name: String):
 	state_name = name
 
 func set_state_machine(sm: AIStateMachine):
-	"""Set reference to the state machine"""
+# Set reference to the state machine
 	state_machine = sm
 
 func add_transition(to_state: String, condition: Callable):
-	"""Add a transition from this state"""
+# Add a transition from this state
 	transitions[to_state] = condition
 
 func check_transitions() -> String:
-	"""Check if any transitions should trigger"""
+# Check if any transitions should trigger
 	for state_name in transitions:
 		var condition = transitions[state_name]
 		if condition.is_valid() and condition.call():
@@ -149,20 +149,20 @@ func check_transitions() -> String:
 	return ""
 
 func enter():
-	"""Called when entering this state"""
+# Called when entering this state
 	entry_time = Time.get_ticks_msec() / 1000.0
 	print("[AIState] Entered state: ", state_name)
 
 func update(delta: float):
-	"""Called each frame while in this state"""
+# Called each frame while in this state
 	pass
 
 func exit():
-	"""Called when exiting this state"""
+# Called when exiting this state
 	print("[AIState] Exited state: ", state_name)
 
 func get_time_in_state() -> float:
-	"""Get time spent in this state"""
+# Get time spent in this state
 	return (Time.get_ticks_msec() / 1000.0) - entry_time
 
 # Specific AI State implementations
@@ -246,7 +246,7 @@ func update(delta: float):
 		pass
 
 func add_investigation_point(point: Vector2):
-	"""Add a point to investigate"""
+# Add a point to investigate
 	investigation_points.append(point)
 
 class_name AIPursuitState
@@ -263,7 +263,7 @@ func _init(name: String = "pursuit", behavior: Callable = Callable(), max_time: 
 	max_pursuit_time = max_time
 
 func set_target(new_target: Node2D):
-	"""Set the target to pursue"""
+# Set the target to pursue
 	target = new_target
 	if target:
 		last_known_position = target.global_position
@@ -294,7 +294,7 @@ func _init(name: String = "attack", behavior: Callable = Callable(), cooldown: f
 	attack_cooldown = cooldown
 
 func set_target(new_target: Node2D):
-	"""Set the target to attack"""
+# Set the target to attack
 	target = new_target
 
 func update(delta: float):
@@ -322,7 +322,7 @@ func _init(name: String = "flee", behavior: Callable = Callable(), speed_mult: f
 	flee_speed_multiplier = speed_mult
 
 func set_threat(threat_source: Node2D):
-	"""Set the threat to flee from"""
+# Set the threat to flee from
 	threat = threat_source
 
 func update(delta: float):
@@ -367,13 +367,13 @@ func update(delta: float):
 		phase_behavior.call(delta, phase_number)
 
 func set_phase_transition_behavior(behavior: Callable):
-	"""Set behavior to execute when transitioning to this phase"""
+# Set behavior to execute when transitioning to this phase
 	phase_transition_behavior = behavior
 
 # Utility functions for common state machine setups
 
 static func create_basic_enemy_fsm(entity: Node2D) -> AIStateMachine:
-	"""Create a basic enemy state machine"""
+# Create a basic enemy state machine
 	var fsm = AIStateMachine.new()
 	
 	# Create states
@@ -406,7 +406,7 @@ static func create_basic_enemy_fsm(entity: Node2D) -> AIStateMachine:
 	return fsm
 
 static func create_boss_fsm(entity: Node2D, num_phases: int = 3) -> AIStateMachine:
-	"""Create a boss state machine with phases"""
+# Create a boss state machine with phases
 	var fsm = AIStateMachine.new()
 	
 	# Create phase states
@@ -425,7 +425,7 @@ static func create_boss_fsm(entity: Node2D, num_phases: int = 3) -> AIStateMachi
 	return fsm
 
 static func create_coward_fsm(entity: Node2D) -> AIStateMachine:
-	"""Create a coward enemy state machine (flees more easily)"""
+# Create a coward enemy state machine (flees more easily)
 	var fsm = AIStateMachine.new()
 	
 	# Create states
@@ -448,7 +448,7 @@ static func create_coward_fsm(entity: Node2D) -> AIStateMachine:
 	return fsm
 
 static func should_coward_flee(entity: Node2D) -> bool:
-	"""Check if coward should flee (higher health threshold)"""
+# Check if coward should flee (higher health threshold)
 	if not entity or not entity.has_method("get_health_percentage"):
 		return false
 	return entity.get_health_percentage() < 0.5  # Flee at 50% health
@@ -469,12 +469,12 @@ var prefer_close: bool = true
 var aggro_memory: Dictionary = {}
 
 func setup(parent_entity: Node2D, perception_system: AISenses):
-	"""Setup target selector"""
+# Setup target selector
 	entity = parent_entity
 	senses = perception_system
 
 func select_best_target() -> Node2D:
-	"""Select the best target from available options"""
+# Select the best target from available options
 	if not senses:
 		return null
 	
@@ -494,7 +494,7 @@ func select_best_target() -> Node2D:
 	return best_target
 
 func calculate_target_score(target: Node2D) -> float:
-	"""Calculate priority score for a potential target"""
+# Calculate priority score for a potential target
 	var score = 0.0
 	
 	if not target or not entity:
@@ -531,7 +531,7 @@ func calculate_target_score(target: Node2D) -> float:
 	return score
 
 func add_aggro(target: Node2D, amount: float = 1.0):
-	"""Add aggro for a target"""
+# Add aggro for a target
 	if not target:
 		return
 	
@@ -539,7 +539,7 @@ func add_aggro(target: Node2D, amount: float = 1.0):
 	aggro_memory[target_id] = aggro_memory.get(target_id, 0.0) + amount
 
 func clear_aggro(target: Node2D):
-	"""Clear aggro for a target"""
+# Clear aggro for a target
 	if not target:
 		return
 	

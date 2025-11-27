@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name DialogueSystem
 
@@ -49,10 +49,10 @@ var dialogue_conditions: Dictionary = {
 func _ready():
 	await setup_dialogue_system()
 	connect_events()
-	print("[DialogueSystem] Sistema de Diálogo inicializado")
+	print("[DialogueSystem] Sistema de DiÃ¡logo inicializado")
 
 func setup_dialogue_system():
-	"""Initialize dialogue system"""
+# Initialize dialogue system
 	# Wait for data to be loaded
 	if not data_loader.is_fully_loaded():
 		await data_loader.all_data_loaded
@@ -65,18 +65,18 @@ func setup_dialogue_system():
 	build_npc_dialogue_map()
 
 func connect_events():
-	"""Connect to game events"""
+# Connect to game events
 	event_bus.connect("npc_interacted", _on_npc_interacted)
 	event_bus.connect("quest_completed", _on_quest_completed)
 	event_bus.connect("quest_started", _on_quest_started)
 
 func load_all_dialogues():
-	"""Load all dialogue data"""
+# Load all dialogue data
 	all_dialogues = data_loader.get_all_dialogues()
-	print("[DialogueSystem] Carregados %d diálogos" % all_dialogues.size())
+	print("[DialogueSystem] Carregados %d diÃ¡logos" % all_dialogues.size())
 
 func build_npc_dialogue_map():
-	"""Build mapping of NPCs to their available dialogues"""
+# Build mapping of NPCs to their available dialogues
 	npc_dialogues.clear()
 	
 	for dialogue_id in all_dialogues.keys():
@@ -89,15 +89,15 @@ func build_npc_dialogue_map():
 			npc_dialogues[target_npc].append(dialogue_id)
 
 func start_dialogue_with_npc(npc_id: String, forced_dialogue_id: String = "") -> bool:
-	"""Start dialogue with an NPC"""
+# Start dialogue with an NPC
 	if current_state != DialogueState.INACTIVE:
-		print("[DialogueSystem] Diálogo já ativo")
+		print("[DialogueSystem] DiÃ¡logo jÃ¡ ativo")
 		return false
 	
 	# Get available dialogues for NPC
 	var available_dialogues = get_available_dialogues_for_npc(npc_id)
 	if available_dialogues.is_empty():
-		print("[DialogueSystem] Nenhum diálogo disponível para NPC: %s" % npc_id)
+		print("[DialogueSystem] Nenhum diÃ¡logo disponÃ­vel para NPC: %s" % npc_id)
 		return false
 	
 	# Choose dialogue to start
@@ -106,13 +106,13 @@ func start_dialogue_with_npc(npc_id: String, forced_dialogue_id: String = "") ->
 		dialogue_id = choose_best_dialogue(npc_id, available_dialogues)
 	
 	if dialogue_id == "":
-		print("[DialogueSystem] Nenhum diálogo adequado encontrado para NPC: %s" % npc_id)
+		print("[DialogueSystem] Nenhum diÃ¡logo adequado encontrado para NPC: %s" % npc_id)
 		return false
 	
 	return start_dialogue(npc_id, dialogue_id)
 
 func get_available_dialogues_for_npc(npc_id: String) -> Array:
-	"""Get all available dialogues for an NPC"""
+# Get all available dialogues for an NPC
 	var available = []
 	var npc_dialogue_list = npc_dialogues.get(npc_id, [])
 	
@@ -123,7 +123,7 @@ func get_available_dialogues_for_npc(npc_id: String) -> Array:
 	return available
 
 func is_dialogue_available(dialogue_id: String, npc_id: String) -> bool:
-	"""Check if dialogue is available"""
+# Check if dialogue is available
 	var dialogue_data = all_dialogues.get(dialogue_id, {})
 	if dialogue_data.is_empty():
 		return false
@@ -140,7 +140,7 @@ func is_dialogue_available(dialogue_id: String, npc_id: String) -> bool:
 	return check_dialogue_conditions(conditions)
 
 func check_dialogue_conditions(conditions: Dictionary) -> bool:
-	"""Check if dialogue conditions are met"""
+# Check if dialogue conditions are met
 	# Quest requirements
 	if conditions.has("quest_completed"):
 		for quest_id in conditions.quest_completed:
@@ -200,7 +200,7 @@ func check_dialogue_conditions(conditions: Dictionary) -> bool:
 	return true
 
 func choose_best_dialogue(npc_id: String, available_dialogues: Array) -> String:
-	"""Choose the best dialogue to start based on priority"""
+# Choose the best dialogue to start based on priority
 	var best_dialogue = ""
 	var highest_priority = -1
 	
@@ -219,10 +219,10 @@ func choose_best_dialogue(npc_id: String, available_dialogues: Array) -> String:
 	return best_dialogue
 
 func start_dialogue(npc_id: String, dialogue_id: String) -> bool:
-	"""Start specific dialogue"""
+# Start specific dialogue
 	var dialogue_data = all_dialogues.get(dialogue_id, {})
 	if dialogue_data.is_empty():
-		print("[DialogueSystem] Diálogo não encontrado: %s" % dialogue_id)
+		print("[DialogueSystem] DiÃ¡logo nÃ£o encontrado: %s" % dialogue_id)
 		return false
 	
 	# Initialize dialogue state
@@ -251,16 +251,16 @@ func start_dialogue(npc_id: String, dialogue_id: String) -> bool:
 	dialogue_started.emit(npc_id, dialogue_id)
 	event_bus.emit_signal("dialogue_ui_show", get_current_node_data())
 	
-	print("[DialogueSystem] Diálogo iniciado: %s com %s" % [dialogue_id, npc_id])
+	print("[DialogueSystem] DiÃ¡logo iniciado: %s com %s" % [dialogue_id, npc_id])
 	return true
 
 func process_dialogue_node(node_id: String):
-	"""Process a dialogue node"""
+# Process a dialogue node
 	var dialogue_data = active_dialogue.data
 	var nodes = dialogue_data.get("nodes", {})
 	
 	if not nodes.has(node_id):
-		print("[DialogueSystem] Nó de diálogo não encontrado: %s" % node_id)
+		print("[DialogueSystem] NÃ³ de diÃ¡logo nÃ£o encontrado: %s" % node_id)
 		end_dialogue()
 		return
 	
@@ -289,7 +289,7 @@ func process_dialogue_node(node_id: String):
 			end_dialogue()
 
 func process_text_node(node_data: Dictionary):
-	"""Process text dialogue node"""
+# Process text dialogue node
 	current_state = DialogueState.ACTIVE
 	
 	# Check for auto-advance
@@ -305,7 +305,7 @@ func process_text_node(node_data: Dictionary):
 			end_dialogue()
 
 func process_choice_node(node_data: Dictionary):
-	"""Process choice dialogue node"""
+# Process choice dialogue node
 	current_state = DialogueState.WAITING_FOR_CHOICE
 	
 	# Filter available choices based on conditions
@@ -325,7 +325,7 @@ func process_choice_node(node_data: Dictionary):
 	event_bus.emit_signal("dialogue_choices_available", available_choices)
 
 func process_action_node(node_data: Dictionary):
-	"""Process action dialogue node"""
+# Process action dialogue node
 	current_state = DialogueState.PROCESSING
 	
 	# Execute node actions immediately
@@ -336,7 +336,7 @@ func process_action_node(node_data: Dictionary):
 		end_dialogue()
 
 func process_conditional_node(node_data: Dictionary):
-	"""Process conditional dialogue node"""
+# Process conditional dialogue node
 	current_state = DialogueState.PROCESSING
 	
 	var conditions = node_data.get("conditions", {})
@@ -355,14 +355,14 @@ func process_conditional_node(node_data: Dictionary):
 		end_dialogue()
 
 func process_node_actions(node_data: Dictionary):
-	"""Process actions defined in dialogue node"""
+# Process actions defined in dialogue node
 	var actions = node_data.get("actions", [])
 	
 	for action in actions:
 		execute_dialogue_action(action)
 
 func execute_dialogue_action(action: Dictionary):
-	"""Execute a dialogue action"""
+# Execute a dialogue action
 	var action_type = action.get("type", "")
 	
 	match action_type:
@@ -422,12 +422,12 @@ func execute_dialogue_action(action: Dictionary):
 				npc_system.change_npc_state(current_npc_id, new_state)
 
 func check_choice_conditions(choice: Dictionary) -> bool:
-	"""Check if choice is available"""
+# Check if choice is available
 	var conditions = choice.get("conditions", {})
 	return check_dialogue_conditions(conditions)
 
 func choose_dialogue_option(option_index: int):
-	"""Player chooses a dialogue option"""
+# Player chooses a dialogue option
 	if current_state != DialogueState.WAITING_FOR_CHOICE:
 		return
 	
@@ -437,7 +437,7 @@ func choose_dialogue_option(option_index: int):
 	var choices = current_node.get("choices", [])
 	
 	if option_index < 0 or option_index >= choices.size():
-		print("[DialogueSystem] Índice de opção inválido: %d" % option_index)
+		print("[DialogueSystem] Ãndice de opÃ§Ã£o invÃ¡lido: %d" % option_index)
 		return
 	
 	var chosen_option = choices[option_index]
@@ -460,11 +460,11 @@ func choose_dialogue_option(option_index: int):
 		end_dialogue()
 
 func get_next_node(node_data: Dictionary) -> String:
-	"""Get the next node to process"""
+# Get the next node to process
 	return node_data.get("next_node", "")
 
 func end_dialogue():
-	"""End current dialogue"""
+# End current dialogue
 	if current_state == DialogueState.INACTIVE:
 		return
 	
@@ -491,10 +491,10 @@ func end_dialogue():
 	active_dialogue.clear()
 	dialogue_variables.clear()
 	
-	print("[DialogueSystem] Diálogo finalizado")
+	print("[DialogueSystem] DiÃ¡logo finalizado")
 
 func get_current_node_data() -> Dictionary:
-	"""Get current dialogue node data for UI"""
+# Get current dialogue node data for UI
 	if current_state == DialogueState.INACTIVE:
 		return {}
 	
@@ -524,7 +524,7 @@ func get_current_node_data() -> Dictionary:
 	}
 
 func get_speaker_data(speaker_id: String) -> Dictionary:
-	"""Get speaker data (NPC or player)"""
+# Get speaker data (NPC or player)
 	if speaker_id == "player":
 		return {
 			"name": game_state.player_name,
@@ -536,7 +536,7 @@ func get_speaker_data(speaker_id: String) -> Dictionary:
 		return {"name": speaker_id}
 
 func get_processed_choices(node_data: Dictionary) -> Array:
-	"""Get processed choices for current node"""
+# Get processed choices for current node
 	if node_data.get("type", "") != "choice":
 		return []
 	
@@ -556,7 +556,7 @@ func get_processed_choices(node_data: Dictionary) -> Array:
 	return processed_choices
 
 func process_text_variables(text: String) -> String:
-	"""Process variables in dialogue text"""
+# Process variables in dialogue text
 	var processed_text = text
 	
 	# Replace player name
@@ -575,35 +575,35 @@ func process_text_variables(text: String) -> String:
 
 # Event handlers
 func _on_npc_interacted(npc_id: String):
-	"""Handle NPC interaction"""
+# Handle NPC interaction
 	start_dialogue_with_npc(npc_id)
 
 func _on_quest_completed(quest_id: String):
-	"""Update dialogue availability when quests complete"""
+# Update dialogue availability when quests complete
 	# Dialogues may become available after quest completion
 	pass
 
 func _on_quest_started(quest_id: String):
-	"""Update dialogue availability when quests start"""
+# Update dialogue availability when quests start
 	# Dialogues may become available after quest starts
 	pass
 
 # Utility functions
 func is_dialogue_active() -> bool:
-	"""Check if dialogue is currently active"""
+# Check if dialogue is currently active
 	return current_state != DialogueState.INACTIVE
 
 func get_dialogue_history_for_npc(npc_id: String) -> Array:
-	"""Get dialogue history with specific NPC"""
+# Get dialogue history with specific NPC
 	return dialogue_history.get(npc_id, [])
 
 func has_had_dialogue(npc_id: String, dialogue_id: String) -> bool:
-	"""Check if player has had specific dialogue with NPC"""
+# Check if player has had specific dialogue with NPC
 	var history = dialogue_history.get(npc_id, [])
 	return dialogue_id in history
 
 func get_all_available_dialogues() -> Dictionary:
-	"""Get all available dialogues organized by NPC"""
+# Get all available dialogues organized by NPC
 	var available = {}
 	
 	for npc_id in npc_dialogues.keys():
@@ -621,7 +621,7 @@ func get_save_data() -> Dictionary:
 	}
 
 func serialize_current_dialogue() -> Dictionary:
-	"""Serialize current dialogue state"""
+# Serialize current dialogue state
 	if current_state == DialogueState.INACTIVE:
 		return {}
 	
@@ -635,7 +635,7 @@ func serialize_current_dialogue() -> Dictionary:
 	}
 
 func load_save_data(data: Dictionary):
-	"""Load dialogue save data"""
+# Load dialogue save data
 	dialogue_history = data.get("dialogue_history", {})
 	
 	# Restore current dialogue if any
@@ -643,10 +643,10 @@ func load_save_data(data: Dictionary):
 	if not current_dialogue_data.is_empty():
 		restore_dialogue_state(current_dialogue_data)
 	
-	print("[DialogueSystem] Dados de diálogo carregados")
+	print("[DialogueSystem] Dados de diÃ¡logo carregados")
 
 func restore_dialogue_state(data: Dictionary):
-	"""Restore dialogue state from save"""
+# Restore dialogue state from save
 	var npc_id = data.get("npc_id", "")
 	var dialogue_id = data.get("dialogue_id", "")
 	
@@ -660,22 +660,22 @@ func restore_dialogue_state(data: Dictionary):
 
 # Debug functions
 func debug_start_dialogue(npc_id: String, dialogue_id: String):
-	"""Debug: Start specific dialogue"""
+# Debug: Start specific dialogue
 	start_dialogue(npc_id, dialogue_id)
 
 func debug_set_dialogue_variable(var_name: String, value):
-	"""Debug: Set dialogue variable"""
+# Debug: Set dialogue variable
 	dialogue_variables[var_name] = value
 
 func debug_clear_dialogue_history(npc_id: String = ""):
-	"""Debug: Clear dialogue history"""
+# Debug: Clear dialogue history
 	if npc_id == "":
 		dialogue_history.clear()
 	else:
 		dialogue_history.erase(npc_id)
 
 func debug_list_available_dialogues(npc_id: String = "") -> Array:
-	"""Debug: List available dialogues"""
+# Debug: List available dialogues
 	if npc_id == "":
 		return get_all_available_dialogues().keys()
 	else:
@@ -766,7 +766,7 @@ func start_dialogue(npc_id: String, dialogue_tree: Dictionary) -> void:
 	process_dialogue_node(current_node)
 	
 	dialogue_started.emit(npc_id)
-	print("[DialogueSystem] Diálogo iniciado com ", npc_id)
+	print("[DialogueSystem] DiÃ¡logo iniciado com ", npc_id)
 
 func load_npc_presentation_data(npc_id: String) -> void:
 	if not npc_system:
@@ -795,7 +795,7 @@ func create_placeholder_portrait() -> ImageTexture:
 
 func process_dialogue_node(node_id: String) -> void:
 	if not current_tree.has("nodes") or not current_tree.nodes.has(node_id):
-		print("[DialogueSystem] ERRO: Nó de diálogo não encontrado: ", node_id)
+		print("[DialogueSystem] ERRO: NÃ³ de diÃ¡logo nÃ£o encontrado: ", node_id)
 		end_dialogue()
 		return
 	
@@ -821,7 +821,7 @@ func process_dialogue_node(node_id: String) -> void:
 		"transport":
 			process_transport_node(node_data)
 		_:
-			print("[DialogueSystem] Tipo de nó desconhecido: ", node_type)
+			print("[DialogueSystem] Tipo de nÃ³ desconhecido: ", node_type)
 			end_dialogue()
 
 func process_text_node(node_data: Dictionary) -> void:
@@ -865,7 +865,7 @@ func process_conditional_node(node_data: Dictionary) -> void:
 				return
 	
 	# No valid path found
-	print("[DialogueSystem] Nenhuma condição atendida no nó condicional")
+	print("[DialogueSystem] Nenhuma condiÃ§Ã£o atendida no nÃ³ condicional")
 	end_dialogue()
 
 func process_quest_check_node(node_data: Dictionary) -> void:
@@ -1163,7 +1163,7 @@ func end_dialogue() -> void:
 	current_node = ""
 	dialogue_history.clear()
 	
-	print("[DialogueSystem] Diálogo encerrado")
+	print("[DialogueSystem] DiÃ¡logo encerrado")
 
 func _on_continue_pressed() -> void:
 	if is_typing:
@@ -1198,7 +1198,7 @@ func _on_choice_selected(choice_index: int, option: Dictionary) -> void:
 					process_text_node({"text": "Transporting to " + option.destination, "end": true})
 			
 			_:
-				print("[DialogueSystem] Ação desconhecida: ", action)
+				print("[DialogueSystem] AÃ§Ã£o desconhecida: ", action)
 	
 	# Navigate to next node
 	if option.has("next"):
@@ -1211,9 +1211,9 @@ func _on_choice_selected(choice_index: int, option: Dictionary) -> void:
 func debug_print_dialogue_state() -> void:
 	print("[DialogueSystem] Estado atual:")
 	print("  NPC: ", current_npc_id)
-	print("  Nó: ", current_node)
+	print("  NÃ³: ", current_node)
 	print("  Ativo: ", active_dialogue)
-	print("  Histórico: ", dialogue_history)
+	print("  HistÃ³rico: ", dialogue_history)
 
 # Input handling
 func _input(event: InputEvent) -> void:

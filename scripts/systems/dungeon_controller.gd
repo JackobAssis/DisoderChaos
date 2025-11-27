@@ -1,4 +1,4 @@
-extends Node2D
+﻿extends Node2D
 class_name DungeonController
 # dungeon_controller.gd - Controls dungeon logic, spawning, and progression
 
@@ -31,7 +31,7 @@ func _ready():
 	connect_signals()
 
 func setup_spawn_system():
-	"""Initialize enemy spawn system"""
+# Initialize enemy spawn system
 	spawn_timer = Timer.new()
 	spawn_timer.timeout.connect(_spawn_enemy)
 	spawn_timer.wait_time = spawn_interval
@@ -39,7 +39,7 @@ func setup_spawn_system():
 	add_child(spawn_timer)
 
 func setup_exit_area():
-	"""Setup dungeon exit area"""
+# Setup dungeon exit area
 	exit_area = Area2D.new()
 	exit_area.name = "ExitArea"
 	var exit_collision = CollisionShape2D.new()
@@ -57,12 +57,12 @@ func setup_exit_area():
 	create_exit_visual()
 
 func connect_signals():
-	"""Connect to event bus signals"""
+# Connect to event bus signals
 	EventBus.enemy_defeated.connect(_on_enemy_defeated)
 	EventBus.dungeon_changed.connect(_on_dungeon_changed)
 
 func load_dungeon(dungeon_id_param: String):
-	"""Load and configure dungeon from data"""
+# Load and configure dungeon from data
 	dungeon_id = dungeon_id_param
 	dungeon_data = DataLoader.get_dungeon(dungeon_id)
 	
@@ -89,7 +89,7 @@ func load_dungeon(dungeon_id_param: String):
 	return true
 
 func configure_dungeon():
-	"""Configure dungeon based on loaded data"""
+# Configure dungeon based on loaded data
 	# Set difficulty-based parameters
 	var difficulty = dungeon_data.get("difficulty", 1)
 	max_enemies = min(3 + difficulty * 2, 10)
@@ -105,7 +105,7 @@ func configure_dungeon():
 	print("  Spawn interval: ", spawn_interval, " seconds")
 
 func start_dungeon():
-	"""Begin dungeon encounter"""
+# Begin dungeon encounter
 	is_cleared = false
 	enemies_defeated = 0
 	exit_unlocked = false
@@ -119,16 +119,16 @@ func start_dungeon():
 	# Start spawn timer
 	spawn_timer.start()
 	
-	EventBus.ui_notification_shown.emit("Entered " + dungeon_data.name, "info")
+	EventBus.show_notification("Entered " + dungeon_data.name, "info")
 
 func spawn_initial_enemies():
-	"""Spawn initial set of enemies"""
+# Spawn initial set of enemies
 	var initial_spawns = min(max_enemies / 2, 3)
 	for i in initial_spawns:
 		_spawn_enemy()
 
 func _spawn_enemy():
-	"""Spawn a single enemy"""
+# Spawn a single enemy
 	if enemies_spawned.size() >= max_enemies:
 		return
 	
@@ -153,7 +153,7 @@ func _spawn_enemy():
 		print("[Dungeon] Spawned ", enemy_type, " at ", spawn_position)
 
 func get_spawn_position() -> Vector2:
-	"""Get a valid spawn position for enemies"""
+# Get a valid spawn position for enemies
 	if "spawn_points" in dungeon_data and not dungeon_data.spawn_points.is_empty():
 		# Use predefined spawn points
 		var spawn_points = dungeon_data.spawn_points
@@ -167,7 +167,7 @@ func get_spawn_position() -> Vector2:
 		return Vector2(x, y)
 
 func create_enemy(enemy_type: String, position: Vector2) -> Node:
-	"""Create and configure an enemy"""
+# Create and configure an enemy
 	# TODO: Load proper enemy scenes based on type
 	# For now, create a basic enemy placeholder
 	
@@ -187,7 +187,7 @@ func create_enemy(enemy_type: String, position: Vector2) -> Node:
 	return enemy
 
 func configure_enemy(enemy: Node, enemy_type: String):
-	"""Configure enemy based on its type"""
+# Configure enemy based on its type
 	# Set basic properties based on enemy type
 	match enemy_type:
 		"slime":
@@ -217,19 +217,19 @@ func configure_enemy(enemy: Node, enemy_type: String):
 			enemy.scale_stats(scale_factor)
 
 func clear_existing_enemies():
-	"""Remove all existing enemies"""
+# Remove all existing enemies
 	for enemy in enemies_spawned:
 		if is_instance_valid(enemy):
 			enemy.queue_free()
 	enemies_spawned.clear()
 
 func check_dungeon_completion():
-	"""Check if dungeon clearing conditions are met"""
+# Check if dungeon clearing conditions are met
 	if enemies_defeated >= total_enemies_to_defeat:
 		complete_dungeon()
 
 func complete_dungeon():
-	"""Handle dungeon completion"""
+# Handle dungeon completion
 	if is_cleared:
 		return
 	
@@ -247,12 +247,12 @@ func complete_dungeon():
 	
 	# Notify completion
 	EventBus.dungeon_completed.emit(dungeon_id)
-	EventBus.ui_notification_shown.emit("Dungeon Cleared! Exit unlocked.", "success")
+	EventBus.show_notification("Dungeon Cleared! Exit unlocked.", "success")
 	
 	print("[Dungeon] Completed dungeon: ", dungeon_data.name)
 
 func spawn_completion_loot():
-	"""Spawn loot for completing dungeon"""
+# Spawn loot for completing dungeon
 	if not "loot_table" in dungeon_data:
 		return
 	
@@ -264,7 +264,7 @@ func spawn_completion_loot():
 		spawn_loot_item(loot_item, get_loot_spawn_position())
 
 func spawn_loot_item(item_id: String, position: Vector2):
-	"""Spawn a loot item at position"""
+# Spawn a loot item at position
 	# TODO: Create proper loot item scene
 	# For now, just add to player inventory automatically
 	GameState.add_item_to_inventory(item_id, 1)
@@ -273,19 +273,19 @@ func spawn_loot_item(item_id: String, position: Vector2):
 	print("[Dungeon] Dropped loot: ", item_id)
 
 func get_loot_spawn_position() -> Vector2:
-	"""Get position to spawn loot"""
+# Get position to spawn loot
 	# Spawn near the center or at specific loot points
 	return Vector2(250, 200) + Vector2(randf_range(-50, 50), randf_range(-50, 50))
 
 func attempt_exit_dungeon():
-	"""Attempt to exit the current dungeon"""
+# Attempt to exit the current dungeon
 	if not exit_unlocked:
-		EventBus.ui_notification_shown.emit("Exit is locked. Clear the dungeon first!", "warning")
+		EventBus.show_notification("Exit is locked. Clear the dungeon first!", "warning")
 		return false
 	
 	# Get connected dungeons
 	if not "connections" in dungeon_data or dungeon_data.connections.is_empty():
-		EventBus.ui_notification_shown.emit("No connected areas found.", "warning")
+		EventBus.show_notification("No connected areas found.", "warning")
 		return false
 	
 	# For now, go to first connected dungeon
@@ -295,7 +295,7 @@ func attempt_exit_dungeon():
 	return true
 
 func change_to_dungeon(target_dungeon_id: String):
-	"""Change to another dungeon"""
+# Change to another dungeon
 	EventBus.dungeon_exited.emit(dungeon_id)
 	GameState.change_dungeon(target_dungeon_id)
 	
@@ -304,7 +304,7 @@ func change_to_dungeon(target_dungeon_id: String):
 
 # Signal handlers
 func _on_enemy_defeated(enemy_id: String, loot: Array):
-	"""Handle enemy defeat"""
+# Handle enemy defeat
 	enemies_defeated += 1
 	
 	# Remove from active enemies list
@@ -325,18 +325,18 @@ func _on_enemy_defeated(enemy_id: String, loot: Array):
 	print("[Dungeon] Enemy defeated. Progress: ", enemies_defeated, "/", total_enemies_to_defeat)
 
 func _on_dungeon_changed(new_dungeon_id: String):
-	"""Handle dungeon change notification"""
+# Handle dungeon change notification
 	if new_dungeon_id != dungeon_id:
 		load_dungeon(new_dungeon_id)
 
 func _on_exit_area_entered(body):
-	"""Handle player entering exit area"""
+# Handle player entering exit area
 	if body.name == "Player" or body.has_method("get_player_data"):
 		attempt_exit_dungeon()
 
 # Dungeon event system
 func trigger_dungeon_event(event_type: String, data: Dictionary = {}):
-	"""Trigger special dungeon events"""
+# Trigger special dungeon events
 	match event_type:
 		"boss_spawn":
 			spawn_boss_enemy()
@@ -350,36 +350,36 @@ func trigger_dungeon_event(event_type: String, data: Dictionary = {}):
 			print("[Dungeon] Unknown event type: ", event_type)
 
 func spawn_boss_enemy():
-	"""Spawn a boss enemy for this dungeon"""
+# Spawn a boss enemy for this dungeon
 	# TODO: Implement boss spawning system
 	pass
 
 func open_treasure_room():
-	"""Open access to treasure room"""
+# Open access to treasure room
 	# TODO: Implement treasure room mechanics
 	pass
 
 func activate_trap(data: Dictionary):
-	"""Activate environmental trap"""
+# Activate environmental trap
 	# TODO: Implement trap system
 	pass
 
 func trigger_hazard(data: Dictionary):
-	"""Trigger environmental hazard"""
+# Trigger environmental hazard
 	# TODO: Implement environmental hazards
 	pass
 
 # Utility methods
 func get_dungeon_progress() -> float:
-	"""Get completion progress as percentage"""
+# Get completion progress as percentage
 	return float(enemies_defeated) / float(total_enemies_to_defeat)
 
 func get_active_enemy_count() -> int:
-	"""Get number of currently active enemies"""
+# Get number of currently active enemies
 	return enemies_spawned.size()
 
 func is_dungeon_completed() -> bool:
-	"""Check if dungeon is completed"""
+# Check if dungeon is completed
 	return is_cleared
 
 # TODO: Future enhancements
@@ -391,7 +391,7 @@ func is_dungeon_completed() -> bool:
 
 # Dungeon transition system
 func create_exit_visual():
-	"""Create visual indicator for dungeon exit"""
+# Create visual indicator for dungeon exit
 	var exit_sprite = Sprite2D.new()
 	exit_sprite.name = "ExitVisual"
 	
@@ -414,14 +414,14 @@ func create_exit_visual():
 		add_exit_glow_effect(exit_sprite)
 
 func add_exit_glow_effect(sprite: Sprite2D):
-	"""Add glowing effect to exit portal"""
+# Add glowing effect to exit portal
 	var tween = create_tween()
 	tween.set_loops()
 	tween.tween_property(sprite, "modulate", Color.WHITE * 1.3, 1.0)
 	tween.tween_property(sprite, "modulate", Color.WHITE * 0.8, 1.0)
 
 func unlock_exit():
-	"""Unlock the dungeon exit"""
+# Unlock the dungeon exit
 	exit_unlocked = true
 	print("[Dungeon] Exit unlocked!")
 	
@@ -431,17 +431,17 @@ func unlock_exit():
 		add_exit_glow_effect(exit_visual)
 	
 	# Show notification
-	EventBus.ui_notification_shown.emit("Exit portal activated!", "success")
+	EventBus.show_notification("Exit portal activated!", "success")
 
 func _on_exit_area_entered(body):
-	"""Handle player entering exit area"""
+# Handle player entering exit area
 	if body.name == "Player" and exit_unlocked:
 		initiate_dungeon_transition()
 	elif body.name == "Player" and not exit_unlocked:
-		EventBus.ui_notification_shown.emit("Exit is locked. Defeat more enemies!", "warning")
+		EventBus.show_notification("Exit is locked. Defeat more enemies!", "warning")
 
 func initiate_dungeon_transition():
-	"""Start transition to next dungeon or world map"""
+# Start transition to next dungeon or world map
 	print("[Dungeon] Initiating dungeon transition...")
 	
 	# Save current game state
@@ -454,7 +454,7 @@ func initiate_dungeon_transition():
 	start_transition_effect(next_destination)
 
 func save_dungeon_progress():
-	"""Save current dungeon progress and player state"""
+# Save current dungeon progress and player state
 	# Update player position for save
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
@@ -475,7 +475,7 @@ func save_dungeon_progress():
 	print("[Dungeon] Game state saved before transition")
 
 func get_next_destination() -> String:
-	"""Determine the next destination after leaving dungeon"""
+# Determine the next destination after leaving dungeon
 	# Check if there's a specified next dungeon
 	if dungeon_data.has("next_dungeon"):
 		var next_dungeon = dungeon_data.next_dungeon
@@ -497,7 +497,7 @@ func get_next_destination() -> String:
 	return "world_map"
 
 func get_dungeon_progression_chain() -> Array:
-	"""Get the dungeon progression chain"""
+# Get the dungeon progression chain
 	# This could be loaded from data files
 	return [
 		"goblin_cave",
@@ -507,7 +507,7 @@ func get_dungeon_progression_chain() -> Array:
 	]
 
 func check_dungeon_requirements(dungeon_id_param: String) -> bool:
-	"""Check if player meets requirements for a dungeon"""
+# Check if player meets requirements for a dungeon
 	var target_dungeon = DataLoader.get_dungeon(dungeon_id_param)
 	if not target_dungeon:
 		return false
@@ -527,7 +527,7 @@ func check_dungeon_requirements(dungeon_id_param: String) -> bool:
 	return true
 
 func start_transition_effect(destination: String):
-	"""Start visual transition effect"""
+# Start visual transition effect
 	print("[Dungeon] Starting transition to: ", destination)
 	
 	# Create fade-out effect
@@ -544,7 +544,7 @@ func start_transition_effect(destination: String):
 	tween.tween_callback(change_to_destination.bind(destination)).set_delay(1.0)
 
 func change_to_destination(destination: String):
-	"""Change to the destination scene"""
+# Change to the destination scene
 	var scene_path = get_scene_path_for_destination(destination)
 	
 	if scene_path != "" and ResourceLoader.exists(scene_path):
@@ -556,7 +556,7 @@ func change_to_destination(destination: String):
 		get_tree().change_scene_to_file("res://scenes/world_map.tscn")
 
 func get_scene_path_for_destination(destination: String) -> String:
-	"""Get scene file path for destination"""
+# Get scene file path for destination
 	var scene_paths = {
 		"world_map": "res://scenes/world_map.tscn",
 		"town": "res://scenes/town.tscn",
@@ -571,7 +571,7 @@ func get_scene_path_for_destination(destination: String) -> String:
 
 # Multi-dungeon navigation
 func create_dungeon_transition_point(transition_data: Dictionary):
-	"""Create a transition point to another dungeon"""
+# Create a transition point to another dungeon
 	var transition_area = Area2D.new()
 	transition_area.name = "DungeonTransition_" + transition_data.get("target", "unknown")
 	
@@ -604,18 +604,18 @@ func create_dungeon_transition_point(transition_data: Dictionary):
 	print("[Dungeon] Created transition point to: ", target_dungeon)
 
 func _on_dungeon_transition_entered(target_dungeon: String, body):
-	"""Handle transition to another dungeon"""
+# Handle transition to another dungeon
 	if body.name == "Player":
 		if check_dungeon_requirements(target_dungeon):
 			# Save progress and transition
 			save_dungeon_progress()
 			start_transition_effect(target_dungeon)
 		else:
-			EventBus.ui_notification_shown.emit("You don't meet the requirements for that area", "warning")
+			EventBus.show_notification("You don't meet the requirements for that area", "warning")
 
 # Dungeon state management
 func save_current_dungeon_state():
-	"""Save current dungeon state for later return"""
+# Save current dungeon state for later return
 	var dungeon_state = {
 		"dungeon_id": dungeon_id,
 		"enemies_defeated": enemies_defeated,
@@ -631,7 +631,7 @@ func save_current_dungeon_state():
 	GameState.player_data.dungeon_states[dungeon_id] = dungeon_state
 
 func load_dungeon_state():
-	"""Load previously saved dungeon state"""
+# Load previously saved dungeon state
 	if not GameState.player_data.has("dungeon_states"):
 		return
 	
@@ -648,7 +648,7 @@ func load_dungeon_state():
 	print("[Dungeon] Restored dungeon state for: ", dungeon_id)
 
 func clear_dungeon_state():
-	"""Clear saved dungeon state (when completed)"""
+# Clear saved dungeon state (when completed)
 	if GameState.player_data.has("dungeon_states"):
 		GameState.player_data.dungeon_states.erase(dungeon_id)
 # - Special event rooms (shops, NPCs, etc.)

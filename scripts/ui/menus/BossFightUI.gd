@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name BossFightUI
 
@@ -58,7 +58,7 @@ func _ready():
 	print("[BossFightUI] Interface de Boss Fight inicializada")
 
 func setup_boss_fight_ui():
-	"""Setup boss fight UI layout"""
+# Setup boss fight UI layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
@@ -69,7 +69,7 @@ func setup_boss_fight_ui():
 	create_warning_overlay()
 
 func create_boss_info_panel():
-	"""Create boss information panel"""
+# Create boss information panel
 	boss_info_panel = Panel.new()
 	boss_info_panel.name = "BossInfoPanel"
 	boss_info_panel.anchor_left = 0.25
@@ -151,7 +151,7 @@ func create_boss_info_panel():
 	create_threat_indicator(info_layout)
 
 func create_boss_health_bar() -> ProgressBar:
-	"""Create boss health bar"""
+# Create boss health bar
 	var health_bar = ProgressBar.new()
 	health_bar.custom_minimum_size = Vector2(0, 25)
 	health_bar.max_value = 100
@@ -186,7 +186,7 @@ func create_boss_health_bar() -> ProgressBar:
 	return health_bar
 
 func create_boss_shield_bar() -> ProgressBar:
-	"""Create boss shield bar"""
+# Create boss shield bar
 	var shield_bar = ProgressBar.new()
 	shield_bar.custom_minimum_size = Vector2(0, 15)
 	shield_bar.max_value = 100
@@ -205,7 +205,7 @@ func create_boss_shield_bar() -> ProgressBar:
 	return shield_bar
 
 func create_threat_indicator(parent: Control):
-	"""Create threat level indicator"""
+# Create threat level indicator
 	boss_threat_indicator = Control.new()
 	boss_threat_indicator.name = "ThreatIndicator"
 	boss_threat_indicator.custom_minimum_size = Vector2(60, 80)
@@ -234,7 +234,7 @@ func create_threat_indicator(parent: Control):
 	boss_threat_indicator.add_child(threat_label)
 
 func create_mechanics_panel():
-	"""Create mechanics tracking panel"""
+# Create mechanics tracking panel
 	mechanics_panel = Panel.new()
 	mechanics_panel.name = "MechanicsPanel"
 	mechanics_panel.anchor_left = 0.02
@@ -275,7 +275,7 @@ func create_mechanics_panel():
 	scroll_container.add_child(mechanics_container)
 
 func create_party_status_panel():
-	"""Create party status panel"""
+# Create party status panel
 	party_status_panel = Panel.new()
 	party_status_panel.name = "PartyStatusPanel"
 	party_status_panel.anchor_left = 0.75
@@ -316,7 +316,7 @@ func create_party_status_panel():
 	party_scroll.add_child(party_members_container)
 
 func create_timer_panel():
-	"""Create timer and information panel"""
+# Create timer and information panel
 	timer_panel = Panel.new()
 	timer_panel.name = "TimerPanel"
 	timer_panel.anchor_left = 0.3
@@ -392,7 +392,7 @@ func create_timer_panel():
 	enrage_container.add_child(enrage_timer)
 
 func create_warning_overlay():
-	"""Create warning overlay for mechanics"""
+# Create warning overlay for mechanics
 	warning_overlay = Control.new()
 	warning_overlay.name = "WarningOverlay"
 	warning_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -411,7 +411,7 @@ func create_warning_overlay():
 
 # Boss encounter management
 func start_boss_encounter(boss_id: String):
-	"""Start boss encounter"""
+# Start boss encounter
 	current_boss_data = load_boss_data(boss_id)
 	if current_boss_data.is_empty():
 		print("[BossFightUI] Failed to load boss data: ", boss_id)
@@ -428,7 +428,7 @@ func start_boss_encounter(boss_id: String):
 	print("[BossFightUI] Boss encounter started: ", boss_id)
 
 func load_boss_data(boss_id: String) -> Dictionary:
-	"""Load boss data from JSON"""
+# Load boss data from JSON
 	var boss_data = DataLoader.load_json_data("res://data/raids/raid_system.json")
 	if not boss_data:
 		return {}
@@ -443,7 +443,7 @@ func load_boss_data(boss_id: String) -> Dictionary:
 	return {}
 
 func setup_boss_display():
-	"""Setup boss information display"""
+# Setup boss information display
 	boss_name_label.text = current_boss_data.get("name", "Unknown Boss")
 	boss_level_label.text = "Lv. " + str(current_boss_data.get("level", 1))
 	phase_indicator.text = "Phase " + str(current_phase)
@@ -453,7 +453,7 @@ func setup_boss_display():
 	update_boss_health_display(100, 100)
 
 func setup_boss_mechanics():
-	"""Setup boss mechanics tracking"""
+# Setup boss mechanics tracking
 	clear_mechanics_display()
 	
 	var mechanics = current_boss_data.get("mechanics", [])
@@ -461,7 +461,7 @@ func setup_boss_mechanics():
 		add_mechanic_tracker(mechanic)
 
 func setup_party_display():
-	"""Setup party member displays"""
+# Setup party member displays
 	clear_party_display()
 	
 	# Get party members
@@ -470,7 +470,7 @@ func setup_party_display():
 		add_party_member_display(member)
 
 func end_boss_encounter(victory: bool):
-	"""End boss encounter"""
+# End boss encounter
 	visible = false
 	clear_all_displays()
 	
@@ -485,7 +485,7 @@ func end_boss_encounter(victory: bool):
 
 # Display update functions
 func update_boss_health(current_hp: float, max_hp: float):
-	"""Update boss health display"""
+# Update boss health display
 	var percentage = (current_hp / max_hp) * 100.0
 	boss_health_bar.value = percentage
 	update_boss_health_display(current_hp, max_hp)
@@ -494,14 +494,14 @@ func update_boss_health(current_hp: float, max_hp: float):
 	check_phase_transition(percentage)
 
 func update_boss_health_display(current_hp: float, max_hp: float):
-	"""Update health bar text"""
+# Update health bar text
 	var health_label = boss_health_bar.get_child(0) as Label
 	if health_label:
 		var percentage = (current_hp / max_hp) * 100.0
 		health_label.text = str(int(percentage)) + "%"
 
 func update_boss_shield(current_shield: float, max_shield: float):
-	"""Update boss shield display"""
+# Update boss shield display
 	if max_shield > 0:
 		boss_shield_bar.visible = true
 		var percentage = (current_shield / max_shield) * 100.0
@@ -510,7 +510,7 @@ func update_boss_shield(current_shield: float, max_shield: float):
 		boss_shield_bar.visible = false
 
 func check_phase_transition(health_percentage: float):
-	"""Check for boss phase transitions"""
+# Check for boss phase transitions
 	var phase_thresholds = current_boss_data.get("phase_thresholds", [75.0, 50.0, 25.0])
 	var new_phase = 1
 	
@@ -522,7 +522,7 @@ func check_phase_transition(health_percentage: float):
 		transition_to_phase(new_phase)
 
 func transition_to_phase(new_phase: int):
-	"""Transition to new boss phase"""
+# Transition to new boss phase
 	current_phase = new_phase
 	phase_indicator.text = "Phase " + str(current_phase)
 	
@@ -535,7 +535,7 @@ func transition_to_phase(new_phase: int):
 	event_bus.emit_signal("boss_phase_changed", current_phase)
 
 func add_mechanic_tracker(mechanic_data: Dictionary):
-	"""Add mechanic tracker to display"""
+# Add mechanic tracker to display
 	var mechanic_id = mechanic_data.get("id", "unknown")
 	
 	if active_mechanics.has(mechanic_id):
@@ -546,7 +546,7 @@ func add_mechanic_tracker(mechanic_data: Dictionary):
 	mechanics_container.add_child(tracker)
 
 func create_mechanic_tracker(mechanic_data: Dictionary) -> Control:
-	"""Create mechanic tracker control"""
+# Create mechanic tracker control
 	var tracker_container = VBoxContainer.new()
 	tracker_container.add_theme_constant_override("separation", 2)
 	
@@ -577,7 +577,7 @@ func create_mechanic_tracker(mechanic_data: Dictionary) -> Control:
 	return tracker_container
 
 func update_mechanic_cooldown(mechanic_id: String, time_remaining: float):
-	"""Update mechanic cooldown"""
+# Update mechanic cooldown
 	if not active_mechanics.has(mechanic_id):
 		return
 	
@@ -593,7 +593,7 @@ func update_mechanic_cooldown(mechanic_id: String, time_remaining: float):
 			cooldown_bar.add_theme_stylebox_override("fill", fill_style)
 
 func trigger_boss_mechanic(mechanic_id: String, mechanic_data: Dictionary):
-	"""Trigger boss mechanic"""
+# Trigger boss mechanic
 	var mechanic_name = mechanic_data.get("name", mechanic_id)
 	var warning_duration = mechanic_data.get("warning_duration", 5.0)
 	
@@ -610,7 +610,7 @@ func trigger_boss_mechanic(mechanic_id: String, mechanic_data: Dictionary):
 			cooldown_bar.add_theme_stylebox_override("fill", fill_style)
 
 func show_mechanic_warning(text: String, duration: float, color: Color):
-	"""Show mechanic warning"""
+# Show mechanic warning
 	var warning = create_warning_display(text, color)
 	active_warnings.append(warning)
 	mechanic_alerts.add_child(warning)
@@ -624,7 +624,7 @@ func show_mechanic_warning(text: String, duration: float, color: Color):
 	timer.start()
 
 func create_warning_display(text: String, color: Color) -> Control:
-	"""Create warning display control"""
+# Create warning display control
 	var warning_panel = Panel.new()
 	warning_panel.custom_minimum_size = Vector2(0, 50)
 	
@@ -649,13 +649,13 @@ func create_warning_display(text: String, color: Color) -> Control:
 	return warning_panel
 
 func remove_warning(warning: Control):
-	"""Remove warning from display"""
+# Remove warning from display
 	if warning in active_warnings:
 		active_warnings.erase(warning)
 	warning.queue_free()
 
 func add_party_member_display(member_data: Dictionary):
-	"""Add party member health display"""
+# Add party member health display
 	var member_id = member_data.get("id", "")
 	if member_id == "":
 		return
@@ -692,7 +692,7 @@ func add_party_member_display(member_data: Dictionary):
 	party_health_bars[member_id] = health_bar
 
 func update_party_member_health(member_id: String, current_hp: float, max_hp: float):
-	"""Update party member health"""
+# Update party member health
 	if not party_health_bars.has(member_id):
 		return
 	
@@ -714,25 +714,25 @@ func update_party_member_health(member_id: String, current_hp: float, max_hp: fl
 	health_bar.add_theme_stylebox_override("fill", fill_style)
 
 func get_party_members() -> Array:
-	"""Get current party members"""
+# Get current party members
 	# TODO: Integrate with party system
 	return []
 
 # Clear functions
 func clear_mechanics_display():
-	"""Clear mechanics display"""
+# Clear mechanics display
 	for tracker in active_mechanics.values():
 		tracker.queue_free()
 	active_mechanics.clear()
 
 func clear_party_display():
-	"""Clear party display"""
+# Clear party display
 	for child in party_members_container.get_children():
 		child.queue_free()
 	party_health_bars.clear()
 
 func clear_all_displays():
-	"""Clear all displays"""
+# Clear all displays
 	clear_mechanics_display()
 	clear_party_display()
 	
@@ -742,7 +742,7 @@ func clear_all_displays():
 
 # Update loop
 func _process(delta):
-	"""Update UI elements"""
+# Update UI elements
 	if not visible:
 		return
 	
@@ -751,14 +751,14 @@ func _process(delta):
 	update_mechanics_timers()
 
 func update_encounter_timer():
-	"""Update encounter timer"""
+# Update encounter timer
 	var elapsed_time = (Time.get_ticks_msec() / 1000.0) - encounter_start_time
 	var minutes = int(elapsed_time) / 60
 	var seconds = int(elapsed_time) % 60
 	encounter_timer.text = "%02d:%02d" % [minutes, seconds]
 
 func update_enrage_timer():
-	"""Update enrage timer"""
+# Update enrage timer
 	var enrage_time = current_boss_data.get("enrage_timer", 600.0)  # 10 minutes default
 	var elapsed_time = (Time.get_ticks_msec() / 1000.0) - encounter_start_time
 	var remaining_time = enrage_time - elapsed_time
@@ -778,13 +778,13 @@ func update_enrage_timer():
 		enrage_timer.add_theme_color_override("font_color", danger_color)
 
 func update_mechanics_timers():
-	"""Update mechanics cooldown timers"""
+# Update mechanics cooldown timers
 	# This would be updated by the combat system
 	pass
 
 # Setup and connections
 func setup_connections():
-	"""Setup signal connections"""
+# Setup signal connections
 	if event_bus:
 		event_bus.connect("boss_encounter_started", start_boss_encounter)
 		event_bus.connect("boss_encounter_ended", end_boss_encounter)
@@ -795,6 +795,6 @@ func setup_connections():
 
 # Input handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if visible and event.is_action_pressed("toggle_boss_ui"):
 		visible = false

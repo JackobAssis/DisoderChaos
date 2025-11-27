@@ -1,4 +1,4 @@
-extends CharacterBody2D
+﻿extends CharacterBody2D
 class_name PlayerController
 # player_controller.gd - Main player controller with movement, combat, and stats
 
@@ -65,7 +65,7 @@ func _ready():
 	load_player_data()
 
 func setup_player():
-	"""Initialize player components"""
+# Initialize player components
 	# Create sprite
 	sprite = Sprite2D.new()
 	add_child(sprite)
@@ -88,7 +88,7 @@ func setup_player():
 	collision_mask = 0b1110  # Collide with enemies, environment, items
 
 func setup_attack_area():
-	"""Setup attack detection area"""
+# Setup attack detection area
 	attack_area = Area2D.new()
 	var attack_collision = CollisionShape2D.new()
 	var attack_shape = CircleShape2D.new()
@@ -103,18 +103,18 @@ func setup_attack_area():
 	attack_area.body_exited.connect(_on_attack_area_exited)
 
 func setup_combat_system():
-	"""Initialize combat system"""
+# Initialize combat system
 	combat_system = CombatSystem.new()
 	add_child(combat_system)
 
 func connect_signals():
-	"""Connect to global event bus"""
+# Connect to global event bus
 	EventBus.player_hp_changed.connect(_on_hp_changed)
 	EventBus.player_mp_changed.connect(_on_mp_changed)
 	EventBus.item_equipped.connect(_on_item_equipped)
 
 func load_player_data():
-	"""Load player data from GameState"""
+# Load player data from GameState
 	player_data = GameState.get_player_data()
 	
 	current_health = player_data.current_hp
@@ -142,7 +142,7 @@ func _physics_process(delta):
 	update_skill_cooldowns(delta)
 
 func handle_input():
-	"""Process player input"""
+# Process player input
 	# Movement input
 	input_vector = Vector2.ZERO
 	
@@ -177,7 +177,7 @@ func handle_input():
 		attempt_interact()
 
 func handle_movement(delta):
-	"""Handle player movement with acceleration and friction"""
+# Handle player movement with acceleration and friction
 	if input_vector != Vector2.ZERO:
 		# Accelerate towards input direction
 		velocity = velocity.move_toward(input_vector * move_speed, acceleration * delta)
@@ -198,14 +198,14 @@ func handle_movement(delta):
 		EventBus.player_moved.emit(global_position)
 
 func handle_combat(delta):
-	"""Handle combat-related updates"""
+# Handle combat-related updates
 	if attack_cooldown > 0:
 		attack_cooldown -= delta
 		if attack_cooldown <= 0:
 			is_attacking = false
 
 func handle_status_effects(delta):
-	"""Process active status effects"""
+# Process active status effects
 	for i in range(status_effects.size() - 1, -1, -1):
 		var effect = status_effects[i]
 		effect.remaining_time -= delta
@@ -218,7 +218,7 @@ func handle_status_effects(delta):
 			remove_status_effect_by_index(i)
 
 func update_skill_cooldowns(delta):
-	"""Update skill cooldown timers"""
+# Update skill cooldown timers
 	var keys_to_remove = []
 	for skill_id in skill_cooldowns:
 		skill_cooldowns[skill_id] -= delta
@@ -229,7 +229,7 @@ func update_skill_cooldowns(delta):
 		skill_cooldowns.erase(key)
 
 func attempt_attack():
-	"""Attempt to perform basic attack"""
+# Attempt to perform basic attack
 	if is_attacking or attack_cooldown > 0:
 		return
 	
@@ -247,7 +247,7 @@ func attempt_attack():
 	perform_attack(closest_target, skill_id)
 
 func perform_attack(target: Node, skill_id: String):
-	"""Perform attack on target"""
+# Perform attack on target
 	is_attacking = true
 	attack_cooldown = 1.0  # Base attack cooldown
 	
@@ -266,7 +266,7 @@ func perform_attack(target: Node, skill_id: String):
 		change_animation_state("idle")
 
 func get_enemies_in_attack_range() -> Array:
-	"""Get all enemies within attack range"""
+# Get all enemies within attack range
 	var enemies = []
 	var bodies = attack_area.get_overlapping_bodies()
 	
@@ -277,7 +277,7 @@ func get_enemies_in_attack_range() -> Array:
 	return enemies
 
 func get_closest_target(targets: Array) -> Node:
-	"""Get the closest target from array"""
+# Get the closest target from array
 	var closest_target = null
 	var closest_distance = INF
 	
@@ -290,7 +290,7 @@ func get_closest_target(targets: Array) -> Node:
 	return closest_target
 
 func use_quick_item():
-	"""Use the currently equipped quick use item"""
+# Use the currently equipped quick use item
 	if quick_use_item.is_empty():
 		return
 	
@@ -300,14 +300,14 @@ func use_quick_item():
 		EventBus.show_notification("Cannot use " + quick_use_item)
 
 func attempt_interact():
-	"""Attempt to interact with nearby objects"""
+# Attempt to interact with nearby objects
 	# TODO: Implement interaction system
 	# Check for interactable objects in range
 	EventBus.show_notification("No interactable objects nearby")
 
 # Combat interface methods (required by CombatSystem)
 func take_damage(amount: int):
-	"""Take damage and update health"""
+# Take damage and update health
 	current_health = max(0, current_health - amount)
 	GameState.update_player_hp(-amount)
 	
@@ -321,7 +321,7 @@ func take_damage(amount: int):
 		die()
 
 func heal(amount: int) -> int:
-	"""Heal player and return actual amount healed"""
+# Heal player and return actual amount healed
 	var old_health = current_health
 	current_health = min(max_health, current_health + amount)
 	var actual_heal = current_health - old_health
@@ -330,7 +330,7 @@ func heal(amount: int) -> int:
 	return actual_heal
 
 func get_stats() -> Dictionary:
-	"""Get player combat stats"""
+# Get player combat stats
 	return {
 		"strength": player_data.attributes.strength,
 		"agility": player_data.attributes.agility,
@@ -347,7 +347,7 @@ func get_stats() -> Dictionary:
 	}
 
 func get_total_armor() -> int:
-	"""Calculate total armor from equipment"""
+# Calculate total armor from equipment
 	var total_armor = 0
 	
 	# Add base armor from equipment
@@ -359,31 +359,31 @@ func get_total_armor() -> int:
 	return total_armor
 
 func get_total_magic_resistance() -> int:
-	"""Calculate total magic resistance"""
+# Calculate total magic resistance
 	var base_resistance = player_data.attributes.willpower / 2
 	# TODO: Add resistance from equipment and buffs
 	return base_resistance
 
 func get_current_mp() -> int:
-	"""Get current mana points"""
+# Get current mana points
 	return current_mana
 
 func consume_mp(amount: int):
-	"""Consume mana points"""
+# Consume mana points
 	current_mana = max(0, current_mana - amount)
 	GameState.update_player_mp(-amount)
 
 func is_skill_on_cooldown(skill_id: String) -> bool:
-	"""Check if skill is on cooldown"""
+# Check if skill is on cooldown
 	return skill_id in skill_cooldowns
 
 func start_skill_cooldown(skill_id: String, cooldown_time: float):
-	"""Start cooldown for a skill"""
+# Start cooldown for a skill
 	skill_cooldowns[skill_id] = cooldown_time
 
 # Status effect methods
 func add_status_effect(effect_data: Dictionary):
-	"""Add a status effect"""
+# Add a status effect
 	# Check if effect already exists
 	for existing_effect in status_effects:
 		if existing_effect.id == effect_data.id:
@@ -397,43 +397,43 @@ func add_status_effect(effect_data: Dictionary):
 	apply_status_effect_start(effect_data)
 
 func remove_status_effect(effect_id: String):
-	"""Remove a status effect by ID"""
+# Remove a status effect by ID
 	for i in range(status_effects.size()):
 		if status_effects[i].id == effect_id:
 			remove_status_effect_by_index(i)
 			break
 
 func remove_status_effect_by_index(index: int):
-	"""Remove status effect by array index"""
+# Remove status effect by array index
 	var effect = status_effects[index]
 	apply_status_effect_end(effect)
 	status_effects.remove_at(index)
 
 func apply_status_effect_start(effect: Dictionary):
-	"""Apply initial status effect"""
+# Apply initial status effect
 	# TODO: Implement specific status effect logic
 	pass
 
 func apply_status_effect_tick(effect: Dictionary):
-	"""Apply per-frame status effect"""
+# Apply per-frame status effect
 	# TODO: Implement DOT/HOT and other recurring effects
 	pass
 
 func apply_status_effect_end(effect: Dictionary):
-	"""Apply status effect removal"""
+# Apply status effect removal
 	# TODO: Implement cleanup for status effects
 	pass
 
 # Player death and respawn
 func die():
-	"""Handle player death"""
+# Handle player death
 	change_animation_state("death")
 	EventBus.player_died.emit()
 	# TODO: Implement death mechanics
 	print("[Player] Player died!")
 
 func respawn():
-	"""Respawn the player"""
+# Respawn the player
 	current_health = max_health
 	current_mana = max_mana
 	GameState.update_player_hp(max_health - current_health)
@@ -443,7 +443,7 @@ func respawn():
 
 # Equipment methods
 func equip_item(item_id: String, slot: String):
-	"""Equip an item to specified slot"""
+# Equip an item to specified slot
 	var item_data = DataLoader.get_item(item_id)
 	if not item_data:
 		return false
@@ -460,12 +460,12 @@ func equip_item(item_id: String, slot: String):
 
 # UI update methods
 func update_health_display():
-	"""Update health bar display"""
+# Update health bar display
 	# TODO: Connect to actual UI elements
 	pass
 
 func update_mana_display():
-	"""Update mana bar display"""
+# Update mana bar display
 	# TODO: Connect to actual UI elements
 	pass
 
@@ -484,25 +484,25 @@ func _on_item_equipped(item_id: String, slot: String):
 	print("[Player] Equipped ", item_id, " to ", slot)
 
 func _on_attack_area_entered(body):
-	"""Handle entity entering attack range"""
+# Handle entity entering attack range
 	pass
 
 func _on_attack_area_exited(body):
-	"""Handle entity leaving attack range"""
+# Handle entity leaving attack range
 	pass
 
 # XP and Level System
 func add_xp(amount: int):
-	"""Add experience points and handle level up"""
+# Add experience points and handle level up
 	current_xp += amount
-	EventBus.ui_notification_shown.emit("+" + str(amount) + " XP", "success")
+	EventBus.show_notification("+" + str(amount) + " XP", "success")
 	
 	# Check for level up
 	while current_xp >= xp_to_next_level:
 		level_up()
 
 func level_up():
-	"""Handle player leveling up"""
+# Handle player leveling up
 	current_xp -= xp_to_next_level
 	level += 1
 	
@@ -534,10 +534,10 @@ func level_up():
 	
 	# Emit level up event
 	EventBus.player_level_up.emit(level, hp_gain, mp_gain)
-	EventBus.ui_notification_shown.emit("LEVEL UP! Level " + str(level), "success")
+	EventBus.show_notification("LEVEL UP! Level " + str(level), "success")
 
 func calculate_derived_attributes():
-	"""Calculate derived stats from base attributes"""
+# Calculate derived stats from base attributes
 	var attrs = player_data.attributes
 	
 	# Attack power based on strength and equipped weapon
@@ -560,7 +560,7 @@ func calculate_derived_attributes():
 	critical_rate = min(0.30, 0.05 + attrs.luck * 0.01)
 
 func setup_animation_system():
-	"""Setup animation tree and state machine"""
+# Setup animation tree and state machine
 	# Create AnimationPlayer
 	var anim_player = AnimationPlayer.new()
 	anim_player.name = "AnimationPlayer"
@@ -581,7 +581,7 @@ func setup_animation_system():
 	current_animation_state = "idle"
 
 func change_animation_state(new_state: String):
-	"""Change current animation state"""
+# Change current animation state
 	if new_state == current_animation_state:
 		return
 	
@@ -591,16 +591,16 @@ func change_animation_state(new_state: String):
 
 # Inventory Management (connects to GameState)
 func add_item_to_inventory(item_id: String, quantity: int = 1):
-	"""Add item to player inventory via GameState"""
+# Add item to player inventory via GameState
 	GameState.add_item_to_inventory(item_id, quantity)
-	EventBus.ui_notification_shown.emit("Received: " + item_id, "info")
+	EventBus.show_notification("Received: " + item_id, "info")
 
 func remove_item_from_inventory(item_id: String, quantity: int = 1) -> bool:
-	"""Remove item from inventory via GameState"""
+# Remove item from inventory via GameState
 	return GameState.remove_item_from_inventory(item_id, quantity)
 
 func has_item_in_inventory(item_id: String, quantity: int = 1) -> bool:
-	"""Check if player has item in inventory"""
+# Check if player has item in inventory
 	var inventory = GameState.player_data.inventory
 	for item in inventory:
 		if item.id == item_id and item.quantity >= quantity:
@@ -608,22 +608,22 @@ func has_item_in_inventory(item_id: String, quantity: int = 1) -> bool:
 	return false
 
 func equip_weapon(item_id: String):
-	"""Equip weapon and update attack power"""
+# Equip weapon and update attack power
 	var item_data = DataLoader.get_item(item_id)
 	if item_data and item_data.type == "weapon":
 		equipped_weapon = item_data
 		calculate_derived_attributes()  # Recalculate attack power
 		EventBus.item_equipped.emit(item_id, "weapon")
-		EventBus.ui_notification_shown.emit("Equipped: " + item_data.name, "info")
+		EventBus.show_notification("Equipped: " + item_data.name, "info")
 
 func equip_armor(item_id: String):
-	"""Equip armor and update defense"""
+# Equip armor and update defense
 	var item_data = DataLoader.get_item(item_id)
 	if item_data and item_data.type == "armor":
 		equipped_armor = item_data
 		calculate_derived_attributes()  # Recalculate defense
 		EventBus.item_equipped.emit(item_id, "armor")
-		EventBus.ui_notification_shown.emit("Equipped: " + item_data.name, "info")
+		EventBus.show_notification("Equipped: " + item_data.name, "info")
 
 # TODO: Future enhancements
 # - Weapon-specific attack animations and effects
@@ -632,21 +632,21 @@ func equip_armor(item_id: String):
 
 # Item usage system
 func use_quick_item():
-	"""Use the currently selected quick item"""
+# Use the currently selected quick item
 	if GameState.player_data.has("quick_item"):
 		var item_id = GameState.player_data.quick_item
 		if item_id and item_id != "":
 			use_item_by_id(item_id)
 
 func use_quick_item_slot(slot: int):
-	"""Use item from specific quick slot"""
+# Use item from specific quick slot
 	if GameState.player_data.has("quick_items"):
 		var quick_items = GameState.player_data.quick_items
 		if slot < quick_items.size() and quick_items[slot]:
 			use_item_by_id(quick_items[slot])
 
 func use_item_by_id(item_id: String, quantity: int = 1) -> bool:
-	"""Use item through the item system"""
+# Use item through the item system
 	var item_system = get_node("/root/ItemSystem")
 	if item_system:
 		return item_system.use_item(self, item_id, quantity)
@@ -655,7 +655,7 @@ func use_item_by_id(item_id: String, quantity: int = 1) -> bool:
 		return false
 
 func use_item_from_inventory(inventory_slot: int) -> bool:
-	"""Use item from specific inventory slot"""
+# Use item from specific inventory slot
 	var inventory = GameState.player_data.inventory
 	if inventory_slot < inventory.size():
 		var item = inventory[inventory_slot]
@@ -663,14 +663,14 @@ func use_item_from_inventory(inventory_slot: int) -> bool:
 	return false
 
 func get_item_cooldown(item_id: String) -> float:
-	"""Get remaining cooldown for an item"""
+# Get remaining cooldown for an item
 	var item_system = get_node("/root/ItemSystem")
 	if item_system:
 		return item_system.get_cooldown_remaining(item_id)
 	return 0.0
 
 func is_item_on_cooldown(item_id: String) -> bool:
-	"""Check if item is on cooldown"""
+# Check if item is on cooldown
 	var item_system = get_node("/root/ItemSystem")
 	if item_system:
 		return item_system.is_item_on_cooldown(item_id)

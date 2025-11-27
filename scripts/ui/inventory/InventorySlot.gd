@@ -1,7 +1,7 @@
-class_name InventorySlot
+﻿class_name InventorySlot
 extends Control
 
-## Slot individual do inventário com suporte a drag & drop
+## Slot individual do inventÃ¡rio com suporte a drag & drop
 
 @onready var background: ColorRect
 @onready var item_icon: TextureRect
@@ -25,26 +25,26 @@ func _ready():
 	setup_slot_ui()
 
 func setup(pos: Vector2i, size: Vector2):
-	"""Configura slot com posição e tamanho"""
+# Configura slot com posiÃ§Ã£o e tamanho
 	position = pos
 	custom_minimum_size = size
 	
 func setup_slot_ui():
-	"""Cria interface do slot"""
+# Cria interface do slot
 	# Background principal
 	background = ColorRect.new()
 	background.color = UIThemeManager.Colors.PRIMARY_DARK
 	background.anchors_preset = Control.PRESET_FULL_RECT
 	add_child(background)
 	
-	# Borda de raridade (inicialmente invisível)
+	# Borda de raridade (inicialmente invisÃ­vel)
 	rarity_border = ColorRect.new()
 	rarity_border.color = Color.TRANSPARENT
 	rarity_border.anchors_preset = Control.PRESET_FULL_RECT
 	rarity_border.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(rarity_border)
 	
-	# Ícone do item
+	# Ãcone do item
 	item_icon = TextureRect.new()
 	item_icon.anchors_preset = Control.PRESET_CENTER
 	item_icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
@@ -70,7 +70,7 @@ func setup_slot_ui():
 	mouse_exited.connect(_on_mouse_exited)
 
 func _on_gui_input(event: InputEvent):
-	"""Gerencia input no slot"""
+# Gerencia input no slot
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.button_index == MOUSE_BUTTON_LEFT:
@@ -89,16 +89,16 @@ func _on_gui_input(event: InputEvent):
 				_start_drag()
 
 func _on_left_click():
-	"""Click esquerdo no slot"""
+# Click esquerdo no slot
 	item_clicked.emit(self)
 
 func _on_right_click():
-	"""Click direito no slot"""
+# Click direito no slot
 	if has_item():
 		item_right_clicked.emit(self)
 
 func _start_drag():
-	"""Inicia drag do item"""
+# Inicia drag do item
 	if not has_item():
 		return
 	
@@ -106,7 +106,7 @@ func _start_drag():
 	drag_started.emit(self)
 
 func _on_drag_end(global_pos: Vector2):
-	"""Termina drag do item"""
+# Termina drag do item
 	if not is_dragging:
 		return
 	
@@ -118,11 +118,11 @@ func _on_drag_end(global_pos: Vector2):
 		drop_attempted.emit(self, target_slot)
 
 func find_slot_at_position(global_pos: Vector2) -> InventorySlot:
-	"""Encontra slot na posição do mouse"""
+# Encontra slot na posiÃ§Ã£o do mouse
 	var viewport = get_viewport()
 	var nodes_at_pos = []
 	
-	# Busca por InventorySlot na posição
+	# Busca por InventorySlot na posiÃ§Ã£o
 	for node in get_tree().get_nodes_in_group("inventory_slots"):
 		if node is InventorySlot:
 			var rect = Rect2(node.global_position, node.size)
@@ -132,7 +132,7 @@ func find_slot_at_position(global_pos: Vector2) -> InventorySlot:
 	return null
 
 func _on_mouse_entered():
-	"""Mouse entra no slot"""
+# Mouse entra no slot
 	if has_item():
 		# Efeito hover
 		var tween = create_tween()
@@ -141,7 +141,7 @@ func _on_mouse_entered():
 		item_hovered.emit(self)
 
 func _on_mouse_exited():
-	"""Mouse sai do slot"""
+# Mouse sai do slot
 	if has_item():
 		# Remove efeito hover
 		var tween = create_tween()
@@ -150,10 +150,10 @@ func _on_mouse_exited():
 		item_unhovered.emit(self)
 
 func set_item(data: Dictionary, texture: Texture2D = null):
-	"""Define item no slot"""
+# Define item no slot
 	item_data = data
 	
-	# Ícone
+	# Ãcone
 	if texture:
 		item_icon.texture = texture
 	elif data.has("icon"):
@@ -185,7 +185,7 @@ func set_item(data: Dictionary, texture: Texture2D = null):
 	add_to_group("inventory_slots")
 
 func clear_item():
-	"""Remove item do slot"""
+# Remove item do slot
 	item_data = {}
 	item_icon.texture = null
 	quantity_label.visible = false
@@ -195,11 +195,11 @@ func clear_item():
 	remove_from_group("inventory_slots")
 
 func has_item() -> bool:
-	"""Verifica se slot tem item"""
+# Verifica se slot tem item
 	return not item_data.is_empty()
 
 func can_stack_with(other_data: Dictionary) -> bool:
-	"""Verifica se pode empilhar com outro item"""
+# Verifica se pode empilhar com outro item
 	if not has_item():
 		return true
 	
@@ -209,15 +209,15 @@ func can_stack_with(other_data: Dictionary) -> bool:
 			get_current_stack_size() < get_max_stack_size())
 
 func get_current_stack_size() -> int:
-	"""Retorna quantidade atual empilhada"""
+# Retorna quantidade atual empilhada
 	return item_data.get("quantity", 1)
 
 func get_max_stack_size() -> int:
-	"""Retorna máximo que pode empilhar"""
+# Retorna mÃ¡ximo que pode empilhar
 	return item_data.get("max_stack", 1)
 
 func add_to_stack(quantity: int) -> int:
-	"""Adiciona quantidade ao stack, retorna sobra"""
+# Adiciona quantidade ao stack, retorna sobra
 	if not item_data.get("stackable", false):
 		return quantity
 	
@@ -238,7 +238,7 @@ func add_to_stack(quantity: int) -> int:
 	return quantity - can_add
 
 func remove_from_stack(quantity: int) -> int:
-	"""Remove quantidade do stack, retorna quanto foi removido"""
+# Remove quantidade do stack, retorna quanto foi removido
 	var current = get_current_stack_size()
 	var to_remove = min(quantity, current)
 	
@@ -256,7 +256,7 @@ func remove_from_stack(quantity: int) -> int:
 	return to_remove
 
 func get_rarity_color(rarity: String) -> Color:
-	"""Retorna cor da raridade"""
+# Retorna cor da raridade
 	match rarity:
 		"legendary": return Color(1.0, 0.5, 0.0)  # Dourado
 		"epic": return Color(0.6, 0.3, 0.9)       # Roxo
@@ -265,32 +265,32 @@ func get_rarity_color(rarity: String) -> Color:
 		_: return Color.WHITE                       # Comum
 
 func highlight_as_valid_drop():
-	"""Destaca slot como destino válido"""
+# Destaca slot como destino vÃ¡lido
 	background.color = UIThemeManager.Colors.SUCCESS_GREEN * 0.3
 
 func highlight_as_invalid_drop():
-	"""Destaca slot como destino inválido"""
+# Destaca slot como destino invÃ¡lido
 	background.color = UIThemeManager.Colors.ERROR_RED * 0.3
 
 func clear_highlight():
-	"""Remove destaque"""
+# Remove destaque
 	background.color = UIThemeManager.Colors.PRIMARY_DARK
 
 func play_pickup_animation():
-	"""Animação ao pegar item"""
+# AnimaÃ§Ã£o ao pegar item
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1)
 	tween.tween_property(self, "scale", Vector2.ONE, 0.1)
 
 func play_drop_animation():
-	"""Animação ao dropar item"""
+# AnimaÃ§Ã£o ao dropar item
 	var tween = create_tween()
 	tween.tween_property(self, "rotation_degrees", 5, 0.1)
 	tween.tween_property(self, "rotation_degrees", -5, 0.1)
 	tween.tween_property(self, "rotation_degrees", 0, 0.1)
 
 func get_item_tooltip_text() -> String:
-	"""Retorna texto para tooltip"""
+# Retorna texto para tooltip
 	if not has_item():
 		return ""
 	

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+﻿extends CharacterBody2D
 class_name BasicEnemy
 # basic_enemy.gd - Basic enemy AI and behavior
 
@@ -49,7 +49,7 @@ func _ready():
 	current_health = max_health
 
 func setup_enemy():
-	"""Initialize enemy components"""
+# Initialize enemy components
 	# Create sprite (placeholder)
 	sprite = Sprite2D.new()
 	add_child(sprite)
@@ -66,7 +66,7 @@ func setup_enemy():
 	collision_mask = 0b1101  # Collide with player, environment, items
 
 func setup_detection():
-	"""Setup player detection area"""
+# Setup player detection area
 	detection_area = Area2D.new()
 	var detection_collision = CollisionShape2D.new()
 	var detection_shape = CircleShape2D.new()
@@ -81,7 +81,7 @@ func setup_detection():
 	detection_area.body_exited.connect(_on_detection_exited)
 
 func setup_attack_area():
-	"""Setup attack area"""
+# Setup attack area
 	attack_area = Area2D.new()
 	var attack_collision = CollisionShape2D.new()
 	var attack_shape = CircleShape2D.new()
@@ -113,7 +113,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func handle_idle_state(delta):
-	"""Handle idle behavior"""
+# Handle idle behavior
 	velocity = velocity.move_toward(Vector2.ZERO, move_speed * delta)
 	
 	# Check for player nearby
@@ -123,7 +123,7 @@ func handle_idle_state(delta):
 		change_state(EnemyState.PATROL)
 
 func handle_patrol_state(delta):
-	"""Handle patrol behavior"""
+# Handle patrol behavior
 	if target:
 		change_state(EnemyState.CHASE)
 		return
@@ -141,7 +141,7 @@ func handle_patrol_state(delta):
 	velocity = direction * move_speed * 0.5  # Slower patrol speed
 
 func handle_chase_state(delta):
-	"""Handle chasing player"""
+# Handle chasing player
 	if not target or not is_instance_valid(target):
 		change_state(EnemyState.IDLE)
 		return
@@ -164,7 +164,7 @@ func handle_chase_state(delta):
 	velocity = direction * move_speed
 
 func handle_attack_state(delta):
-	"""Handle attacking player"""
+# Handle attacking player
 	if not target or not is_instance_valid(target):
 		change_state(EnemyState.IDLE)
 		return
@@ -184,14 +184,14 @@ func handle_attack_state(delta):
 		perform_attack()
 
 func handle_stunned_state(delta):
-	"""Handle stunned state"""
+# Handle stunned state
 	velocity = Vector2.ZERO
 	
 	if state_timer > 1.5:  # Stunned for 1.5 seconds
 		change_state(EnemyState.IDLE)
 
 func change_state(new_state: EnemyState):
-	"""Change enemy state"""
+# Change enemy state
 	current_state = new_state
 	state_timer = 0.0
 	
@@ -205,7 +205,7 @@ func change_state(new_state: EnemyState):
 			velocity = Vector2.ZERO
 
 func perform_attack():
-	"""Perform attack on target"""
+# Perform attack on target
 	if not target:
 		return
 	
@@ -226,7 +226,7 @@ func perform_attack():
 	change_state(EnemyState.STUNNED)
 
 func take_damage(amount: int):
-	"""Take damage from attack"""
+# Take damage from attack
 	current_health -= amount
 	
 	# Show damage number
@@ -245,19 +245,19 @@ func take_damage(amount: int):
 				change_state(EnemyState.CHASE)
 
 func heal(amount: int) -> int:
-	"""Heal the enemy"""
+# Heal the enemy
 	var old_health = current_health
 	current_health = min(max_health, current_health + amount)
 	return current_health - old_health
 
 func flash_damage_effect():
-	"""Visual effect when taking damage"""
+# Visual effect when taking damage
 	# TODO: Implement damage flash effect
 	# Could change sprite color briefly or play animation
 	pass
 
 func die():
-	"""Handle enemy death"""
+# Handle enemy death
 	current_state = EnemyState.DEAD
 	
 	# Generate loot
@@ -274,7 +274,7 @@ func die():
 	queue_free()
 
 func generate_loot() -> Array:
-	"""Generate loot drops based on enemy type"""
+# Generate loot drops based on enemy type
 	var loot = []
 	
 	# Basic loot table
@@ -291,7 +291,7 @@ func generate_loot() -> Array:
 	return loot
 
 func find_player_target():
-	"""Find the player as target"""
+# Find the player as target
 	var bodies = detection_area.get_overlapping_bodies()
 	for body in bodies:
 		if body.has_method("get_player_data") or body.name == "Player":
@@ -300,7 +300,7 @@ func find_player_target():
 			break
 
 func scale_stats(scale_factor: float):
-	"""Scale enemy stats by factor (for difficulty scaling)"""
+# Scale enemy stats by factor (for difficulty scaling)
 	max_health = int(max_health * scale_factor)
 	current_health = max_health
 	damage = int(damage * scale_factor)
@@ -308,7 +308,7 @@ func scale_stats(scale_factor: float):
 
 # Combat system integration methods
 func get_stats() -> Dictionary:
-	"""Get enemy combat stats"""
+# Get enemy combat stats
 	return {
 		"strength": damage,
 		"agility": int(move_speed / 10),
@@ -324,7 +324,7 @@ func get_stats() -> Dictionary:
 var status_effects = []
 
 func add_status_effect(effect_data: Dictionary):
-	"""Add status effect to enemy"""
+# Add status effect to enemy
 	status_effects.append(effect_data)
 	
 	# Apply immediate effects
@@ -338,7 +338,7 @@ func add_status_effect(effect_data: Dictionary):
 			pass
 
 func remove_status_effect(effect_id: String):
-	"""Remove status effect from enemy"""
+# Remove status effect from enemy
 	for i in range(status_effects.size() - 1, -1, -1):
 		if status_effects[i].id == effect_id:
 			var effect = status_effects[i]
@@ -353,29 +353,29 @@ func remove_status_effect(effect_id: String):
 
 # Signal handlers
 func _on_detection_entered(body):
-	"""Handle body entering detection area"""
+# Handle body entering detection area
 	if body.has_method("get_player_data") or body.name == "Player":
 		target = body
 		if current_state == EnemyState.IDLE or current_state == EnemyState.PATROL:
 			change_state(EnemyState.CHASE)
 
 func _on_detection_exited(body):
-	"""Handle body leaving detection area"""
+# Handle body leaving detection area
 	if body == target:
 		# Don't immediately lose target, give some time
 		last_player_position = body.global_position
 
 # Utility methods
 func get_display_name() -> String:
-	"""Get display name for UI"""
+# Get display name for UI
 	return name.replace("_", " ").capitalize()
 
 func is_alive() -> bool:
-	"""Check if enemy is alive"""
+# Check if enemy is alive
 	return current_state != EnemyState.DEAD
 
 func get_health_percentage() -> float:
-	"""Get health as percentage"""
+# Get health as percentage
 	return float(current_health) / float(max_health)
 
 # TODO: Future enhancements

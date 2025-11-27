@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name CraftingUI
 
@@ -60,7 +60,7 @@ func _ready():
 	print("[CraftingUI] Interface de Crafting inicializada")
 
 func setup_crafting_ui():
-	"""Setup crafting UI layout"""
+# Setup crafting UI layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -75,7 +75,7 @@ func setup_crafting_ui():
 	load_recipes()
 
 func create_main_layout():
-	"""Create main layout structure"""
+# Create main layout structure
 	main_container = HSplitContainer.new()
 	main_container.name = "MainContainer"
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -83,7 +83,7 @@ func create_main_layout():
 	add_child(main_container)
 
 func create_recipe_browser():
-	"""Create recipe browser panel"""
+# Create recipe browser panel
 	recipe_panel = Panel.new()
 	recipe_panel.name = "RecipePanel"
 	
@@ -110,7 +110,7 @@ func create_recipe_browser():
 	create_recipe_categories(recipe_layout)
 
 func create_recipe_header(parent: Control):
-	"""Create recipe browser header"""
+# Create recipe browser header
 	var header = VBoxContainer.new()
 	header.name = "RecipeHeader"
 	header.custom_minimum_size = Vector2(0, 80)
@@ -149,7 +149,7 @@ func create_recipe_header(parent: Control):
 	filter_container.add_child(recipe_filter)
 
 func create_recipe_categories(parent: Control):
-	"""Create recipe categories and list"""
+# Create recipe categories and list
 	recipe_categories = TabContainer.new()
 	recipe_categories.name = "RecipeCategories"
 	recipe_categories.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -168,7 +168,7 @@ func create_recipe_categories(parent: Control):
 	scroll.add_child(recipe_list)
 
 func create_crafting_interface():
-	"""Create crafting interface panel"""
+# Create crafting interface panel
 	crafting_panel = Panel.new()
 	crafting_panel.name = "CraftingPanel"
 	
@@ -201,7 +201,7 @@ func create_crafting_interface():
 	create_queue_display(crafting_layout)
 
 func create_station_info(parent: Control):
-	"""Create crafting station info"""
+# Create crafting station info
 	var station_container = VBoxContainer.new()
 	station_container.name = "StationInfo"
 	station_container.custom_minimum_size = Vector2(0, 60)
@@ -222,7 +222,7 @@ func create_station_info(parent: Control):
 	station_container.add_child(station_bonus_label)
 
 func create_recipe_details(parent: Control):
-	"""Create recipe details display"""
+# Create recipe details display
 	var details_scroll = ScrollContainer.new()
 	details_scroll.name = "RecipeDetails"
 	details_scroll.custom_minimum_size = Vector2(0, 250)
@@ -273,7 +273,7 @@ func create_recipe_details(parent: Control):
 	details_container.add_child(materials_container)
 
 func create_crafting_controls(parent: Control):
-	"""Create crafting control buttons"""
+# Create crafting control buttons
 	var controls_container = HBoxContainer.new()
 	controls_container.name = "CraftingControls"
 	controls_container.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -298,7 +298,7 @@ func create_crafting_controls(parent: Control):
 	controls_container.add_child(craft_all_button)
 
 func create_queue_display(parent: Control):
-	"""Create crafting queue display"""
+# Create crafting queue display
 	var queue_header = Label.new()
 	queue_header.text = "Crafting Queue:"
 	queue_header.add_theme_color_override("font_color", neon_green)
@@ -326,13 +326,13 @@ func create_queue_display(parent: Control):
 	queue_scroll.add_child(queue_container)
 
 func create_material_display():
-	"""Create player materials display"""
+# Create player materials display
 	# This will be integrated into the main layout later
 	pass
 
 # Data loading and management
 func load_recipes():
-	"""Load crafting recipes from JSON"""
+# Load crafting recipes from JSON
 	var recipe_data = DataLoader.load_json_data("res://data/crafting/recipes.json")
 	if not recipe_data:
 		print("[CraftingUI] Failed to load recipes")
@@ -341,7 +341,7 @@ func load_recipes():
 	populate_recipe_list(recipe_data)
 
 func populate_recipe_list(recipe_data: Dictionary):
-	"""Populate recipe list with loaded data"""
+# Populate recipe list with loaded data
 	recipe_list.clear()
 	
 	for category in recipe_data:
@@ -362,7 +362,7 @@ func populate_recipe_list(recipe_data: Dictionary):
 				})
 
 func get_rarity_color_code(rarity: String) -> String:
-	"""Get color code for rarity"""
+# Get color code for rarity
 	match rarity:
 		"common": return "[color=white]"
 		"uncommon": return "[color=lime]"
@@ -374,7 +374,7 @@ func get_rarity_color_code(rarity: String) -> String:
 
 # Event handlers
 func _on_recipe_selected(index: int):
-	"""Handle recipe selection"""
+# Handle recipe selection
 	if index < 0:
 		return
 	
@@ -385,7 +385,7 @@ func _on_recipe_selected(index: int):
 		update_craft_buttons()
 
 func update_recipe_details(recipe: Dictionary):
-	"""Update recipe details display"""
+# Update recipe details display
 	recipe_name_label.text = recipe.get("name", "Unknown Recipe")
 	recipe_description_label.text = recipe.get("description", "No description available")
 	
@@ -403,7 +403,7 @@ func update_recipe_details(recipe: Dictionary):
 		materials_container.add_child(material_item)
 
 func create_material_item(material_id: String, required: int, available: int) -> Control:
-	"""Create material requirement item"""
+# Create material requirement item
 	var item_container = HBoxContainer.new()
 	item_container.add_theme_constant_override("separation", 10)
 	
@@ -429,18 +429,18 @@ func create_material_item(material_id: String, required: int, available: int) ->
 	return item_container
 
 func get_player_material_count(material_id: String) -> int:
-	"""Get amount of material player has"""
+# Get amount of material player has
 	# TODO: Integrate with inventory system
 	return 0
 
 func update_craft_buttons():
-	"""Update craft button states"""
+# Update craft button states
 	var can_craft = can_craft_recipe(selected_recipe)
 	craft_button.disabled = not can_craft
 	craft_all_button.disabled = not can_craft
 
 func can_craft_recipe(recipe: Dictionary) -> bool:
-	"""Check if recipe can be crafted"""
+# Check if recipe can be crafted
 	if recipe.is_empty():
 		return false
 	
@@ -464,23 +464,23 @@ func can_craft_recipe(recipe: Dictionary) -> bool:
 	return true
 
 func get_player_skill_level(skill_name: String) -> int:
-	"""Get player skill level"""
+# Get player skill level
 	# TODO: Integrate with player progression system
 	return 1
 
 func _on_craft_button_pressed():
-	"""Handle craft button press"""
+# Handle craft button press
 	if can_craft_recipe(selected_recipe):
 		add_to_craft_queue(selected_recipe, 1)
 
 func _on_craft_all_button_pressed():
-	"""Handle craft all button press"""
+# Handle craft all button press
 	if can_craft_recipe(selected_recipe):
 		var max_possible = calculate_max_craftable(selected_recipe)
 		add_to_craft_queue(selected_recipe, max_possible)
 
 func calculate_max_craftable(recipe: Dictionary) -> int:
-	"""Calculate maximum number of items that can be crafted"""
+# Calculate maximum number of items that can be crafted
 	var materials = recipe.get("materials", {})
 	var max_craft = 999999
 	
@@ -492,7 +492,7 @@ func calculate_max_craftable(recipe: Dictionary) -> int:
 	return max_craft
 
 func add_to_craft_queue(recipe: Dictionary, quantity: int):
-	"""Add recipe to crafting queue"""
+# Add recipe to crafting queue
 	var queue_item = {
 		"recipe": recipe,
 		"quantity": quantity,
@@ -506,7 +506,7 @@ func add_to_craft_queue(recipe: Dictionary, quantity: int):
 		start_next_craft()
 
 func update_queue_display():
-	"""Update crafting queue display"""
+# Update crafting queue display
 	# Clear existing queue items
 	for child in queue_container.get_children():
 		child.queue_free()
@@ -517,7 +517,7 @@ func update_queue_display():
 		queue_container.add_child(item_display)
 
 func create_queue_item_display(queue_item: Dictionary, index: int) -> Control:
-	"""Create queue item display"""
+# Create queue item display
 	var item_container = HBoxContainer.new()
 	item_container.add_theme_constant_override("separation", 10)
 	
@@ -536,7 +536,7 @@ func create_queue_item_display(queue_item: Dictionary, index: int) -> Control:
 	return item_container
 
 func start_next_craft():
-	"""Start crafting next item in queue"""
+# Start crafting next item in queue
 	if crafting_queue_data.is_empty() or is_crafting:
 		return
 	
@@ -550,7 +550,7 @@ func start_next_craft():
 	progress_bar.max_value = 100
 
 func _process(delta):
-	"""Update crafting progress"""
+# Update crafting progress
 	if is_crafting and not crafting_queue_data.is_empty():
 		craft_progress += delta
 		var current_item = crafting_queue_data[0]
@@ -563,7 +563,7 @@ func _process(delta):
 			complete_current_craft()
 
 func complete_current_craft():
-	"""Complete current crafting operation"""
+# Complete current crafting operation
 	if crafting_queue_data.is_empty():
 		return
 	
@@ -598,61 +598,61 @@ func complete_current_craft():
 		craft_progress = 0.0
 
 func create_crafted_item(recipe: Dictionary):
-	"""Create the crafted item and add to inventory"""
+# Create the crafted item and add to inventory
 	var result = recipe.get("result", {})
 	var item_id = result.get("item_id", "")
 	var quantity = result.get("quantity", 1)
 	
 	if item_id != "":
 		# TODO: Add to player inventory
-		event_bus.emit_signal("ui_notification_shown", "Crafted: " + recipe.get("name", item_id), "success")
+		EventBus.show_notification("Crafted: " + recipe.get("name", item_id), "success")
 
 func consume_materials(materials: Dictionary):
-	"""Remove materials from player inventory"""
+# Remove materials from player inventory
 	for material_id in materials:
 		var amount = materials[material_id]
 		# TODO: Remove from inventory system
 		print("[CraftingUI] Consumed ", amount, " x ", material_id)
 
 func award_crafting_experience(skill: String, amount: int):
-	"""Award crafting experience to player"""
+# Award crafting experience to player
 	if skill != "":
 		# TODO: Integrate with progression system
-		event_bus.emit_signal("ui_notification_shown", "+" + str(amount) + " " + skill + " XP", "xp")
+		EventBus.show_notification("+" + str(amount) + " " + skill + " XP", "xp")
 
 # Filter and search functions
 func _on_recipe_search_changed(text: String):
-	"""Handle recipe search"""
+# Handle recipe search
 	filter_recipes()
 
 func _on_recipe_filter_changed(index: int):
-	"""Handle recipe filter change"""
+# Handle recipe filter change
 	filter_recipes()
 
 func filter_recipes():
-	"""Filter recipes based on search and category"""
+# Filter recipes based on search and category
 	# TODO: Implement filtering logic
 	pass
 
 func _on_remove_queue_item(index: int):
-	"""Remove item from crafting queue"""
+# Remove item from crafting queue
 	if index >= 0 and index < crafting_queue_data.size():
 		crafting_queue_data.remove_at(index)
 		update_queue_display()
 
 # Setup and connections
 func setup_connections():
-	"""Setup signal connections"""
+# Setup signal connections
 	if event_bus:
 		event_bus.connect("crafting_station_changed", _on_station_changed)
 
 func _on_station_changed(station_id: String):
-	"""Handle crafting station change"""
+# Handle crafting station change
 	current_station = station_id
 	update_station_display()
 
 func update_station_display():
-	"""Update station display"""
+# Update station display
 	if current_station == "":
 		station_label.text = "No Station Selected"
 		station_bonus_label.text = ""
@@ -662,7 +662,7 @@ func update_station_display():
 
 # Style functions
 func apply_line_edit_style(line_edit: LineEdit):
-	"""Apply dark theme style to line edit"""
+# Apply dark theme style to line edit
 	var style = StyleBoxFlat.new()
 	style.bg_color = darker_bg
 	style.border_color = neon_green
@@ -674,7 +674,7 @@ func apply_line_edit_style(line_edit: LineEdit):
 	line_edit.add_theme_color_override("font_color", Color.WHITE)
 
 func apply_option_button_style(option_button: OptionButton):
-	"""Apply dark theme style to option button"""
+# Apply dark theme style to option button
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -686,7 +686,7 @@ func apply_option_button_style(option_button: OptionButton):
 	option_button.add_theme_color_override("font_color", Color.WHITE)
 
 func apply_button_style(button: Button):
-	"""Apply dark theme style to button"""
+# Apply dark theme style to button
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -703,14 +703,14 @@ func apply_button_style(button: Button):
 	button.add_theme_color_override("font_color", Color.WHITE)
 
 func apply_item_list_style(item_list: ItemList):
-	"""Apply dark theme style to item list"""
+# Apply dark theme style to item list
 	var style = StyleBoxFlat.new()
 	style.bg_color = bg_color
 	item_list.add_theme_stylebox_override("bg", style)
 	item_list.add_theme_color_override("font_color", Color.WHITE)
 
 func apply_progress_bar_style(progress_bar: ProgressBar):
-	"""Apply style to progress bar"""
+# Apply style to progress bar
 	var bg_style = StyleBoxFlat.new()
 	bg_style.bg_color = darker_bg
 	progress_bar.add_theme_stylebox_override("background", bg_style)
@@ -721,16 +721,16 @@ func apply_progress_bar_style(progress_bar: ProgressBar):
 
 # Input handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if visible and event.is_action_pressed("ui_cancel"):
 		if ui_manager:
 			ui_manager.close_crafting()
 
 func show():
-	"""Show crafting UI"""
+# Show crafting UI
 	super.show()
 	load_recipes()
 
 func hide():
-	"""Hide crafting UI"""
+# Hide crafting UI
 	super.hide()

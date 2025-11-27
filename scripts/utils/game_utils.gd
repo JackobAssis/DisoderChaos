@@ -1,16 +1,16 @@
-extends Node
+﻿extends Node
 class_name GameUtils
 # game_utils.gd - General utility functions for game development
 
 # String formatting utilities
 static func format_time(seconds: float) -> String:
-	"""Format seconds into MM:SS format"""
+# Format seconds into MM:SS format
 	var minutes = int(seconds) / 60
 	var remaining_seconds = int(seconds) % 60
 	return "%02d:%02d" % [minutes, remaining_seconds]
 
 static func format_large_number(number: int) -> String:
-	"""Format large numbers with K, M, B suffixes"""
+# Format large numbers with K, M, B suffixes
 	if number >= 1000000000:
 		return "%.1fB" % (number / 1000000000.0)
 	elif number >= 1000000:
@@ -21,7 +21,7 @@ static func format_large_number(number: int) -> String:
 		return str(number)
 
 static func capitalize_words(text: String) -> String:
-	"""Capitalize first letter of each word"""
+# Capitalize first letter of each word
 	var words = text.split(" ")
 	var capitalized_words = []
 	
@@ -33,7 +33,7 @@ static func capitalize_words(text: String) -> String:
 
 # Color utilities
 static func get_rarity_color(rarity: String) -> Color:
-	"""Get color associated with item rarity"""
+# Get color associated with item rarity
 	match rarity.to_lower():
 		"common":
 			return Color.WHITE
@@ -51,7 +51,7 @@ static func get_rarity_color(rarity: String) -> Color:
 			return Color.GRAY
 
 static func get_damage_type_color(damage_type: String) -> Color:
-	"""Get color for damage type"""
+# Get color for damage type
 	match damage_type.to_lower():
 		"physical":
 			return Color.ORANGE
@@ -72,7 +72,7 @@ static func get_damage_type_color(damage_type: String) -> Color:
 
 # Save/Load utilities
 static func save_json_file(data: Dictionary, file_path: String) -> bool:
-	"""Save dictionary to JSON file"""
+# Save dictionary to JSON file
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if not file:
 		push_error("Failed to open file for writing: " + file_path)
@@ -83,7 +83,7 @@ static func save_json_file(data: Dictionary, file_path: String) -> bool:
 	return true
 
 static func load_json_file(file_path: String) -> Dictionary:
-	"""Load dictionary from JSON file"""
+# Load dictionary from JSON file
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
 		push_warning("File not found: " + file_path)
@@ -103,14 +103,14 @@ static func load_json_file(file_path: String) -> Dictionary:
 
 # Node utilities
 static func find_child_by_class(parent: Node, class_name: String) -> Node:
-	"""Find first child node of specific class"""
+# Find first child node of specific class
 	for child in parent.get_children():
 		if child.get_script() and child.get_script().get_global_name() == class_name:
 			return child
 	return null
 
 static func find_all_children_by_class(parent: Node, class_name: String) -> Array:
-	"""Find all child nodes of specific class"""
+# Find all child nodes of specific class
 	var found_nodes = []
 	for child in parent.get_children():
 		if child.get_script() and child.get_script().get_global_name() == class_name:
@@ -118,7 +118,7 @@ static func find_all_children_by_class(parent: Node, class_name: String) -> Arra
 	return found_nodes
 
 static func safe_connect(signal_source: Object, signal_name: String, callable_target: Callable) -> bool:
-	"""Safely connect signal with error checking"""
+# Safely connect signal with error checking
 	if not signal_source.has_signal(signal_name):
 		push_warning("Signal not found: " + signal_name)
 		return false
@@ -132,7 +132,7 @@ static func safe_connect(signal_source: Object, signal_name: String, callable_ta
 
 # Array utilities
 static func shuffle_array(array: Array) -> Array:
-	"""Shuffle array and return new shuffled copy"""
+# Shuffle array and return new shuffled copy
 	var shuffled = array.duplicate()
 	for i in range(shuffled.size() - 1, 0, -1):
 		var j = randi_range(0, i)
@@ -142,13 +142,13 @@ static func shuffle_array(array: Array) -> Array:
 	return shuffled
 
 static func get_random_element(array: Array):
-	"""Get random element from array"""
+# Get random element from array
 	if array.is_empty():
 		return null
 	return array[randi() % array.size()]
 
 static func remove_duplicates(array: Array) -> Array:
-	"""Remove duplicate elements from array"""
+# Remove duplicate elements from array
 	var unique_array = []
 	for element in array:
 		if element not in unique_array:
@@ -157,13 +157,13 @@ static func remove_duplicates(array: Array) -> Array:
 
 # Validation utilities
 static func is_valid_email(email: String) -> bool:
-	"""Basic email validation"""
+# Basic email validation
 	var regex = RegEx.new()
 	regex.compile("^[\\w\\.-]+@[\\w\\.-]+\\.[a-zA-Z]{2,}$")
 	return regex.search(email) != null
 
 static func is_valid_name(name: String) -> bool:
-	"""Validate character/player name"""
+# Validate character/player name
 	if name.length() < 3 or name.length() > 20:
 		return false
 	
@@ -172,14 +172,14 @@ static func is_valid_name(name: String) -> bool:
 	return regex.search(name) != null
 
 static func sanitize_string(text: String) -> String:
-	"""Remove potentially harmful characters from string"""
+# Remove potentially harmful characters from string
 	var regex = RegEx.new()
 	regex.compile("[^a-zA-Z0-9 _-]")
 	return regex.sub(text, "", true)
 
 # Scene management utilities
 static func change_scene_safe(scene_path: String) -> bool:
-	"""Safely change scene with error handling"""
+# Safely change scene with error handling
 	if not ResourceLoader.exists(scene_path):
 		push_error("Scene not found: " + scene_path)
 		return false
@@ -193,7 +193,7 @@ static func change_scene_safe(scene_path: String) -> bool:
 	return true
 
 static func preload_scene(scene_path: String) -> PackedScene:
-	"""Preload scene with error handling"""
+# Preload scene with error handling
 	if not ResourceLoader.exists(scene_path):
 		push_error("Scene not found: " + scene_path)
 		return null
@@ -202,7 +202,7 @@ static func preload_scene(scene_path: String) -> PackedScene:
 
 # Debug utilities
 static func print_node_tree(node: Node, indent: int = 0):
-	"""Print node hierarchy for debugging"""
+# Print node hierarchy for debugging
 	var indent_str = ""
 	for i in indent:
 		indent_str += "  "
@@ -213,14 +213,14 @@ static func print_node_tree(node: Node, indent: int = 0):
 		print_node_tree(child, indent + 1)
 
 static func log_performance(function_name: String, start_time: int):
-	"""Log function performance time"""
+# Log function performance time
 	var end_time = Time.get_ticks_msec()
 	var duration = end_time - start_time
 	print("[PERF] " + function_name + " took " + str(duration) + "ms")
 
 # Input utilities
 static func get_input_vector() -> Vector2:
-	"""Get normalized movement input vector"""
+# Get normalized movement input vector
 	var input_vector = Vector2.ZERO
 	
 	if Input.is_action_pressed("move_up"):
@@ -235,7 +235,7 @@ static func get_input_vector() -> Vector2:
 	return input_vector.normalized()
 
 static func is_any_action_pressed(actions: Array) -> bool:
-	"""Check if any of the specified actions are pressed"""
+# Check if any of the specified actions are pressed
 	for action in actions:
 		if Input.is_action_pressed(action):
 			return true
@@ -243,20 +243,20 @@ static func is_any_action_pressed(actions: Array) -> bool:
 
 # Screen and viewport utilities
 static func get_viewport_size() -> Vector2:
-	"""Get current viewport size"""
+# Get current viewport size
 	return get_viewport().get_visible_rect().size
 
 static func screen_to_world(screen_pos: Vector2, camera: Camera2D) -> Vector2:
-	"""Convert screen position to world position"""
+# Convert screen position to world position
 	return camera.get_global_mouse_position()
 
 static func world_to_screen(world_pos: Vector2, camera: Camera2D) -> Vector2:
-	"""Convert world position to screen position"""
+# Convert world position to screen position
 	return camera.to_screen_coordinates(world_pos)
 
 # Audio utilities
 static func play_sound_2d(sound_path: String, position: Vector2, volume: float = 0.0):
-	"""Play 2D positioned sound effect"""
+# Play 2D positioned sound effect
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = load(sound_path)
 	audio_player.global_position = position

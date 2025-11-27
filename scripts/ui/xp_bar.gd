@@ -1,4 +1,4 @@
-extends ProgressBar
+﻿extends ProgressBar
 class_name XPBar
 # xp_bar.gd - Experience bar with advanced features
 
@@ -30,7 +30,7 @@ func _ready():
 	update_display()
 
 func setup_xp_bar():
-	"""Initialize XP bar properties"""
+# Initialize XP bar properties
 	show_percentage = false
 	step = 1
 	
@@ -65,7 +65,7 @@ func setup_xp_bar():
 	add_theme_stylebox_override("background", bg_style)
 
 func create_labels():
-	"""Create text labels for the XP bar"""
+# Create text labels for the XP bar
 	# XP amount label
 	xp_label = Label.new()
 	xp_label.name = "XPLabel"
@@ -96,7 +96,7 @@ func create_labels():
 	add_child(level_label)
 
 func connect_signals():
-	"""Connect to game events"""
+# Connect to game events
 	EventBus.player_xp_gained.connect(_on_xp_gained)
 	EventBus.player_level_up.connect(_on_level_up)
 	
@@ -106,7 +106,7 @@ func connect_signals():
 	GameState.player_data_changed.connect(_on_player_data_changed)
 
 func update_display():
-	"""Update XP bar display with current player data"""
+# Update XP bar display with current player data
 	if not GameState.player_data:
 		return
 	
@@ -136,7 +136,7 @@ func update_display():
 		current_display_value = target_value
 
 func update_xp_label(current_xp: int, max_xp: int):
-	"""Update XP text display"""
+# Update XP text display
 	if xp_label:
 		var percentage = 0
 		if max_xp > 0:
@@ -145,12 +145,12 @@ func update_xp_label(current_xp: int, max_xp: int):
 		xp_label.text = str(current_xp) + " / " + str(max_xp) + " (" + str(percentage) + "%)"
 
 func update_level_label(level: int):
-	"""Update level display"""
+# Update level display
 	if level_label:
 		level_label.text = "Level " + str(level)
 
 func start_value_animation():
-	"""Start smooth animation to target value"""
+# Start smooth animation to target value
 	if is_animating:
 		return
 	
@@ -158,7 +158,7 @@ func start_value_animation():
 	current_display_value = value
 
 func _process(delta):
-	"""Handle smooth value animation"""
+# Handle smooth value animation
 	if is_animating:
 		# Animate towards target value
 		var difference = target_value - current_display_value
@@ -181,18 +181,18 @@ func _process(delta):
 		update_level_up_effect(delta)
 
 func update_glow_effect(delta):
-	"""Update glow visual effect"""
+# Update glow visual effect
 	var time = Time.get_time_dict_from_system()
 	var glow_intensity = (sin(time.second * 3.0) + 1.0) * 0.5
 	modulate = Color.WHITE.lerp(Color.YELLOW, glow_intensity * 0.3)
 
 func update_level_up_effect(delta):
-	"""Update level up visual effect"""
+# Update level up visual effect
 	# This effect is handled by the pulse animation
 	pass
 
 func gain_experience(amount: int):
-	"""Add experience with visual feedback"""
+# Add experience with visual feedback
 	var old_level = GameState.player_data.get("level", 1)
 	var old_xp = GameState.player_data.get("experience", 0)
 	
@@ -213,7 +213,7 @@ func gain_experience(amount: int):
 	update_display()
 
 func start_xp_gain_effect(amount: int):
-	"""Start visual effect for XP gain"""
+# Start visual effect for XP gain
 	glow_effect = true
 	
 	# Create floating text effect
@@ -228,7 +228,7 @@ func start_xp_gain_effect(amount: int):
 	timer.start()
 
 func handle_level_up(new_level: int):
-	"""Handle level up with special effects"""
+# Handle level up with special effects
 	level_up_effect = true
 	
 	# Change bar color temporarily
@@ -252,7 +252,7 @@ func handle_level_up(new_level: int):
 	timer.start()
 
 func start_level_up_pulse():
-	"""Start pulsing animation for level up"""
+# Start pulsing animation for level up
 	if pulse_animation:
 		pulse_animation.kill()
 	
@@ -264,18 +264,18 @@ func start_level_up_pulse():
 	pulse_animation.tween_property(self, "scale", Vector2(1.0, 1.0), 0.3)
 
 func change_bar_color(color: Color):
-	"""Change the fill color of the progress bar"""
+# Change the fill color of the progress bar
 	var style_box = get_theme_stylebox("fill").duplicate() as StyleBoxFlat
 	style_box.bg_color = color
 	add_theme_stylebox_override("fill", style_box)
 
 func stop_glow_effect():
-	"""Stop glow visual effect"""
+# Stop glow visual effect
 	glow_effect = false
 	modulate = Color.WHITE
 
 func reset_level_up_effects():
-	"""Reset all level up effects"""
+# Reset all level up effects
 	level_up_effect = false
 	
 	# Stop pulse animation
@@ -287,7 +287,7 @@ func reset_level_up_effects():
 	change_bar_color(normal_color)
 
 func create_floating_text(text: String, color: Color):
-	"""Create floating text animation"""
+# Create floating text animation
 	var floating_label = Label.new()
 	floating_label.text = text
 	floating_label.add_theme_color_override("font_color", color)
@@ -314,20 +314,20 @@ func create_floating_text(text: String, color: Color):
 
 # Signal handlers
 func _on_xp_gained(amount: int):
-	"""Handle XP gain event"""
+# Handle XP gain event
 	gain_experience(0)  # The XP has already been added to GameState
 	start_xp_gain_effect(amount)
 
 func _on_level_up(new_level: int):
-	"""Handle level up event"""
+# Handle level up event
 	handle_level_up(new_level)
 
 func _on_player_data_changed():
-	"""Handle player data changes"""
+# Handle player data changes
 	update_display()
 
 func set_xp_directly(current_xp: int, max_xp: int):
-	"""Set XP values directly (for testing or loading)"""
+# Set XP values directly (for testing or loading)
 	max_value = max_xp
 	value = current_xp
 	target_value = current_xp
@@ -337,18 +337,18 @@ func set_xp_directly(current_xp: int, max_xp: int):
 
 # Utility functions
 func get_xp_percentage() -> float:
-	"""Get current XP as percentage of level progress"""
+# Get current XP as percentage of level progress
 	if max_value <= 0:
 		return 0.0
 	return (value / max_value) * 100.0
 
 func is_at_max_level() -> bool:
-	"""Check if player is at maximum level"""
+# Check if player is at maximum level
 	var current_level = GameState.player_data.get("level", 1)
 	return current_level >= GameState.max_level
 
 func get_xp_until_next_level() -> int:
-	"""Get XP needed for next level"""
+# Get XP needed for next level
 	return int(max_value - value)
 
 # TODO: Future enhancements

@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name SaveManager
 
@@ -52,7 +52,7 @@ func _ready():
 	print("[SaveManager] Sistema de Save/Load inicializado")
 
 func setup_save_manager():
-	"""Setup save manager configuration"""
+# Setup save manager configuration
 	# Ensure save directory exists
 	DirAccess.open("user://").make_dir_recursive("saves")
 	
@@ -63,12 +63,12 @@ func setup_save_manager():
 	add_child(auto_save_timer)
 
 func setup_auto_save():
-	"""Setup automatic saving"""
+# Setup automatic saving
 	if auto_save_enabled:
 		auto_save_timer.start()
 
 func connect_events():
-	"""Connect to game events for save triggers"""
+# Connect to game events for save triggers
 	if event_bus:
 		event_bus.connect("player_level_up", _on_auto_save_trigger)
 		event_bus.connect("quest_completed", _on_auto_save_trigger)
@@ -77,7 +77,7 @@ func connect_events():
 
 # Main Save Functions
 func save_game(slot_name: String = "main") -> bool:
-	"""Save current game state"""
+# Save current game state
 	if is_saving:
 		print("[SaveManager] Save already in progress")
 		return false
@@ -108,7 +108,7 @@ func save_game(slot_name: String = "main") -> bool:
 	return success
 
 func save_game_async(slot_name: String = "main") -> void:
-	"""Save game asynchronously without blocking"""
+# Save game asynchronously without blocking
 	if is_saving:
 		print("[SaveManager] Save already in progress")
 		return
@@ -118,7 +118,7 @@ func save_game_async(slot_name: String = "main") -> void:
 	callable.call_deferred()
 
 func load_game(slot_name: String = "main") -> bool:
-	"""Load game state from file"""
+# Load game state from file
 	if is_loading:
 		print("[SaveManager] Load already in progress")
 		return false
@@ -154,7 +154,7 @@ func load_game(slot_name: String = "main") -> bool:
 
 # Save Data Creation
 func create_save_data() -> Dictionary:
-	"""Create complete save data structure"""
+# Create complete save data structure
 	var save_data = save_template.duplicate(true)
 	
 	# Update metadata
@@ -182,7 +182,7 @@ func create_save_data() -> Dictionary:
 	return save_data
 
 func create_player_data() -> Dictionary:
-	"""Create player-specific save data"""
+# Create player-specific save data
 	var player_data = {}
 	
 	if not game_state or not game_state.player_stats:
@@ -258,7 +258,7 @@ func create_player_data() -> Dictionary:
 	return player_data
 
 func create_world_data() -> Dictionary:
-	"""Create world state save data"""
+# Create world state save data
 	var world_data = {}
 	
 	# Unlocked dungeons
@@ -282,7 +282,7 @@ func create_world_data() -> Dictionary:
 	return world_data
 
 func create_progress_data() -> Dictionary:
-	"""Create quest and progress save data"""
+# Create quest and progress save data
 	var progress_data = {}
 	
 	# Quest progress
@@ -308,7 +308,7 @@ func create_progress_data() -> Dictionary:
 	return progress_data
 
 func create_settings_data() -> Dictionary:
-	"""Create user settings save data"""
+# Create user settings save data
 	var settings_data = {}
 	
 	# Graphics settings
@@ -359,7 +359,7 @@ func create_settings_data() -> Dictionary:
 	return settings_data
 
 func create_session_data() -> Dictionary:
-	"""Create session-specific save data"""
+# Create session-specific save data
 	var session_data = {}
 	
 	# Current session info
@@ -383,7 +383,7 @@ func create_session_data() -> Dictionary:
 
 # Serialization Functions
 func serialize_inventory() -> Array:
-	"""Serialize inventory data"""
+# Serialize inventory data
 	var inventory_data = []
 	
 	var inventory_system = get_node_or_null("/root/InventorySystem")
@@ -402,7 +402,7 @@ func serialize_inventory() -> Array:
 	return inventory_data
 
 func serialize_equipment() -> Dictionary:
-	"""Serialize equipment data"""
+# Serialize equipment data
 	var equipment_data = {}
 	
 	var equipment_system = get_node_or_null("/root/EquipmentSystem")
@@ -420,7 +420,7 @@ func serialize_equipment() -> Dictionary:
 	return equipment_data
 
 func serialize_skills() -> Array:
-	"""Serialize unlocked skills"""
+# Serialize unlocked skills
 	var skills_data = []
 	
 	var progression_system = get_node_or_null("/root/PlayerProgression")
@@ -430,7 +430,7 @@ func serialize_skills() -> Array:
 	return skills_data
 
 func serialize_skill_trees() -> Dictionary:
-	"""Serialize skill tree progress"""
+# Serialize skill tree progress
 	var skill_tree_data = {}
 	
 	var progression_system = get_node_or_null("/root/PlayerProgression")
@@ -440,7 +440,7 @@ func serialize_skill_trees() -> Dictionary:
 	return skill_tree_data
 
 func serialize_talents() -> Dictionary:
-	"""Serialize talent selections"""
+# Serialize talent selections
 	var talent_data = {}
 	
 	var progression_system = get_node_or_null("/root/PlayerProgression")
@@ -450,7 +450,7 @@ func serialize_talents() -> Dictionary:
 	return talent_data
 
 func serialize_active_quests() -> Array:
-	"""Serialize active quest states"""
+# Serialize active quest states
 	var quest_data = []
 	
 	var quest_system = get_node_or_null("/root/QuestSystem")
@@ -468,7 +468,7 @@ func serialize_active_quests() -> Array:
 	return quest_data
 
 func serialize_active_buffs() -> Array:
-	"""Serialize active buffs/debuffs"""
+# Serialize active buffs/debuffs
 	var buff_data = []
 	
 	var buff_system = get_node_or_null("/root/BuffSystem")
@@ -485,7 +485,7 @@ func serialize_active_buffs() -> Array:
 	return buff_data
 
 func serialize_cooldowns() -> Dictionary:
-	"""Serialize ability cooldowns"""
+# Serialize ability cooldowns
 	var cooldown_data = {}
 	
 	# This would be implemented based on your skill/ability system
@@ -494,7 +494,7 @@ func serialize_cooldowns() -> Dictionary:
 	return cooldown_data
 
 func get_custom_key_bindings() -> Dictionary:
-	"""Get custom key bindings"""
+# Get custom key bindings
 	var bindings = {}
 	
 	for action in InputMap.get_actions():
@@ -535,7 +535,7 @@ func get_custom_key_bindings() -> Dictionary:
 
 # File Operations
 func write_save_file(data: Dictionary, slot_name: String = "main") -> bool:
-	"""Write save data to file"""
+# Write save data to file
 	var file_path = get_save_file_path(slot_name)
 	
 	# Convert to JSON
@@ -569,7 +569,7 @@ func write_save_file(data: Dictionary, slot_name: String = "main") -> bool:
 	return true
 
 func read_save_file(slot_name: String = "main") -> Dictionary:
-	"""Read save data from file"""
+# Read save data from file
 	var file_path = get_save_file_path(slot_name)
 	
 	if not FileAccess.file_exists(file_path):
@@ -605,7 +605,7 @@ func read_save_file(slot_name: String = "main") -> Dictionary:
 	return data
 
 func get_save_file_path(slot_name: String) -> String:
-	"""Get save file path for slot"""
+# Get save file path for slot
 	if slot_name == "main":
 		return SAVE_FILE_PATH
 	else:
@@ -613,7 +613,7 @@ func get_save_file_path(slot_name: String) -> String:
 
 # Data Validation and Migration
 func validate_save_data(data: Dictionary) -> bool:
-	"""Validate save data integrity"""
+# Validate save data integrity
 	# Check magic number
 	if data.get("magic_number", "") != SAVE_MAGIC_NUMBER:
 		print("[SaveManager] Invalid magic number in save data")
@@ -643,7 +643,7 @@ func validate_save_data(data: Dictionary) -> bool:
 	return true
 
 func validate_and_migrate_save(data: Dictionary) -> Dictionary:
-	"""Validate and migrate save data if necessary"""
+# Validate and migrate save data if necessary
 	if not validate_save_data(data):
 		return {}
 	
@@ -661,7 +661,7 @@ func validate_and_migrate_save(data: Dictionary) -> Dictionary:
 	return data
 
 func migrate_save(data: Dictionary, from_version: float, to_version: float) -> Dictionary:
-	"""Migrate save data between versions"""
+# Migrate save data between versions
 	var migrated_data = data.duplicate(true)
 	
 	# Version 1.0 to 1.1 migration
@@ -683,7 +683,7 @@ func migrate_save(data: Dictionary, from_version: float, to_version: float) -> D
 	return migrated_data
 
 func migrate_1_0_to_1_1(data: Dictionary) -> Dictionary:
-	"""Migrate from version 1.0 to 1.1"""
+# Migrate from version 1.0 to 1.1
 	# Add new currency types introduced in v1.1
 	if not data.player_data.has("magic_fragments"):
 		data.player_data.magic_fragments = 0
@@ -697,7 +697,7 @@ func migrate_1_0_to_1_1(data: Dictionary) -> Dictionary:
 	return data
 
 func migrate_1_1_to_1_2(data: Dictionary) -> Dictionary:
-	"""Migrate from version 1.1 to 1.2"""
+# Migrate from version 1.1 to 1.2
 	# Add performance metrics introduced in v1.2
 	if not data.session_data.has("performance_metrics"):
 		data.session_data.performance_metrics = {
@@ -725,7 +725,7 @@ func migrate_1_1_to_1_2(data: Dictionary) -> Dictionary:
 
 # Utility Functions
 func generate_checksum(data: Dictionary, exclude_checksum: bool = false) -> String:
-	"""Generate checksum for data integrity"""
+# Generate checksum for data integrity
 	var data_copy = data.duplicate(true)
 	
 	# Remove checksum field from calculation if requested
@@ -739,18 +739,18 @@ func generate_checksum(data: Dictionary, exclude_checksum: bool = false) -> Stri
 	return json_string.md5_text()
 
 func compress_data(data: String) -> String:
-	"""Compress data string"""
+# Compress data string
 	var compressed = data.to_utf8_buffer().compress(FileAccess.COMPRESSION_GZIP)
 	return Marshalls.raw_to_base64(compressed)
 
 func decompress_data(compressed_data: String) -> String:
-	"""Decompress data string"""
+# Decompress data string
 	var raw_data = Marshalls.base64_to_raw(compressed_data)
 	var decompressed = raw_data.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP)
 	return decompressed.get_string_from_utf8()
 
 func create_backup() -> bool:
-	"""Create backup of current save file"""
+# Create backup of current save file
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
 		return true  # No save to backup
 	
@@ -764,7 +764,7 @@ func create_backup() -> bool:
 		return false
 
 func restore_backup() -> bool:
-	"""Restore save from backup"""
+# Restore save from backup
 	if not FileAccess.file_exists(BACKUP_FILE_PATH):
 		print("[SaveManager] No backup file found")
 		return false
@@ -778,7 +778,7 @@ func restore_backup() -> bool:
 		return false
 
 func delete_save(slot_name: String = "main") -> bool:
-	"""Delete save file"""
+# Delete save file
 	var file_path = get_save_file_path(slot_name)
 	var dir = DirAccess.open("user://")
 	
@@ -790,11 +790,11 @@ func delete_save(slot_name: String = "main") -> bool:
 		return false
 
 func save_exists(slot_name: String = "main") -> bool:
-	"""Check if save file exists"""
+# Check if save file exists
 	return FileAccess.file_exists(get_save_file_path(slot_name))
 
 func get_save_info(slot_name: String = "main") -> Dictionary:
-	"""Get save file information without loading"""
+# Get save file information without loading
 	var file_path = get_save_file_path(slot_name)
 	
 	if not FileAccess.file_exists(file_path):
@@ -846,7 +846,7 @@ func get_save_info(slot_name: String = "main") -> Dictionary:
 
 # Data Application
 func apply_loaded_data(save_data: Dictionary) -> bool:
-	"""Apply loaded save data to game systems"""
+# Apply loaded save data to game systems
 	print("[SaveManager] Applying loaded save data...")
 	
 	try:
@@ -878,7 +878,7 @@ func apply_loaded_data(save_data: Dictionary) -> bool:
 		return false
 
 func apply_player_data(player_data: Dictionary) -> bool:
-	"""Apply player data to game state"""
+# Apply player data to game state
 	if not game_state or not game_state.player_stats:
 		print("[SaveManager] Game state or player stats not available")
 		return false
@@ -940,7 +940,7 @@ func apply_player_data(player_data: Dictionary) -> bool:
 	return true
 
 func apply_world_data(world_data: Dictionary) -> bool:
-	"""Apply world state data"""
+# Apply world state data
 	game_state.set("unlocked_dungeons", world_data.get("unlocked_dungeons", []))
 	game_state.set("completed_dungeons", world_data.get("completed_dungeons", []))
 	game_state.set("discovered_locations", world_data.get("discovered_locations", []))
@@ -951,7 +951,7 @@ func apply_world_data(world_data: Dictionary) -> bool:
 	return true
 
 func apply_progress_data(progress_data: Dictionary) -> bool:
-	"""Apply quest and progress data"""
+# Apply quest and progress data
 	game_state.set("completed_quests", progress_data.get("completed_quests", []))
 	game_state.set("failed_quests", progress_data.get("failed_quests", []))
 	game_state.set("available_quests", progress_data.get("available_quests", []))
@@ -965,7 +965,7 @@ func apply_progress_data(progress_data: Dictionary) -> bool:
 	return true
 
 func apply_settings_data(settings_data: Dictionary) -> bool:
-	"""Apply settings data"""
+# Apply settings data
 	var graphics = settings_data.get("graphics", {})
 	var audio = settings_data.get("audio", {})
 	var controls = settings_data.get("controls", {})
@@ -999,7 +999,7 @@ func apply_settings_data(settings_data: Dictionary) -> bool:
 	return true
 
 func apply_session_data(session_data: Dictionary) -> bool:
-	"""Apply session data"""
+# Apply session data
 	# Apply active buffs
 	apply_active_buffs_data(session_data.get("active_buffs", []))
 	
@@ -1009,7 +1009,7 @@ func apply_session_data(session_data: Dictionary) -> bool:
 	return true
 
 func apply_inventory_data(inventory_data: Array):
-	"""Apply inventory data"""
+# Apply inventory data
 	var inventory_system = get_node_or_null("/root/InventorySystem")
 	if inventory_system:
 		inventory_system.clear_inventory()
@@ -1017,7 +1017,7 @@ func apply_inventory_data(inventory_data: Array):
 			inventory_system.add_item_from_save(item_data)
 
 func apply_equipment_data(equipment_data: Dictionary):
-	"""Apply equipment data"""
+# Apply equipment data
 	var equipment_system = get_node_or_null("/root/EquipmentSystem")
 	if equipment_system:
 		equipment_system.clear_all_equipment()
@@ -1025,39 +1025,39 @@ func apply_equipment_data(equipment_data: Dictionary):
 			equipment_system.equip_item_from_save(slot, equipment_data[slot])
 
 func apply_skills_data(skills_data: Array):
-	"""Apply skills data"""
+# Apply skills data
 	var progression_system = get_node_or_null("/root/PlayerProgression")
 	if progression_system:
 		progression_system.set_unlocked_skills(skills_data)
 
 func apply_skill_tree_data(skill_tree_data: Dictionary):
-	"""Apply skill tree progress data"""
+# Apply skill tree progress data
 	var progression_system = get_node_or_null("/root/PlayerProgression")
 	if progression_system:
 		progression_system.set_skill_tree_progress(skill_tree_data)
 
 func apply_talents_data(talents_data: Dictionary):
-	"""Apply talents data"""
+# Apply talents data
 	var progression_system = get_node_or_null("/root/PlayerProgression")
 	if progression_system:
 		progression_system.set_selected_talents(talents_data)
 
 func apply_active_quests_data(quests_data: Array):
-	"""Apply active quests data"""
+# Apply active quests data
 	var quest_system = get_node_or_null("/root/QuestSystem")
 	if quest_system:
 		for quest_data in quests_data:
 			quest_system.restore_quest_from_save(quest_data)
 
 func apply_active_buffs_data(buffs_data: Array):
-	"""Apply active buffs data"""
+# Apply active buffs data
 	var buff_system = get_node_or_null("/root/BuffSystem")
 	if buff_system:
 		for buff_data in buffs_data:
 			buff_system.restore_buff_from_save(buff_data)
 
 func apply_key_bindings(bindings_data: Dictionary):
-	"""Apply custom key bindings"""
+# Apply custom key bindings
 	for action in bindings_data:
 		if InputMap.has_action(action):
 			InputMap.action_erase_events(action)
@@ -1067,7 +1067,7 @@ func apply_key_bindings(bindings_data: Dictionary):
 					InputMap.action_add_event(action, event)
 
 func create_input_event_from_data(event_data: Dictionary) -> InputEvent:
-	"""Create input event from save data"""
+# Create input event from save data
 	match event_data.get("type", ""):
 		"key":
 			var event = InputEventKey.new()
@@ -1097,7 +1097,7 @@ func create_input_event_from_data(event_data: Dictionary) -> InputEvent:
 
 # Default Save Creation
 func create_default_save() -> Dictionary:
-	"""Create default save data for new game"""
+# Create default save data for new game
 	var default_save = save_template.duplicate(true)
 	
 	default_save.timestamp = Time.get_unix_time_from_system()
@@ -1177,7 +1177,7 @@ func create_default_save() -> Dictionary:
 
 # Auto-save System
 func enable_auto_save(enabled: bool = true):
-	"""Enable or disable auto-save"""
+# Enable or disable auto-save
 	auto_save_enabled = enabled
 	if enabled:
 		auto_save_timer.start()
@@ -1185,18 +1185,18 @@ func enable_auto_save(enabled: bool = true):
 		auto_save_timer.stop()
 
 func set_auto_save_interval(interval: float):
-	"""Set auto-save interval in seconds"""
+# Set auto-save interval in seconds
 	auto_save_interval = interval
 	auto_save_timer.wait_time = interval
 
 func _on_auto_save_timer():
-	"""Handle auto-save timer timeout"""
+# Handle auto-save timer timeout
 	if auto_save_enabled and not is_saving and not is_loading:
 		print("[SaveManager] Auto-saving game...")
 		save_game_async("autosave")
 
 func _on_auto_save_trigger():
-	"""Trigger auto-save on significant events"""
+# Trigger auto-save on significant events
 	if auto_save_enabled and not is_saving and not is_loading:
 		# Small delay to avoid saving during rapid events
 		await get_tree().create_timer(2.0).timeout
@@ -1205,26 +1205,26 @@ func _on_auto_save_trigger():
 
 # Public API
 func quick_save():
-	"""Perform quick save"""
+# Perform quick save
 	save_game("quicksave")
 
 func quick_load():
-	"""Perform quick load"""
+# Perform quick load
 	load_game("quicksave")
 
 func new_game():
-	"""Start new game with default save"""
+# Start new game with default save
 	var default_data = create_default_save()
 	apply_loaded_data(default_data)
 	save_game("main")
 
 func has_save_data() -> bool:
-	"""Check if main save file exists"""
+# Check if main save file exists
 	return save_exists("main")
 
 # Debug Functions
 func debug_print_save_info():
-	"""Debug: Print save file information"""
+# Debug: Print save file information
 	print("[SaveManager] Save System Status:")
 	print("  Current Version: %s" % CURRENT_SAVE_VERSION)
 	print("  Min Compatible: %s" % MIN_COMPATIBLE_VERSION)
@@ -1244,7 +1244,7 @@ func debug_print_save_info():
 		print("    Location: %s" % main_save_info.get("location", "Unknown"))
 
 func debug_create_test_save():
-	"""Debug: Create test save file"""
+# Debug: Create test save file
 	var test_data = create_default_save()
 	test_data.player_data.name = "Test Hero"
 	test_data.player_data.level = 15
@@ -1253,7 +1253,7 @@ func debug_create_test_save():
 	print("[SaveManager] Test save created")
 
 func debug_validate_current_save():
-	"""Debug: Validate current save file"""
+# Debug: Validate current save file
 	var save_data = read_save_file("main")
 	if save_data.is_empty():
 		print("[SaveManager] No main save found")

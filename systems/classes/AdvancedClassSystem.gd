@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name AdvancedClassSystem
 
 signal class_specialized(player: Node, specialization_id: String)
@@ -11,12 +11,12 @@ var advanced_classes_data: Dictionary = {}
 var player_specializations: Dictionary = {}
 var dual_class_progress: Dictionary = {}
 
-# Configurações
+# ConfiguraÃ§Ãµes
 var specialization_enabled: bool = true
 var dual_class_enabled: bool = true
 var prestige_enabled: bool = true
 
-# Referências
+# ReferÃªncias
 @onready var data_loader: DataLoader = DataLoader.new()
 @onready var event_bus: EventBus = EventBus
 
@@ -24,28 +24,28 @@ func _ready():
 	name = "AdvancedClassSystem"
 	load_advanced_classes_data()
 	connect_events()
-	print("[AdvancedClassSystem] Sistema de classes avançadas inicializado")
+	print("[AdvancedClassSystem] Sistema de classes avanÃ§adas inicializado")
 
 func load_advanced_classes_data():
-	"""Carrega dados das classes avançadas"""
+# Carrega dados das classes avanÃ§adas
 	var data = data_loader.load_json_file("res://data/classes/advanced_classes.json")
 	if data:
 		advanced_classes_data = data
-		print("[AdvancedClassSystem] Dados de classes avançadas carregados")
+		print("[AdvancedClassSystem] Dados de classes avanÃ§adas carregados")
 	else:
-		push_error("[AdvancedClassSystem] Falha ao carregar dados de classes avançadas")
+		push_error("[AdvancedClassSystem] Falha ao carregar dados de classes avanÃ§adas")
 
 func connect_events():
-	"""Conecta aos eventos necessários"""
+# Conecta aos eventos necessÃ¡rios
 	event_bus.player_level_up.connect(_on_player_level_up)
 	event_bus.skill_unlocked.connect(_on_skill_unlocked)
 
 # ============================================================================
-# SISTEMA DE ESPECIALIZAÇÃO
+# SISTEMA DE ESPECIALIZAÃ‡ÃƒO
 # ============================================================================
 
 func can_specialize(player: Node, specialization_id: String) -> bool:
-	"""Verifica se o jogador pode se especializar"""
+# Verifica se o jogador pode se especializar
 	if not specialization_enabled:
 		return false
 	
@@ -53,7 +53,7 @@ func can_specialize(player: Node, specialization_id: String) -> bool:
 	if not player_data:
 		return false
 	
-	# Verifica se já tem especialização
+	# Verifica se jÃ¡ tem especializaÃ§Ã£o
 	if player_specializations.has(player.get_instance_id()):
 		return false
 	
@@ -65,11 +65,11 @@ func can_specialize(player: Node, specialization_id: String) -> bool:
 	if player_data.class != spec_data.base_class_required:
 		return false
 	
-	# Verifica nível
+	# Verifica nÃ­vel
 	if player_data.level < spec_data.level_required:
 		return false
 	
-	# Verifica skills pré-requisitos
+	# Verifica skills prÃ©-requisitos
 	if spec_data.has("prerequisite_skills"):
 		for skill in spec_data.prerequisite_skills:
 			if not _player_has_skill(player, skill):
@@ -78,15 +78,15 @@ func can_specialize(player: Node, specialization_id: String) -> bool:
 	return true
 
 func specialize_player(player: Node, specialization_id: String) -> bool:
-	"""Especializa o jogador"""
+# Especializa o jogador
 	if not can_specialize(player, specialization_id):
-		print("[AdvancedClassSystem] Jogador não pode se especializar em: ", specialization_id)
+		print("[AdvancedClassSystem] Jogador nÃ£o pode se especializar em: ", specialization_id)
 		return false
 	
 	var spec_data = _get_specialization_data(specialization_id)
 	var player_id = player.get_instance_id()
 	
-	# Criar dados da especialização
+	# Criar dados da especializaÃ§Ã£o
 	player_specializations[player_id] = {
 		"specialization_id": specialization_id,
 		"unlocked_skills": {},
@@ -94,7 +94,7 @@ func specialize_player(player: Node, specialization_id: String) -> bool:
 		"specialization_level": 1
 	}
 	
-	# Aplicar bônus de stats
+	# Aplicar bÃ´nus de stats
 	_apply_stat_bonuses(player, spec_data.stat_bonuses)
 	
 	# Desbloquear habilidades especiais
@@ -107,7 +107,7 @@ func specialize_player(player: Node, specialization_id: String) -> bool:
 	return true
 
 func unlock_specialization_skill(player: Node, skill_id: String) -> bool:
-	"""Desbloqueia skill da especialização"""
+# Desbloqueia skill da especializaÃ§Ã£o
 	var player_id = player.get_instance_id()
 	
 	if not player_specializations.has(player_id):
@@ -120,23 +120,23 @@ func unlock_specialization_skill(player: Node, skill_id: String) -> bool:
 	if not class_data or not class_data.has("skill_tree"):
 		return false
 	
-	# Encontrar skill na árvore
+	# Encontrar skill na Ã¡rvore
 	var skill_info = _find_skill_in_tree(class_data.skill_tree, skill_id)
 	if not skill_info:
 		return false
 	
-	# Verificar pontos disponíveis
+	# Verificar pontos disponÃ­veis
 	var cost = skill_info.cost_per_level
 	if spec_data.skill_points < cost:
 		return false
 	
-	# Verificar pré-requisitos
+	# Verificar prÃ©-requisitos
 	if skill_info.has("prerequisites"):
 		for prereq in skill_info.prerequisites:
 			if not spec_data.unlocked_skills.has(prereq):
 				return false
 	
-	# Verificar nível atual da skill
+	# Verificar nÃ­vel atual da skill
 	var current_level = spec_data.unlocked_skills.get(skill_id, 0)
 	if current_level >= skill_info.max_level:
 		return false
@@ -151,15 +151,15 @@ func unlock_specialization_skill(player: Node, skill_id: String) -> bool:
 	# Emitir evento
 	skill_unlocked.emit(player, skill_id, current_level + 1)
 	
-	print("[AdvancedClassSystem] Skill desbloqueada: %s (Nível %d)" % [skill_id, current_level + 1])
+	print("[AdvancedClassSystem] Skill desbloqueada: %s (NÃ­vel %d)" % [skill_id, current_level + 1])
 	return true
 
 # ============================================================================
-# SISTEMA DE EVOLUÇÃO/PRESTIGE
+# SISTEMA DE EVOLUÃ‡ÃƒO/PRESTIGE
 # ============================================================================
 
 func can_evolve_class(player: Node, evolution_id: String) -> bool:
-	"""Verifica se pode evoluir para classe prestigiosa"""
+# Verifica se pode evoluir para classe prestigiosa
 	if not prestige_enabled:
 		return false
 	
@@ -174,18 +174,18 @@ func can_evolve_class(player: Node, evolution_id: String) -> bool:
 	if not evolution_data:
 		return false
 	
-	# Verifica se evolui da especialização atual
+	# Verifica se evolui da especializaÃ§Ã£o atual
 	if evolution_data.evolves_from != spec_data.specialization_id:
 		return false
 	
-	# Verifica nível
+	# Verifica nÃ­vel
 	if player_data.level < evolution_data.level_required:
 		return false
 	
 	return true
 
 func evolve_class(player: Node, evolution_id: String) -> bool:
-	"""Evolui a classe para versão prestigiosa"""
+# Evolui a classe para versÃ£o prestigiosa
 	if not can_evolve_class(player, evolution_id):
 		return false
 	
@@ -196,14 +196,14 @@ func evolve_class(player: Node, evolution_id: String) -> bool:
 	player_specializations[player_id]["evolution_id"] = evolution_id
 	player_specializations[player_id]["prestige_level"] = 1
 	
-	# Desbloquear habilidades únicas
+	# Desbloquear habilidades Ãºnicas
 	_unlock_special_abilities(player, evolution_data.unique_abilities)
 	
 	# Emitir evento
 	class_evolved.emit(player, evolution_id)
 	prestige_achieved.emit(player, evolution_data.name)
 	
-	print("[AdvancedClassSystem] Classe evoluída para: ", evolution_data.name)
+	print("[AdvancedClassSystem] Classe evoluÃ­da para: ", evolution_data.name)
 	return true
 
 # ============================================================================
@@ -211,7 +211,7 @@ func evolve_class(player: Node, evolution_id: String) -> bool:
 # ============================================================================
 
 func can_dual_class(player: Node, second_class: String) -> bool:
-	"""Verifica se pode ter dual class"""
+# Verifica se pode ter dual class
 	if not dual_class_enabled:
 		return false
 	
@@ -219,7 +219,7 @@ func can_dual_class(player: Node, second_class: String) -> bool:
 	if player_data.level < 30:
 		return false
 	
-	# Verificar se já tem dual class
+	# Verificar se jÃ¡ tem dual class
 	var player_id = player.get_instance_id()
 	if dual_class_progress.has(player_id):
 		return false
@@ -227,7 +227,7 @@ func can_dual_class(player: Node, second_class: String) -> bool:
 	return true
 
 func start_dual_class_training(player: Node, second_class: String) -> bool:
-	"""Inicia treinamento de dual class"""
+# Inicia treinamento de dual class
 	if not can_dual_class(player, second_class):
 		return false
 	
@@ -243,7 +243,7 @@ func start_dual_class_training(player: Node, second_class: String) -> bool:
 	return true
 
 func advance_dual_class_training(player: Node, progress_amount: int):
-	"""Avança progresso de dual class"""
+# AvanÃ§a progresso de dual class
 	var player_id = player.get_instance_id()
 	
 	if not dual_class_progress.has(player_id):
@@ -260,7 +260,7 @@ func advance_dual_class_training(player: Node, progress_amount: int):
 		_complete_dual_class_training(player)
 
 func _complete_dual_class_training(player: Node):
-	"""Completa treinamento de dual class"""
+# Completa treinamento de dual class
 	var player_id = player.get_instance_id()
 	var training = dual_class_progress[player_id]
 	
@@ -277,11 +277,11 @@ func _complete_dual_class_training(player: Node):
 		print("[AdvancedClassSystem] Sinergia de classe ativada: ", synergy_data.name)
 
 # ============================================================================
-# FUNÇÕES AUXILIARES
+# FUNÃ‡Ã•ES AUXILIARES
 # ============================================================================
 
 func _get_player_data(player: Node) -> Dictionary:
-	"""Obtém dados do jogador"""
+# ObtÃ©m dados do jogador
 	if player.has_method("get_player_data"):
 		return player.get_player_data()
 	
@@ -289,7 +289,7 @@ func _get_player_data(player: Node) -> Dictionary:
 	return GameState.get_player_data()
 
 func _get_specialization_data(specialization_id: String) -> Dictionary:
-	"""Obtém dados de uma especialização"""
+# ObtÃ©m dados de uma especializaÃ§Ã£o
 	for class_type in advanced_classes_data.prestige_classes:
 		var specializations = advanced_classes_data.prestige_classes[class_type]
 		if specializations.has(specialization_id):
@@ -297,7 +297,7 @@ func _get_specialization_data(specialization_id: String) -> Dictionary:
 	return {}
 
 func _get_evolution_data(evolution_id: String) -> Dictionary:
-	"""Obtém dados de evolução"""
+# ObtÃ©m dados de evoluÃ§Ã£o
 	if not advanced_classes_data.has("prestige_evolution"):
 		return {}
 	
@@ -308,13 +308,13 @@ func _get_evolution_data(evolution_id: String) -> Dictionary:
 	return {}
 
 func _player_has_skill(player: Node, skill_id: String) -> bool:
-	"""Verifica se jogador tem skill"""
-	# Esta função deve verificar no sistema de skills do jogador
+# Verifica se jogador tem skill
+	# Esta funÃ§Ã£o deve verificar no sistema de skills do jogador
 	# Por agora, retorna true como placeholder
 	return true
 
 func _find_skill_in_tree(skill_tree: Dictionary, skill_id: String) -> Dictionary:
-	"""Encontra skill na árvore de skills"""
+# Encontra skill na Ã¡rvore de skills
 	for tier in skill_tree:
 		var tier_data = skill_tree[tier]
 		if tier_data.has(skill_id):
@@ -322,25 +322,25 @@ func _find_skill_in_tree(skill_tree: Dictionary, skill_id: String) -> Dictionary
 	return {}
 
 func _apply_stat_bonuses(player: Node, stat_bonuses: Dictionary):
-	"""Aplica bônus de stats"""
+# Aplica bÃ´nus de stats
 	if player.has_method("add_permanent_stat_bonus"):
 		for stat in stat_bonuses:
 			player.add_permanent_stat_bonus(stat, stat_bonuses[stat])
 
 func _unlock_special_abilities(player: Node, abilities: Array):
-	"""Desbloqueia habilidades especiais"""
+# Desbloqueia habilidades especiais
 	for ability in abilities:
 		if player.has_method("add_ability"):
 			player.add_ability(ability)
 
 func _apply_skill_effects(player: Node, skill_id: String, level: int):
-	"""Aplica efeitos de skill"""
-	# Esta função deve aplicar os efeitos específicos da skill
+# Aplica efeitos de skill
+	# Esta funÃ§Ã£o deve aplicar os efeitos especÃ­ficos da skill
 	# Implementar baseado no sistema de skills existente
 	pass
 
 func _get_class_synergy(class1: String, class2: String) -> String:
-	"""Obtém ID de sinergia entre duas classes"""
+# ObtÃ©m ID de sinergia entre duas classes
 	var combined = class1 + "_" + class2
 	var reversed = class2 + "_" + class1
 	
@@ -352,7 +352,7 @@ func _get_class_synergy(class1: String, class2: String) -> String:
 	return ""
 
 func _apply_synergy_bonuses(player: Node, bonuses: Dictionary):
-	"""Aplica bônus de sinergia"""
+# Aplica bÃ´nus de sinergia
 	if player.has_method("add_synergy_bonuses"):
 		player.add_synergy_bonuses(bonuses)
 
@@ -361,8 +361,8 @@ func _apply_synergy_bonuses(player: Node, bonuses: Dictionary):
 # ============================================================================
 
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
-	"""Quando jogador sobe de nível"""
-	# Adicionar skill points para especialização
+# Quando jogador sobe de nÃ­vel
+	# Adicionar skill points para especializaÃ§Ã£o
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		var player_id = player.get_instance_id()
@@ -370,21 +370,21 @@ func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
 			player_specializations[player_id].skill_points += 2
 
 func _on_skill_unlocked(skill_id: String):
-	"""Quando skill é desbloqueada"""
-	# Verificar se pode desbloquear especializações
+# Quando skill Ã© desbloqueada
+	# Verificar se pode desbloquear especializaÃ§Ãµes
 	pass
 
 # ============================================================================
-# API PÚBLICA
+# API PÃšBLICA
 # ============================================================================
 
 func get_player_specialization(player: Node) -> Dictionary:
-	"""Obtém especialização atual do jogador"""
+# ObtÃ©m especializaÃ§Ã£o atual do jogador
 	var player_id = player.get_instance_id()
 	return player_specializations.get(player_id, {})
 
 func get_available_specializations(player: Node) -> Array:
-	"""Obtém especializações disponíveis"""
+# ObtÃ©m especializaÃ§Ãµes disponÃ­veis
 	var available = []
 	var player_data = _get_player_data(player)
 	
@@ -400,7 +400,7 @@ func get_available_specializations(player: Node) -> Array:
 	return available
 
 func get_available_evolutions(player: Node) -> Array:
-	"""Obtém evoluções disponíveis"""
+# ObtÃ©m evoluÃ§Ãµes disponÃ­veis
 	var available = []
 	
 	if not advanced_classes_data.has("prestige_evolution"):
@@ -417,6 +417,6 @@ func get_available_evolutions(player: Node) -> Array:
 	return available
 
 func get_dual_class_progress(player: Node) -> Dictionary:
-	"""Obtém progresso de dual class"""
+# ObtÃ©m progresso de dual class
 	var player_id = player.get_instance_id()
 	return dual_class_progress.get(player_id, {})

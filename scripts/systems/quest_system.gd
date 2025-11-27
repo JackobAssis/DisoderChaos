@@ -1,6 +1,6 @@
-extends Node
+﻿extends Node
 class_name QuestSystem
-# quest_system.gd - Sistema completo de missões do Disorder Chaos
+# quest_system.gd - Sistema completo de missÃµes do Disorder Chaos
 
 # Quest data storage
 var quest_data: Dictionary = {}
@@ -25,7 +25,7 @@ func _ready():
 	setup_quest_timers()
 
 func load_quest_data():
-	"""Load quest definitions from JSON"""
+# Load quest definitions from JSON
 	var quest_file = DataLoader.load_data_file("quests.json")
 	if quest_file and quest_file.has("quests"):
 		quest_data = quest_file.quests
@@ -35,7 +35,7 @@ func load_quest_data():
 		push_error("[QuestSystem] Failed to load quest data")
 
 func connect_game_events():
-	"""Connect to game events for quest progression"""
+# Connect to game events for quest progression
 	# Player actions
 	EventBus.enemy_defeated.connect(_on_enemy_defeated)
 	EventBus.item_collected.connect(_on_item_collected)
@@ -63,7 +63,7 @@ func connect_game_events():
 	EventBus.survival_time_reached.connect(_on_survival_time_reached)
 
 func setup_quest_timers():
-	"""Setup timers for timed quests"""
+# Setup timers for timed quests
 	var timer = Timer.new()
 	timer.name = "QuestTimer"
 	timer.timeout.connect(_on_quest_timer_tick)
@@ -72,14 +72,14 @@ func setup_quest_timers():
 	add_child(timer)
 
 func initialize_available_quests():
-	"""Initialize list of available quests based on player state"""
+# Initialize list of available quests based on player state
 	for quest_id in quest_data:
 		if is_quest_available(quest_id):
 			available_quests[quest_id] = quest_data[quest_id]
 
 # Quest Management
 func start_quest(quest_id: String) -> bool:
-	"""Start a quest if it meets requirements"""
+# Start a quest if it meets requirements
 	if not quest_data.has(quest_id):
 		print("[QuestSystem] Quest not found: ", quest_id)
 		return false
@@ -111,12 +111,12 @@ func start_quest(quest_id: String) -> bool:
 	quest_started.emit(quest_id)
 	
 	# Show notification
-	EventBus.ui_notification_shown.emit("Quest Started: " + quest.name, "info")
+	EventBus.show_notification("Quest Started: " + quest.name, "info")
 	
 	return true
 
 func complete_quest(quest_id: String):
-	"""Complete a quest and give rewards"""
+# Complete a quest and give rewards
 	if not active_quests.has(quest_id):
 		return
 	
@@ -136,13 +136,13 @@ func complete_quest(quest_id: String):
 	quest_completed.emit(quest_id, quest.rewards)
 	
 	# Show notification
-	EventBus.ui_notification_shown.emit("Quest Completed: " + quest.name, "success")
+	EventBus.show_notification("Quest Completed: " + quest.name, "success")
 	
 	# Check for newly available quests
 	check_newly_available_quests()
 
 func fail_quest(quest_id: String, reason: String):
-	"""Fail a quest"""
+# Fail a quest
 	if not active_quests.has(quest_id):
 		return
 	
@@ -156,10 +156,10 @@ func fail_quest(quest_id: String, reason: String):
 	quest_failed.emit(quest_id, reason)
 	
 	# Show notification
-	EventBus.ui_notification_shown.emit("Quest Failed: " + quest.name, "error")
+	EventBus.show_notification("Quest Failed: " + quest.name, "error")
 
 func give_quest_rewards(quest: Dictionary):
-	"""Give rewards to player"""
+# Give rewards to player
 	var rewards = quest.get("rewards", {})
 	
 	# Experience
@@ -186,7 +186,7 @@ func give_quest_rewards(quest: Dictionary):
 			unlock_game_feature(feature)
 
 func modify_faction_reputation(faction_id: String, amount: int):
-	"""Modify reputation with a faction"""
+# Modify reputation with a faction
 	if not GameState.player_data.has("faction_reputation"):
 		GameState.player_data.faction_reputation = {}
 	
@@ -205,7 +205,7 @@ func modify_faction_reputation(faction_id: String, amount: int):
 	print("[QuestSystem] Faction reputation updated: ", faction_id, " ", amount)
 
 func unlock_game_feature(feature_id: String):
-	"""Unlock a game feature"""
+# Unlock a game feature
 	if not GameState.player_data.has("unlocked_features"):
 		GameState.player_data.unlocked_features = []
 	
@@ -215,7 +215,7 @@ func unlock_game_feature(feature_id: String):
 
 # Quest Requirements
 func is_quest_available(quest_id: String) -> bool:
-	"""Check if quest is available to start"""
+# Check if quest is available to start
 	if not quest_data.has(quest_id):
 		return false
 	
@@ -248,13 +248,13 @@ func is_quest_available(quest_id: String) -> bool:
 	return true
 
 func get_faction_reputation(faction_id: String) -> int:
-	"""Get current reputation with faction"""
+# Get current reputation with faction
 	if GameState.player_data.has("faction_reputation"):
 		return GameState.player_data.faction_reputation.get(faction_id, 0)
 	return 0
 
 func meets_reputation_requirement(current_rep: int, requirement: String) -> bool:
-	"""Check if current reputation meets requirement"""
+# Check if current reputation meets requirement
 	match requirement:
 		"hostile":
 			return current_rep <= -500
@@ -270,7 +270,7 @@ func meets_reputation_requirement(current_rep: int, requirement: String) -> bool
 			return true
 
 func check_newly_available_quests():
-	"""Check for quests that became available after completion"""
+# Check for quests that became available after completion
 	for quest_id in quest_data:
 		if not available_quests.has(quest_id) and not active_quests.has(quest_id):
 			if is_quest_available(quest_id):
@@ -279,7 +279,7 @@ func check_newly_available_quests():
 
 # Objective Progress Tracking
 func update_objective_progress(quest_id: String, objective_id: String, progress: int):
-	"""Update progress for a specific objective"""
+# Update progress for a specific objective
 	if not active_quests.has(quest_id):
 		return
 	
@@ -308,14 +308,14 @@ func update_objective_progress(quest_id: String, objective_id: String, progress:
 				complete_quest(quest_id)
 
 func find_objective(quest: Dictionary, objective_id: String) -> Dictionary:
-	"""Find objective in quest by ID"""
+# Find objective in quest by ID
 	for obj in quest.objectives:
 		if obj.id == objective_id:
 			return obj
 	return {}
 
 func are_all_objectives_completed(quest: Dictionary) -> bool:
-	"""Check if all objectives in quest are completed"""
+# Check if all objectives in quest are completed
 	for obj in quest.objectives:
 		if not obj.completed:
 			return false
@@ -323,7 +323,7 @@ func are_all_objectives_completed(quest: Dictionary) -> bool:
 
 # Event Handlers
 func _on_enemy_defeated(enemy_type: String, enemy_level: int):
-	"""Handle enemy defeat for kill objectives"""
+# Handle enemy defeat for kill objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -331,7 +331,7 @@ func _on_enemy_defeated(enemy_type: String, enemy_level: int):
 				update_objective_progress(quest_id, obj.id, 1)
 
 func _on_item_collected(item_id: String, quantity: int):
-	"""Handle item collection for collect objectives"""
+# Handle item collection for collect objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -339,7 +339,7 @@ func _on_item_collected(item_id: String, quantity: int):
 				update_objective_progress(quest_id, obj.id, quantity)
 
 func _on_item_used(item_id: String):
-	"""Handle item usage for use_item objectives"""
+# Handle item usage for use_item objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -347,7 +347,7 @@ func _on_item_used(item_id: String):
 				update_objective_progress(quest_id, obj.id, 1)
 
 func _on_item_crafted(item_id: String, quantity: int):
-	"""Handle item crafting for craft objectives"""
+# Handle item crafting for craft objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -355,7 +355,7 @@ func _on_item_crafted(item_id: String, quantity: int):
 				update_objective_progress(quest_id, obj.id, quantity)
 
 func _on_npc_talked_to(npc_id: String):
-	"""Handle NPC conversation for talk objectives"""
+# Handle NPC conversation for talk objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -363,7 +363,7 @@ func _on_npc_talked_to(npc_id: String):
 				update_objective_progress(quest_id, obj.id, 1)
 
 func _on_location_discovered(location_id: String):
-	"""Handle location discovery for explore objectives"""
+# Handle location discovery for explore objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -371,7 +371,7 @@ func _on_location_discovered(location_id: String):
 				update_objective_progress(quest_id, obj.id, 1)
 
 func _on_area_explored(area_id: String, percentage: int):
-	"""Handle area exploration percentage"""
+# Handle area exploration percentage
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -382,7 +382,7 @@ func _on_area_explored(area_id: String, percentage: int):
 					quest_objective_completed.emit(quest_id, obj.id)
 
 func _on_stealth_completed(objective_type: String, target: String):
-	"""Handle stealth objectives"""
+# Handle stealth objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -390,7 +390,7 @@ func _on_stealth_completed(objective_type: String, target: String):
 				update_objective_progress(quest_id, obj.id, 1)
 
 func _on_player_detected():
-	"""Handle player detection for stealth failure"""
+# Handle player detection for stealth failure
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for failure_condition in quest.get("failure_conditions", []):
@@ -398,7 +398,7 @@ func _on_player_detected():
 				handle_quest_failure(quest_id, failure_condition)
 
 func _on_survival_time_reached(time_seconds: int):
-	"""Handle survival time objectives"""
+# Handle survival time objectives
 	for quest_id in active_quests:
 		var quest = active_quests[quest_id]
 		for obj in quest.objectives:
@@ -409,7 +409,7 @@ func _on_survival_time_reached(time_seconds: int):
 					quest_objective_completed.emit(quest_id, obj.id)
 
 func handle_quest_failure(quest_id: String, failure_condition: Dictionary):
-	"""Handle quest failure conditions"""
+# Handle quest failure conditions
 	match failure_condition.penalty:
 		"quest_failure":
 			fail_quest(quest_id, failure_condition.type)
@@ -424,7 +424,7 @@ func handle_quest_failure(quest_id: String, failure_condition: Dictionary):
 			active_quests[quest_id].reduced_rewards = true
 
 func reset_quest_progress(quest_id: String):
-	"""Reset progress for a quest"""
+# Reset progress for a quest
 	if quest_objectives_progress.has(quest_id):
 		for obj_id in quest_objectives_progress[quest_id]:
 			quest_objectives_progress[quest_id][obj_id] = 0
@@ -434,7 +434,7 @@ func reset_quest_progress(quest_id: String):
 			obj.completed = false
 
 func _on_quest_timer_tick():
-	"""Handle timed quest updates"""
+# Handle timed quest updates
 	var current_time = Time.get_ticks_msec()
 	var quests_to_fail = []
 	
@@ -453,38 +453,38 @@ func _on_quest_timer_tick():
 
 # Utility Functions
 func get_active_quests() -> Dictionary:
-	"""Get all active quests"""
+# Get all active quests
 	return active_quests.duplicate(true)
 
 func get_available_quests() -> Dictionary:
-	"""Get all available quests"""
+# Get all available quests
 	return available_quests.duplicate(true)
 
 func get_completed_quests() -> Array[String]:
-	"""Get list of completed quest IDs"""
+# Get list of completed quest IDs
 	return completed_quests.duplicate()
 
 func get_quest_progress(quest_id: String) -> Dictionary:
-	"""Get progress for a specific quest"""
+# Get progress for a specific quest
 	if quest_objectives_progress.has(quest_id):
 		return quest_objectives_progress[quest_id].duplicate(true)
 	return {}
 
 func is_quest_completed(quest_id: String) -> bool:
-	"""Check if quest is completed"""
+# Check if quest is completed
 	return quest_id in completed_quests
 
 func is_quest_active(quest_id: String) -> bool:
-	"""Check if quest is active"""
+# Check if quest is active
 	return active_quests.has(quest_id)
 
 func get_quest_data(quest_id: String) -> Dictionary:
-	"""Get quest data by ID"""
+# Get quest data by ID
 	return quest_data.get(quest_id, {})
 
 # Save/Load System Integration
 func save_quest_state() -> Dictionary:
-	"""Save quest system state"""
+# Save quest system state
 	return {
 		"active_quests": active_quests,
 		"completed_quests": completed_quests,
@@ -492,7 +492,7 @@ func save_quest_state() -> Dictionary:
 	}
 
 func load_quest_state(save_data: Dictionary):
-	"""Load quest system state"""
+# Load quest system state
 	if save_data.has("active_quests"):
 		active_quests = save_data.active_quests
 	

@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 class_name GameHUD
 # game_hud.gd - In-game HUD with health, mana, inventory, and combat log
 
@@ -36,7 +36,7 @@ func _ready():
 	update_all_displays()
 
 func setup_hud():
-	"""Setup HUD layout and components"""
+# Setup HUD layout and components
 	
 	# Main HUD container
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -63,7 +63,7 @@ func setup_hud():
 	add_child(notification_timer)
 
 func create_player_stats_panel():
-	"""Create player health/mana/level display"""
+# Create player health/mana/level display
 	var stats_panel = VBoxContainer.new()
 	stats_panel.position = Vector2(20, 20)
 	stats_panel.custom_minimum_size = Vector2(250, 120)
@@ -122,7 +122,7 @@ func create_player_stats_panel():
 	exp_container.add_child(exp_bar)
 
 func create_quick_item_panel():
-	"""Create quick use item slot"""
+# Create quick use item slot
 	var quick_panel = VBoxContainer.new()
 	quick_panel.position = Vector2(1100, 600)
 	quick_panel.custom_minimum_size = Vector2(80, 100)
@@ -150,7 +150,7 @@ func create_quick_item_panel():
 	quick_panel.add_child(key_hint)
 
 func create_combat_log_panel():
-	"""Create combat log display"""
+# Create combat log display
 	combat_log_container = ScrollContainer.new()
 	combat_log_container.position = Vector2(20, 500)
 	combat_log_container.custom_minimum_size = Vector2(400, 180)
@@ -173,7 +173,7 @@ func create_combat_log_panel():
 	move_child(log_bg, get_child_count() - 2)
 
 func create_notification_panel():
-	"""Create notification display"""
+# Create notification display
 	notification_label = Label.new()
 	notification_label.position = Vector2(640, 50)
 	notification_label.custom_minimum_size = Vector2(400, 50)
@@ -184,7 +184,7 @@ func create_notification_panel():
 	add_child(notification_label)
 
 func create_menu_panel():
-	"""Create menu access button"""
+# Create menu access button
 	menu_button = Button.new()
 	menu_button.text = "Menu"
 	menu_button.position = Vector2(1180, 20)
@@ -192,7 +192,7 @@ func create_menu_panel():
 	add_child(menu_button)
 
 func connect_signals():
-	"""Connect to EventBus signals"""
+# Connect to EventBus signals
 	EventBus.player_hp_changed.connect(_on_player_hp_changed)
 	EventBus.player_mp_changed.connect(_on_player_mp_changed)
 	EventBus.player_level_up.connect(_on_player_level_up)
@@ -206,7 +206,7 @@ func connect_signals():
 	menu_button.pressed.connect(_on_menu_button_pressed)
 
 func update_all_displays():
-	"""Update all HUD elements with current game state"""
+# Update all HUD elements with current game state
 	var player_data = GameState.get_player_data()
 	
 	# Update health/mana
@@ -228,14 +228,14 @@ func update_all_displays():
 	update_quick_item_display()
 
 func update_quick_item_display():
-	"""Update quick item slot display"""
+# Update quick item slot display
 	# TODO: Implement when inventory system is complete
 	quick_item_icon.texture = null
 	quick_item_button.text = "Empty"
 
 # Signal handlers
 func _on_player_hp_changed(current_hp: int, max_hp: int):
-	"""Update health bar"""
+# Update health bar
 	health_bar.max_value = max_hp
 	health_bar.value = current_hp
 	health_label.text = str(current_hp) + "/" + str(max_hp)
@@ -250,13 +250,13 @@ func _on_player_hp_changed(current_hp: int, max_hp: int):
 		health_bar.modulate = Color.RED
 
 func _on_player_mp_changed(current_mp: int, max_mp: int):
-	"""Update mana bar"""
+# Update mana bar
 	mana_bar.max_value = max_mp
 	mana_bar.value = current_mp
 	mana_label.text = str(current_mp) + "/" + str(max_mp)
 
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
-	"""Handle level up display"""
+# Handle level up display
 	level_label.text = "Lv " + str(level)
 	
 	# Show level up notification
@@ -271,7 +271,7 @@ func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
 	exp_bar.value = player_data.experience - level_start_exp
 
 func _on_combat_log_updated(message: String):
-	"""Add message to combat log"""
+# Add message to combat log
 	var timestamp = "[color=gray]" + Time.get_time_string_from_system() + "[/color] "
 	combat_log.append_text(timestamp + message + "\n")
 	
@@ -285,7 +285,7 @@ func _on_combat_log_updated(message: String):
 		combat_log.append_text(new_text)
 
 func _on_damage_dealt(attacker: String, target: String, amount: int, damage_type):
-	"""Handle damage dealt event"""
+# Handle damage dealt event
 	var color = "white"
 	var type_text = ""
 	
@@ -304,7 +304,7 @@ func _on_damage_dealt(attacker: String, target: String, amount: int, damage_type
 	_on_combat_log_updated(message)
 
 func _on_heal_applied(target: Node, amount: int):
-	"""Handle heal applied event"""
+# Handle heal applied event
 	var target_name = "Unknown"
 	if target.has_method("get_display_name"):
 		target_name = target.get_display_name()
@@ -315,11 +315,11 @@ func _on_heal_applied(target: Node, amount: int):
 	_on_combat_log_updated(message)
 
 func _on_notification_shown(message: String, type: String):
-	"""Show notification message"""
+# Show notification message
 	show_notification(message, type)
 
 func show_notification(message: String, type: String = "info"):
-	"""Display a temporary notification"""
+# Display a temporary notification
 	var color = Color.WHITE
 	
 	match type:
@@ -341,28 +341,28 @@ func show_notification(message: String, type: String = "info"):
 	notification_timer.start()
 
 func _on_notification_timeout():
-	"""Hide notification after timeout"""
+# Hide notification after timeout
 	notification_label.visible = false
 
 func _on_quick_item_pressed():
-	"""Handle quick item button press"""
+# Handle quick item button press
 	# Simulate using quick item
-	EventBus.ui_notification_shown.emit("Quick item used!", "info")
+	EventBus.show_notification("Quick item used!", "info")
 
 func _on_menu_button_pressed():
-	"""Handle menu button press"""
+# Handle menu button press
 	# TODO: Open pause/settings menu
-	EventBus.ui_notification_shown.emit("Menu not yet implemented!", "warning")
+	EventBus.show_notification("Menu not yet implemented!", "warning")
 
 # Input handling
 func _input(event):
-	"""Handle HUD-specific input"""
+# Handle HUD-specific input
 	if event.is_action_pressed("use_item"):
 		_on_quick_item_pressed()
 
 # Utility functions
 func set_quick_item(item_id: String):
-	"""Set the quick use item"""
+# Set the quick use item
 	var item_data = DataLoader.get_item(item_id)
 	if item_data:
 		# TODO: Set item icon and update display
@@ -370,20 +370,20 @@ func set_quick_item(item_id: String):
 		show_notification("Quick item set to: " + item_data.name, "info")
 
 func flash_health_bar():
-	"""Flash health bar when taking damage"""
+# Flash health bar when taking damage
 	var tween = create_tween()
 	tween.tween_property(health_bar, "modulate", Color.RED, 0.1)
 	tween.tween_property(health_bar, "modulate", Color.WHITE, 0.1)
 
 func flash_mana_bar():
-	"""Flash mana bar when using skills"""
+# Flash mana bar when using skills
 	var tween = create_tween()
 	tween.tween_property(mana_bar, "modulate", Color.BLUE, 0.1)
 	tween.tween_property(mana_bar, "modulate", Color.WHITE, 0.1)
 
 # Debug functions (only in debug builds)
 func add_debug_panel():
-	"""Add debug information panel"""
+# Add debug information panel
 	if not OS.is_debug_build():
 		return
 	

@@ -1,8 +1,8 @@
-class_name GameHUD
+﻿class_name GameHUD
 extends Control
 
 ## HUD Principal do jogo Disorder Chaos
-## Contém barras de status, minimap, buffs, relógio e informações essenciais
+## ContÃ©m barras de status, minimap, buffs, relÃ³gio e informaÃ§Ãµes essenciais
 
 @onready var health_bar: ProgressBar = $VBox/TopPanel/LeftSection/HealthBar
 @onready var mana_bar: ProgressBar = $VBox/TopPanel/LeftSection/ManaBar
@@ -23,12 +23,12 @@ extends Control
 @onready var chat_box: RichTextLabel = $VBox/BottomPanel/ChatContainer/ChatBox
 @onready var chat_input: LineEdit = $VBox/BottomPanel/ChatContainer/ChatInput
 
-# Sistema de relógio do jogo
+# Sistema de relÃ³gio do jogo
 var game_time: float = 0.0
 var time_scale: float = 60.0  # 1 segundo real = 1 minuto do jogo
 var day_duration: float = 1440.0  # 24 horas em minutos
 
-# Cache de referências para performance
+# Cache de referÃªncias para performance
 var player_stats: PlayerStats
 var current_buffs: Array[Buff] = []
 var current_debuffs: Array[Debuff] = []
@@ -55,7 +55,7 @@ func _process(delta):
 	update_game_time(delta)
 
 func setup_ui_theme():
-	"""Aplica tema dark fantasy em todos os elementos"""
+# Aplica tema dark fantasy em todos os elementos
 	# Barras de status
 	health_bar.add_theme_stylebox_override("fill", 
 		UIThemeManager.create_progress_bar_style(UIThemeManager.Colors.HP_RED))
@@ -91,7 +91,7 @@ func setup_ui_theme():
 		UIThemeManager.create_panel_style(UIThemeManager.Colors.PRIMARY_DARK))
 
 func setup_connections():
-	"""Configura todas as conexões de sinais"""
+# Configura todas as conexÃµes de sinais
 	chat_input.text_submitted.connect(_on_chat_text_submitted)
 	
 	# Hotbar inputs
@@ -101,7 +101,7 @@ func setup_connections():
 			slot.pressed.connect(func(): hotbar_slot_used.emit(i))
 
 func setup_hotbar():
-	"""Configura a hotbar com 10 slots"""
+# Configura a hotbar com 10 slots
 	for i in range(10):
 		var slot = Button.new()
 		slot.custom_minimum_size = Vector2(50, 50)
@@ -112,7 +112,7 @@ func setup_hotbar():
 				UIThemeManager.Colors.CYBER_CYAN
 			))
 		
-		# Adiciona número do slot
+		# Adiciona nÃºmero do slot
 		var label = Label.new()
 		label.text = str((i + 1) % 10)  # 1-9, 0
 		label.position = Vector2(2, 2)
@@ -122,7 +122,7 @@ func setup_hotbar():
 		hotbar.add_child(slot)
 
 func update_game_time(delta: float):
-	"""Atualiza relógio interno do jogo"""
+# Atualiza relÃ³gio interno do jogo
 	game_time += delta * time_scale
 	if game_time >= day_duration:
 		game_time = 0.0
@@ -130,7 +130,7 @@ func update_game_time(delta: float):
 	update_time_display()
 
 func update_time_display():
-	"""Atualiza display do relógio"""
+# Atualiza display do relÃ³gio
 	var hours = int(game_time / 60.0)
 	var minutes = int(game_time) % 60
 	var time_period = "AM" if hours < 12 else "PM"
@@ -140,19 +140,19 @@ func update_time_display():
 	
 	game_clock.text = "%02d:%02d %s" % [display_hour, minutes, time_period]
 	
-	# Muda cor baseado no período
+	# Muda cor baseado no perÃ­odo
 	if hours >= 6 and hours < 18:  # Dia
 		game_clock.add_theme_color_override("font_color", UIThemeManager.Colors.XP_YELLOW)
 	else:  # Noite
 		game_clock.add_theme_color_override("font_color", UIThemeManager.Colors.CYBER_CYAN)
 
 func _on_player_stats_changed(stats: PlayerStats):
-	"""Atualiza barras quando stats do player mudam"""
+# Atualiza barras quando stats do player mudam
 	player_stats = stats
 	update_status_bars()
 
 func update_status_bars():
-	"""Atualiza todas as barras de status"""
+# Atualiza todas as barras de status
 	if not player_stats:
 		return
 	
@@ -174,41 +174,41 @@ func update_status_bars():
 	# XP e Level
 	xp_bar.max_value = player_stats.xp_to_next_level
 	xp_bar.value = player_stats.current_xp
-	level_label.text = "Nível %d" % player_stats.level
+	level_label.text = "NÃ­vel %d" % player_stats.level
 	
-	# Animações de mudança
+	# AnimaÃ§Ãµes de mudanÃ§a
 	animate_bar_change(health_bar)
 	animate_bar_change(mana_bar)
 	animate_bar_change(stamina_bar)
 
 func animate_bar_change(bar: ProgressBar):
-	"""Anima mudanças nas barras de status"""
+# Anima mudanÃ§as nas barras de status
 	var tween = create_tween()
 	tween.tween_property(bar, "modulate", Color.WHITE * 1.5, 0.1)
 	tween.tween_property(bar, "modulate", Color.WHITE, 0.1)
 
 func _on_buff_added(buff: Buff):
-	"""Adiciona ícone de buff"""
+# Adiciona Ã­cone de buff
 	current_buffs.append(buff)
 	update_buffs_display()
 
 func _on_buff_removed(buff: Buff):
-	"""Remove ícone de buff"""
+# Remove Ã­cone de buff
 	current_buffs.erase(buff)
 	update_buffs_display()
 
 func _on_debuff_added(debuff: Debuff):
-	"""Adiciona ícone de debuff"""
+# Adiciona Ã­cone de debuff
 	current_debuffs.append(debuff)
 	update_debuffs_display()
 
 func _on_debuff_removed(debuff: Debuff):
-	"""Remove ícone de debuff"""
+# Remove Ã­cone de debuff
 	current_debuffs.erase(debuff)
 	update_debuffs_display()
 
 func update_buffs_display():
-	"""Atualiza display de buffs"""
+# Atualiza display de buffs
 	# Limpa buffs antigos
 	for child in buffs_container.get_children():
 		child.queue_free()
@@ -219,7 +219,7 @@ func update_buffs_display():
 		buffs_container.add_child(buff_icon)
 
 func update_debuffs_display():
-	"""Atualiza display de debuffs"""
+# Atualiza display de debuffs
 	# Limpa debuffs antigos
 	for child in debuffs_container.get_children():
 		child.queue_free()
@@ -230,17 +230,17 @@ func update_debuffs_display():
 		debuffs_container.add_child(debuff_icon)
 
 func create_buff_icon(effect, is_buff: bool) -> Control:
-	"""Cria ícone para buff/debuff"""
+# Cria Ã­cone para buff/debuff
 	var container = Control.new()
 	container.custom_minimum_size = Vector2(32, 32)
 	
-	# Fundo do ícone
+	# Fundo do Ã­cone
 	var background = ColorRect.new()
 	background.color = UIThemeManager.Colors.SUCCESS_GREEN if is_buff else UIThemeManager.Colors.ERROR_RED
 	background.size = Vector2(32, 32)
 	container.add_child(background)
 	
-	# Ícone (usar TextureRect quando tiver assets)
+	# Ãcone (usar TextureRect quando tiver assets)
 	var icon = Label.new()
 	icon.text = effect.icon_text if effect.has_method("get_icon_text") else "?"
 	icon.position = Vector2(8, 8)
@@ -250,7 +250,7 @@ func create_buff_icon(effect, is_buff: bool) -> Control:
 	# Tooltip
 	container.tooltip_text = effect.description if effect.has_method("get_description") else "Efeito"
 	
-	# Timer visual (se aplicável)
+	# Timer visual (se aplicÃ¡vel)
 	if effect.has_method("get_remaining_time"):
 		var timer_label = Label.new()
 		timer_label.text = str(int(effect.get_remaining_time()))
@@ -262,20 +262,20 @@ func create_buff_icon(effect, is_buff: bool) -> Control:
 	return container
 
 func _on_chat_text_submitted(text: String):
-	"""Processa mensagem do chat"""
+# Processa mensagem do chat
 	if text.strip_edges() != "":
-		add_chat_message("Você", text)
+		add_chat_message("VocÃª", text)
 		chat_message_sent.emit(text)
 		chat_input.text = ""
 
 func add_chat_message(sender: String, message: String):
-	"""Adiciona mensagem ao chat"""
+# Adiciona mensagem ao chat
 	var time_str = game_clock.text
 	var formatted_message = "[color=#00d4ff][%s][/color] [color=#ffd700]%s:[/color] %s\n" % [time_str, sender, message]
 	chat_box.append_text(formatted_message)
 
 func show_damage_number(damage: int, position: Vector2, is_critical: bool = false):
-	"""Mostra número de dano flutuante"""
+# Mostra nÃºmero de dano flutuante
 	var damage_label = Label.new()
 	damage_label.text = str(damage)
 	damage_label.position = position
@@ -290,14 +290,14 @@ func show_damage_number(damage: int, position: Vector2, is_critical: bool = fals
 	
 	add_child(damage_label)
 	
-	# Animação
+	# AnimaÃ§Ã£o
 	var tween = create_tween()
 	tween.parallel().tween_property(damage_label, "position", position + Vector2(0, -50), 1.0)
 	tween.parallel().tween_property(damage_label, "modulate", Color.TRANSPARENT, 1.0)
 	tween.tween_callback(damage_label.queue_free)
 
 func show_healing_number(healing: int, position: Vector2):
-	"""Mostra número de cura flutuante"""
+# Mostra nÃºmero de cura flutuante
 	var heal_label = Label.new()
 	heal_label.text = "+" + str(healing)
 	heal_label.position = position
@@ -307,14 +307,14 @@ func show_healing_number(healing: int, position: Vector2):
 	
 	add_child(heal_label)
 	
-	# Animação
+	# AnimaÃ§Ã£o
 	var tween = create_tween()
 	tween.parallel().tween_property(heal_label, "position", position + Vector2(0, -30), 0.8)
 	tween.parallel().tween_property(heal_label, "modulate", Color.TRANSPARENT, 0.8)
 	tween.tween_callback(heal_label.queue_free)
 
 func toggle_minimap_size():
-	"""Alterna entre minimap normal e expandido"""
+# Alterna entre minimap normal e expandido
 	var current_size = minimap.size
 	var target_size = Vector2(200, 200) if current_size.x < 150 else Vector2(120, 120)
 	
@@ -322,7 +322,7 @@ func toggle_minimap_size():
 	tween.tween_property(minimap, "size", target_size, 0.3)
 
 func set_hotbar_item(slot_index: int, item_data: Dictionary):
-	"""Define item em slot da hotbar"""
+# Define item em slot da hotbar
 	if slot_index >= 0 and slot_index < hotbar.get_child_count():
 		var slot = hotbar.get_child(slot_index) as Button
 		if slot and item_data.has("icon"):
@@ -331,7 +331,7 @@ func set_hotbar_item(slot_index: int, item_data: Dictionary):
 
 # === INPUT HANDLING ===
 func _input(event):
-	"""Gerencia inputs do HUD"""
+# Gerencia inputs do HUD
 	if event.is_action_pressed("toggle_chat"):
 		chat_input.grab_focus()
 	elif event.is_action_pressed("toggle_minimap"):
@@ -344,11 +344,11 @@ func _input(event):
 			hotbar_slot_used.emit(i)
 
 func hide_hud():
-	"""Esconde HUD (útil para screenshots ou cutscenes)"""
+# Esconde HUD (Ãºtil para screenshots ou cutscenes)
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.TRANSPARENT, UIThemeManager.Styles.FADE_DURATION)
 
 func show_hud():
-	"""Mostra HUD novamente"""
+# Mostra HUD novamente
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, UIThemeManager.Styles.FADE_DURATION)

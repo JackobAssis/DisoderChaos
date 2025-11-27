@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name AISenses
 # AISenses.gd - AI perception system with vision, hearing, and environmental awareness
 # Supports configurable field of view, sound detection, and climate integration
@@ -61,7 +61,7 @@ func _ready():
 	print("[AISenses] Perception system ready")
 
 func setup(parent_entity: Node2D, detection_range: float):
-	"""Initialize senses for specific entity"""
+# Initialize senses for specific entity
 	entity = parent_entity
 	vision_range = detection_range
 	
@@ -71,21 +71,21 @@ func setup(parent_entity: Node2D, detection_range: float):
 	print("[AISenses] Configured for entity: ", entity.name)
 
 func setup_raycasting():
-	"""Setup raycasting for line of sight checks"""
+# Setup raycasting for line of sight checks
 	vision_raycast = RayCast2D.new()
 	vision_raycast.enabled = true
 	vision_raycast.collision_mask = vision_layers
 	add_child(vision_raycast)
 
 func setup_climate_integration():
-	"""Setup integration with climate system"""
+# Setup integration with climate system
 	climate_manager = get_node_or_null("/root/ClimateManager")
 	if climate_manager:
 		climate_manager.weather_changed.connect(_on_weather_changed)
 		climate_manager.light_level_changed.connect(_on_light_level_changed)
 
 func update_perception(delta: float):
-	"""Main perception update loop"""
+# Main perception update loop
 	if not entity or not space_state:
 		return
 	
@@ -102,7 +102,7 @@ func update_perception(delta: float):
 	cleanup_old_detections(delta)
 
 func update_environmental_factors():
-	"""Update environmental factors affecting perception"""
+# Update environmental factors affecting perception
 	if climate_manager:
 		current_light_level = climate_manager.get_light_level()
 		current_weather_effect = get_weather_perception_effect()
@@ -116,7 +116,7 @@ func update_environmental_factors():
 	effective_hearing_modifier *= current_weather_effect  # Weather affects hearing
 
 func get_weather_perception_effect() -> float:
-	"""Get weather effect on perception"""
+# Get weather effect on perception
 	if not climate_manager:
 		return 1.0
 	
@@ -142,7 +142,7 @@ func get_weather_perception_effect() -> float:
 			return 1.0
 
 func update_vision_detection(delta: float):
-	"""Update visual target detection"""
+# Update visual target detection
 	var potential_targets = get_potential_targets()
 	
 	for target in potential_targets:
@@ -154,7 +154,7 @@ func update_vision_detection(delta: float):
 			handle_target_loss(target, delta)
 
 func get_potential_targets() -> Array:
-	"""Get potential targets within maximum detection range"""
+# Get potential targets within maximum detection range
 	var targets = []
 	var max_range = vision_range * vision_range_modifier * alertness_level
 	
@@ -178,7 +178,7 @@ func get_potential_targets() -> Array:
 	return targets
 
 func check_visual_detection(target: Node2D) -> Dictionary:
-	"""Check if target is visually detectable"""
+# Check if target is visually detectable
 	var result = {
 		"detected": false,
 		"confidence": 0.0,
@@ -227,7 +227,7 @@ func check_visual_detection(target: Node2D) -> Dictionary:
 	return result
 
 func get_entity_facing_direction() -> Vector2:
-	"""Get the direction the entity is facing"""
+# Get the direction the entity is facing
 	# This would depend on how the entity stores its facing direction
 	# For now, assume it's looking right by default
 	if entity.has_method("get_facing_direction"):
@@ -236,7 +236,7 @@ func get_entity_facing_direction() -> Vector2:
 		return Vector2.RIGHT
 
 func check_line_of_sight(from_pos: Vector2, to_pos: Vector2) -> bool:
-	"""Check if there's a clear line of sight between two positions"""
+# Check if there's a clear line of sight between two positions
 	if not vision_raycast or not space_state:
 		return true  # Assume clear if no raycasting available
 	
@@ -250,7 +250,7 @@ func check_line_of_sight(from_pos: Vector2, to_pos: Vector2) -> bool:
 	return result.is_empty()
 
 func calculate_visual_confidence(target: Node2D, distance: float, is_in_fov: bool) -> float:
-	"""Calculate confidence level for visual detection"""
+# Calculate confidence level for visual detection
 	var confidence = 1.0
 	
 	# Distance factor
@@ -284,7 +284,7 @@ func calculate_visual_confidence(target: Node2D, distance: float, is_in_fov: boo
 	return clamp(confidence, 0.0, 1.0)
 
 func update_hearing_detection(delta: float):
-	"""Update auditory detection"""
+# Update auditory detection
 	# Check for footsteps
 	check_footstep_detection()
 	
@@ -295,7 +295,7 @@ func update_hearing_detection(delta: float):
 	update_sound_memory(delta)
 
 func check_footstep_detection():
-	"""Check for footstep detection"""
+# Check for footstep detection
 	var effective_hearing_range = footstep_detection_range * hearing_range_modifier * alertness_level
 	effective_hearing_range *= current_weather_effect
 	
@@ -323,13 +323,13 @@ func check_footstep_detection():
 				register_sound(potential_source.global_position, "footsteps", sound_confidence)
 
 func check_ambient_sound_detection():
-	"""Check for other environmental sounds"""
+# Check for other environmental sounds
 	# This would integrate with a sound manager system
 	# For now, we'll check for sounds emitted by other entities
 	pass
 
 func calculate_hearing_confidence(source: Node2D, distance: float) -> float:
-	"""Calculate confidence for hearing detection"""
+# Calculate confidence for hearing detection
 	var confidence = 1.0
 	
 	# Distance factor
@@ -350,7 +350,7 @@ func calculate_hearing_confidence(source: Node2D, distance: float) -> float:
 	return clamp(confidence, 0.0, 1.0)
 
 func register_sound(position: Vector2, sound_type: String, confidence: float):
-	"""Register a detected sound"""
+# Register a detected sound
 	var sound_data = {
 		"position": position,
 		"type": sound_type,
@@ -369,7 +369,7 @@ func register_sound(position: Vector2, sound_type: String, confidence: float):
 		suspicious_sound.emit(position)
 
 func update_sound_memory(delta: float):
-	"""Update and clean old sounds from memory"""
+# Update and clean old sounds from memory
 	var current_time = Time.get_ticks_msec() / 1000.0
 	
 	# Remove old sounds from memory
@@ -382,7 +382,7 @@ func update_sound_memory(delta: float):
 	heard_sounds.clear()
 
 func handle_target_detection(target: Node2D, detection_result: Dictionary, delta: float):
-	"""Handle target detection with confirmation"""
+# Handle target detection with confirmation
 	var target_id = target.get_instance_id()
 	
 	# Initialize detection timer if needed
@@ -409,7 +409,7 @@ func handle_target_detection(target: Node2D, detection_result: Dictionary, delta
 			last_seen_positions[target_id] = target.global_position
 
 func handle_target_loss(target: Node2D, delta: float):
-	"""Handle loss of target detection"""
+# Handle loss of target detection
 	var target_id = target.get_instance_id()
 	
 	if target in detected_targets:
@@ -425,7 +425,7 @@ func handle_target_loss(target: Node2D, delta: float):
 				line_of_sight_broken.emit(target)
 
 func cleanup_old_detections(delta: float):
-	"""Clean up old detection timers"""
+# Clean up old detection timers
 	var current_time = Time.get_ticks_msec() / 1000.0
 	
 	# Remove detection timers for targets that no longer exist
@@ -437,42 +437,42 @@ func cleanup_old_detections(delta: float):
 
 # Public API
 func can_see_target(target: Node2D) -> bool:
-	"""Check if target is currently visible"""
+# Check if target is currently visible
 	return target in detected_targets
 
 func get_last_seen_position(target: Node2D) -> Vector2:
-	"""Get last known position of target"""
+# Get last known position of target
 	var target_id = target.get_instance_id()
 	return last_seen_positions.get(target_id, Vector2.ZERO)
 
 func increase_alertness(multiplier: float = 2.0):
-	"""Increase alertness level"""
+# Increase alertness level
 	alertness_level = multiplier
 	print("[AISenses] Alertness increased to: ", alertness_level)
 
 func reset_alertness():
-	"""Reset alertness to normal level"""
+# Reset alertness to normal level
 	alertness_level = 1.0
 	print("[AISenses] Alertness reset to normal")
 
 func set_vision_range(new_range: float):
-	"""Set vision range"""
+# Set vision range
 	vision_range = new_range
 
 func set_vision_angle(new_angle: float):
-	"""Set vision angle in degrees"""
+# Set vision angle in degrees
 	vision_angle = clamp(new_angle, 30.0, 360.0)
 
 func set_hearing_range(new_range: float):
-	"""Set hearing range"""
+# Set hearing range
 	hearing_range = new_range
 
 func get_detected_targets() -> Array:
-	"""Get all currently detected targets"""
+# Get all currently detected targets
 	return detected_targets.duplicate()
 
 func get_recent_sounds(max_age: float = 3.0) -> Array:
-	"""Get recent sounds within specified age"""
+# Get recent sounds within specified age
 	var current_time = Time.get_ticks_msec() / 1000.0
 	var recent_sounds = []
 	
@@ -483,7 +483,7 @@ func get_recent_sounds(max_age: float = 3.0) -> Array:
 	return recent_sounds
 
 func has_line_of_sight_to(target: Node2D) -> bool:
-	"""Check if there's line of sight to specific target"""
+# Check if there's line of sight to specific target
 	if not target:
 		return false
 	
@@ -491,18 +491,18 @@ func has_line_of_sight_to(target: Node2D) -> bool:
 
 # Environmental integration
 func _on_weather_changed(weather_type: String):
-	"""Handle weather changes"""
+# Handle weather changes
 	current_weather_effect = get_weather_perception_effect()
 	print("[AISenses] Weather changed, perception effect: ", current_weather_effect)
 
 func _on_light_level_changed(light_level: float):
-	"""Handle light level changes"""
+# Handle light level changes
 	current_light_level = light_level
 	print("[AISenses] Light level changed: ", light_level)
 
 # Special abilities
 func detect_stealth_targets() -> Array:
-	"""Special detection for stealthed/invisible targets"""
+# Special detection for stealthed/invisible targets
 	var stealth_targets = []
 	
 	# This would integrate with a stealth system
@@ -511,7 +511,7 @@ func detect_stealth_targets() -> Array:
 	return stealth_targets
 
 func detect_magic_auras() -> Array:
-	"""Detect magical auras if entity has magical senses"""
+# Detect magical auras if entity has magical senses
 	var magic_targets = []
 	
 	# This would integrate with a magic system
@@ -521,7 +521,7 @@ func detect_magic_auras() -> Array:
 
 # Debug functions
 func debug_draw_vision_cone():
-	"""Draw vision cone for debugging"""
+# Draw vision cone for debugging
 	if not entity:
 		return
 	
@@ -529,7 +529,7 @@ func debug_draw_vision_cone():
 	pass
 
 func debug_draw_hearing_range():
-	"""Draw hearing range for debugging"""
+# Draw hearing range for debugging
 	if not entity:
 		return
 	
@@ -537,7 +537,7 @@ func debug_draw_hearing_range():
 	pass
 
 func get_perception_debug_info() -> Dictionary:
-	"""Get debug information about perception"""
+# Get debug information about perception
 	return {
 		"entity_name": entity.name if entity else "None",
 		"vision_range": vision_range,
@@ -554,7 +554,7 @@ func get_perception_debug_info() -> Dictionary:
 
 # Cleanup
 func _exit_tree():
-	"""Cleanup when senses are removed"""
+# Cleanup when senses are removed
 	if vision_raycast:
 		vision_raycast.queue_free()
 	

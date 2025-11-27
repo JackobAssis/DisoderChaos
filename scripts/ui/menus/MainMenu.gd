@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name MainMenu
 
@@ -41,7 +41,7 @@ func _ready():
 	print("[MainMenu] Menu Principal inicializado")
 
 func setup_main_menu():
-	"""Setup main menu layout"""
+# Setup main menu layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	
@@ -51,7 +51,7 @@ func setup_main_menu():
 	create_version_info()
 
 func create_background():
-	"""Create animated background"""
+# Create animated background
 	background_panel = Panel.new()
 	background_panel.name = "Background"
 	background_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -71,7 +71,7 @@ func create_background():
 	background_panel.add_theme_stylebox_override("panel", gradient_style)
 
 func create_tech_pattern() -> ImageTexture:
-	"""Create tech-style background pattern"""
+# Create tech-style background pattern
 	var size = 64
 	var image = Image.create(size, size, false, Image.FORMAT_RGBA8)
 	
@@ -100,7 +100,7 @@ func create_tech_pattern() -> ImageTexture:
 	return texture
 
 func create_title():
-	"""Create game title"""
+# Create game title
 	title_label = Label.new()
 	title_label.name = "Title"
 	title_label.text = "DISORDER CHAOS"
@@ -124,7 +124,7 @@ func create_title():
 	title_label.add_theme_constant_override("shadow_offset_y", 3)
 
 func create_menu_buttons():
-	"""Create main menu buttons"""
+# Create main menu buttons
 	var button_container = VBoxContainer.new()
 	button_container.name = "ButtonContainer"
 	button_container.anchor_left = 0.5
@@ -164,7 +164,7 @@ func create_menu_buttons():
 	button_container.add_child(quit_button)
 
 func create_menu_button(text: String) -> Button:
-	"""Create styled menu button"""
+# Create styled menu button
 	var button = Button.new()
 	button.text = text
 	button.custom_minimum_size = Vector2(280, 50)
@@ -226,7 +226,7 @@ func create_menu_button(text: String) -> Button:
 	return button
 
 func create_version_info():
-	"""Create version and build info"""
+# Create version and build info
 	version_label = Label.new()
 	version_label.name = "Version"
 	version_label.text = "v1.0.0 - Alpha Build"
@@ -246,7 +246,7 @@ func create_version_info():
 	version_label.add_theme_font_size_override("font_size", 12)
 
 func create_background_effects():
-	"""Create animated background effects"""
+# Create animated background effects
 	# Floating particles
 	particle_system = CPUParticles2D.new()
 	particle_system.name = "BackgroundParticles"
@@ -272,7 +272,7 @@ func create_background_effects():
 	add_child(particle_system)
 
 func create_particle_texture() -> ImageTexture:
-	"""Create particle texture"""
+# Create particle texture
 	var size = 8
 	var image = Image.create(size, size, false, Image.FORMAT_RGBA8)
 	
@@ -291,7 +291,7 @@ func create_particle_texture() -> ImageTexture:
 	return texture
 
 func setup_animations():
-	"""Setup menu animations"""
+# Setup menu animations
 	menu_tween = Tween.new()
 	add_child(menu_tween)
 	
@@ -302,7 +302,7 @@ func setup_animations():
 	start_title_glow_animation()
 
 func start_title_glow_animation():
-	"""Start title glow effect"""
+# Start title glow effect
 	if not title_label or not glow_tween:
 		return
 	
@@ -315,12 +315,12 @@ func start_title_glow_animation():
 	glow_tween.tween_method(_update_title_color, bright_color, original_color, 2.0)
 
 func _update_title_color(color: Color):
-	"""Update title color for glow effect"""
+# Update title color for glow effect
 	if title_label:
 		title_label.add_theme_color_override("font_color", color)
 
 func play_intro_animation():
-	"""Play menu intro animation"""
+# Play menu intro animation
 	if not menu_tween:
 		return
 	
@@ -344,7 +344,7 @@ func play_intro_animation():
 	menu_tween.tween_callback(func(): is_animating = false)
 
 func check_save_data():
-	"""Check if save data exists"""
+# Check if save data exists
 	has_save_data = game_state.has_save_data() if game_state else false
 	
 	if continue_button:
@@ -352,7 +352,7 @@ func check_save_data():
 
 # Button Event Handlers
 func _on_new_game_pressed():
-	"""Handle New Game button press"""
+# Handle New Game button press
 	if is_animating:
 		return
 	
@@ -366,7 +366,7 @@ func _on_new_game_pressed():
 	transition_to_game()
 
 func _on_continue_pressed():
-	"""Handle Continue button press"""
+# Handle Continue button press
 	if is_animating or not has_save_data:
 		return
 	
@@ -380,7 +380,7 @@ func _on_continue_pressed():
 	transition_to_game()
 
 func _on_settings_pressed():
-	"""Handle Settings button press"""
+# Handle Settings button press
 	if is_animating:
 		return
 	
@@ -390,7 +390,7 @@ func _on_settings_pressed():
 	open_settings_menu()
 
 func _on_credits_pressed():
-	"""Handle Credits button press"""
+# Handle Credits button press
 	if is_animating:
 		return
 	
@@ -400,7 +400,7 @@ func _on_credits_pressed():
 	show_credits()
 
 func _on_quit_pressed():
-	"""Handle Quit button press"""
+# Handle Quit button press
 	if is_animating:
 		return
 	
@@ -411,46 +411,46 @@ func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_button_hover(button: Button):
-	"""Handle button hover"""
+# Handle button hover
 	if is_animating:
 		return
 	
 	# Play hover sound
-	event_bus.emit_signal("play_ui_sound", "button_hover")
+	EventBus.play_sound("button_hover")
 	
 	# Subtle scale animation
 	var hover_tween = create_tween()
 	hover_tween.tween_property(button, "scale", Vector2(1.05, 1.05), 0.1)
 
 func _on_button_press(button: Button):
-	"""Handle button press"""
+# Handle button press
 	# Play click sound
-	event_bus.emit_signal("play_ui_sound", "button_click")
+	EventBus.play_sound("button_click")
 
 func play_button_animation(button: Button):
-	"""Play button press animation"""
+# Play button press animation
 	var anim_tween = create_tween()
 	anim_tween.tween_property(button, "scale", Vector2(0.95, 0.95), 0.1)
 	anim_tween.tween_property(button, "scale", Vector2(1.0, 1.0), 0.1)
 
 func transition_to_game():
-	"""Transition to main game scene"""
+# Transition to main game scene
 	# Fade out menu
 	var transition_tween = create_tween()
 	transition_tween.tween_property(self, "modulate:a", 0.0, 1.0)
 	transition_tween.tween_callback(func(): change_to_game_scene())
 
 func change_to_game_scene():
-	"""Change to main game scene"""
+# Change to main game scene
 	# Load main game scene
 	var game_scene_path = "res://scenes/core/Main.tscn"
 	if ResourceLoader.exists(game_scene_path):
 		get_tree().change_scene_to_file(game_scene_path)
 	else:
-		print("[MainMenu] ERRO: Cena do jogo não encontrada")
+		print("[MainMenu] ERRO: Cena do jogo nÃ£o encontrada")
 
 func open_settings_menu():
-	"""Open settings submenu"""
+# Open settings submenu
 	# Create settings overlay
 	var settings_overlay = create_settings_overlay()
 	add_child(settings_overlay)
@@ -461,7 +461,7 @@ func open_settings_menu():
 	settings_tween.tween_property(settings_overlay, "modulate:a", 1.0, 0.3)
 
 func create_settings_overlay() -> Control:
-	"""Create settings menu overlay"""
+# Create settings menu overlay
 	var overlay = Control.new()
 	overlay.name = "SettingsOverlay"
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -529,7 +529,7 @@ func create_settings_overlay() -> Control:
 	return overlay
 
 func show_credits():
-	"""Show credits screen"""
+# Show credits screen
 	var credits_text = """
 	DISORDER CHAOS
 	
@@ -541,7 +541,7 @@ func show_credits():
 	- Godot Community
 	- Open Source Contributors
 	
-	Made with 💚 in 2025
+	Made with ðŸ’š in 2025
 	"""
 	
 	# Create credits overlay
@@ -595,7 +595,7 @@ func show_credits():
 
 # Input handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if event.is_action_pressed("ui_cancel"):
 		if get_children().any(func(child): return child.name in ["SettingsOverlay", "CreditsOverlay"]):
 			# Close any open overlays
@@ -605,11 +605,11 @@ func _input(event):
 
 # Debug Functions
 func debug_enable_continue():
-	"""Debug: Enable continue button"""
+# Debug: Enable continue button
 	has_save_data = true
 	if continue_button:
 		continue_button.disabled = false
 
 func debug_test_animations():
-	"""Debug: Test menu animations"""
+# Debug: Test menu animations
 	play_intro_animation()

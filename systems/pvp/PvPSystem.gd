@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 class_name PvPSystem
 
 signal match_started(match_id: String, players: Array, mode: String)
@@ -17,7 +17,7 @@ var player_ratings: Dictionary = {}
 var active_tournaments: Dictionary = {}
 var player_stats: Dictionary = {}
 
-# Configurações
+# ConfiguraÃ§Ãµes
 var pvp_enabled: bool = true
 var ranked_enabled: bool = true
 var tournaments_enabled: bool = true
@@ -27,7 +27,7 @@ var balance_normalization: bool = true
 var matchmaking_active: bool = true
 var queue_timers: Dictionary = {}
 
-# Referências
+# ReferÃªncias
 @onready var data_loader: DataLoader = DataLoader.new()
 @onready var event_bus: EventBus = EventBus
 
@@ -39,7 +39,7 @@ func _ready():
 	print("[PvPSystem] Sistema PvP inicializado")
 
 func load_pvp_system_data():
-	"""Carrega dados do sistema PvP"""
+# Carrega dados do sistema PvP
 	var data = data_loader.load_json_file("res://data/pvp/pvp_system.json")
 	if data:
 		pvp_system_data = data.pvp_system
@@ -48,13 +48,13 @@ func load_pvp_system_data():
 		push_error("[PvPSystem] Falha ao carregar dados PvP")
 
 func initialize_queues():
-	"""Inicializa filas de matchmaking"""
+# Inicializa filas de matchmaking
 	for mode in pvp_system_data.game_modes:
 		match_queues[mode] = []
 	print("[PvPSystem] Filas de matchmaking inicializadas")
 
 func connect_events():
-	"""Conecta aos eventos necessários"""
+# Conecta aos eventos necessÃ¡rios
 	event_bus.player_level_up.connect(_on_player_level_up)
 	event_bus.combat_ended.connect(_on_combat_ended)
 
@@ -63,28 +63,28 @@ func connect_events():
 # ============================================================================
 
 func queue_for_pvp(player: Node, mode: String) -> bool:
-	"""Adiciona jogador à fila de PvP"""
+# Adiciona jogador Ã  fila de PvP
 	if not pvp_enabled:
-		print("[PvPSystem] PvP está desabilitado")
+		print("[PvPSystem] PvP estÃ¡ desabilitado")
 		return false
 	
 	if not pvp_system_data.game_modes.has(mode):
-		print("[PvPSystem] Modo PvP inválido: ", mode)
+		print("[PvPSystem] Modo PvP invÃ¡lido: ", mode)
 		return false
 	
-	# Verificar se já está em fila
+	# Verificar se jÃ¡ estÃ¡ em fila
 	if _is_player_in_any_queue(player):
-		print("[PvPSystem] Jogador já está em fila")
+		print("[PvPSystem] Jogador jÃ¡ estÃ¡ em fila")
 		return false
 	
 	var mode_data = pvp_system_data.game_modes[mode]
 	
 	# Verificar requisitos do modo
 	if not _meets_mode_requirements(player, mode_data):
-		print("[PvPSystem] Jogador não atende requisitos do modo")
+		print("[PvPSystem] Jogador nÃ£o atende requisitos do modo")
 		return false
 	
-	# Adicionar à fila
+	# Adicionar Ã  fila
 	var queue_entry = {
 		"player": player,
 		"player_id": player.get_instance_id(),
@@ -108,7 +108,7 @@ func queue_for_pvp(player: Node, mode: String) -> bool:
 	return true
 
 func leave_queue(player: Node) -> bool:
-	"""Remove jogador de todas as filas"""
+# Remove jogador de todas as filas
 	var removed = false
 	
 	for mode in match_queues:
@@ -130,7 +130,7 @@ func leave_queue(player: Node) -> bool:
 	return removed
 
 func _attempt_matchmaking(mode: String):
-	"""Tenta fazer matchmaking para um modo"""
+# Tenta fazer matchmaking para um modo
 	if not matchmaking_active:
 		return
 	
@@ -143,7 +143,7 @@ func _attempt_matchmaking(mode: String):
 	# Ordenar por tempo de fila e rating
 	queue.sort_custom(_compare_queue_entries)
 	
-	# Encontrar matches possíveis
+	# Encontrar matches possÃ­veis
 	var potential_matches = _find_potential_matches(queue, mode_data)
 	
 	# Criar matches
@@ -151,7 +151,7 @@ func _attempt_matchmaking(mode: String):
 		_create_match(match_data, mode)
 
 func _find_potential_matches(queue: Array, mode_data: Dictionary) -> Array:
-	"""Encontra matches potenciais na fila"""
+# Encontra matches potenciais na fila
 	var potential_matches = []
 	var used_players = []
 	
@@ -165,7 +165,7 @@ func _find_potential_matches(queue: Array, mode_data: Dictionary) -> Array:
 		var match_players = [anchor_player]
 		used_players.push_back(i)
 		
-		# Encontrar players compatíveis
+		# Encontrar players compatÃ­veis
 		for j in range(i + 1, queue.size()):
 			if used_players.has(j):
 				continue
@@ -188,7 +188,7 @@ func _find_potential_matches(queue: Array, mode_data: Dictionary) -> Array:
 	return potential_matches
 
 func _create_match(players: Array, mode: String) -> String:
-	"""Cria uma nova partida"""
+# Cria uma nova partida
 	var match_id = _generate_match_id()
 	var mode_data = pvp_system_data.game_modes[mode]
 	
@@ -196,7 +196,7 @@ func _create_match(players: Array, mode: String) -> String:
 	for player_entry in players:
 		_remove_from_queue(player_entry.player, mode)
 	
-	# Dividir em teams se necessário
+	# Dividir em teams se necessÃ¡rio
 	var teams = _divide_into_teams(players, mode)
 	
 	# Criar dados da partida
@@ -213,7 +213,7 @@ func _create_match(players: Array, mode: String) -> String:
 		"stats": {}
 	}
 	
-	# Aplicar normalização de stats se necessário
+	# Aplicar normalizaÃ§Ã£o de stats se necessÃ¡rio
 	if _should_normalize_stats(mode):
 		_apply_stat_normalization(players, mode)
 	
@@ -235,7 +235,7 @@ func _create_match(players: Array, mode: String) -> String:
 # ============================================================================
 
 func _get_player_rating(player: Node, mode: String) -> int:
-	"""Obtém rating do jogador para um modo"""
+# ObtÃ©m rating do jogador para um modo
 	var player_id = player.get_instance_id()
 	
 	if not player_ratings.has(player_id):
@@ -258,7 +258,7 @@ func _get_player_rating(player: Node, mode: String) -> int:
 	return player_rating_data[mode].rating
 
 func update_player_rating(player: Node, mode: String, won: bool, performance: Dictionary):
-	"""Atualiza rating do jogador baseado no resultado"""
+# Atualiza rating do jogador baseado no resultado
 	if not ranked_enabled:
 		return
 	
@@ -266,10 +266,10 @@ func update_player_rating(player: Node, mode: String, won: bool, performance: Di
 	var rating_data = player_ratings[player_id][mode]
 	var old_rating = rating_data.rating
 	
-	# Calcular mudança de rating
+	# Calcular mudanÃ§a de rating
 	var rating_change = _calculate_rating_change(rating_data, won, performance)
 	
-	# Aplicar mudança
+	# Aplicar mudanÃ§a
 	rating_data.rating = max(0, rating_data.rating + rating_change)
 	rating_data.games_played += 1
 	
@@ -282,7 +282,7 @@ func update_player_rating(player: Node, mode: String, won: bool, performance: Di
 		rating_data.loss_streak += 1
 		rating_data.win_streak = 0
 	
-	# Atualizar tier e divisão
+	# Atualizar tier e divisÃ£o
 	var old_tier = rating_data.tier
 	_update_tier_and_division(rating_data)
 	
@@ -290,12 +290,12 @@ func update_player_rating(player: Node, mode: String, won: bool, performance: Di
 	if old_tier != rating_data.tier:
 		rating_updated.emit(player, old_rating, rating_data.rating, rating_data.tier)
 	
-	print("[PvPSystem] Rating atualizado - %s: %d → %d (%s)" % [
+	print("[PvPSystem] Rating atualizado - %s: %d â†’ %d (%s)" % [
 		player.name, old_rating, rating_data.rating, rating_data.tier
 	])
 
 func _calculate_rating_change(rating_data: Dictionary, won: bool, performance: Dictionary) -> int:
-	"""Calcula mudança de rating"""
+# Calcula mudanÃ§a de rating
 	var calculation = pvp_system_data.ranking_system.rating_calculation
 	var base_change = calculation.base_rating_gain if won else -calculation.base_rating_loss
 	
@@ -303,7 +303,7 @@ func _calculate_rating_change(rating_data: Dictionary, won: bool, performance: D
 	var performance_level = performance.get("level", "average")
 	var performance_multiplier = calculation.performance_multiplier.get(performance_level, 1.0)
 	
-	# Bônus de streak
+	# BÃ´nus de streak
 	var streak_bonus = 0
 	if won and rating_data.win_streak >= 3:
 		if rating_data.win_streak >= 10:
@@ -315,16 +315,16 @@ func _calculate_rating_change(rating_data: Dictionary, won: bool, performance: D
 	elif not won and rating_data.loss_streak >= 3:
 		streak_bonus = calculation.streak_bonus.loss_streak_protection
 	
-	# Bônus de matchmaking
+	# BÃ´nus de matchmaking
 	var fairness_bonus = performance.get("fairness_bonus", 0)
 	
-	# Calcular mudança final
+	# Calcular mudanÃ§a final
 	var total_change = int((base_change * performance_multiplier) + streak_bonus + fairness_bonus)
 	
 	return total_change
 
 func _update_tier_and_division(rating_data: Dictionary):
-	"""Atualiza tier e divisão baseado no rating"""
+# Atualiza tier e divisÃ£o baseado no rating
 	var rating = rating_data.rating
 	var tiers = pvp_system_data.ranking_system.rating_tiers
 	
@@ -333,7 +333,7 @@ func _update_tier_and_division(rating_data: Dictionary):
 		if rating >= tier_data.min_rating and rating <= tier_data.max_rating:
 			rating_data.tier = tier_name
 			
-			# Calcular divisão
+			# Calcular divisÃ£o
 			if tier_data.has("divisions") and tier_data.divisions > 1:
 				var tier_range = tier_data.max_rating - tier_data.min_rating
 				var division_size = tier_range / tier_data.divisions
@@ -345,16 +345,16 @@ func _update_tier_and_division(rating_data: Dictionary):
 			break
 
 # ============================================================================
-# BALANCEAMENTO E NORMALIZAÇÃO
+# BALANCEAMENTO E NORMALIZAÃ‡ÃƒO
 # ============================================================================
 
 func _should_normalize_stats(mode: String) -> bool:
-	"""Verifica se deve normalizar stats para o modo"""
+# Verifica se deve normalizar stats para o modo
 	var balance = pvp_system_data.balance_mechanics
 	return balance.stat_normalization.enabled_modes.has(mode)
 
 func _apply_stat_normalization(players: Array, mode: String):
-	"""Aplica normalização de stats"""
+# Aplica normalizaÃ§Ã£o de stats
 	if not balance_normalization:
 		return
 	
@@ -365,11 +365,11 @@ func _apply_stat_normalization(players: Array, mode: String):
 		_normalize_player_stats(player, normalized_stats)
 
 func _normalize_player_stats(player: Node, normalized_stats: Dictionary):
-	"""Normaliza stats de um jogador"""
+# Normaliza stats de um jogador
 	if not player.has_method("apply_pvp_normalization"):
 		return
 	
-	# Aplicar normalização via método do jogador
+	# Aplicar normalizaÃ§Ã£o via mÃ©todo do jogador
 	player.apply_pvp_normalization(normalized_stats)
 	
 	# Aplicar modificadores de classe
@@ -381,7 +381,7 @@ func _normalize_player_stats(player: Node, normalized_stats: Dictionary):
 		player.apply_pvp_class_modifiers(modifiers)
 
 func apply_pvp_ability_modifications(player: Node):
-	"""Aplica modificações específicas de PvP para habilidades"""
+# Aplica modificaÃ§Ãµes especÃ­ficas de PvP para habilidades
 	var global_changes = pvp_system_data.balance_mechanics.ability_modifications.global_pvp_changes
 	var specific_nerfs = pvp_system_data.balance_mechanics.ability_modifications.specific_ability_nerfs
 	
@@ -393,7 +393,7 @@ func apply_pvp_ability_modifications(player: Node):
 # ============================================================================
 
 func create_tournament(tournament_type: String, organizer: Node = null) -> String:
-	"""Cria um novo torneio"""
+# Cria um novo torneio
 	if not tournaments_enabled:
 		return ""
 	
@@ -421,7 +421,7 @@ func create_tournament(tournament_type: String, organizer: Node = null) -> Strin
 	return tournament_id
 
 func register_for_tournament(tournament_id: String, player: Node) -> bool:
-	"""Registra jogador em torneio"""
+# Registra jogador em torneio
 	if not active_tournaments.has(tournament_id):
 		return false
 	
@@ -430,11 +430,11 @@ func register_for_tournament(tournament_id: String, player: Node) -> bool:
 	if tournament.status != "registration":
 		return false
 	
-	# Verificar qualificações
+	# Verificar qualificaÃ§Ãµes
 	if not _meets_tournament_requirements(player, tournament):
 		return false
 	
-	# Verificar se já está registrado
+	# Verificar se jÃ¡ estÃ¡ registrado
 	for participant in tournament.participants:
 		if participant.get_instance_id() == player.get_instance_id():
 			return false
@@ -446,7 +446,7 @@ func register_for_tournament(tournament_id: String, player: Node) -> bool:
 	return true
 
 func start_tournament(tournament_id: String) -> bool:
-	"""Inicia um torneio"""
+# Inicia um torneio
 	if not active_tournaments.has(tournament_id):
 		return false
 	
@@ -471,17 +471,17 @@ func start_tournament(tournament_id: String) -> bool:
 	return true
 
 # ============================================================================
-# FUNÇÕES AUXILIARES
+# FUNÃ‡Ã•ES AUXILIARES
 # ============================================================================
 
 func _get_player_data(player: Node) -> Dictionary:
-	"""Obtém dados do jogador"""
+# ObtÃ©m dados do jogador
 	if player.has_method("get_player_data"):
 		return player.get_player_data()
 	return GameState.get_player_data()
 
 func _is_player_in_any_queue(player: Node) -> bool:
-	"""Verifica se jogador está em alguma fila"""
+# Verifica se jogador estÃ¡ em alguma fila
 	var player_id = player.get_instance_id()
 	
 	for mode in match_queues:
@@ -493,7 +493,7 @@ func _is_player_in_any_queue(player: Node) -> bool:
 	return false
 
 func _meets_mode_requirements(player: Node, mode_data: Dictionary) -> bool:
-	"""Verifica se jogador atende requisitos do modo"""
+# Verifica se jogador atende requisitos do modo
 	var player_data = _get_player_data(player)
 	
 	if mode_data.has("requirements"):
@@ -517,15 +517,15 @@ func _meets_mode_requirements(player: Node, mode_data: Dictionary) -> bool:
 	return true
 
 func _meets_tournament_requirements(player: Node, tournament: Dictionary) -> bool:
-	"""Verifica requisitos de torneio"""
+# Verifica requisitos de torneio
 	var tournament_type = tournament.type
 	var tournament_data = pvp_system_data.tournament_system.tournament_types[tournament_type]
 	
-	# Implementar verificações específicas de torneio
+	# Implementar verificaÃ§Ãµes especÃ­ficas de torneio
 	return true
 
 func _compare_queue_entries(a: Dictionary, b: Dictionary) -> bool:
-	"""Compara entradas da fila para ordenação"""
+# Compara entradas da fila para ordenaÃ§Ã£o
 	# Priorizar por tempo de fila primeiro
 	if a.queue_time != b.queue_time:
 		return a.queue_time < b.queue_time
@@ -534,7 +534,7 @@ func _compare_queue_entries(a: Dictionary, b: Dictionary) -> bool:
 	return a.rating > b.rating
 
 func _remove_from_queue(player: Node, mode: String):
-	"""Remove jogador específico da fila"""
+# Remove jogador especÃ­fico da fila
 	var queue = match_queues[mode]
 	var player_id = player.get_instance_id()
 	
@@ -544,7 +544,7 @@ func _remove_from_queue(player: Node, mode: String):
 			break
 
 func _divide_into_teams(players: Array, mode: String) -> Array:
-	"""Divide jogadores em teams"""
+# Divide jogadores em teams
 	var teams = [[], []]
 	
 	# Dividir por rating balanceado
@@ -557,35 +557,35 @@ func _divide_into_teams(players: Array, mode: String) -> Array:
 	return teams
 
 func _select_map(mode_data: Dictionary) -> String:
-	"""Seleciona mapa para a partida"""
+# Seleciona mapa para a partida
 	if mode_data.has("maps") and mode_data.maps.size() > 0:
 		return mode_data.maps[randi() % mode_data.maps.size()]
 	return "default_map"
 
 func _generate_match_id() -> String:
-	"""Gera ID único para partida"""
+# Gera ID Ãºnico para partida
 	return "match_" + str(Time.get_time_dict_from_system().unix) + "_" + str(randi())
 
 func _generate_tournament_id() -> String:
-	"""Gera ID único para torneio"""
+# Gera ID Ãºnico para torneio
 	return "tournament_" + str(Time.get_time_dict_from_system().unix) + "_" + str(randi())
 
 func _generate_tournament_bracket(participants: Array, tournament_type: String) -> Dictionary:
-	"""Gera bracket do torneio"""
-	# Implementação de bracket baseada no tipo de torneio
+# Gera bracket do torneio
+	# ImplementaÃ§Ã£o de bracket baseada no tipo de torneio
 	return {}
 
 func _start_tournament_round(tournament_id: String, round_number: int):
-	"""Inicia round do torneio"""
-	# Implementar lógica de rounds de torneio
+# Inicia round do torneio
+	# Implementar lÃ³gica de rounds de torneio
 	pass
 
 func _calculate_tournament_prizes(tournament_type: String) -> Dictionary:
-	"""Calcula prêmios do torneio"""
+# Calcula prÃªmios do torneio
 	return {}
 
 func _start_queue_timer(player: Node, mode: String):
-	"""Inicia timer de expansão de busca"""
+# Inicia timer de expansÃ£o de busca
 	var player_id = player.get_instance_id()
 	queue_timers[player_id] = {
 		"mode": mode,
@@ -597,26 +597,26 @@ func _start_queue_timer(player: Node, mode: String):
 # ============================================================================
 
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):
-	"""Quando jogador sobe de nível"""
+# Quando jogador sobe de nÃ­vel
 	# Verificar se desbloqueou novos modos PvP
 	pass
 
 func _on_combat_ended(winner: String):
-	"""Quando combate termina"""
+# Quando combate termina
 	# Processar resultado se for match PvP
 	pass
 
 # ============================================================================
-# API PÚBLICA
+# API PÃšBLICA
 # ============================================================================
 
 func get_player_pvp_stats(player: Node) -> Dictionary:
-	"""Obtém estatísticas PvP do jogador"""
+# ObtÃ©m estatÃ­sticas PvP do jogador
 	var player_id = player.get_instance_id()
 	return player_ratings.get(player_id, {})
 
 func get_active_match(player: Node) -> Dictionary:
-	"""Obtém partida ativa do jogador"""
+# ObtÃ©m partida ativa do jogador
 	var player_id = player.get_instance_id()
 	
 	for match_id in active_matches:
@@ -628,7 +628,7 @@ func get_active_match(player: Node) -> Dictionary:
 	return {}
 
 func get_leaderboard(mode: String, limit: int = 50) -> Array:
-	"""Obtém leaderboard de um modo"""
+# ObtÃ©m leaderboard de um modo
 	var leaderboard = []
 	
 	for player_id in player_ratings:
@@ -652,7 +652,7 @@ func get_leaderboard(mode: String, limit: int = 50) -> Array:
 	return leaderboard
 
 func end_match(match_id: String, winner_team: int, stats: Dictionary) -> bool:
-	"""Finaliza uma partida"""
+# Finaliza uma partida
 	if not active_matches.has(match_id):
 		return false
 	
@@ -675,7 +675,7 @@ func end_match(match_id: String, winner_team: int, stats: Dictionary) -> bool:
 	return true
 
 func _process_match_results(match_data: Dictionary):
-	"""Processa resultados da partida"""
+# Processa resultados da partida
 	var mode = match_data.mode
 	
 	for i in range(match_data.players.size()):

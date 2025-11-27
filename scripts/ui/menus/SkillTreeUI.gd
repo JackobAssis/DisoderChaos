@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name SkillTreeUI
 
@@ -52,10 +52,10 @@ func _ready():
 	setup_skill_tree_ui()
 	setup_connections()
 	load_skill_data()
-	print("[SkillTreeUI] Interface de Árvore de Habilidades inicializada")
+	print("[SkillTreeUI] Interface de Ãrvore de Habilidades inicializada")
 
 func setup_skill_tree_ui():
-	"""Setup skill tree UI layout"""
+# Setup skill tree UI layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -68,7 +68,7 @@ func setup_skill_tree_ui():
 	create_info_panel()
 
 func create_main_layout():
-	"""Create main layout structure"""
+# Create main layout structure
 	main_container = VBoxContainer.new()
 	main_container.name = "MainContainer"
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -76,7 +76,7 @@ func create_main_layout():
 	add_child(main_container)
 
 func create_header():
-	"""Create header with skill points and controls"""
+# Create header with skill points and controls
 	header_panel = Panel.new()
 	header_panel.name = "HeaderPanel"
 	header_panel.custom_minimum_size = Vector2(0, 60)
@@ -132,7 +132,7 @@ func create_header():
 	header_layout.add_child(reset_button)
 
 func create_tree_display():
-	"""Create skill tree display area"""
+# Create skill tree display area
 	tree_container = HSplitContainer.new()
 	tree_container.name = "TreeContainer"
 	tree_container.split_offset = 800
@@ -165,7 +165,7 @@ func create_tree_display():
 	current_tree_canvas.move_child(canvas_bg, 0)  # Send to back
 
 func create_info_panel():
-	"""Create skill information panel"""
+# Create skill information panel
 	info_panel = Panel.new()
 	info_panel.name = "InfoPanel"
 	info_panel.custom_minimum_size = Vector2(300, 0)
@@ -248,7 +248,7 @@ func create_info_panel():
 	info_layout.add_child(upgrade_button)
 
 func load_skill_data():
-	"""Load skill tree data"""
+# Load skill tree data
 	var skill_data = DataLoader.load_json_data("res://data/skills/skill_trees.json")
 	if not skill_data:
 		print("[SkillTreeUI] Failed to load skill tree data")
@@ -268,7 +268,7 @@ func load_skill_data():
 		display_skill_tree(current_tree)
 
 func display_skill_tree(tree_id: String):
-	"""Display the specified skill tree"""
+# Display the specified skill tree
 	clear_skill_nodes()
 	
 	var skill_data = DataLoader.load_json_data("res://data/skills/skill_trees.json")
@@ -288,7 +288,7 @@ func display_skill_tree(tree_id: String):
 	draw_skill_connections(skills)
 
 func clear_skill_nodes():
-	"""Clear all skill nodes from display"""
+# Clear all skill nodes from display
 	for node in skill_nodes.values():
 		node.queue_free()
 	
@@ -299,7 +299,7 @@ func clear_skill_nodes():
 	connection_lines.clear()
 
 func create_skill_node(skill_id: String, skill_data: Dictionary, tree_color: Color):
-	"""Create a skill node display"""
+# Create a skill node display
 	var node = SkillNode.new()
 	node.initialize(skill_id, skill_data, tree_color)
 	node.skill_selected.connect(_on_skill_node_selected)
@@ -316,7 +316,7 @@ func create_skill_node(skill_id: String, skill_data: Dictionary, tree_color: Col
 	update_skill_node(skill_id)
 
 func draw_skill_connections(skills: Dictionary):
-	"""Draw connections between prerequisite skills"""
+# Draw connections between prerequisite skills
 	for skill_id in skills:
 		var skill = skills[skill_id]
 		var prerequisites = skill.get("prerequisites", [])
@@ -326,7 +326,7 @@ func draw_skill_connections(skills: Dictionary):
 				create_connection_line(prereq_id, skill_id)
 
 func create_connection_line(from_skill: String, to_skill: String):
-	"""Create connection line between skills"""
+# Create connection line between skills
 	var line = Line2D.new()
 	line.width = 3
 	line.default_color = Color.GRAY
@@ -342,7 +342,7 @@ func create_connection_line(from_skill: String, to_skill: String):
 	connection_lines.append(line)
 
 func update_skill_node(skill_id: String):
-	"""Update skill node based on current state"""
+# Update skill node based on current state
 	if not skill_nodes.has(skill_id):
 		return
 	
@@ -353,12 +353,12 @@ func update_skill_node(skill_id: String):
 	node.update_state(current_level, can_upgrade)
 
 func update_all_skill_nodes():
-	"""Update all skill nodes"""
+# Update all skill nodes
 	for skill_id in skill_nodes.keys():
 		update_skill_node(skill_id)
 
 func can_upgrade_skill(skill_id: String) -> bool:
-	"""Check if skill can be upgraded"""
+# Check if skill can be upgraded
 	var skill_data = get_skill_data(skill_id)
 	if not skill_data:
 		return false
@@ -385,7 +385,7 @@ func can_upgrade_skill(skill_id: String) -> bool:
 	return true
 
 func get_skill_data(skill_id: String) -> Dictionary:
-	"""Get skill data for given skill ID"""
+# Get skill data for given skill ID
 	var skill_data = DataLoader.load_json_data("res://data/skills/skill_trees.json")
 	if not skill_data:
 		return {}
@@ -400,18 +400,18 @@ func get_skill_data(skill_id: String) -> Dictionary:
 
 # Event handlers
 func _on_tree_changed(index: int):
-	"""Handle tree selection change"""
+# Handle tree selection change
 	if index >= 0 and index < tree_selector.get_item_count():
 		current_tree = tree_selector.get_item_metadata(index)
 		display_skill_tree(current_tree)
 
 func _on_skill_node_selected(skill_id: String):
-	"""Handle skill node selection"""
+# Handle skill node selection
 	selected_skill = skill_id
 	update_skill_info()
 
 func update_skill_info():
-	"""Update skill information panel"""
+# Update skill information panel
 	if selected_skill == "":
 		skill_name_label.text = "Select a Skill"
 		skill_description_label.text = ""
@@ -439,7 +439,7 @@ func update_skill_info():
 	display_skill_effects(skill_data, current_level)
 
 func display_skill_effects(skill_data: Dictionary, current_level: int):
-	"""Display skill effects"""
+# Display skill effects
 	clear_skill_effects()
 	
 	var effects = skill_data.get("effects", {})
@@ -455,7 +455,7 @@ func display_skill_effects(skill_data: Dictionary, current_level: int):
 		skill_effects_container.add_child(cooldown_item)
 
 func create_effect_item(effect_name: String, values: Array, current_level: int) -> Control:
-	"""Create effect display item"""
+# Create effect display item
 	var item_container = HBoxContainer.new()
 	item_container.add_theme_constant_override("separation", 10)
 	
@@ -473,7 +473,7 @@ func create_effect_item(effect_name: String, values: Array, current_level: int) 
 		var current_value = values[current_level - 1]
 		var next_value = ""
 		if current_level < values.size():
-			next_value = " → " + str(values[current_level])
+			next_value = " â†’ " + str(values[current_level])
 		value_label.text = str(current_value) + next_value
 		value_label.add_theme_color_override("font_color", neon_green)
 	else:
@@ -487,17 +487,17 @@ func create_effect_item(effect_name: String, values: Array, current_level: int) 
 	return item_container
 
 func clear_skill_effects():
-	"""Clear skill effects display"""
+# Clear skill effects display
 	for child in skill_effects_container.get_children():
 		child.queue_free()
 
 func _on_upgrade_skill_pressed():
-	"""Handle upgrade skill button press"""
+# Handle upgrade skill button press
 	if selected_skill != "" and can_upgrade_skill(selected_skill):
 		upgrade_skill(selected_skill)
 
 func upgrade_skill(skill_id: String):
-	"""Upgrade the specified skill"""
+# Upgrade the specified skill
 	var skill_data = get_skill_data(skill_id)
 	if not skill_data:
 		return
@@ -525,11 +525,11 @@ func upgrade_skill(skill_id: String):
 	print("[SkillTreeUI] Skill upgraded: ", skill_id, " to level ", player_skills[skill_id])
 
 func _on_reset_tree_pressed():
-	"""Handle reset tree button press"""
+# Handle reset tree button press
 	show_reset_confirmation()
 
 func show_reset_confirmation():
-	"""Show skill tree reset confirmation"""
+# Show skill tree reset confirmation
 	var dialog = AcceptDialog.new()
 	dialog.title = "Reset Skill Tree"
 	dialog.dialog_text = "Are you sure you want to reset this skill tree? This will refund all skill points but remove all skill levels."
@@ -541,12 +541,12 @@ func show_reset_confirmation():
 	dialog.popup_centered()
 
 func _on_reset_confirmed(action: String):
-	"""Handle reset confirmation"""
+# Handle reset confirmation
 	if action == "reset":
 		reset_skill_tree()
 
 func reset_skill_tree():
-	"""Reset current skill tree"""
+# Reset current skill tree
 	var refunded_points = 0
 	
 	# Calculate refunded points and reset skills
@@ -569,7 +569,7 @@ func reset_skill_tree():
 	event_bus.emit_signal("skill_tree_reset", current_tree)
 
 func is_skill_in_current_tree(skill_id: String) -> bool:
-	"""Check if skill belongs to current tree"""
+# Check if skill belongs to current tree
 	var skill_data = DataLoader.load_json_data("res://data/skills/skill_trees.json")
 	if not skill_data or not skill_data.has(current_tree):
 		return false
@@ -578,7 +578,7 @@ func is_skill_in_current_tree(skill_id: String) -> bool:
 	return skills.has(skill_id)
 
 func clear_skill_info():
-	"""Clear skill information display"""
+# Clear skill information display
 	selected_skill = ""
 	skill_name_label.text = "Select a Skill"
 	skill_description_label.text = ""
@@ -587,30 +587,30 @@ func clear_skill_info():
 	clear_skill_effects()
 
 func update_skill_points_display():
-	"""Update skill points display"""
+# Update skill points display
 	skill_points_label.text = "Skill Points: " + str(available_skill_points)
 
 # Setup and connections
 func setup_connections():
-	"""Setup signal connections"""
+# Setup signal connections
 	if event_bus:
 		event_bus.connect("player_leveled_up", _on_player_level_up)
 		event_bus.connect("skill_points_awarded", _on_skill_points_awarded)
 
 func _on_player_level_up(new_level: int):
-	"""Handle player level up"""
+# Handle player level up
 	# Award skill points on level up
 	var points_per_level = 2
 	available_skill_points += points_per_level
 	update_skill_points_display()
 
 func _on_skill_points_awarded(points: int):
-	"""Handle skill points awarded"""
+# Handle skill points awarded
 	available_skill_points += points
 	update_skill_points_display()
 
 func _on_tree_canvas_input(event: InputEvent):
-	"""Handle tree canvas input"""
+# Handle tree canvas input
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			# Deselect if clicking empty area
@@ -626,7 +626,7 @@ func _on_tree_canvas_input(event: InputEvent):
 
 # Styling functions
 func apply_button_style(button: Button):
-	"""Apply dark theme style to button"""
+# Apply dark theme style to button
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -643,7 +643,7 @@ func apply_button_style(button: Button):
 	button.add_theme_color_override("font_color", Color.WHITE)
 
 func apply_option_button_style(option_button: OptionButton):
-	"""Apply dark theme style to option button"""
+# Apply dark theme style to option button
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -656,13 +656,13 @@ func apply_option_button_style(option_button: OptionButton):
 
 # Input handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if visible and event.is_action_pressed("ui_cancel"):
 		if ui_manager:
 			ui_manager.close_skill_tree()
 
 func show():
-	"""Show skill tree UI"""
+# Show skill tree UI
 	super.show()
 	load_skill_data()
 	update_skill_points_display()

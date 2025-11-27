@@ -1,4 +1,4 @@
-extends CharacterBody2D
+﻿extends CharacterBody2D
 class_name EnemyBase
 # enemy_base.gd - Advanced enemy base class with JSON-driven stats and improved AI
 
@@ -71,7 +71,7 @@ func _ready():
 	setup_ai_behavior()
 
 func setup_enemy_components():
-	"""Initialize enemy visual and collision components"""
+# Initialize enemy visual and collision components
 	# Create sprite with placeholder
 	sprite = Sprite2D.new()
 	add_child(sprite)
@@ -93,7 +93,7 @@ func setup_enemy_components():
 	setup_health_bar()
 
 func setup_detection_area():
-	"""Setup enemy detection range"""
+# Setup enemy detection range
 	detection_area = Area2D.new()
 	var detection_collision = CollisionShape2D.new()
 	var detection_shape = CircleShape2D.new()
@@ -108,7 +108,7 @@ func setup_detection_area():
 	detection_area.body_exited.connect(_on_detection_exited)
 
 func setup_attack_area():
-	"""Setup attack range area"""
+# Setup attack range area
 	attack_area = Area2D.new()
 	var attack_collision = CollisionShape2D.new()
 	var attack_shape = CircleShape2D.new()
@@ -119,7 +119,7 @@ func setup_attack_area():
 	add_child(attack_area)
 
 func setup_health_bar():
-	"""Setup floating health bar"""
+# Setup floating health bar
 	health_bar = ProgressBar.new()
 	health_bar.size = Vector2(40, 6)
 	health_bar.position = Vector2(-20, -25)
@@ -128,7 +128,7 @@ func setup_health_bar():
 	add_child(health_bar)
 
 func load_enemy_data(id: String):
-	"""Load enemy statistics and behavior from JSON data"""
+# Load enemy statistics and behavior from JSON data
 	enemy_data = DataLoader.get_enemy_data(id)
 	if not enemy_data:
 		push_error("Enemy data not found: " + id)
@@ -174,19 +174,19 @@ func load_enemy_data(id: String):
 	print("[EnemyBase] Loaded enemy: ", enemy_data.name, " HP:", max_health, " ATK:", attack_damage)
 
 func update_detection_range():
-	"""Update detection area size based on loaded data"""
+# Update detection area size based on loaded data
 	if detection_area and detection_area.get_child(0):
 		var detection_shape = detection_area.get_child(0).shape as CircleShape2D
 		detection_shape.radius = detection_range
 
 func update_health_bar():
-	"""Update health bar display"""
+# Update health bar display
 	health_bar.max_value = max_health
 	health_bar.value = current_health
 	health_bar.visible = current_health < max_health
 
 func setup_ai_behavior():
-	"""Initialize AI behavior based on type"""
+# Initialize AI behavior based on type
 	home_position = global_position
 	
 	match ai_type:
@@ -205,7 +205,7 @@ func setup_ai_behavior():
 			change_state(EnemyState.IDLE)
 
 func setup_patrol_points():
-	"""Setup patrol points around home position"""
+# Setup patrol points around home position
 	patrol_points.clear()
 	for i in range(3):
 		var angle = i * TAU / 3
@@ -221,7 +221,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func update_ai_behavior(delta):
-	"""Main AI behavior update"""
+# Main AI behavior update
 	match current_state:
 		EnemyState.IDLE:
 			handle_idle_state(delta)
@@ -237,7 +237,7 @@ func update_ai_behavior(delta):
 			handle_casting_state(delta)
 
 func handle_idle_state(delta):
-	"""Handle idle behavior based on AI type"""
+# Handle idle behavior based on AI type
 	velocity = velocity.move_toward(Vector2.ZERO, move_speed * delta)
 	
 	# Check for nearby threats based on AI type
@@ -246,7 +246,7 @@ func handle_idle_state(delta):
 			change_state(EnemyState.CHASE)
 
 func handle_patrol_state(delta):
-	"""Handle patrol behavior"""
+# Handle patrol behavior
 	if target and ai_type == AIType.AGGRESSIVE:
 		change_state(EnemyState.CHASE)
 		return
@@ -263,7 +263,7 @@ func handle_patrol_state(delta):
 		velocity = direction * move_speed * 0.5
 
 func handle_chase_state(delta):
-	"""Handle chasing target"""
+# Handle chasing target
 	if not target or not is_instance_valid(target):
 		change_state(EnemyState.IDLE)
 		return
@@ -287,7 +287,7 @@ func handle_chase_state(delta):
 	velocity = direction * move_speed
 
 func handle_attack_state(delta):
-	"""Handle attacking behavior"""
+# Handle attacking behavior
 	if not target or not is_instance_valid(target):
 		change_state(EnemyState.IDLE)
 		return
@@ -307,17 +307,17 @@ func handle_attack_state(delta):
 		perform_attack()
 
 func handle_stunned_state(delta):
-	"""Handle stunned state"""
+# Handle stunned state
 	velocity = Vector2.ZERO
 	# Stunned duration handled by status effects
 
 func handle_casting_state(delta):
-	"""Handle special ability casting"""
+# Handle special ability casting
 	velocity = Vector2.ZERO
 	# Casting handled by special abilities
 
 func change_state(new_state: EnemyState):
-	"""Change enemy AI state"""
+# Change enemy AI state
 	if new_state == current_state:
 		return
 	
@@ -339,7 +339,7 @@ func change_state(new_state: EnemyState):
 				enemy_aggro.emit(enemy_id, target)
 
 func perform_attack():
-	"""Execute basic attack"""
+# Execute basic attack
 	if not target:
 		return
 	
@@ -357,14 +357,14 @@ func perform_attack():
 		EventBus.sound_play_requested.emit("enemy_attack", global_position)
 
 func get_target_defense() -> int:
-	"""Get target's defense value"""
+# Get target's defense value
 	if target.has_method("get_stats"):
 		var stats = target.get_stats()
 		return stats.get("armor", 0)
 	return 0
 
 func take_damage(amount: int, damage_type: String = "physical"):
-	"""Take damage with resistances and weaknesses"""
+# Take damage with resistances and weaknesses
 	var final_damage = calculate_damage_with_resistances(amount, damage_type)
 	
 	current_health = max(0, current_health - final_damage)
@@ -384,7 +384,7 @@ func take_damage(amount: int, damage_type: String = "physical"):
 		die()
 
 func calculate_damage_with_resistances(damage: int, damage_type: String) -> int:
-	"""Calculate final damage considering resistances and weaknesses"""
+# Calculate final damage considering resistances and weaknesses
 	var final_damage = damage
 	
 	# Apply resistances
@@ -401,14 +401,14 @@ func calculate_damage_with_resistances(damage: int, damage_type: String) -> int:
 	return final_damage
 
 func heal(amount: int) -> int:
-	"""Heal the enemy"""
+# Heal the enemy
 	var old_health = current_health
 	current_health = min(max_health, current_health + amount)
 	update_health_bar()
 	return current_health - old_health
 
 func die():
-	"""Handle enemy death"""
+# Handle enemy death
 	current_state = EnemyState.DEAD
 	
 	# Generate loot and XP
@@ -429,7 +429,7 @@ func die():
 	queue_free()
 
 func generate_loot() -> Array:
-	"""Generate loot based on loot table"""
+# Generate loot based on loot table
 	var dropped_loot = []
 	
 	for loot_entry in loot_table:
@@ -447,7 +447,7 @@ func generate_loot() -> Array:
 	return dropped_loot
 
 func award_experience_to_players():
-	"""Award experience to nearby players"""
+# Award experience to nearby players
 	# Find all players in range
 	var players_in_range = []
 	var bodies = detection_area.get_overlapping_bodies()
@@ -461,14 +461,14 @@ func award_experience_to_players():
 		player.add_xp(exp_reward)
 
 func flash_damage_effect():
-	"""Visual damage feedback"""
+# Visual damage feedback
 	if sprite:
 		var tween = create_tween()
 		tween.tween_property(sprite, "modulate", Color.RED, 0.1)
 		tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
 
 func can_see_target() -> bool:
-	"""Check if enemy can see the target"""
+# Check if enemy can see the target
 	if not target:
 		return false
 	
@@ -476,7 +476,7 @@ func can_see_target() -> bool:
 	return distance <= detection_range
 
 func find_attacker_as_target():
-	"""Find nearby player as target when attacked"""
+# Find nearby player as target when attacked
 	var bodies = detection_area.get_overlapping_bodies()
 	for body in bodies:
 		if body.has_method("get_stats"):
@@ -484,7 +484,7 @@ func find_attacker_as_target():
 			break
 
 func get_closest_patrol_point() -> Vector2:
-	"""Get closest patrol point to current position"""
+# Get closest patrol point to current position
 	if patrol_points.is_empty():
 		return Vector2.ZERO
 	
@@ -501,7 +501,7 @@ func get_closest_patrol_point() -> Vector2:
 
 # Status effect system
 func process_status_effects(delta):
-	"""Process active status effects"""
+# Process active status effects
 	for i in range(status_effects.size() - 1, -1, -1):
 		var effect = status_effects[i]
 		effect.remaining_time -= delta
@@ -514,7 +514,7 @@ func process_status_effects(delta):
 			remove_status_effect_at_index(i)
 
 func process_status_effect(effect: Dictionary):
-	"""Process a single status effect"""
+# Process a single status effect
 	match effect.id:
 		"poison":
 			if effect.get("last_tick", 0) + 1.0 < Time.get_time_dict_from_system()["unix"]:
@@ -526,7 +526,7 @@ func process_status_effect(effect: Dictionary):
 			change_state(EnemyState.STUNNED)
 
 func add_status_effect(effect_id: String, duration: float, data: Dictionary = {}):
-	"""Add a status effect"""
+# Add a status effect
 	var effect = {
 		"id": effect_id,
 		"remaining_time": duration,
@@ -535,7 +535,7 @@ func add_status_effect(effect_id: String, duration: float, data: Dictionary = {}
 	status_effects.append(effect)
 
 func remove_status_effect_at_index(index: int):
-	"""Remove status effect at specific index"""
+# Remove status effect at specific index
 	var effect = status_effects[index]
 	
 	# Cleanup effect
@@ -548,33 +548,33 @@ func remove_status_effect_at_index(index: int):
 
 # Signal handlers
 func _on_detection_entered(body):
-	"""Handle body entering detection range"""
+# Handle body entering detection range
 	if body.has_method("get_stats") and ai_type != AIType.PASSIVE:
 		target = body
 		if current_state == EnemyState.IDLE or current_state == EnemyState.PATROL:
 			change_state(EnemyState.CHASE)
 
 func _on_detection_exited(body):
-	"""Handle body leaving detection range"""
+# Handle body leaving detection range
 	if body == target:
 		last_player_position = body.global_position
 		# Don't immediately lose target, let chase timer handle it
 
 # Utility methods
 func get_display_name() -> String:
-	"""Get display name for UI"""
+# Get display name for UI
 	return enemy_data.get("name", name)
 
 func is_alive() -> bool:
-	"""Check if enemy is alive"""
+# Check if enemy is alive
 	return current_state != EnemyState.DEAD
 
 func get_health_percentage() -> float:
-	"""Get health as percentage"""
+# Get health as percentage
 	return float(current_health) / float(max_health)
 
 func scale_stats(multiplier: float):
-	"""Scale enemy stats for difficulty"""
+# Scale enemy stats for difficulty
 	max_health = int(max_health * multiplier)
 	current_health = max_health
 	attack_damage = int(attack_damage * multiplier)

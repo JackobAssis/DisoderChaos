@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name QuestJournal
 
@@ -52,10 +52,10 @@ var selected_quest: Dictionary = {}
 func _ready():
 	setup_quest_journal()
 	setup_connections()
-	print("[QuestJournal] Diário de Missões inicializado")
+	print("[QuestJournal] DiÃ¡rio de MissÃµes inicializado")
 
 func setup_quest_journal():
-	"""Setup quest journal layout"""
+# Setup quest journal layout
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -68,7 +68,7 @@ func setup_quest_journal():
 	create_header_controls()
 
 func create_main_layout():
-	"""Create main layout structure"""
+# Create main layout structure
 	main_container = HSplitContainer.new()
 	main_container.name = "MainContainer"
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -76,7 +76,7 @@ func create_main_layout():
 	add_child(main_container)
 
 func create_quest_list_panel():
-	"""Create quest list panel"""
+# Create quest list panel
 	quest_list_panel = Panel.new()
 	quest_list_panel.name = "QuestListPanel"
 	quest_list_panel.custom_minimum_size = Vector2(400, 500)
@@ -99,7 +99,7 @@ func create_quest_list_panel():
 	create_quest_categories()
 
 func create_quest_categories():
-	"""Create quest category tabs"""
+# Create quest category tabs
 	quest_category_tabs = TabContainer.new()
 	quest_category_tabs.name = "QuestCategories"
 	quest_category_tabs.anchor_top = 0.15  # Below header
@@ -126,7 +126,7 @@ func create_quest_categories():
 	quest_category_tabs.add_child(failed_quests_tab)
 
 func create_quest_tab(tab_name: String) -> Control:
-	"""Create a quest category tab"""
+# Create a quest category tab
 	var tab = Control.new()
 	tab.name = tab_name
 	
@@ -142,7 +142,7 @@ func create_quest_tab(tab_name: String) -> Control:
 	return tab
 
 func style_tab_container(tab_container: TabContainer):
-	"""Apply neon green style to tab container"""
+# Apply neon green style to tab container
 	# Tab bar style
 	var tab_style = StyleBoxFlat.new()
 	tab_style.bg_color = darker_bg
@@ -164,7 +164,7 @@ func style_tab_container(tab_container: TabContainer):
 	tab_container.add_theme_font_size_override("font_size", 14)
 
 func create_quest_details_panel():
-	"""Create quest details panel"""
+# Create quest details panel
 	quest_details_panel = Panel.new()
 	quest_details_panel.name = "QuestDetailsPanel"
 	quest_details_panel.custom_minimum_size = Vector2(500, 500)
@@ -187,7 +187,7 @@ func create_quest_details_panel():
 	create_quest_details_content()
 
 func create_quest_details_content():
-	"""Create quest details content"""
+# Create quest details content
 	var details_scroll = ScrollContainer.new()
 	details_scroll.name = "DetailsScrollContainer"
 	details_scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -271,7 +271,7 @@ func create_quest_details_content():
 	details_container.add_child(rewards_container)
 
 func style_progress_bar(progress_bar: ProgressBar):
-	"""Style progress bar with neon green theme"""
+# Style progress bar with neon green theme
 	var bg_style = StyleBoxFlat.new()
 	bg_style.bg_color = Color(0.1, 0.1, 0.1, 0.8)
 	bg_style.border_color = neon_green
@@ -294,7 +294,7 @@ func style_progress_bar(progress_bar: ProgressBar):
 	progress_bar.add_theme_stylebox_override("fill", fill_style)
 
 func create_header_controls():
-	"""Create header controls for quest list"""
+# Create header controls for quest list
 	var header = VBoxContainer.new()
 	header.name = "HeaderControls"
 	header.custom_minimum_size = Vector2(0, 60)
@@ -364,7 +364,7 @@ func create_header_controls():
 	controls_row.add_child(sort_options)
 
 func style_line_edit(line_edit: LineEdit):
-	"""Apply neon green style to line edit"""
+# Apply neon green style to line edit
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -386,7 +386,7 @@ func style_line_edit(line_edit: LineEdit):
 	line_edit.add_theme_color_override("font_placeholder_color", Color.GRAY)
 
 func style_option_button(option_button: OptionButton):
-	"""Apply neon green style to option button"""
+# Apply neon green style to option button
 	var normal_style = StyleBoxFlat.new()
 	normal_style.bg_color = darker_bg
 	normal_style.border_color = neon_green
@@ -407,7 +407,7 @@ func style_option_button(option_button: OptionButton):
 	option_button.add_theme_color_override("font_color", Color.WHITE)
 
 func setup_connections():
-	"""Setup event connections"""
+# Setup event connections
 	if event_bus:
 		event_bus.connect("quest_started", _on_quest_started)
 		event_bus.connect("quest_completed", _on_quest_completed)
@@ -416,12 +416,12 @@ func setup_connections():
 		event_bus.connect("quest_progress_updated", _on_progress_updated)
 
 func show():
-	"""Show quest journal"""
+# Show quest journal
 	super.show()
 	refresh_quest_lists()
 
 func refresh_quest_lists():
-	"""Refresh all quest lists"""
+# Refresh all quest lists
 	if not quest_system:
 		return
 	
@@ -430,7 +430,7 @@ func refresh_quest_lists():
 	refresh_tab_quests("FAILED", quest_system.get_failed_quests())
 
 func refresh_tab_quests(tab_name: String, quests: Array):
-	"""Refresh quests in a specific tab"""
+# Refresh quests in a specific tab
 	var tab = quest_category_tabs.get_node(tab_name)
 	if not tab:
 		return
@@ -450,7 +450,7 @@ func refresh_tab_quests(tab_name: String, quests: Array):
 			quest_container.add_child(quest_entry)
 
 func should_show_quest(quest_data: Dictionary) -> bool:
-	"""Check if quest should be shown based on filters"""
+# Check if quest should be shown based on filters
 	# Search filter
 	var search_text = search_box.text.to_lower()
 	if search_text != "":
@@ -469,7 +469,7 @@ func should_show_quest(quest_data: Dictionary) -> bool:
 	return true
 
 func create_quest_entry(quest_data: Dictionary) -> Control:
-	"""Create a quest entry widget"""
+# Create a quest entry widget
 	var entry = Panel.new()
 	entry.custom_minimum_size = Vector2(0, 80)
 	
@@ -564,7 +564,7 @@ func create_quest_entry(quest_data: Dictionary) -> Control:
 	return entry
 
 func calculate_quest_progress(quest_data: Dictionary) -> float:
-	"""Calculate quest completion progress"""
+# Calculate quest completion progress
 	var objectives = quest_data.get("objectives", [])
 	if objectives.is_empty():
 		return 0.0
@@ -577,12 +577,12 @@ func calculate_quest_progress(quest_data: Dictionary) -> float:
 	return float(completed_objectives) / float(objectives.size())
 
 func _on_quest_entry_clicked(quest_data: Dictionary, event: InputEvent):
-	"""Handle quest entry click"""
+# Handle quest entry click
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		select_quest(quest_data)
 
 func _on_quest_entry_hovered(entry: Panel, is_hovered: bool):
-	"""Handle quest entry hover"""
+# Handle quest entry hover
 	var style = entry.get_theme_stylebox("panel").duplicate()
 	if is_hovered:
 		style.bg_color = Color(neon_green.r, neon_green.g, neon_green.b, 0.1)
@@ -593,12 +593,12 @@ func _on_quest_entry_hovered(entry: Panel, is_hovered: bool):
 	entry.add_theme_stylebox_override("panel", style)
 
 func select_quest(quest_data: Dictionary):
-	"""Select and display quest details"""
+# Select and display quest details
 	selected_quest = quest_data
 	update_quest_details(quest_data)
 
 func update_quest_details(quest_data: Dictionary):
-	"""Update quest details panel"""
+# Update quest details panel
 	if quest_data.is_empty():
 		quest_title_label.text = "Select a Quest"
 		quest_description_label.text = ""
@@ -639,12 +639,12 @@ func update_quest_details(quest_data: Dictionary):
 	update_rewards_display(quest_data.get("rewards", {}))
 
 func clear_objectives():
-	"""Clear objectives display"""
+# Clear objectives display
 	for child in objectives_container.get_children():
 		child.queue_free()
 
 func update_objectives_display(objectives: Array):
-	"""Update objectives display"""
+# Update objectives display
 	clear_objectives()
 	
 	for i in range(objectives.size()):
@@ -653,7 +653,7 @@ func update_objectives_display(objectives: Array):
 		objectives_container.add_child(objective_entry)
 
 func create_objective_entry(objective: Dictionary, index: int) -> Control:
-	"""Create objective entry widget"""
+# Create objective entry widget
 	var entry = HBoxContainer.new()
 	entry.add_theme_constant_override("separation", 10)
 	
@@ -695,18 +695,18 @@ func create_objective_entry(objective: Dictionary, index: int) -> Control:
 	return entry
 
 func style_checkbox(checkbox: CheckBox):
-	"""Style checkbox with neon theme"""
+# Style checkbox with neon theme
 	# Checkbox icon styles would need custom textures
 	checkbox.add_theme_color_override("font_color", Color.WHITE)
 	checkbox.add_theme_font_size_override("font_size", 12)
 
 func clear_rewards():
-	"""Clear rewards display"""
+# Clear rewards display
 	for child in rewards_container.get_children():
 		child.queue_free()
 
 func update_rewards_display(rewards: Dictionary):
-	"""Update rewards display"""
+# Update rewards display
 	clear_rewards()
 	
 	# Experience reward
@@ -732,7 +732,7 @@ func update_rewards_display(rewards: Dictionary):
 			rewards_container.add_child(item_reward)
 
 func create_reward_entry(reward_type: String, reward_text: String) -> Control:
-	"""Create reward entry widget"""
+# Create reward entry widget
 	var entry = HBoxContainer.new()
 	entry.add_theme_constant_override("separation", 10)
 	
@@ -761,7 +761,7 @@ func create_reward_entry(reward_type: String, reward_text: String) -> Control:
 	return entry
 
 func format_time(seconds: float) -> String:
-	"""Format time for display"""
+# Format time for display
 	var hours = int(seconds) / 3600
 	var minutes = (int(seconds) % 3600) / 60
 	var secs = int(seconds) % 60
@@ -773,32 +773,32 @@ func format_time(seconds: float) -> String:
 
 # Filter and Sort Handlers
 func _on_search_changed(search_text: String):
-	"""Handle search text change"""
+# Handle search text change
 	refresh_quest_lists()
 
 func _on_filter_changed(index: int):
-	"""Handle filter change"""
+# Handle filter change
 	refresh_quest_lists()
 
 func _on_sort_changed(index: int):
-	"""Handle sort change"""
+# Handle sort change
 	refresh_quest_lists()
 
 # Quest System Event Handlers
 func _on_quest_started(quest_id: String):
-	"""Handle quest started event"""
+# Handle quest started event
 	refresh_quest_lists()
 
 func _on_quest_completed(quest_id: String):
-	"""Handle quest completed event"""
+# Handle quest completed event
 	refresh_quest_lists()
 
 func _on_quest_failed(quest_id: String):
-	"""Handle quest failed event"""
+# Handle quest failed event
 	refresh_quest_lists()
 
 func _on_objective_completed(quest_id: String, objective_index: int):
-	"""Handle objective completed event"""
+# Handle objective completed event
 	if selected_quest.get("id") == quest_id:
 		# Refresh details if currently viewing this quest
 		if quest_system:
@@ -808,7 +808,7 @@ func _on_objective_completed(quest_id: String, objective_index: int):
 	refresh_quest_lists()
 
 func _on_progress_updated(quest_id: String):
-	"""Handle quest progress update"""
+# Handle quest progress update
 	if selected_quest.get("id") == quest_id:
 		# Refresh details if currently viewing this quest
 		if quest_system:
@@ -818,14 +818,14 @@ func _on_progress_updated(quest_id: String):
 
 # Input Handling
 func _input(event):
-	"""Handle input events"""
+# Handle input events
 	if visible and event.is_action_pressed("ui_cancel"):
 		if ui_manager:
 			ui_manager.close_quest_journal()
 
 # Debug Functions
 func debug_populate_test_quests():
-	"""Debug: Populate with test quests"""
+# Debug: Populate with test quests
 	if not quest_system:
 		return
 	

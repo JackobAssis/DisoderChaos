@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 class_name HUDController
 # hud_controller.gd - Comprehensive HUD management system
 
@@ -35,7 +35,7 @@ func _ready():
 	update_all_displays()
 
 func setup_hud_elements():
-	"""Initialize all HUD elements"""
+# Initialize all HUD elements
 	# Main bars setup
 	setup_main_bars()
 	
@@ -49,7 +49,7 @@ func setup_hud_elements():
 	loot_popup_scene = load("res://ui/popup_notification.tscn")
 
 func setup_main_bars():
-	"""Setup health, mana, and XP bars"""
+# Setup health, mana, and XP bars
 	# Find or create health bar
 	health_bar = find_child("HealthBar") as ProgressBar
 	if not health_bar:
@@ -86,7 +86,7 @@ func setup_main_bars():
 		add_child(currency_label)
 
 func create_progress_bar(bar_type: String, color: Color) -> ProgressBar:
-	"""Create a styled progress bar"""
+# Create a styled progress bar
 	var bar = ProgressBar.new()
 	bar.name = bar_type.capitalize() + "Bar"
 	bar.size = Vector2(150, 20)
@@ -108,7 +108,7 @@ func create_progress_bar(bar_type: String, color: Color) -> ProgressBar:
 	return bar
 
 func setup_quick_item_slots():
-	"""Setup quick item display slots"""
+# Setup quick item display slots
 	quick_item_slots.clear()
 	quick_item_labels.clear()
 	quick_item_cooldowns.clear()
@@ -158,7 +158,7 @@ func setup_quick_item_slots():
 		quick_item_cooldowns.append(cooldown_bar)
 
 func setup_status_effects_display():
-	"""Setup status effects display area"""
+# Setup status effects display area
 	status_effects_container = find_child("StatusEffectsContainer") as HBoxContainer
 	if not status_effects_container:
 		status_effects_container = HBoxContainer.new()
@@ -167,7 +167,7 @@ func setup_status_effects_display():
 		add_child(status_effects_container)
 
 func connect_signals():
-	"""Connect to game events"""
+# Connect to game events
 	# Player data changes
 	EventBus.player_health_changed.connect(_on_player_health_changed)
 	EventBus.player_mana_changed.connect(_on_player_mana_changed)
@@ -188,7 +188,7 @@ func connect_signals():
 	GameState.player_data_changed.connect(_on_player_data_changed)
 
 func update_all_displays():
-	"""Update all HUD displays with current data"""
+# Update all HUD displays with current data
 	update_health_display()
 	update_mana_display()
 	update_xp_display()
@@ -197,7 +197,7 @@ func update_all_displays():
 	update_quick_item_displays()
 
 func update_health_display():
-	"""Update health bar display"""
+# Update health bar display
 	if health_bar and GameState.player_data:
 		var current_hp = GameState.player_data.get("current_hp", 100)
 		var max_hp = GameState.player_data.get("max_hp", 100)
@@ -210,7 +210,7 @@ func update_health_display():
 		health_bar.tooltip_text = "Health: " + text
 
 func update_mana_display():
-	"""Update mana bar display"""
+# Update mana bar display
 	if mana_bar and GameState.player_data:
 		var current_mp = GameState.player_data.get("current_mp", 100)
 		var max_mp = GameState.player_data.get("max_mp", 100)
@@ -223,7 +223,7 @@ func update_mana_display():
 		mana_bar.tooltip_text = "Mana: " + text
 
 func update_xp_display():
-	"""Update XP bar display"""
+# Update XP bar display
 	if xp_bar and GameState.player_data:
 		var current_xp = GameState.player_data.get("experience", 0)
 		var level = GameState.player_data.get("level", 1)
@@ -240,19 +240,19 @@ func update_xp_display():
 		xp_bar.tooltip_text = "Experience: " + text
 
 func update_level_display():
-	"""Update level label"""
+# Update level label
 	if level_label and GameState.player_data:
 		var level = GameState.player_data.get("level", 1)
 		level_label.text = "Level " + str(level)
 
 func update_currency_display():
-	"""Update currency display"""
+# Update currency display
 	if currency_label and GameState.player_data:
 		var currency = GameState.player_data.get("currency", 0)
 		currency_label.text = str(currency) + " coins"
 
 func update_quick_item_displays():
-	"""Update quick item slot displays"""
+# Update quick item slot displays
 	if not GameState.player_data.has("quick_items"):
 		return
 	
@@ -302,7 +302,7 @@ func update_quick_item_displays():
 			item_slot.tooltip_text = ""
 
 func get_item_tooltip(item_id: String) -> String:
-	"""Get formatted tooltip for item"""
+# Get formatted tooltip for item
 	var item_system = get_node("/root/ItemSystem")
 	if item_system:
 		return item_system.get_item_tooltip(item_id)
@@ -314,7 +314,7 @@ func get_item_tooltip(item_id: String) -> String:
 	return "Unknown Item"
 
 func update_status_effects(status_effects: Array):
-	"""Update status effect display"""
+# Update status effect display
 	# Clear existing status effect displays
 	for child in status_effects_container.get_children():
 		child.queue_free()
@@ -339,12 +339,12 @@ func update_status_effects(status_effects: Array):
 		status_effects_container.add_child(effect_icon)
 
 func _process(delta):
-	"""Update HUD elements that need frame updates"""
+# Update HUD elements that need frame updates
 	update_item_cooldowns(delta)
 	update_popup_positions(delta)
 
 func update_item_cooldowns(delta):
-	"""Update quick item cooldown displays"""
+# Update quick item cooldown displays
 	if not GameState.player_data.has("quick_items"):
 		return
 	
@@ -376,7 +376,7 @@ func update_item_cooldowns(delta):
 			cooldown_bar.visible = false
 
 func update_popup_positions(delta):
-	"""Update loot popup positions and cleanup expired ones"""
+# Update loot popup positions and cleanup expired ones
 	for i in range(active_popups.size() - 1, -1, -1):
 		var popup = active_popups[i]
 		if is_instance_valid(popup):
@@ -393,25 +393,25 @@ func update_popup_positions(delta):
 
 # Signal handlers
 func _on_player_health_changed(new_health: int):
-	"""Handle player health changes"""
+# Handle player health changes
 	update_health_display()
 
 func _on_player_mana_changed(new_mana: int):
-	"""Handle player mana changes"""
+# Handle player mana changes
 	update_mana_display()
 
 func _on_player_xp_gained(amount: int):
-	"""Handle XP gain"""
+# Handle XP gain
 	update_xp_display()
 	show_xp_popup("+" + str(amount) + " XP")
 
 func _on_player_level_up(new_level: int):
-	"""Handle level up"""
+# Handle level up
 	update_all_displays()
 	show_level_up_popup(new_level)
 
 func _on_item_looted(item_id: String, quantity: int):
-	"""Handle item pickup"""
+# Handle item pickup
 	var item_data = DataLoader.get_item(item_id)
 	if item_data:
 		var text = "Looted: " + item_data.name
@@ -420,24 +420,24 @@ func _on_item_looted(item_id: String, quantity: int):
 		show_loot_popup(text)
 
 func _on_item_used(item_id: String):
-	"""Handle item usage"""
+# Handle item usage
 	update_quick_item_displays()
 
 func _on_item_equipped(item_id: String, slot_type: String):
-	"""Handle item equipment"""
+# Handle item equipment
 	update_quick_item_displays()
 
 func _on_notification_shown(message: String, type: String):
-	"""Handle notification display"""
+# Handle notification display
 	show_notification_popup(message, type)
 
 func _on_player_data_changed():
-	"""Handle player data changes"""
+# Handle player data changes
 	update_all_displays()
 
 # Popup functions
 func show_loot_popup(text: String):
-	"""Show loot pickup popup"""
+# Show loot pickup popup
 	if loot_popup_scene:
 		var popup = loot_popup_scene.instantiate()
 		popup.setup_notification(text, "loot")
@@ -446,7 +446,7 @@ func show_loot_popup(text: String):
 		active_popups.append(popup)
 
 func show_xp_popup(text: String):
-	"""Show XP gain popup"""
+# Show XP gain popup
 	if loot_popup_scene:
 		var popup = loot_popup_scene.instantiate()
 		popup.setup_notification(text, "xp")
@@ -455,7 +455,7 @@ func show_xp_popup(text: String):
 		active_popups.append(popup)
 
 func show_level_up_popup(new_level: int):
-	"""Show level up popup"""
+# Show level up popup
 	if loot_popup_scene:
 		var popup = loot_popup_scene.instantiate()
 		popup.setup_notification("LEVEL UP! Level " + str(new_level), "level_up")
@@ -464,7 +464,7 @@ func show_level_up_popup(new_level: int):
 		active_popups.append(popup)
 
 func show_notification_popup(message: String, type: String):
-	"""Show general notification popup"""
+# Show general notification popup
 	if loot_popup_scene:
 		var popup = loot_popup_scene.instantiate()
 		popup.setup_notification(message, type)

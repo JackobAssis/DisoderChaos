@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 class_name MainHUD
 
@@ -49,13 +49,13 @@ func _ready():
 	print("[MainHUD] HUD Principal inicializada")
 
 func initialize(stats: PlayerStats):
-	"""Initialize HUD with player stats"""
+# Initialize HUD with player stats
 	player_stats = stats
 	if player_stats:
 		update_all_bars()
 
 func create_hud_layout():
-	"""Create the HUD layout programmatically"""
+# Create the HUD layout programmatically
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
@@ -72,7 +72,7 @@ func create_hud_layout():
 	create_dungeon_info()
 
 func create_vital_bars():
-	"""Create health, stamina, mana, and XP bars"""
+# Create health, stamina, mana, and XP bars
 	var vital_container = VBoxContainer.new()
 	vital_container.name = "VitalContainer"
 	vital_container.position = Vector2(20, 20)
@@ -105,7 +105,7 @@ func create_vital_bars():
 	vital_container.add_child(xp_container)
 
 func create_bar_container(label_text: String) -> VBoxContainer:
-	"""Create a container for a progress bar with label"""
+# Create a container for a progress bar with label
 	var container = VBoxContainer.new()
 	container.custom_minimum_size = Vector2(300, 25)
 	
@@ -117,7 +117,7 @@ func create_bar_container(label_text: String) -> VBoxContainer:
 	return container
 
 func create_progress_bar(bar_color: Color) -> ProgressBar:
-	"""Create a styled progress bar"""
+# Create a styled progress bar
 	var bar = ProgressBar.new()
 	bar.custom_minimum_size = Vector2(280, 20)
 	bar.max_value = 100
@@ -149,7 +149,7 @@ func create_progress_bar(bar_color: Color) -> ProgressBar:
 	return bar
 
 func create_info_panel():
-	"""Create level and currency info panel"""
+# Create level and currency info panel
 	var info_panel = VBoxContainer.new()
 	info_panel.name = "InfoPanel"
 	info_panel.anchor_left = 1.0
@@ -177,7 +177,7 @@ func create_info_panel():
 	info_panel.add_child(currency_label)
 
 func create_bottom_panel():
-	"""Create bottom panel for quickslots and buffs"""
+# Create bottom panel for quickslots and buffs
 	var bottom_container = HBoxContainer.new()
 	bottom_container.name = "BottomPanel"
 	bottom_container.anchor_left = 0.5
@@ -214,7 +214,7 @@ func create_bottom_panel():
 	bottom_container.add_child(buff_container)
 
 func create_quickslot(index: int) -> Control:
-	"""Create a quickslot"""
+# Create a quickslot
 	var quickslot = Control.new()
 	quickslot.name = "QuickSlot_" + str(index)
 	quickslot.custom_minimum_size = Vector2(48, 48)
@@ -256,7 +256,7 @@ func create_quickslot(index: int) -> Control:
 	return quickslot
 
 func create_dungeon_info():
-	"""Create dungeon information display"""
+# Create dungeon information display
 	dungeon_info = Label.new()
 	dungeon_info.name = "DungeonInfo"
 	dungeon_info.anchor_left = 0.5
@@ -272,7 +272,7 @@ func create_dungeon_info():
 	add_child(dungeon_info)
 
 func setup_animations():
-	"""Setup animation tweens"""
+# Setup animation tweens
 	health_tween = Tween.new()
 	add_child(health_tween)
 	
@@ -287,7 +287,7 @@ func setup_animations():
 
 # Update Functions
 func update_health(current: int, maximum: int):
-	"""Update health bar"""
+# Update health bar
 	if not health_bar:
 		return
 	
@@ -310,7 +310,7 @@ func update_health(current: int, maximum: int):
 	update_bar_color(health_bar, bar_color)
 
 func update_stamina(current: float, maximum: float):
-	"""Update stamina bar"""
+# Update stamina bar
 	if not stamina_bar:
 		return
 	
@@ -324,7 +324,7 @@ func update_stamina(current: float, maximum: float):
 		stamina_bar.value = target_value
 
 func update_xp(current: int, required: int, level: int):
-	"""Update XP bar and level"""
+# Update XP bar and level
 	if not xp_bar:
 		return
 	
@@ -342,17 +342,17 @@ func update_xp(current: int, required: int, level: int):
 		level_label.text = "Level " + str(level)
 
 func update_currency(amount: int):
-	"""Update currency display"""
+# Update currency display
 	if currency_label:
 		currency_label.text = "Gold: " + str(amount)
 
 func update_dungeon_name(dungeon_name: String):
-	"""Update dungeon name display"""
+# Update dungeon name display
 	if dungeon_info:
 		dungeon_info.text = dungeon_name
 
 func update_bar_color(bar: ProgressBar, color: Color):
-	"""Update progress bar color"""
+# Update progress bar color
 	var style_fill = StyleBoxFlat.new()
 	style_fill.bg_color = color
 	style_fill.corner_radius_top_left = 3
@@ -362,7 +362,7 @@ func update_bar_color(bar: ProgressBar, color: Color):
 	bar.add_theme_stylebox_override("fill", style_fill)
 
 func update_all_bars():
-	"""Update all bars with current player stats"""
+# Update all bars with current player stats
 	if not player_stats:
 		return
 	
@@ -375,22 +375,22 @@ func update_all_bars():
 
 # Notification System
 func show_xp_gain(amount: int):
-	"""Show XP gain notification"""
+# Show XP gain notification
 	var notification = create_floating_text("+" + str(amount) + " XP", xp_color)
 	show_floating_notification(notification, Vector2(0, -30))
 
 func show_damage_taken(amount: int):
-	"""Show damage taken notification"""
+# Show damage taken notification
 	var notification = create_floating_text("-" + str(amount), Color.RED)
 	show_floating_notification(notification, Vector2(-50, -20))
 
 func show_healing(amount: int):
-	"""Show healing notification"""
+# Show healing notification
 	var notification = create_floating_text("+" + str(amount), Color.GREEN)
 	show_floating_notification(notification, Vector2(-50, -20))
 
 func create_floating_text(text: String, color: Color) -> Label:
-	"""Create floating text notification"""
+# Create floating text notification
 	var label = Label.new()
 	label.text = text
 	label.add_theme_color_override("font_color", color)
@@ -399,7 +399,7 @@ func create_floating_text(text: String, color: Color) -> Label:
 	return label
 
 func show_floating_notification(notification: Label, offset: Vector2):
-	"""Show floating notification with animation"""
+# Show floating notification with animation
 	var start_pos = Vector2(size.x * 0.5, size.y * 0.4) + offset
 	notification.position = start_pos
 	add_child(notification)
@@ -413,7 +413,7 @@ func show_floating_notification(notification: Label, offset: Vector2):
 
 # Buff System
 func add_buff_icon(buff_id: String, duration: float):
-	"""Add buff icon to display"""
+# Add buff icon to display
 	if active_buffs.has(buff_id):
 		# Update existing buff duration
 		active_buffs[buff_id].update_duration(duration)
@@ -425,14 +425,14 @@ func add_buff_icon(buff_id: String, duration: float):
 		buff_container.add_child(buff_icon)
 
 func remove_buff_icon(buff_id: String):
-	"""Remove buff icon"""
+# Remove buff icon
 	if active_buffs.has(buff_id):
 		var buff_icon = active_buffs[buff_id]
 		buff_icon.queue_free()
 		active_buffs.erase(buff_id)
 
 func create_buff_icon(buff_id: String, duration: float) -> Control:
-	"""Create buff icon control"""
+# Create buff icon control
 	var icon_container = Control.new()
 	icon_container.custom_minimum_size = Vector2(40, 40)
 	
@@ -479,7 +479,7 @@ func create_buff_icon(buff_id: String, duration: float) -> Control:
 
 # Quick Slot System
 func set_quickslot_item(slot_index: int, item_id: String, quantity: int = 1):
-	"""Set item in quickslot"""
+# Set item in quickslot
 	if slot_index < 0 or slot_index >= quickslots.size():
 		return
 	
@@ -488,7 +488,7 @@ func set_quickslot_item(slot_index: int, item_id: String, quantity: int = 1):
 	print("[MainHUD] Item %s equipped to slot %d" % [item_id, slot_index])
 
 func clear_quickslot(slot_index: int):
-	"""Clear quickslot"""
+# Clear quickslot
 	if slot_index < 0 or slot_index >= quickslots.size():
 		return
 	
@@ -498,19 +498,19 @@ func clear_quickslot(slot_index: int):
 
 # Utility Functions
 func fade_in():
-	"""Fade in the HUD"""
+# Fade in the HUD
 	modulate.a = 0.0
 	var fade_tween = create_tween()
 	fade_tween.tween_property(self, "modulate:a", 1.0, 0.5)
 
 func fade_out():
-	"""Fade out the HUD"""
+# Fade out the HUD
 	var fade_tween = create_tween()
 	fade_tween.tween_property(self, "modulate:a", 0.0, 0.5)
 
 # Debug Functions
 func debug_test_notifications():
-	"""Debug: Test notification system"""
+# Debug: Test notification system
 	show_xp_gain(50)
 	await get_tree().create_timer(0.5).timeout
 	show_damage_taken(25)
@@ -518,7 +518,7 @@ func debug_test_notifications():
 	show_healing(15)
 
 func debug_test_buffs():
-	"""Debug: Test buff system"""
+# Debug: Test buff system
 	add_buff_icon("strength", 30.0)
 	add_buff_icon("speed", 15.0)
 	add_buff_icon("protection", 60.0)

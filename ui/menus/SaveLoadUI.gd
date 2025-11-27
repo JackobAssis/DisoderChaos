@@ -51,7 +51,7 @@ func _ready():
 	print("[SaveLoadUI] Save/Load UI ready")
 
 func setup_ui_connections():
-	"""Connect UI signals"""
+	# Connect UI signals
 	save_button.pressed.connect(_on_save_button_pressed)
 	load_button.pressed.connect(_on_load_button_pressed)
 	delete_button.pressed.connect(_on_delete_button_pressed)
@@ -62,7 +62,7 @@ func setup_ui_connections():
 	new_save_dialog.confirmed.connect(_on_new_save_confirmed)
 
 func refresh_save_slots():
-	"""Refresh the display of save slots"""
+	# Refresh the display of save slots
 	print("[SaveLoadUI] Refreshing save slots display")
 	
 	# Clear existing slots
@@ -80,7 +80,7 @@ func refresh_save_slots():
 	update_save_info_display()
 
 func create_save_slot_ui(slot_index: int):
-	"""Create UI element for a save slot"""
+	# Create UI element for a save slot
 	var slot_container = HBoxContainer.new()
 	slot_container.custom_minimum_size = Vector2(500, 80)
 	
@@ -139,7 +139,7 @@ func create_save_slot_ui(slot_index: int):
 	save_slots_container.add_child(slot_container)
 
 func format_save_slot_text(save_data: Dictionary) -> String:
-	"""Format save slot display text"""
+	# Format save slot display text
 	var text = "Slot " + str(save_data.slot) + "\n"
 	
 	# Player info
@@ -164,7 +164,7 @@ func format_save_slot_text(save_data: Dictionary) -> String:
 	return text
 
 func format_play_time(seconds: float) -> String:
-	"""Format play time for display"""
+	# Format play time for display
 	var hours = int(seconds / 3600)
 	var minutes = int((seconds % 3600) / 60)
 	
@@ -174,7 +174,7 @@ func format_play_time(seconds: float) -> String:
 		return "%dm" % minutes
 
 func update_save_info_display():
-	"""Update the save information panel"""
+	# Update the save information panel
 	if selected_slot == -1:
 		save_info_label.text = "Select a save slot to view details"
 		return
@@ -234,7 +234,7 @@ func update_save_info_display():
 	save_info_label.text = info_text
 
 func format_file_size(bytes: int) -> String:
-	"""Format file size for display"""
+	# Format file size for display
 	if bytes < 1024:
 		return str(bytes) + " B"
 	elif bytes < 1024 * 1024:
@@ -243,7 +243,7 @@ func format_file_size(bytes: int) -> String:
 		return "%.1f MB" % (bytes / (1024.0 * 1024.0))
 
 func update_ui_state():
-	"""Update UI button states based on selection"""
+	# Update UI button states based on selection
 	var has_selection = selected_slot != -1
 	var has_save_data = false
 	
@@ -264,7 +264,7 @@ func update_ui_state():
 
 # Signal handlers
 func _on_save_slot_selected(slot: int):
-	"""Handle save slot selection"""
+	# Handle save slot selection
 	selected_slot = slot
 	update_save_info_display()
 	update_ui_state()
@@ -272,30 +272,30 @@ func _on_save_slot_selected(slot: int):
 	print("[SaveLoadUI] Selected save slot: ", slot)
 
 func _on_save_button_pressed():
-	"""Handle save button press"""
+	# Handle save button press
 	if selected_slot != -1:
 		save_name_input.text = "Save " + str(selected_slot)
 		new_save_dialog.popup_centered()
 
 func _on_load_button_pressed():
-	"""Handle load button press"""
+	# Handle load button press
 	if selected_slot != -1:
 		confirmation_dialog.dialog_text = "Load save slot " + str(selected_slot) + "?\nAny unsaved progress will be lost."
 		confirmation_dialog.popup_centered()
 
 func _on_delete_button_pressed():
-	"""Handle delete button press"""
+	# Handle delete button press
 	if selected_slot != -1:
 		confirmation_dialog.dialog_text = "Delete save slot " + str(selected_slot) + "?\nThis action cannot be undone."
 		confirmation_dialog.popup_centered()
 
 func _on_quick_save_pressed():
-	"""Handle quick save button press"""
+	# Handle quick save button press
 	if save_integration:
 		await save_integration.request_quick_save()
 
 func _on_quick_load_pressed(slot: int):
-	"""Handle quick load for specific slot"""
+	# Handle quick load for specific slot
 	load_requested.emit(slot)
 	if game_state:
 		var result = game_state.load_game(slot)
@@ -303,25 +303,25 @@ func _on_quick_load_pressed(slot: int):
 			get_tree().change_scene_to_file("res://scenes/main_game.tscn")
 
 func _on_quick_save_to_slot_pressed(slot: int):
-	"""Handle quick save to specific slot"""
+	# Handle quick save to specific slot
 	save_requested.emit(slot)
 	if save_integration:
 		await save_integration.request_manual_save(slot, false)
 		refresh_save_slots()
 
 func _on_quick_delete_pressed(slot: int):
-	"""Handle quick delete for specific slot"""
+	# Handle quick delete for specific slot
 	if game_state:
 		game_state.delete_save(slot)
 
 func _on_auto_save_toggled(enabled: bool):
-	"""Handle auto-save toggle"""
+	# Handle auto-save toggle
 	if save_integration:
 		save_integration.set_auto_save_enabled(enabled)
 		EventBus.show_notification("Auto-save " + ("enabled" if enabled else "disabled"), "info")
 
 func _on_confirmation_confirmed():
-	"""Handle confirmation dialog"""
+	# Handle confirmation dialog
 	if "Load save slot" in confirmation_dialog.dialog_text:
 		# Load confirmation
 		load_requested.emit(selected_slot)
@@ -336,7 +336,7 @@ func _on_confirmation_confirmed():
 			game_state.delete_save(selected_slot)
 
 func _on_new_save_confirmed():
-	"""Handle new save confirmation"""
+	# Handle new save confirmation
 	if selected_slot != -1:
 		save_requested.emit(selected_slot)
 		if save_integration:
@@ -345,16 +345,16 @@ func _on_new_save_confirmed():
 
 # EventBus signal handlers
 func _on_game_saved(slot: int):
-	"""Handle game saved event"""
+	# Handle game saved event
 	EventBus.show_notification("Game saved to slot " + str(slot), "success")
 	refresh_save_slots()
 
 func _on_game_loaded():
-	"""Handle game loaded event"""
+	# Handle game loaded event
 	EventBus.show_notification("Game loaded successfully", "success")
 
 func _on_save_deleted(slot: int):
-	"""Handle save deleted event"""
+	# Handle save deleted event
 	EventBus.show_notification("Save slot " + str(slot) + " deleted", "info")
 	if selected_slot == slot:
 		selected_slot = -1
@@ -362,16 +362,16 @@ func _on_save_deleted(slot: int):
 
 # Public API
 func show_save_interface():
-	"""Show the save interface"""
+	# Show the save interface
 	refresh_save_slots()
 	show()
 
 func hide_save_interface():
-	"""Hide the save interface"""
+	# Hide the save interface
 	hide()
 
 func set_auto_save_enabled(enabled: bool):
-	"""Set auto-save enabled from external source"""
+	# Set auto-save enabled from external source
 	auto_save_toggle.button_pressed = enabled
 	_on_auto_save_toggled(enabled)
 

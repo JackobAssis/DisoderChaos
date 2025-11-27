@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 class_name LootSystem
 
@@ -59,7 +59,7 @@ func _ready():
 	print("[LootSystem] Sistema de Loot inicializado")
 
 func setup_loot_system():
-	"""Initialize loot system and build loot tables"""
+# Initialize loot system and build loot tables
 	# Wait for data to be loaded
 	if not data_loader.is_fully_loaded():
 		await data_loader.all_data_loaded
@@ -68,14 +68,14 @@ func setup_loot_system():
 	setup_global_loot_pools()
 
 func connect_events():
-	"""Connect to game events"""
+# Connect to game events
 	event_bus.connect("enemy_defeated", _on_enemy_defeated)
 	event_bus.connect("boss_defeated", _on_boss_defeated)
 	event_bus.connect("container_opened", _on_container_opened)
 	event_bus.connect("quest_completed", _on_quest_completed)
 
 func build_loot_tables():
-	"""Build loot tables from enemy data"""
+# Build loot tables from enemy data
 	var enemies_data = data_loader.get_all_enemies()
 	
 	for enemy_id in enemies_data.keys():
@@ -85,10 +85,10 @@ func build_loot_tables():
 		if not loot_table.is_empty():
 			mob_loot_tables[enemy_id] = process_loot_table(loot_table)
 	
-	print("[LootSystem] Construídas %d tabelas de loot" % mob_loot_tables.size())
+	print("[LootSystem] ConstruÃ­das %d tabelas de loot" % mob_loot_tables.size())
 
 func process_loot_table(raw_loot_table: Dictionary) -> Dictionary:
-	"""Process and validate a loot table"""
+# Process and validate a loot table
 	var processed_table = {
 		"guaranteed_drops": [],
 		"chance_drops": [],
@@ -136,7 +136,7 @@ func process_loot_table(raw_loot_table: Dictionary) -> Dictionary:
 	return processed_table
 
 func setup_global_loot_pools():
-	"""Setup global loot pools for different contexts"""
+# Setup global loot pools for different contexts
 	global_loot_pools = {
 		"consumables": get_items_by_category("consumable"),
 		"weapons": get_items_by_category("weapon"),
@@ -149,7 +149,7 @@ func setup_global_loot_pools():
 	print("[LootSystem] Pools globais configurados")
 
 func get_items_by_category(category: String) -> Array:
-	"""Get all items of specific category"""
+# Get all items of specific category
 	var items = []
 	var all_items = data_loader.get_all_items()
 	
@@ -161,7 +161,7 @@ func get_items_by_category(category: String) -> Array:
 	return items
 
 func generate_loot(source_id: String, source_type: String, player_level: int = 1, bonus_multiplier: float = 1.0) -> Array:
-	"""Generate loot from a source"""
+# Generate loot from a source
 	var loot_items = []
 	var loot_table = get_loot_table(source_id, source_type)
 	
@@ -202,7 +202,7 @@ func generate_loot(source_id: String, source_type: String, player_level: int = 1
 	return loot_items
 
 func get_loot_table(source_id: String, source_type: String) -> Dictionary:
-	"""Get loot table for source"""
+# Get loot table for source
 	match source_type:
 		"enemy":
 			return mob_loot_tables.get(source_id, {})
@@ -214,7 +214,7 @@ func get_loot_table(source_id: String, source_type: String) -> Dictionary:
 			return {}
 
 func create_loot_item(drop_data: Dictionary) -> Dictionary:
-	"""Create loot item from drop data"""
+# Create loot item from drop data
 	return {
 		"item_id": drop_data.item_id,
 		"quantity": drop_data.quantity,
@@ -223,7 +223,7 @@ func create_loot_item(drop_data: Dictionary) -> Dictionary:
 	}
 
 func check_drop_condition(condition: String, player_level: int) -> bool:
-	"""Check if drop condition is met"""
+# Check if drop condition is met
 	if condition == "":
 		return true
 	
@@ -235,7 +235,7 @@ func check_drop_condition(condition: String, player_level: int) -> bool:
 	return true
 
 func get_rarity_chance(rarity: String) -> float:
-	"""Get drop chance for rarity level"""
+# Get drop chance for rarity level
 	match rarity:
 		"common":
 			return base_drop_chance
@@ -251,7 +251,7 @@ func get_rarity_chance(rarity: String) -> float:
 			return base_drop_chance
 
 func generate_currency(currency_range: Dictionary, player_level: int) -> int:
-	"""Generate currency amount"""
+# Generate currency amount
 	var min_amount = currency_range.get("min", 0)
 	var max_amount = currency_range.get("max", 0)
 	
@@ -266,7 +266,7 @@ func generate_currency(currency_range: Dictionary, player_level: int) -> int:
 	return randi_range(min_amount, max_amount)
 
 func drop_loot_at_position(loot_items: Array, position: Vector2, spread: float = 50.0):
-	"""Drop loot items at world position"""
+# Drop loot items at world position
 	for loot_item in loot_items:
 		var drop_position = position + Vector2(
 			randf_range(-spread, spread),
@@ -276,7 +276,7 @@ func drop_loot_at_position(loot_items: Array, position: Vector2, spread: float =
 		create_loot_drop(loot_item, drop_position)
 
 func create_loot_drop(loot_item: Dictionary, position: Vector2) -> Node2D:
-	"""Create physical loot drop in world"""
+# Create physical loot drop in world
 	drop_counter += 1
 	var drop_id = "drop_" + str(drop_counter)
 	
@@ -298,7 +298,7 @@ func create_loot_drop(loot_item: Dictionary, position: Vector2) -> Node2D:
 	return drop_instance
 
 func create_drop_node(loot_item: Dictionary, position: Vector2) -> Area2D:
-	"""Create the visual drop node"""
+# Create the visual drop node
 	var drop_area = Area2D.new()
 	drop_area.position = position
 	
@@ -323,7 +323,7 @@ func create_drop_node(loot_item: Dictionary, position: Vector2) -> Area2D:
 	return drop_area
 
 func get_item_icon(item_id: String) -> Texture2D:
-	"""Get item icon texture"""
+# Get item icon texture
 	var item_data = data_loader.get_item(item_id)
 	if item_data and item_data.has("icon_path"):
 		var icon_path = item_data.icon_path
@@ -334,7 +334,7 @@ func get_item_icon(item_id: String) -> Texture2D:
 	return create_item_placeholder_icon(item_id)
 
 func create_item_placeholder_icon(item_id: String) -> ImageTexture:
-	"""Create placeholder icon for item"""
+# Create placeholder icon for item
 	var color = Color.WHITE
 	
 	if item_id == "gold":
@@ -361,7 +361,7 @@ func create_item_placeholder_icon(item_id: String) -> ImageTexture:
 	return texture
 
 func add_rarity_effect(drop_node: Node2D, rarity: String):
-	"""Add visual effect based on rarity"""
+# Add visual effect based on rarity
 	# Add a simple colored outline or glow
 	var effect_sprite = Sprite2D.new()
 	effect_sprite.modulate = get_rarity_color(rarity)
@@ -376,7 +376,7 @@ func add_rarity_effect(drop_node: Node2D, rarity: String):
 	drop_node.add_child(effect_sprite)
 
 func get_rarity_color(rarity: String) -> Color:
-	"""Get color for item rarity"""
+# Get color for item rarity
 	match rarity:
 		"common":
 			return Color.WHITE
@@ -392,7 +392,7 @@ func get_rarity_color(rarity: String) -> Color:
 			return Color.WHITE
 
 func create_glow_texture(color: Color) -> ImageTexture:
-	"""Create glow effect texture"""
+# Create glow effect texture
 	var image = Image.create(32, 32, false, Image.FORMAT_RGB8)
 	image.fill(color)
 	var texture = ImageTexture.new()
@@ -400,7 +400,7 @@ func create_glow_texture(color: Color) -> ImageTexture:
 	return texture
 
 func collect_loot(loot_item: Dictionary) -> bool:
-	"""Add loot to player inventory"""
+# Add loot to player inventory
 	var item_id = loot_item.item_id
 	var quantity = loot_item.quantity
 	
@@ -417,7 +417,7 @@ func collect_loot(loot_item: Dictionary) -> bool:
 		return success
 
 func generate_quest_reward_loot(quest_id: String, player_level: int) -> Array:
-	"""Generate loot for quest completion"""
+# Generate loot for quest completion
 	var quest_data = data_loader.get_quest(quest_id)
 	if not quest_data:
 		return []
@@ -445,7 +445,7 @@ func generate_quest_reward_loot(quest_id: String, player_level: int) -> Array:
 	return reward_items
 
 func generate_random_items(pool_name: String, count: int, player_level: int) -> Array:
-	"""Generate random items from pool"""
+# Generate random items from pool
 	var items = []
 	var pool = global_loot_pools.get(pool_name, [])
 	
@@ -464,26 +464,26 @@ func generate_random_items(pool_name: String, count: int, player_level: int) -> 
 
 # Event handlers
 func _on_enemy_defeated(enemy_id: String, position: Vector2, player_level: int):
-	"""Handle enemy defeat and generate loot"""
+# Handle enemy defeat and generate loot
 	var loot_items = generate_loot(enemy_id, "enemy", player_level)
 	if loot_items.size() > 0:
 		drop_loot_at_position(loot_items, position)
 
 func _on_boss_defeated(boss_id: String, position: Vector2, player_level: int):
-	"""Handle boss defeat with bonus loot"""
+# Handle boss defeat with bonus loot
 	var bonus_multiplier = 2.0  # Bosses have better loot
 	var loot_items = generate_loot(boss_id, "boss", player_level, bonus_multiplier)
 	if loot_items.size() > 0:
 		drop_loot_at_position(loot_items, position, 100.0)  # Larger spread
 
 func _on_container_opened(container_id: String, position: Vector2, player_level: int):
-	"""Handle container opening"""
+# Handle container opening
 	var loot_items = generate_loot(container_id, "container", player_level)
 	if loot_items.size() > 0:
 		drop_loot_at_position(loot_items, position, 30.0)
 
 func _on_quest_completed(quest_id: String, player_level: int):
-	"""Handle quest completion rewards"""
+# Handle quest completion rewards
 	var reward_items = generate_quest_reward_loot(quest_id, player_level)
 	
 	# Add rewards directly to inventory
@@ -491,7 +491,7 @@ func _on_quest_completed(quest_id: String, player_level: int):
 		collect_loot(reward)
 
 func _on_loot_pickup(loot_item: Dictionary, drop_node: Node2D, body: Node2D):
-	"""Handle loot pickup by player"""
+# Handle loot pickup by player
 	if not body.has_method("is_player"):
 		return
 	
@@ -506,7 +506,7 @@ func _on_loot_pickup(loot_item: Dictionary, drop_node: Node2D, body: Node2D):
 
 # Utility functions
 func get_total_loot_value(loot_items: Array) -> int:
-	"""Calculate total value of loot"""
+# Calculate total value of loot
 	var total_value = 0
 	
 	for loot_item in loot_items:
@@ -521,7 +521,7 @@ func get_total_loot_value(loot_items: Array) -> int:
 	return total_value
 
 func clear_all_drops():
-	"""Clear all active loot drops"""
+# Clear all active loot drops
 	for drop_id in active_drops.keys():
 		var drop_data = active_drops[drop_id]
 		if drop_data.node:
@@ -536,7 +536,7 @@ func get_save_data() -> Dictionary:
 	}
 
 func serialize_active_drops() -> Array:
-	"""Serialize active drops for saving"""
+# Serialize active drops for saving
 	var serialized_drops = []
 	
 	for drop_id in active_drops.keys():
@@ -551,12 +551,12 @@ func serialize_active_drops() -> Array:
 	return serialized_drops
 
 func load_save_data(data: Dictionary):
-	"""Load loot system save data"""
+# Load loot system save data
 	if data.has("active_drops"):
 		restore_active_drops(data.active_drops)
 
 func restore_active_drops(serialized_drops: Array):
-	"""Restore active drops from save data"""
+# Restore active drops from save data
 	clear_all_drops()
 	
 	for drop_data in serialized_drops:
@@ -566,12 +566,12 @@ func restore_active_drops(serialized_drops: Array):
 
 # Debug functions
 func debug_generate_test_loot(enemy_id: String, position: Vector2):
-	"""Debug: Generate test loot"""
+# Debug: Generate test loot
 	var loot_items = generate_loot(enemy_id, "enemy", 10, 2.0)
 	drop_loot_at_position(loot_items, position)
 
 func debug_spawn_rare_item(item_id: String, position: Vector2, rarity: String = "legendary"):
-	"""Debug: Spawn specific rare item"""
+# Debug: Spawn specific rare item
 	var loot_item = {
 		"item_id": item_id,
 		"quantity": 1,

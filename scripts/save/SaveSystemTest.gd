@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 class_name SaveSystemTest
 # SaveSystemTest.gd - Test and validation script for the save system
 # Comprehensive testing of all save/load functionality
@@ -45,12 +45,12 @@ func _ready():
 	print("[SaveSystemTest] Save system test ready")
 
 func update_status(message: String):
-	"""Update status label"""
+# Update status label
 	status_label.text = message
 	print("[SaveSystemTest] " + message)
 
 func log_test_result(test_name: String, success: bool, details: String = ""):
-	"""Log a test result"""
+# Log a test result
 	var result = {
 		"test": test_name,
 		"success": success,
@@ -68,7 +68,7 @@ func log_test_result(test_name: String, success: bool, details: String = ""):
 	test_results_text.append_text(result_text + "\n\n")
 
 func _on_run_tests_pressed():
-	"""Run comprehensive save system tests"""
+# Run comprehensive save system tests
 	update_status("Running save system tests...")
 	progress_bar.value = 0
 	test_results.clear()
@@ -97,7 +97,7 @@ func _on_run_tests_pressed():
 	update_status("Tests completed: " + str(passed) + " passed, " + str(failed) + " failed")
 
 func run_all_tests():
-	"""Run all save system tests"""
+# Run all save system tests
 	var total_tests = 15
 	var current_test = 0
 	
@@ -193,13 +193,13 @@ func run_all_tests():
 
 # Individual test functions
 func test_save_manager_creation():
-	"""Test SaveManager instantiation"""
+# Test SaveManager instantiation
 	var success = save_manager != null
 	log_test_result("SaveManager Creation", success, 
 		"SaveManager instance created successfully" if success else "Failed to create SaveManager")
 
 func test_basic_save_operation():
-	"""Test basic save functionality"""
+# Test basic save functionality
 	if not save_manager:
 		log_test_result("Basic Save Operation", false, "SaveManager not available")
 		return
@@ -210,7 +210,7 @@ func test_basic_save_operation():
 		"Save operation completed" if result else "Save operation failed")
 
 func test_basic_load_operation():
-	"""Test basic load functionality"""
+# Test basic load functionality
 	if not save_manager:
 		log_test_result("Basic Load Operation", false, "SaveManager not available")
 		return
@@ -220,7 +220,7 @@ func test_basic_load_operation():
 		"Load operation completed" if result else "Load operation failed")
 
 func test_save_data_validation():
-	"""Test save data structure validation"""
+# Test save data structure validation
 	if not save_manager:
 		log_test_result("Save Data Validation", false, "SaveManager not available")
 		return
@@ -230,7 +230,7 @@ func test_save_data_validation():
 		"Save data is valid" if result.valid else "Save data validation failed: " + result.error)
 
 func test_compression():
-	"""Test save file compression"""
+# Test save file compression
 	if not save_manager:
 		log_test_result("Compression Test", false, "SaveManager not available")
 		return
@@ -247,7 +247,7 @@ func test_compression():
 		"Both compressed and uncompressed saves successful" if success else "Compression test failed")
 
 func test_version_migration():
-	"""Test save version migration"""
+# Test save version migration
 	if not save_manager:
 		log_test_result("Version Migration", false, "SaveManager not available")
 		return
@@ -259,7 +259,7 @@ func test_version_migration():
 		"Migration system available" if has_migration else "Migration system not found")
 
 func test_backup_system():
-	"""Test backup creation and restoration"""
+# Test backup creation and restoration
 	if not save_manager or not game_state:
 		log_test_result("Backup System", false, "SaveManager or GameState not available")
 		return
@@ -269,7 +269,7 @@ func test_backup_system():
 		"Backup created successfully" if backup_result else "Backup creation failed")
 
 func test_multiple_save_slots():
-	"""Test saving to multiple slots"""
+# Test saving to multiple slots
 	if not game_state:
 		log_test_result("Multiple Save Slots", false, "GameState not available")
 		return
@@ -287,7 +287,7 @@ func test_multiple_save_slots():
 		"All test slots saved successfully" if all_successful else "One or more slot saves failed")
 
 func test_save_corruption_detection():
-	"""Test corruption detection"""
+# Test corruption detection
 	if not save_manager:
 		log_test_result("Corruption Detection", false, "SaveManager not available")
 		return
@@ -299,7 +299,7 @@ func test_save_corruption_detection():
 		"Corruption detection available" if has_validation else "Corruption detection not found")
 
 func test_save_slot_management():
-	"""Test save slot listing and management"""
+# Test save slot listing and management
 	if not game_state:
 		log_test_result("Save Slot Management", false, "GameState not available")
 		return
@@ -310,7 +310,7 @@ func test_save_slot_management():
 		"Retrieved " + str(slots.size()) + " save slots" if success else "Failed to retrieve save slots")
 
 func test_auto_save_integration():
-	"""Test auto-save functionality"""
+# Test auto-save functionality
 	if not game_state:
 		log_test_result("Auto-save Integration", false, "GameState not available")
 		return
@@ -321,7 +321,7 @@ func test_auto_save_integration():
 		"Auto-save completed successfully" if result else "Auto-save failed")
 
 func test_quick_save_load():
-	"""Test quick save and load"""
+# Test quick save and load
 	if not game_state:
 		log_test_result("Quick Save/Load", false, "GameState not available")
 		return
@@ -335,7 +335,7 @@ func test_quick_save_load():
 		"Quick save/load completed" if success else "Quick save/load failed")
 
 func test_save_data_integrity():
-	"""Test save data integrity"""
+# Test save data integrity
 	if not save_manager:
 		log_test_result("Save Data Integrity", false, "SaveManager not available")
 		return
@@ -346,7 +346,7 @@ func test_save_data_integrity():
 		"Checksum validation available" if has_checksum else "Checksum validation not found")
 
 func test_error_handling():
-	"""Test error handling for invalid operations"""
+# Test error handling for invalid operations
 	if not game_state:
 		log_test_result("Error Handling", false, "GameState not available")
 		return
@@ -358,7 +358,7 @@ func test_error_handling():
 		"Invalid load handled gracefully" if success else "Error handling failed")
 
 func test_performance():
-	"""Test save/load performance"""
+# Test save/load performance
 	if not game_state:
 		log_test_result("Performance Test", false, "GameState not available")
 		return
@@ -378,7 +378,7 @@ func test_performance():
 		"Save: " + str(save_time) + "ms, Load: " + str(load_time) + "ms")
 
 func create_test_game_state():
-	"""Create test game state data"""
+# Create test game state data
 	if not game_state:
 		return
 	
@@ -404,7 +404,7 @@ func create_test_game_state():
 	game_state.game_time = 3600.0  # 1 hour
 
 func _on_clear_saves_pressed():
-	"""Clear all test save files"""
+# Clear all test save files
 	update_status("Clearing test saves...")
 	
 	var cleared = 0
@@ -417,7 +417,7 @@ func _on_clear_saves_pressed():
 	update_status("Cleared " + str(cleared) + " save files")
 
 func _on_create_test_data_pressed():
-	"""Create test data in multiple slots"""
+# Create test data in multiple slots
 	update_status("Creating test data...")
 	
 	create_test_game_state()
@@ -439,7 +439,7 @@ func _on_create_test_data_pressed():
 	update_status("Created test data in " + str(created) + " slots")
 
 func _on_benchmark_pressed():
-	"""Run performance benchmarks"""
+# Run performance benchmarks
 	update_status("Running benchmarks...")
 	progress_bar.value = 0
 	test_results_text.clear()

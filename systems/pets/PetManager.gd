@@ -1,4 +1,4 @@
-# Gerenciador de Pets - Disorder Chaos
+﻿# Gerenciador de Pets - Disorder Chaos
 extends Node
 class_name PetManager
 
@@ -12,7 +12,7 @@ var pet_system: PetSystem = null
 var loaded_pet_data: Dictionary = {}
 var global_pet_config: Dictionary = {}
 
-# Configurações globais
+# ConfiguraÃ§Ãµes globais
 @export var max_active_pets: int = 1
 @export var global_xp_modifier: float = 1.0
 @export var pet_revival_enabled: bool = true
@@ -23,7 +23,7 @@ func _ready():
 	pet_system = PetSystem.new()
 	add_child(pet_system)
 	
-	# Carregar configurações e dados
+	# Carregar configuraÃ§Ãµes e dados
 	_load_pet_configuration()
 	_load_global_pet_data()
 	
@@ -33,7 +33,7 @@ func _ready():
 	pet_system_ready.emit()
 	print("[PetManager] Pet system initialized")
 
-## Carrega configurações do sistema de pets
+## Carrega configuraÃ§Ãµes do sistema de pets
 func _load_pet_configuration():
 	var config_file = FileAccess.open("res://data/pets/pet_config.json", FileAccess.READ)
 	if config_file:
@@ -44,7 +44,7 @@ func _load_pet_configuration():
 			global_pet_config = config_data
 			_apply_global_config()
 	else:
-		# Configuração padrão
+		# ConfiguraÃ§Ã£o padrÃ£o
 		global_pet_config = {
 			"max_active_pets": 1,
 			"global_xp_modifier": 1.0,
@@ -56,14 +56,14 @@ func _load_pet_configuration():
 		}
 		_save_pet_configuration()
 
-## Aplica configurações globais
+## Aplica configuraÃ§Ãµes globais
 func _apply_global_config():
 	max_active_pets = global_pet_config.get("max_active_pets", 1)
 	global_xp_modifier = global_pet_config.get("global_xp_modifier", 1.0)
 	pet_revival_enabled = global_pet_config.get("pet_revival_enabled", true)
 	auto_dismiss_in_pvp = global_pet_config.get("auto_dismiss_in_pvp", true)
 
-## Salva configurações do sistema
+## Salva configuraÃ§Ãµes do sistema
 func _save_pet_configuration():
 	var config_file = FileAccess.open("res://data/pets/pet_config.json", FileAccess.WRITE)
 	if config_file:
@@ -119,7 +119,7 @@ func unregister_entity(entity: Entity) -> bool:
 	print("Entity unregistered from pet system: ", entity.name)
 	return true
 
-## Invoca um pet para uma entidade específica
+## Invoca um pet para uma entidade especÃ­fica
 func summon_pet(entity: Entity, pet_id: String) -> bool:
 	if pet_system:
 		return pet_system.summon_pet_for_entity(entity, pet_id)
@@ -155,13 +155,13 @@ func give_pet_xp(entity: Entity, xp_amount: int):
 		var modified_xp = int(xp_amount * global_xp_modifier)
 		pet_system.give_pet_xp_to_entity(entity, modified_xp)
 
-## Obtém todos os pets de uma entidade
+## ObtÃ©m todos os pets de uma entidade
 func get_entity_pets(entity: Entity) -> Array[Pet]:
 	if pet_system:
 		return pet_system.get_entity_pets(entity)
 	return []
 
-## Obtém pet ativo de uma entidade
+## ObtÃ©m pet ativo de uma entidade
 func get_active_pet(entity: Entity) -> Pet:
 	if pet_system:
 		return pet_system.get_entity_active_pet(entity)
@@ -177,7 +177,7 @@ func entity_has_active_pet(entity: Entity) -> bool:
 func create_pet_from_data(pet_data: Dictionary) -> Pet:
 	return Pet.from_json_data(pet_data)
 
-## Obtém dados de um pet por ID
+## ObtÃ©m dados de um pet por ID
 func get_pet_data(pet_id: String) -> Dictionary:
 	if loaded_pet_data.has("pets"):
 		for pet_data in loaded_pet_data["pets"]:
@@ -185,7 +185,7 @@ func get_pet_data(pet_id: String) -> Dictionary:
 				return pet_data
 	return {}
 
-## Obtém dados de uma habilidade por ID
+## ObtÃ©m dados de uma habilidade por ID
 func get_ability_data(ability_id: String) -> Dictionary:
 	if loaded_pet_data.has("pet_abilities"):
 		return loaded_pet_data["pet_abilities"].get(ability_id, {})
@@ -198,10 +198,10 @@ func apply_global_modifiers(pet: Pet):
 	
 	# Modificar XP baseado no modificador global
 	if global_xp_modifier != 1.0:
-		# XP modificado já é aplicado em give_pet_xp
+		# XP modificado jÃ¡ Ã© aplicado em give_pet_xp
 		pass
 
-## Obtém pets disponíveis por tipo
+## ObtÃ©m pets disponÃ­veis por tipo
 func get_pets_by_type(pet_type: Pet.PetType) -> Array[Dictionary]:
 	var filtered_pets = []
 	
@@ -225,7 +225,7 @@ func get_pets_by_type(pet_type: Pet.PetType) -> Array[Dictionary]:
 	
 	return filtered_pets
 
-## Obtém estatísticas globais do sistema
+## ObtÃ©m estatÃ­sticas globais do sistema
 func get_system_statistics() -> Dictionary:
 	var stats = {
 		"total_entities": 0,
@@ -246,16 +246,16 @@ func get_system_statistics() -> Dictionary:
 
 ## Efeitos globais para pets
 func apply_global_pet_effect(effect_name: String, data: Dictionary):
-	"""Aplica efeito global a todos os pets ativos"""
+# Aplica efeito global a todos os pets ativos
 	if pet_system:
 		pet_system.apply_global_pet_effect(effect_name, data)
 
 func dismiss_all_pets_in_area(area_name: String):
-	"""Dispensa todos os pets em uma área específica"""
+# Dispensa todos os pets em uma Ã¡rea especÃ­fica
 	if pet_system:
 		pet_system.dismiss_all_pets_in_area(area_name)
 
-## Configurações do sistema
+## ConfiguraÃ§Ãµes do sistema
 func set_global_xp_modifier(modifier: float):
 	global_xp_modifier = modifier
 	global_pet_config["global_xp_modifier"] = modifier
@@ -278,7 +278,7 @@ func set_auto_dismiss_in_pvp(enabled: bool):
 
 ## Sistema de recompensas para pets
 func reward_all_active_pets(reward_type: String, amount: int):
-	"""Recompensa todos os pets ativos"""
+# Recompensa todos os pets ativos
 	if not pet_system:
 		return
 	
@@ -295,21 +295,21 @@ func reward_all_active_pets(reward_type: String, amount: int):
 
 ## Sistema de eventos para pets
 func trigger_pet_event(event_name: String, event_data: Dictionary = {}):
-	"""Dispara evento específico para pets"""
+# Dispara evento especÃ­fico para pets
 	match event_name:
 		"xp_boost_hour":
 			var boost_amount = event_data.get("boost", 100)
 			reward_all_active_pets("xp", boost_amount)
-			EventBus.ui_notification_shown.emit("Evento: Hora do XP de Pets! +" + str(boost_amount) + " XP", "event")
+			EventBus.show_notification("Evento: Hora do XP de Pets! +" + str(boost_amount) + " XP", "event")
 		
 		"pet_ability_reset":
 			apply_global_pet_effect("ability_reset", {})
-			EventBus.ui_notification_shown.emit("Evento: Cooldowns de pets resetados!", "event")
+			EventBus.show_notification("Evento: Cooldowns de pets resetados!", "event")
 		
 		"pet_stat_boost":
 			var boost_duration = event_data.get("duration", 300) # 5 minutos
 			apply_global_pet_effect("stat_boost", {"duration": boost_duration})
-			EventBus.ui_notification_shown.emit("Evento: Pets receberam boost de stats temporário!", "event")
+			EventBus.show_notification("Evento: Pets receberam boost de stats temporÃ¡rio!", "event")
 
 ## Callbacks de sinais
 func _on_pet_summoned(entity: Entity, pet: Pet):
@@ -338,18 +338,18 @@ func _on_pet_level_up(entity: Entity, pet: Pet, new_level: int):
 		"timestamp": Time.get_unix_time_from_system()
 	})
 	
-	# Efeito especial a cada 5 níveis
+	# Efeito especial a cada 5 nÃ­veis
 	if new_level % 5 == 0:
-		EventBus.ui_notification_shown.emit(pet.name + " atingiu nível " + str(new_level) + "! Pets crescem mais fortes!", "achievement")
+		EventBus.show_notification(pet.name + " atingiu nÃ­vel " + str(new_level) + "! Pets crescem mais fortes!", "achievement")
 
 func _on_pet_xp_gained(entity: Entity, pet: Pet, xp_amount: int):
-	# Log de XP para estatísticas
+	# Log de XP para estatÃ­sticas
 	pass
 
 func _on_pet_system_ready():
 	print("[PetManager] Pet system is ready")
 
-## Métodos de debug
+## MÃ©todos de debug
 func debug_list_all_entities():
 	print("=== Pet System Entities ===")
 	if pet_system:
@@ -374,8 +374,8 @@ func _exit_tree():
 	if pet_system:
 		pet_system.queue_free()
 
-## Sistema de migração de dados
+## Sistema de migraÃ§Ã£o de dados
 func migrate_pet_data_if_needed():
-	"""Migra dados de pets para versões mais novas se necessário"""
-	# Placeholder para futuras migrações de dados
+# Migra dados de pets para versÃµes mais novas se necessÃ¡rio
+	# Placeholder para futuras migraÃ§Ãµes de dados
 	pass

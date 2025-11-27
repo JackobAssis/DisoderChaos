@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 # main_menu.gd - Main menu interface and navigation
 
 # Menu panels
@@ -26,7 +26,7 @@ func _ready():
 	connect_signals()
 
 func setup_main_menu():
-	"""Setup main menu UI"""
+# Setup main menu UI
 	# Create main panel
 	main_panel = VBoxContainer.new()
 	main_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
@@ -74,7 +74,7 @@ func setup_main_menu():
 	main_panel.add_child(exit_button)
 
 func setup_character_creation():
-	"""Setup character creation panel"""
+# Setup character creation panel
 	character_creation_panel = Control.new()
 	character_creation_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	character_creation_panel.visible = false
@@ -151,7 +151,7 @@ func setup_character_creation():
 	populate_class_options()
 
 func populate_race_options():
-	"""Populate race selection dropdown"""
+# Populate race selection dropdown
 	var races = DataLoader.get_all_races()
 	for race_id in races:
 		var race_data = DataLoader.get_race(race_id)
@@ -160,7 +160,7 @@ func populate_race_options():
 			race_option.set_item_metadata(race_option.get_item_count() - 1, race_id)
 
 func populate_class_options():
-	"""Populate class selection dropdown"""
+# Populate class selection dropdown
 	var classes = DataLoader.get_all_classes()
 	for class_id in classes:
 		var class_data = DataLoader.get_class(class_id)
@@ -169,7 +169,7 @@ func populate_class_options():
 			class_option.set_item_metadata(class_option.get_item_count() - 1, class_id)
 
 func connect_signals():
-	"""Connect button signals"""
+# Connect button signals
 	new_game_button.pressed.connect(_on_new_game_pressed)
 	load_game_button.pressed.connect(_on_load_game_pressed)
 	settings_button.pressed.connect(_on_settings_pressed)
@@ -183,11 +183,11 @@ func connect_signals():
 	EventBus.ui_menu_closed.connect(_on_menu_closed)
 
 func _on_new_game_pressed():
-	"""Handle new game button"""
+# Handle new game button
 	show_character_creation()
 
 func _on_load_game_pressed():
-	"""Handle load game button"""
+# Handle load game button
 	# Try to load saved game
 	if GameState.load_game(0):
 		start_game()
@@ -195,15 +195,15 @@ func _on_load_game_pressed():
 		show_notification("No saved game found!")
 
 func _on_settings_pressed():
-	"""Handle settings button"""
+# Handle settings button
 	show_notification("Settings not yet implemented!")
 
 func _on_exit_pressed():
-	"""Handle exit button"""
+# Handle exit button
 	get_tree().quit()
 
 func _on_create_character_pressed():
-	"""Handle create character button"""
+# Handle create character button
 	var character_name = name_input.text.strip_edges()
 	if character_name.is_empty():
 		show_notification("Please enter a character name!")
@@ -223,17 +223,17 @@ func _on_create_character_pressed():
 		show_notification("Failed to create character!")
 
 func _on_back_from_creation_pressed():
-	"""Handle back from character creation"""
+# Handle back from character creation
 	show_main_menu()
 
 func show_character_creation():
-	"""Show character creation panel"""
+# Show character creation panel
 	main_panel.visible = false
 	character_creation_panel.visible = true
 	EventBus.ui_menu_opened.emit("character_creation")
 
 func show_main_menu():
-	"""Show main menu panel"""
+# Show main menu panel
 	main_panel.visible = true
 	character_creation_panel.visible = false
 	if load_game_panel:
@@ -243,12 +243,12 @@ func show_main_menu():
 	EventBus.ui_menu_opened.emit("main_menu")
 
 func start_game():
-	"""Start the game"""
+# Start the game
 	EventBus.ui_menu_closed.emit("main_menu")
 	get_tree().change_scene_to_file("res://scenes/world/world_test.tscn")
 
 func show_notification(message: String):
-	"""Show a temporary notification"""
+# Show a temporary notification
 	# Create simple notification popup
 	var popup = AcceptDialog.new()
 	popup.dialog_text = message
@@ -262,17 +262,17 @@ func show_notification(message: String):
 		popup.queue_free()
 
 func _input(event):
-	"""Handle global input"""
+# Handle global input
 	if event.is_action_pressed("ui_cancel"):
 		if character_creation_panel.visible:
 			show_main_menu()
 
 func _on_menu_opened(menu_name: String):
-	"""Handle menu opened event"""
+# Handle menu opened event
 	print("[MainMenu] Menu opened: ", menu_name)
 
 func _on_menu_closed(menu_name: String):
-	"""Handle menu closed event"""
+# Handle menu closed event
 	print("[MainMenu] Menu closed: ", menu_name)
 
 # TODO: Future enhancements

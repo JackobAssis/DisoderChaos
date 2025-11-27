@@ -1,10 +1,10 @@
-# ============================================================================
+﻿# ============================================================================
 # UIManager.gd
 # Sistema central de gerenciamento da UI do jogo
 # ============================================================================
 extends Node
 
-# Referências para as UIs principais
+# ReferÃªncias para as UIs principais
 var game_hud: GameHUD
 var pause_menu: PauseMenu
 var options_menu: OptionsMenu
@@ -28,7 +28,7 @@ enum UILayer {
 }
 
 # ============================================================================
-# INICIALIZAÇÃO
+# INICIALIZAÃ‡ÃƒO
 # ============================================================================
 
 func _ready():
@@ -62,7 +62,7 @@ func _initialize_ui_systems():
 	_setup_popup_system(main_scene)
 
 # ============================================================================
-# CONFIGURAÇÃO DOS SISTEMAS
+# CONFIGURAÃ‡ÃƒO DOS SISTEMAS
 # ============================================================================
 
 func _setup_hud_system(main_scene: Node):
@@ -71,7 +71,7 @@ func _setup_hud_system(main_scene: Node):
 	
 	if game_hud:
 		game_hud.z_index = UILayer.HUD
-		print("✅ HUD sistema configurado")
+		print("âœ… HUD sistema configurado")
 
 func _setup_menu_systems(main_scene: Node):
 	var ui_container = _get_or_create_ui_container(main_scene)
@@ -82,13 +82,13 @@ func _setup_menu_systems(main_scene: Node):
 		pause_menu.z_index = UILayer.MENU
 		pause_menu.visible = false
 	
-	# Menu de opções
+	# Menu de opÃ§Ãµes
 	options_menu = _find_or_create_ui(ui_container, "OptionsMenu", "res://scenes/ui/menus/OptionsMenu.tscn")
 	if options_menu:
 		options_menu.z_index = UILayer.MENU
 		options_menu.visible = false
 	
-	# Inventário
+	# InventÃ¡rio
 	inventory_ui = _find_or_create_ui(ui_container, "InventoryUI", "res://scenes/ui/menus/AdvancedInventoryUI.tscn")
 	if inventory_ui:
 		inventory_ui.z_index = UILayer.MENU
@@ -106,7 +106,7 @@ func _setup_menu_systems(main_scene: Node):
 		crafting_ui.z_index = UILayer.MENU
 		crafting_ui.visible = false
 	
-	print("✅ Sistemas de menu configurados")
+	print("âœ… Sistemas de menu configurados")
 
 func _setup_popup_system(main_scene: Node):
 	# PopupManager sempre no topo
@@ -117,7 +117,7 @@ func _setup_popup_system(main_scene: Node):
 		main_scene.add_child(popup_manager)
 	
 	popup_manager.z_index = UILayer.POPUP
-	print("✅ Sistema de popup configurado")
+	print("âœ… Sistema de popup configurado")
 
 func _get_or_create_ui_container(parent: Node) -> CanvasLayer:
 	var ui_container = parent.find_child("UIContainer", false)
@@ -186,7 +186,7 @@ func pause_game():
 		is_any_menu_open = true
 	
 	EventBus.game_paused.emit()
-	print("🎮 Jogo pausado")
+	print("ðŸŽ® Jogo pausado")
 
 func resume_game():
 	if not is_game_paused:
@@ -202,7 +202,7 @@ func resume_game():
 	is_any_menu_open = false
 	
 	EventBus.game_unpaused.emit()
-	print("🎮 Jogo retomado")
+	print("ðŸŽ® Jogo retomado")
 
 func toggle_menu(menu_name: String):
 	if is_game_paused:
@@ -236,12 +236,12 @@ func open_menu(menu_name: String):
 		current_menu = menu_name
 		is_any_menu_open = true
 		
-		# Aplicar tema se necessário
+		# Aplicar tema se necessÃ¡rio
 		if menu_node.has_method("apply_theme"):
 			menu_node.apply_theme()
 		
 		EventBus.menu_opened.emit(menu_name)
-		print("📋 Menu aberto: ", menu_name)
+		print("ðŸ“‹ Menu aberto: ", menu_name)
 
 func close_menu(menu_name: String):
 	var menu_node: Control = null
@@ -267,7 +267,7 @@ func close_menu(menu_name: String):
 			is_any_menu_open = false
 		
 		EventBus.menu_closed.emit(menu_name)
-		print("📋 Menu fechado: ", menu_name)
+		print("ðŸ“‹ Menu fechado: ", menu_name)
 
 func close_current_menu():
 	if current_menu != "":
@@ -316,7 +316,7 @@ func is_menu_open(menu_name: String) -> bool:
 	return current_menu == menu_name
 
 func refresh_all_uis():
-	"""Atualizar todas as UIs com dados mais recentes"""
+# Atualizar todas as UIs com dados mais recentes
 	if game_hud and game_hud.has_method("refresh_ui"):
 		game_hud.refresh_ui()
 	
@@ -330,7 +330,7 @@ func refresh_all_uis():
 		crafting_ui.refresh_recipes()
 
 func apply_theme_to_all():
-	"""Aplicar tema atualizado a todas as UIs"""
+# Aplicar tema atualizado a todas as UIs
 	var all_uis = [game_hud, pause_menu, options_menu, inventory_ui, equipment_ui, crafting_ui]
 	
 	for ui in all_uis:
@@ -351,11 +351,11 @@ func _on_debug_info_requested():
 	print("===========================")
 
 # ============================================================================
-# NOTIFICAÇÕES
+# NOTIFICAÃ‡Ã•ES
 # ============================================================================
 
 func show_notification(message: String, type: String = "info", duration: float = 3.0):
-	"""Mostrar notificação temporária na tela"""
+# Mostrar notificaÃ§Ã£o temporÃ¡ria na tela
 	if popup_manager:
 		popup_manager.show_popup("notification", {
 			"message": message,
@@ -364,7 +364,7 @@ func show_notification(message: String, type: String = "info", duration: float =
 		})
 
 func show_tooltip(text: String, position: Vector2):
-	"""Mostrar tooltip na posição especificada"""
+# Mostrar tooltip na posiÃ§Ã£o especificada
 	if popup_manager:
 		popup_manager.show_popup("tooltip", {
 			"text": text,
@@ -372,6 +372,6 @@ func show_tooltip(text: String, position: Vector2):
 		})
 
 func hide_tooltip():
-	"""Esconder tooltip ativo"""
+# Esconder tooltip ativo
 	if popup_manager:
 		popup_manager.hide_popup("tooltip")

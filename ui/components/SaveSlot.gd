@@ -48,7 +48,7 @@ func _ready():
 	gui_input.connect(_on_gui_input)
 
 func setup_ui():
-	"""Setup initial UI state"""
+	# Setup initial UI state
 	custom_minimum_size = Vector2(500, 100)
 	
 	# Background panel
@@ -61,7 +61,7 @@ func setup_ui():
 	update_visual_state()
 
 func configure_slot(index: int, data: Dictionary = {}):
-	"""Configure the save slot with data"""
+	# Configure the save slot with data
 	slot_index = index
 	save_data = data
 	is_empty = data.is_empty()
@@ -70,7 +70,7 @@ func configure_slot(index: int, data: Dictionary = {}):
 	update_visual_state()
 
 func update_display():
-	"""Update the display based on save data"""
+	# Update the display based on save data
 	# Slot number
 	slot_number_label.text = str(slot_index)
 	
@@ -124,7 +124,7 @@ func update_display():
 		save_button.disabled = false
 
 func format_play_time(seconds: float) -> String:
-	"""Format play time for display"""
+	# Format play time for display
 	var hours = int(seconds / 3600)
 	var minutes = int((seconds % 3600) / 60)
 	
@@ -134,7 +134,7 @@ func format_play_time(seconds: float) -> String:
 		return "%dm" % minutes
 
 func update_visual_state():
-	"""Update visual appearance"""
+	# Update visual appearance
 	if not background:
 		return
 		
@@ -158,7 +158,7 @@ func update_visual_state():
 	background.add_theme_stylebox_override("panel", style_box)
 
 func set_selected(selected: bool):
-	"""Set the selection state"""
+	# Set the selection state
 	is_selected = selected
 	update_visual_state()
 	
@@ -166,7 +166,7 @@ func set_selected(selected: bool):
 		slot_selected.emit(slot_index)
 
 func get_slot_info() -> Dictionary:
-	"""Get information about this slot"""
+	# Get information about this slot
 	return {
 		"slot_index": slot_index,
 		"is_empty": is_empty,
@@ -175,21 +175,21 @@ func get_slot_info() -> Dictionary:
 
 # Signal handlers
 func _on_load_pressed():
-	"""Handle load button press"""
+	# Handle load button press
 	if not is_empty:
 		load_requested.emit(slot_index)
 
 func _on_save_pressed():
-	"""Handle save button press"""
+	# Handle save button press
 	save_requested.emit(slot_index)
 
 func _on_delete_pressed():
-	"""Handle delete button press"""
+	# Handle delete button press
 	if not is_empty:
 		delete_requested.emit(slot_index)
 
 func _on_mouse_entered():
-	"""Handle mouse entering the slot"""
+	# Handle mouse entering the slot
 	if not is_selected and background:
 		var style_box = StyleBoxFlat.new()
 		style_box.bg_color = hover_color if not is_empty else empty_color.lightened(0.1)
@@ -200,35 +200,35 @@ func _on_mouse_entered():
 		background.add_theme_stylebox_override("panel", style_box)
 
 func _on_mouse_exited():
-	"""Handle mouse exiting the slot"""
+	# Handle mouse exiting the slot
 	if not is_selected:
 		update_visual_state()
 
 func _on_gui_input(event: InputEvent):
-	"""Handle GUI input events"""
+	# Handle GUI input events
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			set_selected(true)
 
 # Animation effects
 func animate_save_success():
-	"""Animate successful save"""
+	# Animate successful save
 	var tween = create_tween()
 	tween.tween_method(_set_flash_color, Color.GREEN, normal_color, 0.5)
 
 func animate_load_success():
-	"""Animate successful load"""
+	# Animate successful load
 	var tween = create_tween()
 	tween.tween_method(_set_flash_color, Color.BLUE, normal_color, 0.5)
 
 func animate_delete():
-	"""Animate deletion"""
+	# Animate deletion
 	var tween = create_tween()
 	tween.tween_method(_set_flash_color, Color.RED, empty_color, 0.3)
 	tween.tween_callback(func(): configure_slot(slot_index, {}))
 
 func _set_flash_color(color: Color):
-	"""Helper for animation"""
+	# Helper for animation
 	if background:
 		var style_box = StyleBoxFlat.new()
 		style_box.bg_color = color
