@@ -1,0 +1,240 @@
+{
+  "base_prices": {
+    "common": 10,
+    "uncommon": 50,
+    "rare": 200,
+    "epic": 1000,
+    "legendary": 5000
+  },
+  "rarity_multipliers": {
+    "common": 1.0,
+    "uncommon": 2.5,
+    "rare": 8.0,
+    "epic": 25.0,
+    "legendary": 100.0
+  },
+  "type_multipliers": {
+    "weapon": 3.0,
+    "armor": 2.5,
+    "consumable": 0.5,
+    "material": 0.3,
+    "special": 10.0,
+    "accessory": 4.0
+  },
+  "shop_modifiers": {
+    "general_store": 1.0,
+    "weapon_shop": 1.2,
+    "armor_shop": 1.1,
+    "magic_shop": 1.5,
+    "black_market": 2.0,
+    "guild_shop": 0.8
+  },
+  "inflation_system": {
+    "base_inflation_rate": 0.02,
+    "demand_multiplier": 1.5,
+    "supply_multiplier": 0.8,
+    "max_price_increase": 3.0,
+    "max_price_decrease": 0.3
+  },
+  "currencies": {
+    "gold": {
+      "name": "Ouro",
+      "icon": "res://assets/icons/currency/gold.png",
+      "base_conversion": 1.0
+    },
+    "chaos_shard": {
+      "name": "Fragmento do Caos",
+      "icon": "res://assets/icons/currency/chaos_shard.png",
+      "base_conversion": 100.0,
+      "description": "Moeda rara obtida derrotando chefes"
+    },
+    "rare_essence": {
+      "name": "Essência Rara",
+      "icon": "res://assets/icons/currency/rare_essence.png",
+      "base_conversion": 50.0,
+      "description": "Usada para melhorias especiais"
+    },
+    "raid_token": {
+      "name": "Token de Incursão",
+      "icon": "res://assets/icons/currency/raid_token.png",
+      "base_conversion": 500.0,
+      "description": "Obtido completando raids"
+    }
+  },
+  "crafting_stations": {
+    "workbench": {
+      "name": "Bancada de Trabalho",
+      "icon": "res://assets/icons/stations/workbench.png",
+      "cost": 100,
+      "level_requirement": 1
+    },
+    "forge": {
+      "name": "Forja",
+      "icon": "res://assets/icons/stations/forge.png", 
+      "cost": 500,
+      "level_requirement": 5
+    },
+    "alchemy_table": {
+      "name": "Mesa de Alquimia",
+      "icon": "res://assets/icons/stations/alchemy.png",
+      "cost": 750,
+      "level_requirement": 8
+    },
+    "enchanting_table": {
+      "name": "Mesa de Encantamento",
+      "icon": "res://assets/icons/stations/enchanting.png",
+      "cost": 1000,
+      "level_requirement": 10
+    },
+    "advanced_forge": {
+      "name": "Forja Avançada",
+      "icon": "res://assets/icons/stations/advanced_forge.png",
+      "cost": 2500,
+      "level_requirement": 15
+    }
+  },
+  "repair_costs": {
+    "base_cost_percentage": 0.25,
+    "durability_threshold": 0.2,
+    "emergency_repair_multiplier": 2.0
+  },
+  "enhancement_costs": {
+    "+1": {
+      "base_cost": 100,
+      "success_rate": 90,
+      "material_cost": 50
+    },
+    "+2": {
+      "base_cost": 250,
+      "success_rate": 80,
+      "material_cost": 100
+    },
+    "+3": {
+      "base_cost": 500,
+      "success_rate": 70,
+      "material_cost": 200
+    },
+    "+4": {
+      "base_cost": 1000,
+      "success_rate": 60,
+      "material_cost": 400
+    },
+    "+5": {
+      "base_cost": 2000,
+      "success_rate": 50,
+      "material_cost": 800
+    },
+    "+6": {
+      "base_cost": 4000,
+      "success_rate": 40,
+      "material_cost": 1600
+    },
+    "+7": {
+      "base_cost": 8000,
+      "success_rate": 30,
+      "material_cost": 3200
+    },
+    "+8": {
+      "base_cost": 16000,
+      "success_rate": 20,
+      "material_cost": 6400
+    },
+    "+9": {
+      "base_cost": 32000,
+      "success_rate": 10,
+      "material_cost": 12800
+    },
+    "+10": {
+      "base_cost": 64000,
+      "success_rate": 5,
+      "material_cost": 25600
+    }
+  },
+  "banking_system": {
+    "interest_rate": 0.05,
+    "max_interest_per_day": 1000,
+    "withdrawal_fee": 0.02,
+    "storage_slots": {
+      "basic": 50,
+      "premium": 100,
+      "vault": 200
+    },
+    "storage_costs": {
+      "basic": 0,
+      "premium": 1000,
+      "vault": 5000
+    }
+  },
+  "auction_house": {
+    "listing_fee": 0.05,
+    "success_fee": 0.10,
+    "max_listing_duration": 7,
+    "min_bid_increase": 0.05
+  },
+  "reputation_system": {
+    "discount_rates": {
+      "neutral": 1.0,
+      "friendly": 0.95,
+      "honored": 0.90,
+      "revered": 0.85,
+      "exalted": 0.80
+    },
+    "reputation_thresholds": {
+      "hostile": -3000,
+      "unfriendly": -1000,
+      "neutral": 0,
+      "friendly": 1000,
+      "honored": 3000,
+      "revered": 9000,
+      "exalted": 21000
+    }
+  },
+  "daily_market_events": [
+    {
+      "name": "Festa do Ferreiro",
+      "description": "Todas as armas 20% mais baratas",
+      "type": "discount",
+      "categories": ["weapon"],
+      "modifier": 0.8,
+      "probability": 0.1
+    },
+    {
+      "name": "Escassez de Ferro",
+      "description": "Armas e armaduras 50% mais caras",
+      "type": "inflation",
+      "categories": ["weapon", "armor"],
+      "modifier": 1.5,
+      "probability": 0.05
+    },
+    {
+      "name": "Caravana de Mercadores",
+      "description": "Todos os itens 15% mais baratos",
+      "type": "discount",
+      "categories": ["all"],
+      "modifier": 0.85,
+      "probability": 0.08
+    },
+    {
+      "name": "Festival das Poções",
+      "description": "Consumíveis 30% mais baratos",
+      "type": "discount", 
+      "categories": ["consumable"],
+      "modifier": 0.7,
+      "probability": 0.12
+    }
+  ],
+  "global_economic_factors": {
+    "server_population_modifier": {
+      "low": 0.9,
+      "medium": 1.0,
+      "high": 1.2,
+      "overcrowded": 1.5
+    },
+    "seasonal_modifiers": {
+      "spring": 1.0,
+      "summer": 1.1,
+      "autumn": 0.95,
+      "winter": 1.05
+    }
+  }
+}

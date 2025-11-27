@@ -198,6 +198,360 @@ func initialize_fog_of_war():
 		for y in range(fog_resolution):
 			fog_grid[x].append(false)  # false = unexplored
 
+# Core update functions
+func update_minimap():
+	"""Update minimap display"""
+	if not player_node or not minimap_camera:
+		return
+	
+	# Update camera position
+	minimap_camera.global_position = player_node.global_position
+	
+	# Update fog of war
+	update_fog_exploration()
+	
+	# Update icon positions
+	update_icon_positions()
+
+func update_fog_exploration():
+	"""Update fog of war based on player position"""
+	if not player_node:
+		return
+	
+	var player_pos = player_node.global_position
+	var grid_x = int((player_pos.x / 100.0) + fog_resolution / 2)
+	var grid_y = int((player_pos.y / 100.0) + fog_resolution / 2)
+	
+	# Explore area around player
+	for x in range(max(0, grid_x - 2), min(fog_resolution, grid_x + 3)):
+		for y in range(max(0, grid_y - 2), min(fog_resolution, grid_y + 3)):
+			var distance = Vector2(x - grid_x, y - grid_y).length()
+			if distance <= exploration_radius / 50.0:
+				fog_grid[x][y] = true
+	
+	fog_of_war.queue_redraw()
+
+func update_icon_positions():
+	"""Update positions of all minimap icons"""
+	update_npc_icons()
+	update_enemy_icons()
+	update_item_icons()
+	update_poi_icons()
+
+func update_npc_icons():
+	"""Update NPC icon positions"""
+	for npc_id in npc_icons.keys():
+		var icon = npc_icons[npc_id]
+		var npc_node = get_node_or_null(npc_id)
+		if npc_node and is_position_visible(npc_node.global_position):
+			var screen_pos = world_to_minimap_position(npc_node.global_position)
+			icon.position = screen_pos
+			icon.visible = true
+		else:
+			icon.visible = false
+
+func update_enemy_icons():
+	"""Update enemy icon positions"""
+	for enemy_id in enemy_icons.keys():
+		var icon = enemy_icons[enemy_id]
+		var enemy_node = get_node_or_null(enemy_id)
+		if enemy_node and is_position_visible(enemy_node.global_position):
+			var screen_pos = world_to_minimap_position(enemy_node.global_position)
+			icon.position = screen_pos
+			icon.visible = true
+		else:
+			icon.visible = false
+
+func update_item_icons():
+	"""Update item icon positions"""
+	for item_id in item_icons.keys():
+		var icon = item_icons[item_id]
+		var item_node = get_node_or_null(item_id)
+		if item_node and is_position_visible(item_node.global_position):
+			var screen_pos = world_to_minimap_position(item_node.global_position)
+			icon.position = screen_pos
+			icon.visible = true
+		else:
+			icon.visible = false
+
+func update_poi_icons():
+	"""Update point of interest icon positions"""
+	for poi_id in poi_icons.keys():
+		var icon = poi_icons[poi_id]
+		# POIs are usually static, get position from data
+		var poi_data = get_poi_data(poi_id)
+		if poi_data and is_position_visible(poi_data.position):
+			var screen_pos = world_to_minimap_position(poi_data.position)
+			icon.position = screen_pos
+			icon.visible = true
+		else:
+			icon.visible = false
+
+func world_to_minimap_position(world_pos: Vector2) -> Vector2:
+	"""Convert world position to minimap screen position"""
+	if not player_node:
+		return Vector2.ZERO
+	
+	var relative_pos = world_pos - player_node.global_position
+	var screen_pos = relative_pos * zoom_level
+	
+	# Scale to minimap size and center
+	screen_pos = screen_pos * (minimap_size / 200.0) + minimap_size / 2
+	
+	return screen_pos
+
+func is_position_visible(world_pos: Vector2) -> bool:
+	"""Check if position should be visible on minimap"""
+	if not player_node:
+		return false
+	
+	var distance = world_pos.distance_to(player_node.global_position)
+	var view_range = 100.0 / zoom_level
+	
+	return distance <= view_range
+
+func get_poi_data(poi_id: String) -> Dictionary:
+	"""Get point of interest data"""
+	# TODO: Integrate with dungeon/world data
+	return {}
+
+# Icon management functions
+func add_npc_icon(npc_id: String, npc_position: Vector2):
+	"""Add NPC icon to minimap"""
+	if npc_icons.has(npc_id):
+		return
+	
+	var icon = create_minimap_icon(npc_color, 6)
+	npc_icons[npc_id] = icon
+	minimap_frame.add_child(icon)
+
+func add_enemy_icon(enemy_id: String, enemy_position: Vector2):
+	"""Add enemy icon to minimap"""
+	if enemy_icons.has(enemy_id):
+		return
+	
+	var icon = create_minimap_icon(enemy_color, 5)
+	enemy_icons[enemy_id] = icon
+	minimap_frame.add_child(icon)
+
+func add_item_icon(item_id: String, item_position: Vector2):
+	"""Add item icon to minimap"""
+	if item_icons.has(item_id):
+		return
+	
+	var icon = create_minimap_icon(item_color, 4)
+	item_icons[item_id] = icon
+	minimap_frame.add_child(icon)
+
+func add_poi_icon(poi_id: String, poi_position: Vector2, poi_type: String):
+	"""Add point of interest icon to minimap"""
+	if poi_icons.has(poi_id):
+		return
+	
+	var color = poi_color
+	match poi_type:
+		"dungeon_entrance": color = Color.PURPLE
+		"shop": color = Color.GOLD
+		"quest_giver": color = Color.ORANGE
+		"boss": color = Color.DARK_RED
+	
+	var icon = create_minimap_icon(color, 8)
+	poi_icons[poi_id] = icon
+	minimap_frame.add_child(icon)
+
+func create_minimap_icon(color: Color, size: int) -> Control:
+	"""Create a minimap icon"""
+	var icon = Control.new()
+	icon.custom_minimum_size = Vector2(size, size)
+	icon.anchor_left = 0.5
+	icon.anchor_right = 0.5
+	icon.anchor_top = 0.5
+	icon.anchor_bottom = 0.5
+	icon.offset_left = -size / 2
+	icon.offset_right = size / 2
+	icon.offset_top = -size / 2
+	icon.offset_bottom = size / 2
+	
+	var icon_panel = Panel.new()
+	icon_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon.add_child(icon_panel)
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = color
+	style.corner_radius_top_left = size / 2
+	style.corner_radius_top_right = size / 2
+	style.corner_radius_bottom_left = size / 2
+	style.corner_radius_bottom_right = size / 2
+	icon_panel.add_theme_stylebox_override("panel", style)
+	
+	return icon
+
+func remove_npc_icon(npc_id: String):
+	"""Remove NPC icon from minimap"""
+	if npc_icons.has(npc_id):
+		npc_icons[npc_id].queue_free()
+		npc_icons.erase(npc_id)
+
+func remove_enemy_icon(enemy_id: String):
+	"""Remove enemy icon from minimap"""
+	if enemy_icons.has(enemy_id):
+		enemy_icons[enemy_id].queue_free()
+		enemy_icons.erase(enemy_id)
+
+func remove_item_icon(item_id: String):
+	"""Remove item icon from minimap"""
+	if item_icons.has(item_id):
+		item_icons[item_id].queue_free()
+		item_icons.erase(item_id)
+
+# Zoom and navigation functions
+func zoom_in():
+	"""Zoom in on minimap"""
+	zoom_level = min(zoom_level * 1.5, max_zoom)
+	if minimap_camera:
+		minimap_camera.zoom = Vector2.ONE * zoom_level
+
+func zoom_out():
+	"""Zoom out on minimap"""
+	zoom_level = max(zoom_level / 1.5, min_zoom)
+	if minimap_camera:
+		minimap_camera.zoom = Vector2.ONE * zoom_level
+
+func toggle_fullscreen():
+	"""Toggle minimap fullscreen mode"""
+	is_fullscreen = not is_fullscreen
+	
+	if is_fullscreen:
+		# Expand to larger size
+		anchor_left = 0.2
+		anchor_right = 0.8
+		anchor_top = 0.2
+		anchor_bottom = 0.8
+		offset_left = 0
+		offset_right = 0
+		offset_top = 0
+		offset_bottom = 0
+	else:
+		# Return to corner position
+		anchor_left = 1.0
+		anchor_right = 1.0
+		anchor_top = 0.0
+		anchor_bottom = 0.0
+		offset_left = -minimap_size.x - 20
+		offset_right = -20
+		offset_top = 20
+		offset_bottom = minimap_size.y + 20
+
+# Drawing functions
+func _draw_fog_of_war():
+	"""Draw fog of war overlay"""
+	var cell_size = minimap_size / fog_resolution
+	
+	for x in range(fog_resolution):
+		for y in range(fog_resolution):
+			if not fog_grid[x][y]:
+				var pos = Vector2(x * cell_size.x, y * cell_size.y)
+				var rect = Rect2(pos, cell_size)
+				fog_of_war.draw_rect(rect, fog_color)
+
+# Event handlers
+func _on_player_moved(new_position: Vector2):
+	"""Handle player movement"""
+	# Update is handled in update_minimap()
+	pass
+
+func _on_dungeon_changed(dungeon_id: String):
+	"""Handle dungeon change"""
+	current_dungeon = dungeon_id
+	# Clear all dynamic icons
+	clear_all_icons()
+	# Load dungeon-specific POIs
+	load_dungeon_pois(dungeon_id)
+
+func _on_npc_spawned(npc_id: String, position: Vector2):
+	"""Handle NPC spawn"""
+	add_npc_icon(npc_id, position)
+
+func _on_npc_despawned(npc_id: String):
+	"""Handle NPC despawn"""
+	remove_npc_icon(npc_id)
+
+func _on_enemy_spawned(enemy_id: String, position: Vector2):
+	"""Handle enemy spawn"""
+	add_enemy_icon(enemy_id, position)
+
+func _on_enemy_defeated(enemy_id: String):
+	"""Handle enemy defeat"""
+	remove_enemy_icon(enemy_id)
+
+func _on_item_dropped(item_id: String, position: Vector2):
+	"""Handle item drop"""
+	add_item_icon(item_id, position)
+
+func _on_item_collected(item_id: String):
+	"""Handle item collection"""
+	remove_item_icon(item_id)
+
+func _on_minimap_input(event: InputEvent):
+	"""Handle minimap input"""
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			# Calculate world position from click
+			var click_pos = event.position
+			var world_pos = minimap_to_world_position(click_pos)
+			
+			# Emit navigation request
+			event_bus.emit_signal("minimap_navigation_requested", world_pos)
+		
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			toggle_fullscreen()
+		
+		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_in()
+		
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_out()
+
+func minimap_to_world_position(minimap_pos: Vector2) -> Vector2:
+	"""Convert minimap position to world position"""
+	if not player_node:
+		return Vector2.ZERO
+	
+	# Convert screen position to relative position
+	var relative_pos = (minimap_pos - minimap_size / 2) / zoom_level
+	relative_pos = relative_pos / (minimap_size / 200.0)
+	
+	# Add to player position
+	return player_node.global_position + relative_pos
+
+func clear_all_icons():
+	"""Clear all dynamic icons"""
+	for icon in npc_icons.values():
+		icon.queue_free()
+	for icon in enemy_icons.values():
+		icon.queue_free()
+	for icon in item_icons.values():
+		icon.queue_free()
+	
+	npc_icons.clear()
+	enemy_icons.clear()
+	item_icons.clear()
+
+func load_dungeon_pois(dungeon_id: String):
+	"""Load points of interest for current dungeon"""
+	var dungeon_data = DataLoader.load_json_data("res://data/dungeons/" + dungeon_id + ".json")
+	if not dungeon_data:
+		return
+	
+	var pois = dungeon_data.get("points_of_interest", [])
+	for poi in pois:
+		var poi_id = poi.get("id", "")
+		var position = Vector2(poi.get("x", 0), poi.get("y", 0))
+		var type = poi.get("type", "generic")
+		
+		if poi_id != "":
+			add_poi_icon(poi_id, position, type)
+
 func update_minimap():
 	"""Update minimap display"""
 	if not player_node or not minimap_camera:

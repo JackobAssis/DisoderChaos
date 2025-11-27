@@ -1,0 +1,204 @@
+{
+  "shop_types": {
+    "general_store": {
+      "name": "General Store",
+      "description": "Basic supplies and equipment",
+      "npc_type": "merchant",
+      "categories": ["consumables", "basic_equipment", "materials"],
+      "markup": 1.2,
+      "inventory_refresh_hours": 24,
+      "reputation_required": 0
+    },
+    "blacksmith": {
+      "name": "Blacksmith",
+      "description": "Weapons and armor specialist",
+      "npc_type": "craftsman",
+      "categories": ["weapons", "armor", "materials"],
+      "markup": 1.5,
+      "inventory_refresh_hours": 48,
+      "reputation_required": 0,
+      "services": ["repair", "upgrade", "enchant"]
+    },
+    "alchemist": {
+      "name": "Alchemist",
+      "description": "Potions and magical components",
+      "npc_type": "scholar",
+      "categories": ["potions", "magical_components", "recipes"],
+      "markup": 1.8,
+      "inventory_refresh_hours": 12,
+      "reputation_required": 0,
+      "services": ["brew_potions", "identify_items"]
+    },
+    "luxury_merchant": {
+      "name": "Luxury Merchant",
+      "description": "Rare and expensive items",
+      "npc_type": "noble_merchant",
+      "categories": ["rare_equipment", "gems", "luxury_items"],
+      "markup": 3.0,
+      "inventory_refresh_hours": 168,
+      "reputation_required": 500,
+      "services": ["special_orders"]
+    }
+  },
+  "items_for_sale": {
+    "consumables": [
+      {
+        "item_id": "health_potion_small",
+        "base_price": 25,
+        "stock": {"min": 10, "max": 20},
+        "availability": 0.9
+      },
+      {
+        "item_id": "mana_potion_small",
+        "base_price": 30,
+        "stock": {"min": 8, "max": 15},
+        "availability": 0.8
+      },
+      {
+        "item_id": "bread",
+        "base_price": 2,
+        "stock": {"min": 50, "max": 100},
+        "availability": 1.0
+      }
+    ],
+    "basic_equipment": [
+      {
+        "item_id": "iron_sword",
+        "base_price": 150,
+        "stock": {"min": 1, "max": 3},
+        "availability": 0.7
+      },
+      {
+        "item_id": "leather_armor",
+        "base_price": 120,
+        "stock": {"min": 1, "max": 2},
+        "availability": 0.6
+      },
+      {
+        "item_id": "wooden_shield",
+        "base_price": 80,
+        "stock": {"min": 2, "max": 4},
+        "availability": 0.8
+      }
+    ],
+    "weapons": [
+      {
+        "item_id": "steel_sword",
+        "base_price": 300,
+        "stock": {"min": 1, "max": 2},
+        "availability": 0.5
+      },
+      {
+        "item_id": "war_hammer",
+        "base_price": 450,
+        "stock": {"min": 0, "max": 1},
+        "availability": 0.3
+      }
+    ],
+    "armor": [
+      {
+        "item_id": "chainmail_armor",
+        "base_price": 250,
+        "stock": {"min": 1, "max": 2},
+        "availability": 0.4
+      },
+      {
+        "item_id": "steel_helmet",
+        "base_price": 180,
+        "stock": {"min": 1, "max": 3},
+        "availability": 0.6
+      }
+    ],
+    "materials": [
+      {
+        "item_id": "iron_ore",
+        "base_price": 5,
+        "stock": {"min": 20, "max": 50},
+        "availability": 0.9
+      },
+      {
+        "item_id": "leather",
+        "base_price": 8,
+        "stock": {"min": 15, "max": 30},
+        "availability": 0.8
+      }
+    ],
+    "potions": [
+      {
+        "item_id": "health_potion_large",
+        "base_price": 75,
+        "stock": {"min": 3, "max": 8},
+        "availability": 0.7
+      },
+      {
+        "item_id": "strength_potion",
+        "base_price": 120,
+        "stock": {"min": 1, "max": 3},
+        "availability": 0.4
+      }
+    ],
+    "magical_components": [
+      {
+        "item_id": "mana_crystal",
+        "base_price": 100,
+        "stock": {"min": 2, "max": 5},
+        "availability": 0.5
+      },
+      {
+        "item_id": "dragon_scale",
+        "base_price": 500,
+        "stock": {"min": 0, "max": 1},
+        "availability": 0.1
+      }
+    ],
+    "rare_equipment": [
+      {
+        "item_id": "enchanted_blade",
+        "base_price": 2000,
+        "stock": {"min": 0, "max": 1},
+        "availability": 0.2
+      },
+      {
+        "item_id": "dragon_armor",
+        "base_price": 5000,
+        "stock": {"min": 0, "max": 1},
+        "availability": 0.05
+      }
+    ]
+  },
+  "dynamic_pricing": {
+    "supply_demand_factor": 0.3,
+    "reputation_discount": {
+      "neutral": 0.0,
+      "friendly": 0.05,
+      "honored": 0.10,
+      "revered": 0.15,
+      "exalted": 0.20
+    },
+    "bulk_discount": {
+      "5_items": 0.05,
+      "10_items": 0.10,
+      "20_items": 0.15
+    },
+    "market_events": [
+      {
+        "event_id": "iron_shortage",
+        "items_affected": ["iron_ore", "iron_sword", "chainmail_armor"],
+        "price_multiplier": 1.5,
+        "duration_hours": 72
+      },
+      {
+        "event_id": "harvest_festival",
+        "items_affected": ["bread", "health_potion_small"],
+        "price_multiplier": 0.8,
+        "duration_hours": 48
+      }
+    ]
+  },
+  "buyback_system": {
+    "enabled": true,
+    "buyback_percentage": 0.6,
+    "max_buyback_slots": 10,
+    "buyback_expiry_hours": 24
+  }
+}

@@ -1,13 +1,18 @@
+# ============================================================================
+# PauseMenu.gd
+# Menu de pausa do jogo
+# ============================================================================
 extends Control
-
 class_name PauseMenu
 
-# Menu components
-@onready var main_panel: Panel
-@onready var continue_button: Button
-@onready var inventory_button: Button
-@onready var character_button: Button
-@onready var journal_button: Button
+@onready var resume_button = $PausePanel/VBoxContainer/ButtonsContainer/ResumeButton
+@onready var inventory_button = $PausePanel/VBoxContainer/ButtonsContainer/InventoryButton
+@onready var equipment_button = $PausePanel/VBoxContainer/ButtonsContainer/EquipmentButton
+@onready var crafting_button = $PausePanel/VBoxContainer/ButtonsContainer/CraftingButton
+@onready var options_button = $PausePanel/VBoxContainer/ButtonsContainer/OptionsButton
+@onready var main_menu_button = $PausePanel/VBoxContainer/ButtonsContainer/MainMenuButton
+@onready var quit_button = $PausePanel/VBoxContainer/ButtonsContainer/QuitButton
+@onready var title_label = $PausePanel/VBoxContainer/Title
 @onready var settings_button: Button
 @onready var save_button: Button
 @onready var main_menu_button: Button
@@ -20,10 +25,10 @@ var quick_inventory_panel: Control
 var menu_tween: Tween
 var blur_effect: Control
 
-# Style
-var neon_green: Color = Color(0.0, 1.0, 0.549, 1.0)
-var dark_bg: Color = Color(0.0, 0.1, 0.05, 0.9)
-var darker_bg: Color = Color(0.0, 0.05, 0.025, 0.95)
+# Style - usando UIThemeManager
+var neon_green: Color = UIThemeManager.Colors.CYBER_CYAN
+var dark_bg: Color = UIThemeManager.Colors.BG_PANEL
+var darker_bg: Color = UIThemeManager.Colors.BG_POPUP
 
 # References
 @onready var game_state: GameState = get_node("/root/GameState")

@@ -1,0 +1,84 @@
+[gd_scene load_steps=3 format=3 uid="uid://csgb85cjm1xkr"]
+
+[ext_resource type="Script" path="res://scripts/ui/menus/PauseMenu.gd" id="1_1lvk6"]
+[ext_resource type="Script" path="res://scripts/ui/themes/UIThemeManager.gd" id="2_theme"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_1lvk6")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="PausePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -250.0
+offset_right = 200.0
+offset_bottom = 250.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PausePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+
+[node name="Title" type="Label" parent="PausePanel/VBoxContainer"]
+layout_mode = 2
+text = "JOGO PAUSADO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PausePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="PausePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResumeButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Continuar"
+
+[node name="InventoryButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Inventário"
+
+[node name="EquipmentButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Equipamentos"
+
+[node name="CraftingButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Crafting"
+
+[node name="OptionsButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Opções"
+
+[node name="HSeparator2" type="HSeparator" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Menu Principal"
+
+[node name="QuitButton" type="Button" parent="PausePanel/VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Sair do Jogo"

@@ -21,6 +21,10 @@ var quest_journal: QuestJournal
 var pause_menu: PauseMenu
 var main_menu: MainMenu
 var dialogue_ui: DialogueUI
+var crafting_ui: CraftingUI
+var skill_tree_ui: SkillTreeUI
+var boss_fight_ui: BossFightUI
+var shop_ui: ShopUI
 
 # Component status
 var components_loaded: Dictionary = {
@@ -30,7 +34,11 @@ var components_loaded: Dictionary = {
 	"quest_journal": false,
 	"pause_menu": false,
 	"main_menu": false,
-	"dialogue_ui": false
+	"dialogue_ui": false,
+	"crafting_ui": false,
+	"skill_tree_ui": false,
+	"boss_fight_ui": false,
+	"shop_ui": false
 }
 
 # UI State
@@ -204,6 +212,10 @@ func load_ui_components():
 	load_quest_journal()
 	load_pause_menu()
 	load_dialogue_ui()
+	load_crafting_ui()
+	load_skill_tree_ui()
+	load_boss_fight_ui()
+	load_shop_ui()
 	
 	# Mark all components as loaded
 	components_loaded["main_hud"] = true
@@ -212,6 +224,10 @@ func load_ui_components():
 	components_loaded["quest_journal"] = true
 	components_loaded["pause_menu"] = true
 	components_loaded["dialogue_ui"] = true
+	components_loaded["crafting_ui"] = true
+	components_loaded["skill_tree_ui"] = true
+	components_loaded["boss_fight_ui"] = true
+	components_loaded["shop_ui"] = true
 	
 	print("[UIManager] Todos os componentes de UI carregados")
 
@@ -275,17 +291,38 @@ func load_dialogue_ui():
 	dialogue_ui.theme = ui_theme
 	dialogue_ui.visible = false
 	popup_container.add_child(dialogue_ui)
-	pause_menu = preload("res://scripts/ui/menus/PauseMenu.gd").new()
-	pause_menu.theme = ui_theme
-	pause_menu.visible = false
-	menu_container.add_child(pause_menu)
 
-func load_dialogue_ui():
-	"""Load dialogue interface"""
-	dialogue_ui = preload("res://scripts/ui/menus/DialogueUI.gd").new()
-	dialogue_ui.theme = ui_theme
-	dialogue_ui.visible = false
-	popup_container.add_child(dialogue_ui)
+func load_crafting_ui():
+	"""Load crafting interface"""
+	crafting_ui = preload("res://scripts/ui/menus/CraftingUI.gd").new()
+	crafting_ui.name = "CraftingUI"
+	crafting_ui.theme = ui_theme
+	crafting_ui.visible = false
+	menu_container.add_child(crafting_ui)
+
+func load_skill_tree_ui():
+	"""Load skill tree interface"""
+	skill_tree_ui = preload("res://scripts/ui/menus/SkillTreeUI.gd").new()
+	skill_tree_ui.name = "SkillTreeUI"
+	skill_tree_ui.theme = ui_theme
+	skill_tree_ui.visible = false
+	menu_container.add_child(skill_tree_ui)
+
+func load_boss_fight_ui():
+	"""Load boss fight interface"""
+	boss_fight_ui = preload("res://scripts/ui/menus/BossFightUI.gd").new()
+	boss_fight_ui.name = "BossFightUI"
+	boss_fight_ui.theme = ui_theme
+	boss_fight_ui.visible = false
+	hud_container.add_child(boss_fight_ui)  # Boss UI goes in HUD container
+
+func load_shop_ui():
+	"""Load shop interface"""
+	shop_ui = preload("res://scripts/ui/menus/ShopUI.gd").new()
+	shop_ui.name = "ShopUI"
+	shop_ui.theme = ui_theme
+	shop_ui.visible = false
+	menu_container.add_child(shop_ui)
 
 func connect_events():
 	"""Connect to game events"""
@@ -296,6 +333,13 @@ func connect_events():
 	event_bus.connect("experience_gained", _on_experience_gained)
 	event_bus.connect("buff_applied", _on_buff_applied)
 	event_bus.connect("buff_removed", _on_buff_removed)
+	
+	# New UI systems events
+	event_bus.connect("boss_encounter_started", _on_boss_encounter_started)
+	event_bus.connect("boss_encounter_ended", _on_boss_encounter_ended)
+	event_bus.connect("shop_opened", _on_shop_opened)
+	event_bus.connect("shop_closed", _on_shop_closed)
+	event_bus.connect("crafting_station_opened", _on_crafting_station_opened)
 
 func setup_input_handling():
 	"""Setup input handling for UI"""
@@ -304,13 +348,41 @@ func setup_input_handling():
 func _unhandled_input(event):
 	"""Handle UI input"""
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause"):
-		toggle_pause_menu()
+		if is_any_menu_open():
+			close_top_ui()
+		else:
+			toggle_pause_menu()
 	elif event.is_action_pressed("open_inventory"):
 		toggle_inventory()
 	elif event.is_action_pressed("open_journal"):
 		toggle_quest_journal()
 	elif event.is_action_pressed("toggle_map"):
 		toggle_minimap_fullscreen()
+	elif event.is_action_pressed("open_crafting"):
+		toggle_crafting()
+	elif event.is_action_pressed("open_skills"):
+		toggle_skill_tree()
+
+# Additional event handlers for new systems
+func _on_boss_encounter_started(boss_id: String):
+	"""Handle boss encounter start"""
+	show_boss_fight_ui()
+
+func _on_boss_encounter_ended(victory: bool):
+	"""Handle boss encounter end"""
+	hide_boss_fight_ui()
+
+func _on_shop_opened(shop_id: String, npc_data: Dictionary = {}):
+	"""Handle shop opening"""
+	open_shop(shop_id, npc_data)
+
+func _on_shop_closed():
+	"""Handle shop closing"""
+	close_shop()
+
+func _on_crafting_station_opened(station_id: String):
+	"""Handle crafting station interaction"""
+	open_crafting()
 
 # UI Toggle Functions
 func toggle_pause_menu():
@@ -432,6 +504,117 @@ func close_dialogue_ui():
 	remove_from_ui_stack(dialogue_ui)
 	ui_closed.emit("dialogue_ui")
 
+# New UI Systems Toggle Functions
+func toggle_crafting():
+	"""Toggle crafting UI"""
+	if not components_loaded.get("crafting_ui", false):
+		return
+	
+	if crafting_ui.visible:
+		close_crafting()
+	else:
+		open_crafting()
+
+func open_crafting():
+	"""Open crafting UI"""
+	if not components_loaded.get("crafting_ui", false) or crafting_ui.visible:
+		return
+	
+	crafting_ui.show()
+	add_to_ui_stack(crafting_ui)
+	ui_opened.emit("crafting")
+
+func close_crafting():
+	"""Close crafting UI"""
+	if not crafting_ui or not crafting_ui.visible:
+		return
+	
+	crafting_ui.hide()
+	remove_from_ui_stack(crafting_ui)
+	ui_closed.emit("crafting")
+
+func toggle_skill_tree():
+	"""Toggle skill tree UI"""
+	if not components_loaded.get("skill_tree_ui", false):
+		return
+	
+	if skill_tree_ui.visible:
+		close_skill_tree()
+	else:
+		open_skill_tree()
+
+func open_skill_tree():
+	"""Open skill tree UI"""
+	if not components_loaded.get("skill_tree_ui", false) or skill_tree_ui.visible:
+		return
+	
+	skill_tree_ui.show()
+	add_to_ui_stack(skill_tree_ui)
+	ui_opened.emit("skill_tree")
+
+func close_skill_tree():
+	"""Close skill tree UI"""
+	if not skill_tree_ui or not skill_tree_ui.visible:
+		return
+	
+	skill_tree_ui.hide()
+	remove_from_ui_stack(skill_tree_ui)
+	ui_closed.emit("skill_tree")
+
+func toggle_boss_fight():
+	"""Toggle boss fight UI"""
+	if not components_loaded.get("boss_fight_ui", false):
+		return
+	
+	boss_fight_ui.visible = not boss_fight_ui.visible
+	ui_toggled.emit("boss_fight", boss_fight_ui.visible)
+
+func show_boss_fight_ui():
+	"""Show boss fight UI"""
+	if not components_loaded.get("boss_fight_ui", false):
+		return
+	
+	boss_fight_ui.visible = true
+	ui_opened.emit("boss_fight")
+
+func hide_boss_fight_ui():
+	"""Hide boss fight UI"""
+	if not components_loaded.get("boss_fight_ui", false):
+		return
+	
+	boss_fight_ui.visible = false
+	ui_closed.emit("boss_fight")
+
+func toggle_shop():
+	"""Toggle shop UI"""
+	if not components_loaded.get("shop_ui", false):
+		return
+	
+	if shop_ui.visible:
+		close_shop()
+	else:
+		# Shop should be opened by NPC interaction with shop_id
+		pass
+
+func open_shop(shop_id: String = "", npc_data: Dictionary = {}):
+	"""Open shop UI"""
+	if not components_loaded.get("shop_ui", false) or shop_ui.visible:
+		return
+	
+	if shop_id != "":
+		shop_ui.open_shop(shop_id, npc_data)
+	add_to_ui_stack(shop_ui)
+	ui_opened.emit("shop")
+
+func close_shop():
+	"""Close shop UI"""
+	if not shop_ui or not shop_ui.visible:
+		return
+	
+	shop_ui.close_shop()
+	remove_from_ui_stack(shop_ui)
+	ui_closed.emit("shop")
+
 func toggle_minimap_fullscreen():
 	"""Toggle minimap fullscreen mode"""
 	if components_loaded.get("minimap", false) and minimap:
@@ -458,12 +641,21 @@ func close_top_ui():
 			close_inventory()
 		elif top_ui == quest_journal:
 			close_quest_journal()
+		elif top_ui == crafting_ui:
+			close_crafting()
+		elif top_ui == skill_tree_ui:
+			close_skill_tree()
+		elif top_ui == shop_ui:
+			close_shop()
 
 func close_all_menus():
 	"""Close all open menus"""
 	close_inventory()
 	close_quest_journal()
 	close_pause_menu()
+	close_crafting()
+	close_skill_tree()
+	close_shop()
 
 # Event Handlers
 func _on_dialogue_show(dialogue_data: Dictionary):

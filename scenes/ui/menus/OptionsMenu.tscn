@@ -1,0 +1,261 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq3m8x7t4n9vy"]
+
+[ext_resource type="Script" path="res://scripts/ui/menus/OptionsMenu.gd" id="1_x8n2l"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_x8n2l")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="TabContainer" type="TabContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 200.0
+
+[node name="Video" type="Control" parent="Background/TabContainer"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Background/TabContainer/Video"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 40.0
+offset_right = -20.0
+offset_bottom = -20.0
+
+[node name="Resolution" type="HBoxContainer" parent="Background/TabContainer/Video/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Video/VBox/Resolution"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Resolução:"
+
+[node name="OptionButton" type="OptionButton" parent="Background/TabContainer/Video/VBox/Resolution"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fullscreen" type="HBoxContainer" parent="Background/TabContainer/Video/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Video/VBox/Fullscreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Tela Cheia:"
+
+[node name="CheckBox" type="CheckBox" parent="Background/TabContainer/Video/VBox/Fullscreen"]
+layout_mode = 2
+
+[node name="VSync" type="HBoxContainer" parent="Background/TabContainer/Video/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Video/VBox/VSync"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "V-Sync:"
+
+[node name="CheckBox" type="CheckBox" parent="Background/TabContainer/Video/VBox/VSync"]
+layout_mode = 2
+
+[node name="Quality" type="HBoxContainer" parent="Background/TabContainer/Video/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Video/VBox/Quality"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Qualidade:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Video/VBox/Quality"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 75.0
+
+[node name="Brightness" type="HBoxContainer" parent="Background/TabContainer/Video/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Video/VBox/Brightness"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Brilho:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Video/VBox/Brightness"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 50.0
+
+[node name="Audio" type="Control" parent="Background/TabContainer"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Background/TabContainer/Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 40.0
+offset_right = -20.0
+offset_bottom = -20.0
+
+[node name="Master" type="HBoxContainer" parent="Background/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Audio/VBox/Master"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Volume Geral:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Audio/VBox/Master"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 100.0
+
+[node name="Music" type="HBoxContainer" parent="Background/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Audio/VBox/Music"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Música:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Audio/VBox/Music"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 80.0
+
+[node name="SFX" type="HBoxContainer" parent="Background/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Audio/VBox/SFX"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Efeitos Sonoros:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Audio/VBox/SFX"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 90.0
+
+[node name="Voice" type="HBoxContainer" parent="Background/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Audio/VBox/Voice"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Vozes:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Audio/VBox/Voice"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 85.0
+
+[node name="Mute" type="HBoxContainer" parent="Background/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Audio/VBox/Mute"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Mutar:"
+
+[node name="CheckBox" type="CheckBox" parent="Background/TabContainer/Audio/VBox/Mute"]
+layout_mode = 2
+
+[node name="Controls" type="Control" parent="Background/TabContainer"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Background/TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 40.0
+offset_right = -20.0
+offset_bottom = -100.0
+
+[node name="Sensitivity" type="HBoxContainer" parent="Background/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Controls/VBox/Sensitivity"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "Sensibilidade do Mouse:"
+
+[node name="HSlider" type="HSlider" parent="Background/TabContainer/Controls/VBox/Sensitivity"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 50.0
+
+[node name="InvertY" type="HBoxContainer" parent="Background/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/TabContainer/Controls/VBox/InvertY"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "Inverter Eixo Y:"
+
+[node name="CheckBox" type="CheckBox" parent="Background/TabContainer/Controls/VBox/InvertY"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = -20.0
+offset_bottom = -20.0
+
+[node name="VBox" type="VBoxContainer" parent="Background/TabContainer/Controls/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -80.0
+offset_right = 150.0
+offset_bottom = -20.0
+alignment = 1
+
+[node name="ApplyButton" type="Button" parent="Background/ButtonsContainer"]
+layout_mode = 2
+text = "Aplicar"
+
+[node name="CancelButton" type="Button" parent="Background/ButtonsContainer"]
+layout_mode = 2
+text = "Cancelar"
+
+[node name="DefaultsButton" type="Button" parent="Background/ButtonsContainer"]
+layout_mode = 2
+text = "Padrão"

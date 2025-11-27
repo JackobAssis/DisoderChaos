@@ -12,6 +12,16 @@ Disorder Chaos is a top-down RPG with action elements where players explore inte
 - **Combat System**: Real-time combat with skills, status effects, and damage types
 - **Progression**: Level up system with attribute growth and skill unlocking
 - **Inventory System**: Collect items, equipment, and consumables
+- **Advanced Class System**: 6 specializations with prestige evolution and dual-class mechanics
+- **Guild System**: Member management, guild halls, alliances, and activities
+- **PvP System**: 6 game modes with ranking system and tournaments
+- **Raid System**: 5 raid types with difficulty scaling and boss mechanics
+- **Pet System**: Tame, evolve and battle with mystical creatures
+- **Mount System**: Rideable creatures with unique abilities and skills
+- **Crafting System**: Comprehensive crafting with recipes, materials, and progression
+- **Skill Trees**: Advanced character development with multiple specialization paths
+- **Boss Fights**: Specialized boss encounters with unique mechanics and phases
+- **Economy System**: Dynamic NPC shops with market events and reputation
 - **Modular Architecture**: Easy to expand with new content and features
 
 ## 🏗️ Project Structure
@@ -26,16 +36,36 @@ Disorder Chaos is a top-down RPG with action elements where players explore inte
     /dungeons        # Dungeon templates and instances
   /scripts
     /systems         # Core game systems (combat, dungeon management)
+      /classes       # Advanced class and specialization systems
+      /guilds        # Guild management and alliance systems
+      /pvp           # PvP matchmaking and tournament systems
+      /raids         # Raid instance and boss encounter systems
     /entities        # Entity controllers (player, enemies)
     /ui              # UI controllers and managers
+      /hud           # HUD components (MainHUD, Minimap)
+      /menus         # Menu systems (Inventory, Crafting, Skills, Shop, etc.)
     /utils           # Utility scripts and helpers
   /data              # JSON data files for game content
+    /classes         # Advanced class system data
+    /guilds          # Guild system configuration
+    /pvp             # PvP modes and ranking data
+    /raids           # Raid encounters and boss data
+    /pets            # Pet system configuration
+    /mounts          # Mount system data
+    /crafting        # Crafting recipes and materials
+    /skills          # Skill trees and abilities
+    /economy         # Shop and economic system data
     base_attributes.json  # Core attribute definitions
     races.json           # Player race definitions
     classes.json         # Player class definitions  
     spells.json          # Skills and abilities
     dungeons.json        # Dungeon configurations
     items.json           # Items, weapons, armor
+  /ui                # UI scenes and components
+    /hud             # HUD interface scenes
+    /menus           # Menu interface scenes
+    /pets            # Pet system UI
+    /mounts          # Mount system UI
   /assets
     /sprites         # 2D graphics and textures
     /sounds          # Audio files and music
@@ -93,6 +123,16 @@ Disorder Chaos is a top-down RPG with action elements where players explore inte
 - **Progression**: XP system, abilities, stat growth
 - **Management**: Single active pet, UI controls, pet storage
 
+### User Interface Systems
+- **HUD Base**: MainHUD with health/mana/XP bars, quickslots, notifications
+- **Menus**: Main menu, pause menu, character creation
+- **Inventory & Equipment**: Complete inventory management with drag/drop
+- **Crafting Interface**: Recipe browser, crafting queue, material tracking
+- **Skill Trees**: Visual skill trees with prerequisites and specializations
+- **Boss Fight UI**: Specialized interface for boss encounters with mechanics tracking
+- **Shop System**: NPC merchants with dynamic pricing and reputation
+- **Minimap**: Navigation, markers, fog of war, zoom controls
+
 ### Data-Driven Design
 All game content is defined in JSON files, making it easy to:
 - Add new races, classes, and skills
@@ -114,6 +154,21 @@ All game content is defined in JSON files, making it easy to:
 1. Edit `data/classes.json`
 2. Define class with base stats and starting skills
 3. Add corresponding skills to `data/spells.json`
+
+#### New Crafting Recipe
+1. Edit `data/crafting/recipes.json`
+2. Add recipe with materials, skill requirements, and results
+3. Configure crafting stations if needed
+
+#### New Skill Tree
+1. Edit `data/skills/skill_trees.json`
+2. Define skills with prerequisites, effects, and positioning
+3. UI will automatically generate the skill tree
+
+#### New Shop
+1. Edit `data/economy/shop_system.json`
+2. Configure shop type, inventory, and pricing
+3. Add to NPC interaction system
 
 #### New Dungeon
 1. Edit `data/dungeons.json`
@@ -164,9 +219,17 @@ All game content is defined in JSON files, making it easy to:
 
 ## 🎯 Future Development
 
+### Recently Implemented ✅
+- **Advanced UI Systems**: Complete interface overhaul with crafting, skill trees, boss fights, shops
+- **Guild System**: Full guild management with alliances and activities
+- **PvP System**: Arena modes, ranking, tournaments
+- **Raid System**: Instance management with boss mechanics
+- **Pet & Mount Systems**: Creature companions with unique abilities
+- **Crafting System**: Recipe-based item creation with stations
+- **Dynamic Minimap**: Enhanced navigation with markers and fog of war
+
 ### Planned Features
 - **Multiplayer Support**: Cooperative dungeon exploration
-- **Crafting System**: Item creation and enhancement
 - **Quest System**: Story-driven content and side quests
 - **Guild System**: Player organizations and group activities
 - **PvP Zones**: Competitive player vs player areas

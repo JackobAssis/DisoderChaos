@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=1 format=3 uid="uid://be6b7h2xqwi7u"]
+
+[resource]
+default_font_size = 16
+
+; Dark Fantasy Color Palette
+; Primary: Dark blues and purples (#1a1a2e, #16213e, #0f3460)
+; Secondary: Glowing cyan/orange (#00d4ff, #ff6b35)
+; Accent: Golden yellow (#ffd700)
+; Text: Light gray/white (#e0e0e0, #ffffff)
+; Background: Deep black/navy (#0a0a0a, #1a1a2e)
+; Status: Health red (#ff4757), Mana blue (#3742fa), Energy yellow (#ffa502)
