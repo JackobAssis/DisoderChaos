@@ -52,6 +52,17 @@ signal game_saved(slot)
 signal game_paused()
 signal game_resumed()
 signal settings_changed(settings)
+signal save_deleted(slot)
+signal auto_save_triggered()
+signal save_corruption_detected(slot, backup_restored)
+
+# AI system events
+signal ai_target_detected(ai_entity, target)
+signal ai_combat_started(ai_entity, target)
+signal ai_reinforcements_called(position, faction)
+signal ai_boss_phase_changed(boss, phase)
+signal ai_global_alert_triggered(level)
+signal ai_faction_relations_changed(faction_a, faction_b, relation)
 
 # Network events (for future multiplayer)
 signal player_connected(player_id)

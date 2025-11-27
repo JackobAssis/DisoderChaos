@@ -6,6 +6,43 @@ signal npc_spawned(npc_id: String, npc_node: Node2D)
 signal npc_despawned(npc_id: String)
 signal npc_interaction_started(npc_id: String)
 signal npc_interaction_ended(npc_id: String)
+signal npc_state_changed(npc_id: String, old_state: String, new_state: String)
+signal npc_mood_changed(npc_id: String, new_mood: String)
+signal merchant_inventory_updated(npc_id: String)
+
+# NPC Types
+enum NPCType {
+	GENERIC,
+	MERCHANT,
+	QUEST_GIVER,
+	GUARD,
+	STORY_CHARACTER,
+	ENEMY,
+	COMPANION
+}
+
+# NPC States  
+enum NPCState {
+	IDLE,
+	PATROLLING,
+	WORKING,
+	TALKING,
+	SLEEPING,
+	TRAVELING,
+	HOSTILE,
+	DEAD
+}
+
+# NPC Moods
+enum NPCMood {
+	NEUTRAL,
+	FRIENDLY,
+	SUSPICIOUS,
+	ANGRY,
+	FEARFUL,
+	HAPPY,
+	SAD
+}
 
 # Core data structures
 var npcs_data: Dictionary = {}
@@ -13,16 +50,29 @@ var dialogue_trees: Dictionary = {}
 var active_npcs: Dictionary = {} # npc_id -> NPCController
 var npc_schedules: Dictionary = {} # npc_id -> current schedule state
 
-# Location tracking
+# Enhanced NPC tracking
+var npc_states: Dictionary = {} # npc_id -> NPCState
+var npc_moods: Dictionary = {} # npc_id -> NPCMood
+var npc_relationships: Dictionary = {} # npc_id -> {player_relationship, faction_relationships}
+var npc_inventories: Dictionary = {} # npc_id -> merchant inventory
+var npc_patrol_routes: Dictionary = {} # npc_id -> patrol data
+
+# Location and environment
 var player_location: String = ""
 var location_npcs: Dictionary = {} # location -> Array[npc_ids]
+var weather_effects: Dictionary = {} # weather -> npc behavior modifiers
 
 # Time and conditions
 var current_time: int = 12 # 0-23 hours
 var current_weather: String = "clear"
 var player_level: int = 1
 
+# Merchant system
+var merchant_refresh_timer: float = 0.0
+var merchant_refresh_interval: float = 86400.0 # 24 hours in seconds
+
 # References
+@onready var data_loader: DataLoader = get_node("/root/DataLoader")
 @onready var quest_system: QuestSystem = get_node("/root/QuestSystem") if has_node("/root/QuestSystem") else null
 @onready var game_state: GameState = get_node("/root/GameState")
 @onready var event_bus: EventBus = get_node("/root/EventBus")

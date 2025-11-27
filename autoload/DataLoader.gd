@@ -1,6 +1,10 @@
 extends Node
-# DataLoader.gd - Loads and manages all JSON data files
-# Provides getter methods for all game data
+# DataLoader.gd - ROBUST JSON Data Loader with validation and error handling
+# Provides safe getter methods for all game data with crash prevention
+
+signal data_loaded(data_type: String, count: int)
+signal data_error(data_type: String, error_message: String)
+signal all_data_loaded()
 
 # Cached data dictionaries
 var races = {}
@@ -10,143 +14,595 @@ var dungeons = {}
 var items = {}
 var enemies = {}
 var attributes = []
+var npcs = {}
+var quests = {}
+var dialogue_trees = {}
+var lore = {}
 
-# Data file paths
-var data_paths = {
-	"races": "res://data/races.json",
-	"classes": "res://data/classes.json", 
-	"spells": "res://data/spells.json",
-	"dungeons": "res://data/dungeons.json",
-	"items": "res://data/items.json",
-	"enemies": "res://data/enemies.json",
-	"attributes": "res://data/base_attributes.json"
+# Data loading status
+var loading_status = {}
+var load_errors = {}
+var is_fully_loaded = false
+
+# Data file paths with required fields validation
+var data_schemas = {
+	"races": {
+		"path": "res://data/json/races.json",
+		"required_fields": ["id", "name", "attribute_modifiers"],
+		"root_key": null
+	},
+	"classes": {
+		"path": "res://data/json/classes.json", 
+		"required_fields": ["id", "name", "base_stats"],
+		"root_key": null
+	},
+	"spells": {
+		"path": "res://data/json/spells.json",
+		"required_fields": ["id", "name", "cost", "effect"],
+		"root_key": null
+	},
+	"dungeons": {
+		"path": "res://data/json/dungeons.json",
+		"required_fields": ["id", "name", "level_range"],
+		"root_key": null
+	},
+	"items": {
+		"path": "res://data/json/items.json",
+		"required_fields": ["id", "name", "type"],
+		"root_key": null
+	},
+	"enemies": {
+		"path": "res://data/json/enemies.json",
+		"required_fields": ["id", "name", "stats", "level"],
+		"root_key": null
+	},
+	"attributes": {
+		"path": "res://data/json/base_attributes.json",
+		"required_fields": ["attributes"],
+		"root_key": "attributes"
+	},
+	"npcs": {
+		"path": "res://data/json/npcs.json",
+		"required_fields": ["id", "name", "faction"],
+		"root_key": "npcs"
+	},
+	"quests": {
+		"path": "res://data/json/quests.json",
+		"required_fields": ["id", "title", "objectives"],
+		"root_key": "quests"
+	},
+	"dialogues": {
+		"path": "res://data/json/dialogues.json",
+		"required_fields": ["root", "nodes"],
+		"root_key": "dialogue_trees"
+	},
+	"world_timeline": {
+		"path": "res://data/lore/world_timeline.json",
+		"required_fields": ["timeline"],
+		"root_key": "timeline"
+	},
+	"factions": {
+		"path": "res://data/lore/factions.json",
+		"required_fields": ["factions"],
+		"root_key": "factions"
+	}
 }
 
 func _ready():
-	print("[DataLoader] Starting data loading...")
-	load_all_data()
+	print("[DataLoader] Initializing ROBUST data loading system...")
+	initialize_loading_status()
+	await load_all_data()
+
+func initialize_loading_status():
+	"""Initialize loading status tracking"""
+	for data_type in data_schemas.keys():
+		loading_status[data_type] = "pending"
+		load_errors[data_type] = []
 
 func load_all_data():
-	"""Load all JSON data files into memory"""
-	load_attributes()
-	load_races()
-	load_classes()
-	load_spells()
-	load_dungeons()
-	load_items()
-	load_enemies()
-	print("[DataLoader] All data loaded successfully")
+	"""Load all JSON data files with comprehensive error handling"""
+	print("[DataLoader] Starting comprehensive data loading...")
+	
+	var successful_loads = 0
+	var total_loads = data_schemas.size()
+	
+	# Load core systems first
+	var core_systems = ["attributes", "races", "classes", "items", "enemies", "spells", "dungeons"]
+	for data_type in core_systems:
+		if await load_data_type(data_type):
+			successful_loads += 1
+	
+	# Load narrative systems
+	var narrative_systems = ["npcs", "quests", "dialogues"]
+	for data_type in narrative_systems:
+		if await load_data_type(data_type):
+			successful_loads += 1
+	
+	# Load lore systems
+	var lore_systems = ["world_timeline", "factions"]
+	for data_type in lore_systems:
+		if await load_data_type(data_type):
+			successful_loads += 1
+	
+	# Final status report
+	is_fully_loaded = (successful_loads == total_loads)
+	
+	if is_fully_loaded:
+		print("[DataLoader] ✅ ALL DATA LOADED SUCCESSFULLY (%d/%d)" % [successful_loads, total_loads])
+		all_data_loaded.emit()
+	else:
+		print("[DataLoader] ⚠️ PARTIAL DATA LOAD (%d/%d) - Some systems may be unavailable" % [successful_loads, total_loads])
+		print_load_errors()
 
-func load_json_file(file_path: String):
-	"""Generic JSON file loader with error handling"""
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	if not file:
-		push_error("Failed to open file: " + file_path)
+func load_data_type(data_type: String) -> bool:
+	"""Load a specific data type with validation"""
+	if not data_schemas.has(data_type):
+		loading_status[data_type] = "failed"
+		load_errors[data_type].append("Unknown data type")
+		return false
+	
+	var schema = data_schemas[data_type]
+	var file_path = schema.path
+	
+	print("[DataLoader] Loading %s from %s..." % [data_type, file_path])
+	
+	var raw_data = load_json_file_safe(file_path, data_type)
+	if raw_data == null:
+		return false
+	
+	var processed_data = process_raw_data(raw_data, schema, data_type)
+	if processed_data == null:
+		return false
+	
+	if not validate_data_structure(processed_data, schema, data_type):
+		return false
+	
+	# Store processed data
+	store_data(data_type, processed_data)
+	
+	loading_status[data_type] = "success"
+	var count = get_data_count(processed_data)
+	data_loaded.emit(data_type, count)
+	print("[DataLoader] ✅ %s loaded successfully (%d items)" % [data_type.capitalize(), count])
+	
+	return true
+
+func load_json_file_safe(file_path: String, data_type: String):
+	"""Safe JSON file loader with comprehensive error handling"""
+	# Check if file exists
+	if not FileAccess.file_exists(file_path):
+		var error = "File does not exist: " + file_path
+		load_errors[data_type].append(error)
+		loading_status[data_type] = "failed"
+		print("[DataLoader] ❌ %s: %s" % [data_type, error])
+		data_error.emit(data_type, error)
 		return null
 	
+	# Open file
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if not file:
+		var error = "Failed to open file: " + file_path + " (Error: " + str(FileAccess.get_open_error()) + ")"
+		load_errors[data_type].append(error)
+		loading_status[data_type] = "failed"
+		print("[DataLoader] ❌ %s: %s" % [data_type, error])
+		data_error.emit(data_type, error)
+		return null
+	
+	# Read file content
 	var json_string = file.get_as_text()
 	file.close()
 	
+	if json_string.is_empty():
+		var error = "File is empty: " + file_path
+		load_errors[data_type].append(error)
+		loading_status[data_type] = "failed"
+		print("[DataLoader] ❌ %s: %s" % [data_type, error])
+		data_error.emit(data_type, error)
+		return null
+	
+	# Parse JSON
 	var json = JSON.new()
 	var parse_result = json.parse(json_string)
 	
 	if parse_result != OK:
-		push_error("Failed to parse JSON file: " + file_path + " Error: " + json.get_error_message())
+		var error = "JSON parse error in " + file_path + ": " + json.get_error_message() + " at line " + str(json.get_error_line())
+		load_errors[data_type].append(error)
+		loading_status[data_type] = "failed"
+		print("[DataLoader] ❌ %s: %s" % [data_type, error])
+		data_error.emit(data_type, error)
 		return null
 	
 	return json.data
 
-# Specific data loaders
-func load_attributes():
-	"""Load base attributes list"""
-	var data = load_json_file(data_paths.attributes)
-	if data:
-		attributes = data.attributes
-		print("[DataLoader] Loaded ", attributes.size(), " attributes")
+func process_raw_data(raw_data, schema: Dictionary, data_type: String):
+	"""Process raw JSON data based on schema"""
+	var root_key = schema.get("root_key")
+	
+	if root_key:
+		# Extract data from root key
+		if not raw_data.has(root_key):
+			var error = "Missing root key '%s' in %s" % [root_key, data_type]
+			load_errors[data_type].append(error)
+			print("[DataLoader] ❌ %s: %s" % [data_type, error])
+			data_error.emit(data_type, error)
+			return null
+		return raw_data[root_key]
+	else:
+		# Use raw data as-is
+		return raw_data
 
-func load_races():
-	"""Load race data into dictionary"""
-	var data = load_json_file(data_paths.races)
-	if data:
-		races.clear()
-		for race in data:
-			races[race.id] = race
-		print("[DataLoader] Loaded ", races.size(), " races")
+func validate_data_structure(data, schema: Dictionary, data_type: String) -> bool:
+	"""Validate data structure against required fields"""
+	var required_fields = schema.get("required_fields", [])
+	var validation_errors = []
+	
+	if data is Array:
+		# Validate array of objects
+		for i in range(data.size()):
+			var item = data[i]
+			if not item is Dictionary:
+				validation_errors.append("Item %d is not a dictionary" % i)
+				continue
+			
+			for field in required_fields:
+				if not item.has(field):
+					validation_errors.append("Item %d missing required field: %s" % [i, field])
+	
+	elif data is Dictionary:
+		# Validate single dictionary or dictionary of objects
+		if data_type in ["npcs", "quests", "dialogues"]:
+			# Dictionary of objects
+			for key in data.keys():
+				var item = data[key]
+				if not item is Dictionary:
+					validation_errors.append("Item '%s' is not a dictionary" % key)
+					continue
+				
+				for field in required_fields:
+					if not item.has(field):
+						validation_errors.append("Item '%s' missing required field: %s" % [key, field])
+		else:
+			# Single dictionary
+			for field in required_fields:
+				if not data.has(field):
+					validation_errors.append("Missing required field: %s" % field)
+	
+	else:
+		validation_errors.append("Data is not array or dictionary")
+	
+	if validation_errors.size() > 0:
+		load_errors[data_type].extend(validation_errors)
+		loading_status[data_type] = "failed"
+		for error in validation_errors:
+			print("[DataLoader] ❌ %s validation: %s" % [data_type, error])
+			data_error.emit(data_type, error)
+		return false
+	
+	return true
 
-func load_classes():
-	"""Load class data into dictionary"""
-	var data = load_json_file(data_paths.classes)
-	if data:
-		classes.clear()
-		for class_data in data:
-			classes[class_data.id] = class_data
-		print("[DataLoader] Loaded ", classes.size(), " classes")
+func store_data(data_type: String, data):
+	"""Store validated data in appropriate containers"""
+	match data_type:
+		"races":
+			races.clear()
+			for race in data:
+				races[race.id] = race
+		
+		"classes":
+			classes.clear()
+			for class_data in data:
+				classes[class_data.id] = class_data
+		
+		"spells":
+			spells.clear()
+			for spell in data:
+				spells[spell.id] = spell
+		
+		"dungeons":
+			dungeons.clear()
+			for dungeon in data:
+				dungeons[dungeon.id] = dungeon
+		
+		"items":
+			items.clear()
+			for item in data:
+				items[item.id] = item
+		
+		"enemies":
+			enemies.clear()
+			for enemy in data:
+				enemies[enemy.id] = enemy
+		
+		"attributes":
+			attributes = data
+		
+		"npcs":
+			npcs = data
+		
+		"quests":
+			quests = data
+		
+		"dialogues":
+			dialogue_trees = data
+		
+		"world_timeline":
+			if not lore.has("timeline"):
+				lore["timeline"] = {}
+			lore["timeline"] = data
+		
+		"factions":
+			if not lore.has("factions"):
+				lore["factions"] = {}
+			lore["factions"] = data
 
-func load_spells():
-	"""Load spell data into dictionary"""
-	var data = load_json_file(data_paths.spells)
-	if data:
-		spells.clear()
-		for spell in data:
-			spells[spell.id] = spell
-		print("[DataLoader] Loaded ", spells.size(), " spells")
+func get_data_count(data) -> int:
+	"""Get count of items in data structure"""
+	if data is Array:
+		return data.size()
+	elif data is Dictionary:
+		return data.size()
+	else:
+		return 1
 
-func load_dungeons():
-	"""Load dungeon data into dictionary"""
-	var data = load_json_file(data_paths.dungeons)
-	if data:
-		dungeons.clear()
-		for dungeon in data:
-			dungeons[dungeon.id] = dungeon
-		print("[DataLoader] Loaded ", dungeons.size(), " dungeons")
-
-func load_items():
-	"""Load item data into dictionary"""
-	var data = load_json_file(data_paths.items)
-	if data:
-		items.clear()
-		for item in data:
-			items[item.id] = item
-		print("[DataLoader] Loaded ", items.size(), " items")
-
-func load_enemies():
-	"""Load enemy data into dictionary"""
-	var data = load_json_file(data_paths.enemies)
-	if data:
-		enemies.clear()
-		for enemy in data:
-			enemies[enemy.id] = enemy
-		print("[DataLoader] Loaded ", enemies.size(), " enemies")
-
-# Getter methods with validation
+# ROBUST GETTER METHODS with validation and fallbacks
 func get_race(race_id: String):
-	"""Get race data by ID"""
+	"""Get race data by ID with validation"""
+	if not is_data_loaded("races"):
+		print("[DataLoader] ⚠️ Races not loaded - returning null")
+		return null
+	
 	if race_id in races:
 		return races[race_id]
 	else:
-		push_warning("Race not found: " + race_id)
+		print("[DataLoader] ⚠️ Race not found: " + race_id)
 		return null
 
 func get_class(class_id: String):
-	"""Get class data by ID"""
+	"""Get class data by ID with validation"""
+	if not is_data_loaded("classes"):
+		print("[DataLoader] ⚠️ Classes not loaded - returning null")
+		return null
+	
 	if class_id in classes:
 		return classes[class_id]
 	else:
-		push_warning("Class not found: " + class_id)
+		print("[DataLoader] ⚠️ Class not found: " + class_id)
 		return null
 
 func get_spell(spell_id: String):
-	"""Get spell data by ID"""
+	"""Get spell data by ID with validation"""
+	if not is_data_loaded("spells"):
+		print("[DataLoader] ⚠️ Spells not loaded - returning null")
+		return null
+	
 	if spell_id in spells:
 		return spells[spell_id]
 	else:
-		push_warning("Spell not found: " + spell_id)
+		print("[DataLoader] ⚠️ Spell not found: " + spell_id)
 		return null
 
 func get_dungeon(dungeon_id: String):
-	"""Get dungeon data by ID"""
+	"""Get dungeon data by ID with validation"""
+	if not is_data_loaded("dungeons"):
+		print("[DataLoader] ⚠️ Dungeons not loaded - returning null")
+		return null
+	
 	if dungeon_id in dungeons:
 		return dungeons[dungeon_id]
+	else:
+		print("[DataLoader] ⚠️ Dungeon not found: " + dungeon_id)
+		return null
+
+func get_item(item_id: String):
+	"""Get item data by ID with validation"""
+	if not is_data_loaded("items"):
+		print("[DataLoader] ⚠️ Items not loaded - returning null")
+		return null
+	
+	if item_id in items:
+		return items[item_id]
+	else:
+		print("[DataLoader] ⚠️ Item not found: " + item_id)
+		return null
+
+func get_enemy(enemy_id: String):
+	"""Get enemy data by ID with validation"""
+	if not is_data_loaded("enemies"):
+		print("[DataLoader] ⚠️ Enemies not loaded - returning null")
+		return null
+	
+	if enemy_id in enemies:
+		return enemies[enemy_id]
+	else:
+		print("[DataLoader] ⚠️ Enemy not found: " + enemy_id)
+		return null
+
+func get_npc(npc_id: String):
+	"""Get NPC data by ID with validation"""
+	if not is_data_loaded("npcs"):
+		print("[DataLoader] ⚠️ NPCs not loaded - returning null")
+		return null
+	
+	if npc_id in npcs:
+		return npcs[npc_id]
+	else:
+		print("[DataLoader] ⚠️ NPC not found: " + npc_id)
+		return null
+
+func get_quest(quest_id: String):
+	"""Get quest data by ID with validation"""
+	if not is_data_loaded("quests"):
+		print("[DataLoader] ⚠️ Quests not loaded - returning null")
+		return null
+	
+	if quest_id in quests:
+		return quests[quest_id]
+	else:
+		print("[DataLoader] ⚠️ Quest not found: " + quest_id)
+		return null
+
+func get_dialogue_tree(dialogue_id: String):
+	"""Get dialogue tree by ID with validation"""
+	if not is_data_loaded("dialogues"):
+		print("[DataLoader] ⚠️ Dialogues not loaded - returning null")
+		return null
+	
+	if dialogue_id in dialogue_trees:
+		return dialogue_trees[dialogue_id]
+	else:
+		print("[DataLoader] ⚠️ Dialogue tree not found: " + dialogue_id)
+		return null
+
+# COLLECTION GETTERS
+func get_all_races() -> Dictionary:
+	"""Get all race data"""
+	if not is_data_loaded("races"):
+		return {}
+	return races
+
+func get_all_classes() -> Dictionary:
+	"""Get all class data"""
+	if not is_data_loaded("classes"):
+		return {}
+	return classes
+
+func get_all_spells() -> Dictionary:
+	"""Get all spell data"""
+	if not is_data_loaded("spells"):
+		return {}
+	return spells
+
+func get_all_dungeons() -> Dictionary:
+	"""Get all dungeon data"""
+	if not is_data_loaded("dungeons"):
+		return {}
+	return dungeons
+
+func get_all_items() -> Dictionary:
+	"""Get all item data"""
+	if not is_data_loaded("items"):
+		return {}
+	return items
+
+func get_all_enemies() -> Dictionary:
+	"""Get all enemy data"""
+	if not is_data_loaded("enemies"):
+		return {}
+	return enemies
+
+func get_all_npcs() -> Dictionary:
+	"""Get all NPC data"""
+	if not is_data_loaded("npcs"):
+		return {}
+	return npcs
+
+func get_all_quests() -> Dictionary:
+	"""Get all quest data"""
+	if not is_data_loaded("quests"):
+		return {}
+	return quests
+
+func get_attributes() -> Array:
+	"""Get attributes list"""
+	if not is_data_loaded("attributes"):
+		return []
+	return attributes
+
+func get_lore_data(lore_type: String):
+	"""Get specific lore data (timeline, factions, etc.)"""
+	if lore.has(lore_type):
+		return lore[lore_type]
+	else:
+		print("[DataLoader] ⚠️ Lore type not found: " + lore_type)
+		return null
+
+# UTILITY METHODS
+func is_data_loaded(data_type: String) -> bool:
+	"""Check if specific data type is loaded successfully"""
+	return loading_status.get(data_type, "pending") == "success"
+
+func is_fully_loaded() -> bool:
+	"""Check if all data is loaded successfully"""
+	return is_fully_loaded
+
+func get_loading_status() -> Dictionary:
+	"""Get loading status of all data types"""
+	return loading_status
+
+func get_load_errors() -> Dictionary:
+	"""Get all load errors"""
+	return load_errors
+
+func print_load_errors():
+	"""Print all load errors for debugging"""
+	print("[DataLoader] 📊 LOAD ERROR SUMMARY:")
+	for data_type in load_errors.keys():
+		var errors = load_errors[data_type]
+		if errors.size() > 0:
+			print("  ❌ %s: %d errors" % [data_type, errors.size()])
+			for error in errors:
+				print("    - %s" % error)
+
+func reload_data_type(data_type: String) -> bool:
+	"""Reload specific data type"""
+	if not data_schemas.has(data_type):
+		print("[DataLoader] ❌ Cannot reload unknown data type: " + data_type)
+		return false
+	
+	loading_status[data_type] = "pending"
+	load_errors[data_type].clear()
+	
+	print("[DataLoader] 🔄 Reloading " + data_type + "...")
+	return await load_data_type(data_type)
+
+# DYNAMIC DATA LOADING (for runtime additions)
+func load_data_file(file_path: String, data_type: String = "custom"):
+	"""Load any JSON file dynamically with validation"""
+	return load_json_file_safe(file_path, data_type)
+
+func validate_json_structure(data, required_fields: Array) -> Array:
+	"""Validate JSON structure and return list of missing fields"""
+	var missing_fields = []
+	
+	if not data is Dictionary:
+		missing_fields.append("Root must be a dictionary")
+		return missing_fields
+	
+	for field in required_fields:
+		if not data.has(field):
+			missing_fields.append("Missing required field: " + field)
+	
+	return missing_fields
+
+# DEBUG AND DEVELOPMENT METHODS
+func debug_print_all_data():
+	"""Print summary of all loaded data"""
+	print("[DataLoader] 🔍 DATA SUMMARY:")
+	print("  Races: %d" % races.size())
+	print("  Classes: %d" % classes.size())
+	print("  Spells: %d" % spells.size())
+	print("  Dungeons: %d" % dungeons.size())
+	print("  Items: %d" % items.size())
+	print("  Enemies: %d" % enemies.size())
+	print("  Attributes: %d" % attributes.size())
+	print("  NPCs: %d" % npcs.size())
+	print("  Quests: %d" % quests.size())
+	print("  Dialogue Trees: %d" % dialogue_trees.size())
+	print("  Lore Sections: %d" % lore.size())
+
+func debug_validate_all_references():
+	"""Validate all cross-references in data"""
+	print("[DataLoader] 🔍 VALIDATING CROSS-REFERENCES...")
+	
+	# Validate spell references in classes
+	for class_data in classes.values():
+		if class_data.has("spells"):
+			for spell_id in class_data.spells:
+				if not spells.has(spell_id):
+					print("[DataLoader] ⚠️ Class %s references unknown spell: %s" % [class_data.id, spell_id])
+	
+	# Add more validation as needed
+	print("[DataLoader] ✅ Cross-reference validation complete")
 	else:
 		push_warning("Dungeon not found: " + dungeon_id)
 		return null

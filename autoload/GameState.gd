@@ -201,59 +201,150 @@ func get_current_dungeon_data():
 	"""Get data for current dungeon"""
 	return DataLoader.get_dungeon(current_dungeon_id)
 
-# Save/Load functions
-func save_game(slot: int = 0):
-	"""Save current game state"""
+# Save/Load functions using SaveManager
+var save_manager: SaveManager
+
+func _init_save_manager():
+	"""Initialize the SaveManager if not already done"""
+	if not save_manager:
+		save_manager = preload("res://scripts/save/SaveManager.gd").new()
+		add_child(save_manager)
+
+func save_game(slot: int = 0, use_compression: bool = true) -> bool:
+	"""Save current game state using SaveManager"""
+	_init_save_manager()
+	
+	# Prepare comprehensive save data
 	var save_data = {
-		"player_data": player_data,
-		"current_dungeon_id": current_dungeon_id,
-		"visited_dungeons": visited_dungeons,
-		"world_events": world_events,
-		"game_time": game_time,
-		"settings": settings,
-		"save_timestamp": Time.get_unix_time_from_system()
+		"player": {
+			"level": player_data.level,
+			"experience": player_data.experience,
+			"race": player_data.race,
+			"class": player_data.class,
+			"name": "Hero",  # Add player name support
+			"attributes": player_data.attributes.duplicate(),
+			"health": {
+				"current": player_data.current_hp,
+				"max": player_data.max_hp
+			},
+			"mana": {
+				"current": player_data.current_mp,
+				"max": player_data.max_mp
+			},
+			"skills": player_data.skills.duplicate(),
+			"currency": player_data.currency
+		},
+		"inventory": {
+			"items": player_data.inventory.duplicate(),
+			"max_slots": 50  # Add inventory slot limit
+		},
+		"equipment": {
+			"weapon": player_data.equipped.weapon,
+			"armor": player_data.equipped.armor,
+			"accessory": player_data.equipped.accessory
+		},
+		"world": {
+			"current_dungeon": current_dungeon_id,
+			"visited_dungeons": visited_dungeons.duplicate(),
+			"events": world_events.duplicate(),
+			"game_time": game_time
+		},
+		"quests": {
+			"active": [],
+			"completed": [],
+			"failed": []
+		},
+		"settings": settings.duplicate(),
+		"session": {
+			"play_time": game_time,
+			"last_save": Time.get_unix_time_from_system(),
+			"save_count": 1
+		}
 	}
 	
-	var save_file = FileAccess.open("user://save_game_" + str(slot) + ".dat", FileAccess.WRITE)
-	if save_file:
-		save_file.store_string(JSON.stringify(save_data))
-		save_file.close()
-		print("[GameState] Game saved to slot ", slot)
-		return true
+	var result = await save_manager.save_game_async(save_data, slot, use_compression)
+	if result.success:
+		print("[GameState] Game saved to slot ", slot, " with SaveManager")
+		EventBus.game_saved.emit(slot)
 	else:
-		push_error("Failed to save game")
-		return false
+		push_error("[GameState] Failed to save game: " + result.message)
+	
+	return result.success
 
 func load_game(slot: int = 0) -> bool:
-	"""Load game state from save file"""
-	var save_file = FileAccess.open("user://save_game_" + str(slot) + ".dat", FileAccess.READ)
-	if not save_file:
-		print("[GameState] No save file found for slot ", slot)
+	"""Load game state using SaveManager"""
+	_init_save_manager()
+	
+	var result = save_manager.load_game(slot)
+	if not result.success:
+		print("[GameState] No save file found for slot ", slot, " or load failed: ", result.message)
 		return false
 	
-	var json_string = save_file.get_as_text()
-	save_file.close()
+	var save_data = result.data
 	
-	var json = JSON.new()
-	var parse_result = json.parse(json_string)
+	# Restore player data
+	player_data.level = save_data.player.level
+	player_data.experience = save_data.player.experience
+	player_data.race = save_data.player.race
+	player_data.class = save_data.player.class
+	player_data.attributes = save_data.player.attributes.duplicate()
+	player_data.current_hp = save_data.player.health.current
+	player_data.max_hp = save_data.player.health.max
+	player_data.current_mp = save_data.player.mana.current
+	player_data.max_mp = save_data.player.mana.max
+	player_data.skills = save_data.player.skills.duplicate()
+	player_data.currency = save_data.player.currency
 	
-	if parse_result != OK:
-		push_error("Failed to parse save file")
-		return false
+	# Restore inventory
+	player_data.inventory = save_data.inventory.items.duplicate()
 	
-	var save_data = json.data
+	# Restore equipment
+	player_data.equipped.weapon = save_data.equipment.weapon
+	player_data.equipped.armor = save_data.equipment.armor
+	player_data.equipped.accessory = save_data.equipment.accessory
 	
-	# Restore data
-	player_data = save_data.player_data
-	current_dungeon_id = save_data.current_dungeon_id
-	visited_dungeons = save_data.visited_dungeons
-	world_events = save_data.world_events
-	game_time = save_data.game_time
-	settings = save_data.settings
+	# Restore world state
+	current_dungeon_id = save_data.world.current_dungeon
+	visited_dungeons = save_data.world.visited_dungeons.duplicate()
+	world_events = save_data.world.events.duplicate()
+	game_time = save_data.world.game_time
 	
-	print("[GameState] Game loaded from slot ", slot)
+	# Restore settings
+	if "settings" in save_data:
+		settings = save_data.settings.duplicate()
+	
+	print("[GameState] Game loaded from slot ", slot, " with SaveManager")
 	EventBus.game_loaded.emit()
 	return true
+
+func get_save_slots() -> Array:
+	"""Get information about all save slots"""
+	_init_save_manager()
+	return save_manager.get_save_slots()
+
+func delete_save(slot: int) -> bool:
+	"""Delete a save file"""
+	_init_save_manager()
+	var result = save_manager.delete_save(slot)
+	if result:
+		print("[GameState] Save slot ", slot, " deleted")
+		EventBus.save_deleted.emit(slot)
+	return result
+
+func quick_save() -> bool:
+	"""Quick save to dedicated quick save slot"""
+	return await save_game(999, true)  # Use slot 999 for quick saves
+
+func auto_save() -> bool:
+	"""Auto save if enabled in settings"""
+	if settings.auto_save:
+		return await save_game(998, true)  # Use slot 998 for auto saves
+	return false
+
+func backup_save(slot: int) -> bool:
+	"""Create backup of save file"""
+	_init_save_manager()
+	return save_manager.backup_save_file(slot)
 
 # Signal handlers
 func _on_player_level_up(level: int, hp_gain: int, mp_gain: int):

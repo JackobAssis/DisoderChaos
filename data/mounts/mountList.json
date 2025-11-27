@@ -1,0 +1,208 @@
+{
+  "mounts": [
+    {
+      "id": "horse_common",
+      "name": "Cavalo Comum",
+      "type": "terrestre",
+      "rarity": "comum",
+      "velocidadeBase": 250.0,
+      "stamina": 100.0,
+      "staminaConsumo": 15.0,
+      "staminaRecuperacao": 10.0,
+      "cooldown": 5.0,
+      "skills": [],
+      "description": "Um cavalo básico para transporte rápido",
+      "iconPath": "res://ui/icons/mounts/horse_common.png",
+      "modelPath": "res://models/mounts/horse_common.tscn",
+      "pvpBlocked": false,
+      "levelRequired": 1,
+      "unlocked": true
+    },
+    {
+      "id": "wolf_shadow",
+      "name": "Lobo das Sombras",
+      "type": "sombria",
+      "rarity": "raro",
+      "velocidadeBase": 280.0,
+      "stamina": 120.0,
+      "staminaConsumo": 12.0,
+      "staminaRecuperacao": 15.0,
+      "cooldown": 8.0,
+      "skills": ["stealth_dash"],
+      "description": "Um lobo sombrio capaz de dash invisível",
+      "iconPath": "res://ui/icons/mounts/wolf_shadow.png",
+      "modelPath": "res://models/mounts/wolf_shadow.tscn",
+      "pvpBlocked": false,
+      "levelRequired": 15,
+      "unlocked": false
+    },
+    {
+      "id": "griffin_wind",
+      "name": "Grifo dos Ventos",
+      "type": "aérea",
+      "rarity": "épico",
+      "velocidadeBase": 350.0,
+      "stamina": 150.0,
+      "staminaConsumo": 20.0,
+      "staminaRecuperacao": 8.0,
+      "cooldown": 12.0,
+      "skills": ["air_dash", "glide"],
+      "description": "Criatura voadora capaz de planar e dash aéreo",
+      "iconPath": "res://ui/icons/mounts/griffin_wind.png",
+      "modelPath": "res://models/mounts/griffin_wind.tscn",
+      "pvpBlocked": false,
+      "levelRequired": 25,
+      "unlocked": false
+    },
+    {
+      "id": "phoenix_fire",
+      "name": "Fênix de Fogo",
+      "type": "elemental",
+      "rarity": "lendário",
+      "velocidadeBase": 320.0,
+      "stamina": 200.0,
+      "staminaConsumo": 25.0,
+      "staminaRecuperacao": 12.0,
+      "cooldown": 15.0,
+      "skills": ["fire_trail", "phoenix_dash", "flame_wings"],
+      "description": "Fênix lendária que deixa rastro de fogo",
+      "iconPath": "res://ui/icons/mounts/phoenix_fire.png",
+      "modelPath": "res://models/mounts/phoenix_fire.tscn",
+      "pvpBlocked": true,
+      "levelRequired": 40,
+      "unlocked": false
+    },
+    {
+      "id": "tiger_lightning",
+      "name": "Tigre do Trovão",
+      "type": "elemental",
+      "rarity": "épico",
+      "velocidadeBase": 300.0,
+      "stamina": 130.0,
+      "staminaConsumo": 18.0,
+      "staminaRecuperacao": 14.0,
+      "cooldown": 10.0,
+      "skills": ["lightning_dash", "thunder_roar"],
+      "description": "Tigre elemental com velocidade do raio",
+      "iconPath": "res://ui/icons/mounts/tiger_lightning.png",
+      "modelPath": "res://models/mounts/tiger_lightning.tscn",
+      "pvpBlocked": false,
+      "levelRequired": 30,
+      "unlocked": false
+    },
+    {
+      "id": "dragon_bone",
+      "name": "Dragão de Ossos",
+      "type": "sombria",
+      "rarity": "mítico",
+      "velocidadeBase": 380.0,
+      "stamina": 250.0,
+      "staminaConsumo": 30.0,
+      "staminaRecuperacao": 15.0,
+      "cooldown": 20.0,
+      "skills": ["bone_dash", "fear_aura", "necro_speed"],
+      "description": "Dragão morto-vivo com poder supremo",
+      "iconPath": "res://ui/icons/mounts/dragon_bone.png",
+      "modelPath": "res://models/mounts/dragon_bone.tscn",
+      "pvpBlocked": true,
+      "levelRequired": 50,
+      "unlocked": false
+    }
+  ],
+  "mount_skills": {
+    "stealth_dash": {
+      "name": "Dash Sombrio",
+      "description": "Dash que torna invisível por 2 segundos",
+      "cooldown": 15.0,
+      "stamina_cost": 25.0,
+      "duration": 2.0,
+      "effect": "invisibility"
+    },
+    "air_dash": {
+      "name": "Dash Aéreo",
+      "description": "Dash que permite voar temporariamente",
+      "cooldown": 12.0,
+      "stamina_cost": 30.0,
+      "duration": 3.0,
+      "effect": "flight"
+    },
+    "glide": {
+      "name": "Planar",
+      "description": "Reduz velocidade de queda",
+      "cooldown": 0.0,
+      "stamina_cost": 5.0,
+      "duration": -1,
+      "effect": "glide"
+    },
+    "fire_trail": {
+      "name": "Rastro de Fogo",
+      "description": "Deixa rastro de fogo que causa dano",
+      "cooldown": 20.0,
+      "stamina_cost": 40.0,
+      "duration": 8.0,
+      "effect": "fire_trail"
+    },
+    "phoenix_dash": {
+      "name": "Dash da Fênix",
+      "description": "Dash explosivo com dano de fogo",
+      "cooldown": 18.0,
+      "stamina_cost": 35.0,
+      "duration": 1.0,
+      "effect": "fire_dash"
+    },
+    "flame_wings": {
+      "name": "Asas de Chama",
+      "description": "Permite voo sustentado",
+      "cooldown": 30.0,
+      "stamina_cost": 20.0,
+      "duration": 10.0,
+      "effect": "sustained_flight"
+    },
+    "lightning_dash": {
+      "name": "Dash do Raio",
+      "description": "Dash instantâneo com efeito de raio",
+      "cooldown": 10.0,
+      "stamina_cost": 25.0,
+      "duration": 0.5,
+      "effect": "lightning_dash"
+    },
+    "thunder_roar": {
+      "name": "Rugido do Trovão",
+      "description": "Atordoa inimigos próximos",
+      "cooldown": 25.0,
+      "stamina_cost": 30.0,
+      "duration": 3.0,
+      "effect": "stun_aoe"
+    },
+    "bone_dash": {
+      "name": "Dash Necrótico",
+      "description": "Dash que atravessa inimigos causando dano",
+      "cooldown": 15.0,
+      "stamina_cost": 40.0,
+      "duration": 1.5,
+      "effect": "piercing_dash"
+    },
+    "fear_aura": {
+      "name": "Aura do Medo",
+      "description": "Inimigos próximos fogem em terror",
+      "cooldown": 45.0,
+      "stamina_cost": 50.0,
+      "duration": 5.0,
+      "effect": "fear_aura"
+    },
+    "necro_speed": {
+      "name": "Velocidade Necrótica",
+      "description": "Aumenta velocidade drasticamente",
+      "cooldown": 60.0,
+      "stamina_cost": 60.0,
+      "duration": 8.0,
+      "effect": "speed_boost"
+    }
+  },
+  "pvp_restricted_areas": [
+    "arena_1v1",
+    "arena_3v3",
+    "battleground_central",
+    "tournament_grounds"
+  ]
+}

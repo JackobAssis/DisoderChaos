@@ -1,0 +1,635 @@
+{
+  "version": 1.2,
+  "magic_number": "DISCORD_CHAOS_SAVE",
+  "timestamp": 1732723200,
+  "checksum": "a1b2c3d4e5f6789",
+  
+  "player_data": {
+    "name": "Hero of Chaos",
+    "race": "human",
+    "character_class": "warrior",
+    "created_at": 1732723100,
+    
+    "level": 25,
+    "experience": 156750,
+    "experience_to_next_level": 32500,
+    "skill_points_available": 3,
+    "attribute_points_available": 5,
+    
+    "current_health": 285,
+    "max_health": 300,
+    "current_stamina": 150,
+    "max_stamina": 180,
+    "current_mana": 95,
+    "max_mana": 120,
+    
+    "strength": 35,
+    "agility": 28,
+    "intelligence": 22,
+    "vitality": 30,
+    "luck": 18,
+    
+    "attack_power": 125,
+    "defense": 85,
+    "critical_chance": 15.5,
+    "critical_damage": 200.0,
+    "movement_speed": 110.0,
+    
+    "currency": 2850,
+    "premium_currency": 150,
+    "magic_fragments": 45,
+    "rare_essences": 8,
+    
+    "current_location": "shadowmere_caverns",
+    "current_dungeon": "shadowmere_depths",
+    "current_floor": 3,
+    "spawn_point": {
+      "x": 150.5,
+      "y": 200.3
+    },
+    
+    "inventory": [
+      {
+        "id": "iron_sword",
+        "count": 1,
+        "durability": 87.5,
+        "enchantments": [
+          {
+            "type": "sharpness",
+            "level": 2
+          }
+        ],
+        "custom_properties": {
+          "blessed": true,
+          "found_location": "ancient_ruins"
+        }
+      },
+      {
+        "id": "health_potion",
+        "count": 15,
+        "durability": 100.0,
+        "enchantments": [],
+        "custom_properties": {}
+      },
+      {
+        "id": "mystic_crystal",
+        "count": 3,
+        "durability": 100.0,
+        "enchantments": [],
+        "custom_properties": {
+          "purity": "high",
+          "elemental_affinity": "shadow"
+        }
+      }
+    ],
+    
+    "equipment": {
+      "main_hand": {
+        "id": "enchanted_blade",
+        "durability": 92.3,
+        "enchantments": [
+          {
+            "type": "fire_damage",
+            "level": 3
+          },
+          {
+            "type": "vampiric",
+            "level": 1
+          }
+        ],
+        "custom_properties": {
+          "legendary_effect": "flame_burst"
+        }
+      },
+      "chest": {
+        "id": "plate_armor",
+        "durability": 78.9,
+        "enchantments": [
+          {
+            "type": "protection",
+            "level": 2
+          }
+        ],
+        "custom_properties": {}
+      },
+      "ring_1": {
+        "id": "ring_of_strength",
+        "durability": 100.0,
+        "enchantments": [],
+        "custom_properties": {
+          "strength_bonus": 5
+        }
+      }
+    },
+    
+    "unlocked_skills": [
+      "sword_mastery_1",
+      "sword_mastery_2",
+      "berserker_rage_1",
+      "armor_expertise_1",
+      "critical_strike_1",
+      "weapon_throw_1",
+      "battle_cry_1"
+    ],
+    
+    "skill_tree_progress": {
+      "warrior": {
+        "sword_mastery": {
+          "level": 2,
+          "experience": 250
+        },
+        "berserker": {
+          "level": 1,
+          "experience": 100
+        },
+        "defender": {
+          "level": 0,
+          "experience": 0
+        }
+      }
+    },
+    
+    "talents": {
+      "tier_1": "mighty_strikes",
+      "tier_2": "bloodlust",
+      "tier_3": null,
+      "tier_4": null,
+      "tier_5": null
+    },
+    
+    "play_time": 18500.5,
+    "total_deaths": 12,
+    "total_kills": 547,
+    "dungeons_cleared": 8,
+    "bosses_defeated": 3
+  },
+  
+  "world_data": {
+    "unlocked_dungeons": [
+      "tutorial_cave",
+      "goblin_warrens",
+      "shadowmere_caverns",
+      "ancient_ruins",
+      "frost_peaks"
+    ],
+    
+    "completed_dungeons": [
+      "tutorial_cave",
+      "goblin_warrens"
+    ],
+    
+    "discovered_locations": [
+      "town_haven",
+      "crossroads_tavern",
+      "merchant_camp",
+      "shadow_portal",
+      "crystal_springs",
+      "old_watchtower"
+    ],
+    
+    "world_flags": {
+      "bridge_repaired": true,
+      "ancient_seal_broken": true,
+      "goblin_king_defeated": true,
+      "tavern_brawl_winner": true,
+      "merchant_friend": true
+    },
+    
+    "npc_states": {
+      "blacksmith_gareth": {
+        "disposition": "friendly",
+        "reputation": 150,
+        "quests_completed": 2,
+        "special_dialogue_unlocked": true
+      },
+      "merchant_elara": {
+        "disposition": "neutral",
+        "reputation": 75,
+        "trade_discount": 5,
+        "rare_items_unlocked": false
+      },
+      "wizard_aldric": {
+        "disposition": "respected",
+        "reputation": 200,
+        "apprentice_level": 1,
+        "tower_access": true
+      }
+    },
+    
+    "environment_states": {
+      "shadowmere_caverns": {
+        "light_crystal_activated": true,
+        "water_level": "low",
+        "bridge_status": "repaired"
+      },
+      "ancient_ruins": {
+        "entrance_sealed": false,
+        "guardian_awakened": true,
+        "treasure_rooms_opened": 3
+      }
+    },
+    
+    "game_time": 259200.0,
+    "current_weather": "storm",
+    "season": "autumn",
+    
+    "faction_standings": {
+      "order_of_light": {
+        "reputation": 250,
+        "rank": "initiate",
+        "missions_completed": 5
+      },
+      "shadow_brotherhood": {
+        "reputation": -50,
+        "rank": "unknown",
+        "missions_completed": 0
+      },
+      "merchants_guild": {
+        "reputation": 180,
+        "rank": "associate",
+        "trade_volume": 15000
+      },
+      "arcane_circle": {
+        "reputation": 120,
+        "rank": "student",
+        "knowledge_points": 45
+      }
+    }
+  },
+  
+  "progress_data": {
+    "active_quests": [
+      {
+        "id": "main_001",
+        "progress": {
+          "current_objective": 2,
+          "objectives_completed": [0, 1],
+          "variables": {
+            "artifacts_found": 2,
+            "guardians_defeated": 1
+          }
+        },
+        "objectives_completed": [
+          {
+            "index": 0,
+            "completed_at": 1732723000,
+            "description": "Enter the ancient ruins"
+          },
+          {
+            "index": 1,
+            "completed_at": 1732723150,
+            "description": "Defeat the stone guardian"
+          }
+        ],
+        "start_time": 1732722800,
+        "variables": {
+          "companion_rescued": true,
+          "secret_path_found": false
+        }
+      },
+      {
+        "id": "side_003",
+        "progress": {
+          "current_objective": 0,
+          "objectives_completed": [],
+          "variables": {
+            "herbs_collected": 3,
+            "target_count": 10
+          }
+        },
+        "objectives_completed": [],
+        "start_time": 1732723100,
+        "variables": {}
+      }
+    ],
+    
+    "completed_quests": [
+      "tutorial_001",
+      "tutorial_002",
+      "main_prologue",
+      "side_001",
+      "side_002",
+      "daily_001",
+      "daily_002"
+    ],
+    
+    "failed_quests": [
+      "time_limited_001"
+    ],
+    
+    "available_quests": [
+      "side_004",
+      "side_005",
+      "faction_001",
+      "weekly_001"
+    ],
+    
+    "story_flags": {
+      "prologue_completed": true,
+      "first_dungeon_cleared": true,
+      "mentor_met": true,
+      "ancient_prophecy_revealed": false,
+      "chosen_one_path": "warrior"
+    },
+    
+    "dialogue_history": {
+      "wizard_aldric": {
+        "last_conversation": "ancient_knowledge_001",
+        "relationship_level": 3,
+        "important_choices": [
+          {
+            "dialogue_id": "first_meeting",
+            "choice": "respectful_greeting",
+            "timestamp": 1732722500
+          }
+        ]
+      },
+      "blacksmith_gareth": {
+        "last_conversation": "weapon_upgrade_002",
+        "relationship_level": 2,
+        "important_choices": []
+      }
+    },
+    
+    "choices_made": {
+      "moral_alignment": "neutral_good",
+      "major_decisions": [
+        {
+          "decision_id": "goblin_king_fate",
+          "choice": "spare_life",
+          "consequences": ["goblin_peace_treaty"],
+          "timestamp": 1732722800
+        },
+        {
+          "decision_id": "ancient_artifact",
+          "choice": "return_to_wizard",
+          "consequences": ["wizard_favor", "knowledge_bonus"],
+          "timestamp": 1732723000
+        }
+      ]
+    },
+    
+    "discovered_items": [
+      "iron_sword",
+      "health_potion",
+      "mystic_crystal",
+      "enchanted_blade",
+      "plate_armor",
+      "ring_of_strength",
+      "ancient_tome",
+      "dragon_scale"
+    ],
+    
+    "bestiary": {
+      "goblin": {
+        "encounters": 25,
+        "victories": 23,
+        "defeats": 2,
+        "knowledge_level": "expert",
+        "weaknesses_known": ["fire", "light"],
+        "lore_unlocked": true
+      },
+      "stone_guardian": {
+        "encounters": 1,
+        "victories": 1,
+        "defeats": 0,
+        "knowledge_level": "basic",
+        "weaknesses_known": ["magic"],
+        "lore_unlocked": false
+      },
+      "shadow_wraith": {
+        "encounters": 8,
+        "victories": 6,
+        "defeats": 2,
+        "knowledge_level": "intermediate",
+        "weaknesses_known": ["holy"],
+        "lore_unlocked": true
+      }
+    },
+    
+    "lore_entries": [
+      "history_of_shadowmere",
+      "legend_of_the_crystal",
+      "goblin_tribal_structure",
+      "ancient_magic_theory",
+      "faction_wars_timeline"
+    ],
+    
+    "unlocked_achievements": [
+      "first_steps",
+      "goblin_slayer",
+      "treasure_hunter",
+      "dungeon_explorer",
+      "hero_of_haven",
+      "friend_of_merchants"
+    ],
+    
+    "achievement_progress": {
+      "master_warrior": {
+        "current": 547,
+        "target": 1000,
+        "description": "Defeat 1000 enemies"
+      },
+      "legendary_hero": {
+        "current": 3,
+        "target": 10,
+        "description": "Defeat 10 boss monsters"
+      },
+      "completionist": {
+        "current": 7,
+        "target": 50,
+        "description": "Complete 50 quests"
+      }
+    }
+  },
+  
+  "settings_data": {
+    "graphics": {
+      "fullscreen": true,
+      "vsync": 1,
+      "resolution": [1920, 1080],
+      "quality_preset": "high",
+      "shadow_quality": "high",
+      "texture_quality": "high",
+      "effects_quality": "medium",
+      "render_scale": 1.0,
+      "fxaa_enabled": true,
+      "bloom_enabled": true,
+      "motion_blur_enabled": false
+    },
+    
+    "audio": {
+      "master_volume": -2.5,
+      "music_volume": -8.0,
+      "sfx_volume": -5.0,
+      "voice_volume": -3.0,
+      "ambient_volume": -10.0,
+      "mute_when_unfocused": false,
+      "audio_device": "default",
+      "sample_rate": 44100,
+      "buffer_size": 512
+    },
+    
+    "controls": {
+      "mouse_sensitivity": 1.2,
+      "invert_mouse": false,
+      "auto_run": false,
+      "toggle_run": true,
+      "camera_shake": true,
+      "haptic_feedback": true,
+      "key_bindings": {
+        "move_forward": [
+          {
+            "type": "key",
+            "keycode": 87,
+            "physical_keycode": 87,
+            "unicode": 119,
+            "pressed": false,
+            "modifiers": {
+              "alt": false,
+              "shift": false,
+              "ctrl": false,
+              "meta": false
+            }
+          }
+        ],
+        "move_backward": [
+          {
+            "type": "key",
+            "keycode": 83,
+            "physical_keycode": 83,
+            "unicode": 115,
+            "pressed": false,
+            "modifiers": {
+              "alt": false,
+              "shift": false,
+              "ctrl": false,
+              "meta": false
+            }
+          }
+        ],
+        "attack": [
+          {
+            "type": "mouse",
+            "button_index": 1,
+            "pressed": false,
+            "modifiers": {
+              "alt": false,
+              "shift": false,
+              "ctrl": false,
+              "meta": false
+            }
+          }
+        ]
+      }
+    },
+    
+    "ui": {
+      "ui_scale": 1.0,
+      "show_damage_numbers": true,
+      "show_tooltips": true,
+      "tooltip_delay": 0.5,
+      "auto_pause": false,
+      "hud_opacity": 0.9,
+      "minimap_enabled": true,
+      "minimap_size": 1.0,
+      "chat_fade_time": 5.0,
+      "subtitle_enabled": true,
+      "colorblind_support": false,
+      "high_contrast": false
+    },
+    
+    "gameplay": {
+      "difficulty": "normal",
+      "auto_save_enabled": true,
+      "auto_save_interval": 300.0,
+      "tutorial_completed": true,
+      "hints_enabled": true,
+      "damage_confirmation": true,
+      "auto_loot": false,
+      "pause_on_focus_loss": true,
+      "skip_cutscenes": false,
+      "fast_travel_unlocked": true
+    },
+    
+    "accessibility": {
+      "text_size": "normal",
+      "screen_reader": false,
+      "reduce_motion": false,
+      "high_contrast": false,
+      "color_blind_filter": "none",
+      "subtitle_size": "medium",
+      "ui_sounds": true
+    }
+  },
+  
+  "session_data": {
+    "session_start_time": 1732723200,
+    "previous_session_duration": 3600.5,
+    "total_sessions": 25,
+    
+    "active_buffs": [
+      {
+        "id": "strength_boost",
+        "remaining_time": 180.5,
+        "stacks": 1,
+        "source": "potion"
+      },
+      {
+        "id": "fire_resistance",
+        "remaining_time": 300.0,
+        "stacks": 1,
+        "source": "enchantment"
+      },
+      {
+        "id": "experience_bonus",
+        "remaining_time": 1200.0,
+        "stacks": 1,
+        "source": "blessing"
+      }
+    ],
+    
+    "cooldowns": {
+      "berserker_rage": 45.2,
+      "weapon_throw": 12.8,
+      "battle_cry": 0.0
+    },
+    
+    "temporary_flags": {
+      "in_combat": false,
+      "recently_leveled": false,
+      "vendor_discount_active": true,
+      "dungeon_bonus_active": false
+    },
+    
+    "performance_metrics": {
+      "fps_average": 58.3,
+      "memory_usage": {
+        "geometry": 125829120,
+        "texture": 89562624,
+        "audio": 15728640,
+        "script": 8388608
+      },
+      "load_times": [
+        {
+          "operation": "level_load",
+          "duration": 2.3,
+          "timestamp": 1732723150
+        },
+        {
+          "operation": "save_game",
+          "duration": 0.8,
+          "timestamp": 1732723100
+        }
+      ]
+    },
+    
+    "statistics": {
+      "buttons_pressed": 12540,
+      "distance_traveled": 25680.5,
+      "items_picked_up": 234,
+      "spells_cast": 45,
+      "potions_consumed": 18
+    }
+  }
+}
