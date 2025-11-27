@@ -1,0 +1,378 @@
+{
+  "guild_system": {
+    "creation_requirements": {
+      "min_level": 15,
+      "creation_cost": 1000,
+      "founder_requirements": ["leadership_skill"],
+      "max_guild_name_length": 20,
+      "min_guild_name_length": 3
+    },
+    "guild_ranks": {
+      "guild_master": {
+        "level": 5,
+        "name": "Mestre da Guilda",
+        "permissions": ["all"],
+        "max_count": 1,
+        "color": "#FFD700"
+      },
+      "officer": {
+        "level": 4,
+        "name": "Oficial",
+        "permissions": [
+          "invite_members",
+          "kick_members",
+          "promote_to_member",
+          "demote_to_recruit",
+          "manage_guild_hall",
+          "start_guild_activities"
+        ],
+        "max_count": 5,
+        "color": "#FF6B6B"
+      },
+      "veteran": {
+        "level": 3,
+        "name": "Veterano",
+        "permissions": [
+          "invite_members",
+          "access_guild_storage",
+          "participate_guild_activities"
+        ],
+        "max_count": 15,
+        "color": "#4ECDC4"
+      },
+      "member": {
+        "level": 2,
+        "name": "Membro",
+        "permissions": [
+          "access_guild_hall",
+          "participate_guild_activities",
+          "use_guild_chat"
+        ],
+        "max_count": 50,
+        "color": "#95E1D3"
+      },
+      "recruit": {
+        "level": 1,
+        "name": "Recruta",
+        "permissions": [
+          "use_guild_chat",
+          "access_basic_guild_benefits"
+        ],
+        "max_count": 100,
+        "color": "#FFFFFF"
+      }
+    },
+    "guild_benefits": {
+      "experience_bonus": {
+        "guild_level_1": 5,
+        "guild_level_2": 10,
+        "guild_level_3": 15,
+        "guild_level_4": 20,
+        "guild_level_5": 25
+      },
+      "resource_bonuses": {
+        "gathering_speed": 10,
+        "crafting_success_rate": 5,
+        "vendor_discount": 5
+      },
+      "combat_bonuses": {
+        "damage_in_guild_activities": 10,
+        "defense_in_guild_activities": 10,
+        "healing_efficiency": 15
+      }
+    },
+    "guild_activities": {
+      "guild_raids": {
+        "min_participants": 10,
+        "max_participants": 25,
+        "cooldown_hours": 72,
+        "boss_types": [
+          {
+            "name": "Ancient Dragon",
+            "required_guild_level": 3,
+            "difficulty": "hard",
+            "rewards": {
+              "guild_experience": 5000,
+              "guild_resources": 1000,
+              "individual_rewards": ["rare_equipment", "guild_tokens"]
+            }
+          },
+          {
+            "name": "Chaos Titan",
+            "required_guild_level": 5,
+            "difficulty": "extreme",
+            "rewards": {
+              "guild_experience": 10000,
+              "guild_resources": 2500,
+              "individual_rewards": ["legendary_equipment", "prestige_points"]
+            }
+          }
+        ]
+      },
+      "guild_wars": {
+        "min_participants": 15,
+        "max_participants": 50,
+        "duration_minutes": 60,
+        "objectives": [
+          "capture_points",
+          "eliminate_enemy_guild_master",
+          "hold_territory"
+        ],
+        "rewards": {
+          "winner": {
+            "guild_experience": 3000,
+            "guild_prestige": 100,
+            "war_tokens": 500
+          },
+          "loser": {
+            "guild_experience": 1000,
+            "participation_rewards": true
+          }
+        }
+      },
+      "guild_expeditions": {
+        "min_participants": 5,
+        "max_participants": 15,
+        "types": [
+          {
+            "name": "Resource Gathering",
+            "description": "Coletar recursos raros em território perigoso",
+            "duration_minutes": 45,
+            "rewards": ["rare_materials", "guild_experience"]
+          },
+          {
+            "name": "Territory Exploration",
+            "description": "Explorar e mapear novas áreas",
+            "duration_minutes": 60,
+            "rewards": ["map_data", "discovery_points", "hidden_treasures"]
+          },
+          {
+            "name": "Monster Hunting",
+            "description": "Caçar criaturas élite específicas",
+            "duration_minutes": 30,
+            "rewards": ["rare_drops", "hunting_trophies", "guild_reputation"]
+          }
+        ]
+      }
+    },
+    "guild_hall": {
+      "upgrades": {
+        "main_hall": {
+          "level_1": {
+            "cost": 5000,
+            "max_members": 25,
+            "features": ["basic_storage", "meeting_room"]
+          },
+          "level_2": {
+            "cost": 15000,
+            "max_members": 50,
+            "features": ["enhanced_storage", "training_grounds", "workshop"]
+          },
+          "level_3": {
+            "cost": 35000,
+            "max_members": 100,
+            "features": ["vault", "library", "enchanting_station", "garden"]
+          },
+          "level_4": {
+            "cost": 75000,
+            "max_members": 150,
+            "features": ["portal_room", "guild_bank", "research_lab"]
+          },
+          "level_5": {
+            "cost": 150000,
+            "max_members": 200,
+            "features": ["throne_room", "artifact_display", "war_room", "guild_shrine"]
+          }
+        },
+        "defensive_structures": {
+          "walls": {
+            "cost": 10000,
+            "effect": "defense_bonus_20_percent"
+          },
+          "towers": {
+            "cost": 25000,
+            "effect": "automatic_defense_systems"
+          },
+          "barriers": {
+            "cost": 50000,
+            "effect": "magical_protection_shields"
+          }
+        }
+      },
+      "facilities": {
+        "guild_storage": {
+          "shared_storage_slots": 500,
+          "access_levels": {
+            "recruit": 10,
+            "member": 25,
+            "veteran": 50,
+            "officer": 100,
+            "guild_master": 500
+          }
+        },
+        "training_grounds": {
+          "experience_bonus": 15,
+          "skill_training_available": true,
+          "sparring_matches": true
+        },
+        "workshop": {
+          "crafting_bonus": 20,
+          "batch_crafting": true,
+          "shared_recipes": true
+        },
+        "guild_bank": {
+          "shared_currency": true,
+          "loan_system": true,
+          "investment_options": true
+        }
+      }
+    },
+    "alliance_system": {
+      "creation_requirements": {
+        "min_guild_level": 3,
+        "min_guilds": 2,
+        "max_guilds": 5,
+        "alliance_cost": 50000
+      },
+      "alliance_benefits": {
+        "shared_territories": true,
+        "joint_activities": true,
+        "trade_bonuses": 15,
+        "military_cooperation": true,
+        "shared_defense": true
+      },
+      "alliance_activities": {
+        "mega_raids": {
+          "min_participants": 50,
+          "max_participants": 125,
+          "requires_multiple_guilds": true,
+          "epic_bosses": [
+            "World Destroyer",
+            "Chaos Lord",
+            "Ancient God"
+          ]
+        },
+        "territory_wars": {
+          "alliance_vs_alliance": true,
+          "territory_control": true,
+          "siege_mechanics": true
+        }
+      }
+    }
+  },
+  "guild_progression": {
+    "experience_sources": {
+      "member_activities": {
+        "quest_completion": 100,
+        "dungeon_clear": 250,
+        "boss_defeat": 500,
+        "pvp_victory": 150,
+        "event_participation": 200
+      },
+      "guild_activities": {
+        "guild_raid_completion": 2000,
+        "guild_war_victory": 3000,
+        "expedition_success": 1000,
+        "territory_conquest": 5000
+      }
+    },
+    "level_requirements": {
+      "level_1": 0,
+      "level_2": 10000,
+      "level_3": 35000,
+      "level_4": 85000,
+      "level_5": 175000,
+      "max_level": 5
+    },
+    "unlocks_per_level": {
+      "level_1": ["guild_chat", "basic_storage", "member_recruitment"],
+      "level_2": ["guild_hall_upgrades", "guild_expeditions", "veteran_rank"],
+      "level_3": ["guild_raids", "alliance_formation", "officer_rank"],
+      "level_4": ["guild_wars", "territory_control", "advanced_facilities"],
+      "level_5": ["mega_raids", "guild_mastery", "legendary_rewards"]
+    }
+  },
+  "guild_economy": {
+    "taxation_system": {
+      "member_contribution": {
+        "automatic": true,
+        "percentage": 5,
+        "sources": ["quest_rewards", "trading_profits", "dungeon_loot"]
+      },
+      "voluntary_donations": {
+        "gold": true,
+        "resources": true,
+        "items": true,
+        "donor_recognition": true
+      }
+    },
+    "guild_treasury": {
+      "spending_categories": {
+        "hall_upgrades": 40,
+        "member_benefits": 30,
+        "activities": 20,
+        "emergency_fund": 10
+      },
+      "budget_management": {
+        "officer_approval_required": true,
+        "spending_limits": true,
+        "transaction_logs": true
+      }
+    }
+  },
+  "guild_events": {
+    "seasonal_events": {
+      "guild_festival": {
+        "frequency": "monthly",
+        "duration_days": 3,
+        "special_activities": [
+          "guild_tournaments",
+          "crafting_competitions",
+          "treasure_hunts"
+        ],
+        "exclusive_rewards": true
+      },
+      "war_season": {
+        "frequency": "quarterly",
+        "duration_days": 14,
+        "guild_vs_guild": true,
+        "leaderboards": true,
+        "prestigious_rewards": true
+      }
+    },
+    "dynamic_events": {
+      "guild_invasion": {
+        "random_occurrence": true,
+        "defend_guild_hall": true,
+        "cooperative_defense": true,
+        "failure_consequences": true
+      },
+      "resource_crisis": {
+        "guild_wide_challenge": true,
+        "resource_gathering_required": true,
+        "time_limited": true,
+        "community_effort": true
+      }
+    }
+  },
+  "guild_configurations": {
+    "balance_settings": {
+      "max_guilds_per_server": 1000,
+      "guild_activity_cooldowns": true,
+      "member_switching_cooldown": 24,
+      "guild_deletion_grace_period": 168
+    },
+    "moderation_tools": {
+      "guild_name_filter": true,
+      "inappropriate_content_reporting": true,
+      "automatic_moderation": true,
+      "appeal_system": true
+    },
+    "performance_settings": {
+      "member_activity_tracking": true,
+      "contribution_analytics": true,
+      "performance_metrics": true,
+      "inactive_member_warnings": true
+    }
+  }
+}

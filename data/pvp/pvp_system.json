@@ -1,0 +1,465 @@
+{
+  "pvp_system": {
+    "game_modes": {
+      "arena_1v1": {
+        "name": "Arena 1v1",
+        "description": "Combate individual em arena balanceada",
+        "min_players": 2,
+        "max_players": 2,
+        "duration_minutes": 10,
+        "queue_time_max": 180,
+        "rating_impact": "high",
+        "maps": ["colosseum", "void_chamber", "elemental_platform"],
+        "rules": {
+          "friendly_fire": false,
+          "respawn": false,
+          "items_allowed": false,
+          "abilities_allowed": true,
+          "potions_allowed": false
+        }
+      },
+      "arena_3v3": {
+        "name": "Arena 3v3",
+        "description": "Combate em equipe pequena",
+        "min_players": 6,
+        "max_players": 6,
+        "duration_minutes": 15,
+        "queue_time_max": 300,
+        "rating_impact": "medium",
+        "maps": ["battle_grounds", "crystal_cavern", "ancient_ruins"],
+        "rules": {
+          "friendly_fire": false,
+          "respawn": false,
+          "items_allowed": true,
+          "abilities_allowed": true,
+          "potions_allowed": true,
+          "team_composition_required": true
+        }
+      },
+      "battleground_5v5": {
+        "name": "Campo de Batalha 5v5",
+        "description": "Combate em larga escala com objetivos",
+        "min_players": 10,
+        "max_players": 10,
+        "duration_minutes": 20,
+        "queue_time_max": 420,
+        "rating_impact": "high",
+        "maps": ["siege_fortress", "chaos_valley", "dragon_peak"],
+        "objectives": [
+          "capture_flags",
+          "control_points",
+          "escort_payload",
+          "destroy_core"
+        ],
+        "rules": {
+          "friendly_fire": true,
+          "respawn": true,
+          "respawn_timer": 15,
+          "items_allowed": true,
+          "abilities_allowed": true,
+          "potions_allowed": true,
+          "mounts_allowed": true
+        }
+      },
+      "guild_war": {
+        "name": "Guerra de Guildas",
+        "description": "Combate massivo entre guildas",
+        "min_players": 20,
+        "max_players": 100,
+        "duration_minutes": 60,
+        "queue_time_max": 600,
+        "rating_impact": "extreme",
+        "maps": ["guild_fortress", "war_plains", "contested_territory"],
+        "objectives": [
+          "capture_guild_hall",
+          "control_resource_nodes",
+          "eliminate_guild_master",
+          "defend_territory"
+        ],
+        "special_mechanics": {
+          "siege_weapons": true,
+          "destructible_environment": true,
+          "guild_buffs": true,
+          "alliance_support": true
+        }
+      },
+      "ranked_duel": {
+        "name": "Duelo Ranqueado",
+        "description": "Combate competitivo com ranking",
+        "min_players": 2,
+        "max_players": 2,
+        "duration_minutes": 15,
+        "queue_time_max": 300,
+        "rating_impact": "extreme",
+        "season_based": true,
+        "maps": ["honor_circle", "masters_arena", "champions_platform"],
+        "requirements": {
+          "min_level": 30,
+          "ranked_games_required": 10,
+          "class_balance_enforced": true
+        }
+      },
+      "chaos_mode": {
+        "name": "Modo Caos",
+        "description": "PvP sem regras com recompensas aleatórias",
+        "min_players": 6,
+        "max_players": 20,
+        "duration_minutes": 30,
+        "queue_time_max": 180,
+        "rating_impact": "low",
+        "maps": ["chaos_realm", "unstable_dimension", "madness_pit"],
+        "special_effects": [
+          "random_buffs",
+          "environmental_hazards",
+          "power_ups",
+          "class_swapping",
+          "time_dilation"
+        ]
+      }
+    },
+    "ranking_system": {
+      "rating_tiers": {
+        "bronze": {
+          "name": "Bronze",
+          "min_rating": 0,
+          "max_rating": 1199,
+          "color": "#CD7F32",
+          "divisions": 5,
+          "promotion_games": 3,
+          "demotion_protection": 5
+        },
+        "silver": {
+          "name": "Prata",
+          "min_rating": 1200,
+          "max_rating": 1599,
+          "color": "#C0C0C0",
+          "divisions": 5,
+          "promotion_games": 3,
+          "demotion_protection": 3
+        },
+        "gold": {
+          "name": "Ouro",
+          "min_rating": 1600,
+          "max_rating": 1999,
+          "color": "#FFD700",
+          "divisions": 5,
+          "promotion_games": 5,
+          "demotion_protection": 3
+        },
+        "platinum": {
+          "name": "Platina",
+          "min_rating": 2000,
+          "max_rating": 2399,
+          "color": "#E5E4E2",
+          "divisions": 5,
+          "promotion_games": 5,
+          "demotion_protection": 2
+        },
+        "diamond": {
+          "name": "Diamante",
+          "min_rating": 2400,
+          "max_rating": 2799,
+          "color": "#B9F2FF",
+          "divisions": 5,
+          "promotion_games": 5,
+          "demotion_protection": 1
+        },
+        "master": {
+          "name": "Mestre",
+          "min_rating": 2800,
+          "max_rating": 3199,
+          "color": "#9932CC",
+          "divisions": 1,
+          "percentage_based": true,
+          "max_percentage": 3
+        },
+        "grandmaster": {
+          "name": "Grão-Mestre",
+          "min_rating": 3200,
+          "max_rating": 99999,
+          "color": "#FF0000",
+          "divisions": 1,
+          "percentage_based": true,
+          "max_percentage": 0.5
+        }
+      },
+      "rating_calculation": {
+        "base_rating_gain": 25,
+        "base_rating_loss": 20,
+        "performance_multiplier": {
+          "excellent": 1.5,
+          "good": 1.2,
+          "average": 1.0,
+          "poor": 0.8,
+          "terrible": 0.6
+        },
+        "streak_bonus": {
+          "win_streak_3": 5,
+          "win_streak_5": 10,
+          "win_streak_10": 20,
+          "loss_streak_protection": -5
+        },
+        "matchmaking_fairness": {
+          "underdog_bonus": 10,
+          "favorite_penalty": -5,
+          "balanced_match": 0
+        }
+      },
+      "seasonal_rewards": {
+        "season_duration_weeks": 12,
+        "end_of_season_rewards": {
+          "bronze": {
+            "currency": 500,
+            "cosmetics": ["bronze_frame"],
+            "titles": ["Bronze Warrior"]
+          },
+          "silver": {
+            "currency": 1000,
+            "cosmetics": ["silver_frame", "silver_effect"],
+            "titles": ["Silver Guardian"]
+          },
+          "gold": {
+            "currency": 2000,
+            "cosmetics": ["gold_frame", "gold_effect", "gold_mount"],
+            "titles": ["Golden Champion"]
+          },
+          "platinum": {
+            "currency": 3500,
+            "cosmetics": ["platinum_frame", "platinum_effect", "platinum_mount", "platinum_weapon_skin"],
+            "titles": ["Platinum Elite"]
+          },
+          "diamond": {
+            "currency": 5000,
+            "cosmetics": ["diamond_frame", "diamond_effect", "diamond_mount", "diamond_armor_set"],
+            "titles": ["Diamond Legend"]
+          },
+          "master": {
+            "currency": 7500,
+            "cosmetics": ["master_frame", "master_effect", "master_mount", "master_armor_set", "master_weapon_set"],
+            "titles": ["Master of Combat"],
+            "special_rewards": ["exclusive_access_areas"]
+          },
+          "grandmaster": {
+            "currency": 10000,
+            "cosmetics": ["grandmaster_frame", "grandmaster_effect", "grandmaster_mount", "grandmaster_full_set"],
+            "titles": ["Grandmaster", "Arena Legend"],
+            "special_rewards": ["exclusive_access_areas", "custom_title", "developer_recognition"]
+          }
+        }
+      }
+    },
+    "balance_mechanics": {
+      "stat_normalization": {
+        "enabled_modes": ["arena_1v1", "ranked_duel"],
+        "normalized_stats": {
+          "health": 1000,
+          "mana": 500,
+          "attack_power": 100,
+          "magic_power": 100,
+          "armor": 50,
+          "magic_resistance": 50,
+          "movement_speed": 300,
+          "critical_rate": 0.10
+        },
+        "scaling_with_level": true,
+        "equipment_bonus_cap": 20
+      },
+      "class_balance": {
+        "warrior": {
+          "pvp_health_modifier": 1.2,
+          "pvp_damage_modifier": 1.0,
+          "pvp_resistance_modifier": 1.1,
+          "pvp_speed_modifier": 0.9,
+          "class_specific_rules": {
+            "charge_cooldown_reduced": true,
+            "crowd_control_duration_reduced": 0.7
+          }
+        },
+        "rogue": {
+          "pvp_health_modifier": 0.8,
+          "pvp_damage_modifier": 1.3,
+          "pvp_resistance_modifier": 0.9,
+          "pvp_speed_modifier": 1.2,
+          "class_specific_rules": {
+            "stealth_detection_immunity": 2,
+            "critical_damage_increased": 1.5
+          }
+        },
+        "mage": {
+          "pvp_health_modifier": 0.7,
+          "pvp_damage_modifier": 1.4,
+          "pvp_resistance_modifier": 1.0,
+          "pvp_speed_modifier": 0.8,
+          "class_specific_rules": {
+            "spell_cast_time_reduced": 0.8,
+            "mana_regeneration_increased": 1.5
+          }
+        }
+      },
+      "ability_modifications": {
+        "global_pvp_changes": {
+          "healing_effectiveness": 0.6,
+          "crowd_control_duration": 0.7,
+          "damage_over_time_effectiveness": 0.8,
+          "shield_effectiveness": 0.9,
+          "movement_abilities_cooldown": 1.2
+        },
+        "specific_ability_nerfs": {
+          "instant_kill_abilities": "disabled",
+          "mass_teleportation": "limited_range",
+          "infinite_resources": "disabled",
+          "permanent_buffs": "time_limited"
+        }
+      },
+      "anti_griefing": {
+        "spawn_protection": 5,
+        "anti_camping": true,
+        "afk_detection": 30,
+        "team_damage_penalty": true,
+        "unsportsmanlike_conduct_detection": true
+      }
+    },
+    "matchmaking": {
+      "algorithm": "skill_based_rating",
+      "factors": {
+        "rating_weight": 70,
+        "recent_performance_weight": 15,
+        "class_balance_weight": 10,
+        "connection_quality_weight": 5
+      },
+      "queue_parameters": {
+        "initial_search_range": 100,
+        "search_expansion_rate": 10,
+        "max_search_range": 500,
+        "search_expansion_interval": 30
+      },
+      "team_composition": {
+        "enforce_role_balance": true,
+        "max_same_class": 2,
+        "preferred_compositions": [
+          {"tank": 1, "dps": 2, "support": 1, "utility": 1},
+          {"tank": 2, "dps": 2, "support": 1},
+          {"tank": 1, "dps": 3, "support": 1}
+        ]
+      },
+      "fair_play_measures": {
+        "smurf_detection": true,
+        "win_trading_detection": true,
+        "skill_verification": true,
+        "rank_integrity_protection": true
+      }
+    },
+    "reward_systems": {
+      "match_rewards": {
+        "victory": {
+          "base_currency": 100,
+          "pvp_tokens": 10,
+          "experience": 500,
+          "performance_bonus": true
+        },
+        "defeat": {
+          "base_currency": 25,
+          "pvp_tokens": 3,
+          "experience": 150,
+          "participation_reward": true
+        },
+        "exceptional_performance": {
+          "mvp_bonus": 50,
+          "killing_spree": 25,
+          "objective_master": 30,
+          "clutch_victory": 40
+        }
+      },
+      "progression_rewards": {
+        "daily_objectives": {
+          "win_matches": {"count": 3, "reward": {"currency": 200, "pvp_tokens": 15}},
+          "deal_damage": {"amount": 10000, "reward": {"experience": 300}},
+          "heal_allies": {"amount": 5000, "reward": {"currency": 150}},
+          "capture_objectives": {"count": 5, "reward": {"pvp_tokens": 20}}
+        },
+        "weekly_objectives": {
+          "win_streak": {"count": 5, "reward": {"currency": 1000, "rare_material": 1}},
+          "rank_up": {"count": 1, "reward": {"currency": 500, "cosmetic_item": 1}},
+          "participate_modes": {"count": 3, "reward": {"pvp_tokens": 50}}
+        },
+        "monthly_objectives": {
+          "reach_rank": {"tier": "gold", "reward": {"exclusive_mount": 1, "currency": 5000}},
+          "tournament_participation": {"count": 1, "reward": {"prestige_points": 100}}
+        }
+      },
+      "leaderboard_rewards": {
+        "daily_top_10": {"currency": 500, "pvp_tokens": 25},
+        "weekly_top_50": {"rare_materials": 3, "currency": 1000},
+        "monthly_top_100": {"exclusive_cosmetics": 1, "currency": 5000},
+        "seasonal_champions": {"legendary_rewards": true, "hall_of_fame": true}
+      }
+    },
+    "tournament_system": {
+      "tournament_types": {
+        "daily_brackets": {
+          "schedule": "every_6_hours",
+          "participants": 16,
+          "format": "single_elimination",
+          "entry_fee": 50,
+          "duration_minutes": 120
+        },
+        "weekly_championships": {
+          "schedule": "saturday_sunday",
+          "participants": 64,
+          "format": "double_elimination",
+          "entry_fee": 500,
+          "duration_hours": 6
+        },
+        "seasonal_grand_prix": {
+          "schedule": "end_of_season",
+          "participants": 256,
+          "format": "swiss_rounds_plus_elimination",
+          "entry_fee": 0,
+          "qualification_required": true,
+          "duration_days": 2
+        },
+        "guild_tournaments": {
+          "schedule": "monthly",
+          "participants": "guild_teams",
+          "format": "round_robin_plus_playoffs",
+          "entry_fee": "guild_treasury",
+          "duration_hours": 4
+        }
+      },
+      "qualification_systems": {
+        "ladder_qualification": {
+          "top_percentage": 10,
+          "minimum_games": 50,
+          "rating_threshold": 2000
+        },
+        "tournament_points": {
+          "earned_from_smaller_tournaments": true,
+          "decay_over_time": true,
+          "minimum_for_major_events": 1000
+        }
+      }
+    }
+  },
+  "technical_settings": {
+    "networking": {
+      "tick_rate": 60,
+      "lag_compensation": true,
+      "rollback_netcode": true,
+      "anti_cheat_integration": true,
+      "server_authority": true
+    },
+    "performance": {
+      "max_concurrent_matches": 100,
+      "spectator_limit_per_match": 50,
+      "replay_recording": true,
+      "match_analysis_tools": true
+    },
+    "moderation": {
+      "automated_toxicity_detection": true,
+      "player_reporting_system": true,
+      "replay_review_for_cheating": true,
+      "temporary_suspension_system": true,
+      "appeal_process": true
+    }
+  }
+}

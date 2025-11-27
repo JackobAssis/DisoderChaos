@@ -65,6 +65,7 @@ Disorder Chaos is a top-down RPG with action elements where players explore inte
 ### Character System
 - **Races**: Human (balanced), Beastkin (agile), Mystborn (magical)
 - **Classes**: Warrior (melee), Rogue (stealth), Mage (magic)
+- **Advanced Classes**: Specializations, prestige evolution, dual-class system
 - **Attributes**: Strength, Agility, Vitality, Intelligence, Willpower, Luck
 
 ### Combat System
@@ -72,18 +73,32 @@ Disorder Chaos is a top-down RPG with action elements where players explore inte
 - Physical, magical, and true damage types
 - Critical hits and status effects
 - Skill cooldowns and mana costs
+- **PvP System**: Arena, battlegrounds, ranking, tournaments
 
-### Dungeon System
-- Interconnected dungeons with different themes
-- Dynamic enemy spawning based on difficulty
-- Loot drops and completion rewards
-- Exit unlocks when clearing conditions are met
+### Guild System
+- **Guild Creation**: Member management, ranking system
+- **Guild Activities**: Raids, wars, expeditions
+- **Alliance System**: Multi-guild cooperation
+- **Guild Halls**: Upgradeable facilities and defenses
+
+### Raid & Dungeon System
+- **Raid Types**: Dungeon crawl, raid instances, epic raids, world bosses
+- **Difficulty Scaling**: Normal to Mythic with unique mechanics
+- **Group Mechanics**: Role requirements, coordination tools
+- **Loot Systems**: Multiple distribution methods, progression rewards
+
+### Pet & Companion System
+- **Pet Types**: Attack, support, passive buff, collection pets
+- **AI Behavior**: Advanced follow mechanics, combat assistance
+- **Progression**: XP system, abilities, stat growth
+- **Management**: Single active pet, UI controls, pet storage
 
 ### Data-Driven Design
 All game content is defined in JSON files, making it easy to:
 - Add new races, classes, and skills
 - Create new dungeons and enemies
 - Define items and equipment
+- Configure advanced systems (classes, guilds, PvP, raids)
 - Modify game balance without code changes
 
 ## 🔧 Development Guide

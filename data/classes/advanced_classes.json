@@ -1,0 +1,488 @@
+{
+  "prestige_classes": {
+    "warrior_specializations": {
+      "berserker": {
+        "id": "berserker",
+        "name": "Berserker",
+        "description": "Especialização em combate corpo a corpo feroz, sacrificando defesa por dano devastador",
+        "base_class_required": "warrior",
+        "level_required": 25,
+        "prerequisite_skills": ["rage", "weapon_mastery_melee"],
+        "stat_bonuses": {
+          "strength": 8,
+          "vitality": 5,
+          "agility": 3,
+          "intelligence": -2
+        },
+        "special_abilities": [
+          {
+            "id": "blood_frenzy",
+            "name": "Frenesia Sanguinária",
+            "description": "Aumenta dano por % de vida perdida",
+            "type": "passive",
+            "effect": "damage_increase_per_missing_hp",
+            "value": 2
+          },
+          {
+            "id": "berserker_rage",
+            "name": "Fúria do Berserker",
+            "description": "Ativa por 30s: +50% dano, +30% velocidade, -25% defesa",
+            "type": "active",
+            "cooldown": 120,
+            "duration": 30,
+            "effects": {
+              "damage_bonus": 50,
+              "movement_speed": 30,
+              "defense_penalty": -25
+            }
+          }
+        ],
+        "skill_tree": {
+          "tier_1": {
+            "rampage": {
+              "name": "Devastação",
+              "description": "Cada kill consecutivo aumenta dano em 10% por 15s",
+              "max_level": 5,
+              "cost_per_level": 1
+            },
+            "thick_skin": {
+              "name": "Pele Grossa",
+              "description": "Reduz dano recebido em 2% por nível",
+              "max_level": 10,
+              "cost_per_level": 1
+            }
+          },
+          "tier_2": {
+            "intimidation": {
+              "name": "Intimidação",
+              "description": "Inimigos próximos recebem -15% dano",
+              "max_level": 3,
+              "cost_per_level": 2,
+              "prerequisites": ["thick_skin"]
+            }
+          },
+          "tier_3": {
+            "unstoppable_force": {
+              "name": "Força Imparável",
+              "description": "Imune a debuffs de movimento por 10s após usar Berserker Rage",
+              "max_level": 1,
+              "cost_per_level": 3,
+              "prerequisites": ["intimidation"]
+            }
+          }
+        },
+        "evolution_path": {
+          "level_50": "warlord",
+          "level_75": "chaos_warrior"
+        }
+      },
+      "guardian": {
+        "id": "guardian",
+        "name": "Guardião",
+        "description": "Especialização em proteção e defesa, focado em tankar dano",
+        "base_class_required": "warrior",
+        "level_required": 25,
+        "prerequisite_skills": ["shield_mastery", "defensive_stance"],
+        "stat_bonuses": {
+          "vitality": 10,
+          "strength": 4,
+          "agility": -2,
+          "willpower": 5
+        },
+        "special_abilities": [
+          {
+            "id": "aegis_protocol",
+            "name": "Protocolo Aegis",
+            "description": "Absorve 50% do dano de aliados próximos",
+            "type": "toggle",
+            "radius": 150,
+            "damage_absorption": 50
+          },
+          {
+            "id": "fortress_stance",
+            "name": "Postura da Fortaleza",
+            "description": "Imóvel por 10s: +75% defesa, +100% resistência a debuffs",
+            "type": "active",
+            "cooldown": 90,
+            "duration": 10,
+            "effects": {
+              "defense_bonus": 75,
+              "debuff_resistance": 100,
+              "movement_speed": -100
+            }
+          }
+        ],
+        "skill_tree": {
+          "tier_1": {
+            "armor_expertise": {
+              "name": "Especialista em Armadura",
+              "description": "Aumenta eficiência de armadura em 5% por nível",
+              "max_level": 10,
+              "cost_per_level": 1
+            },
+            "shield_bash": {
+              "name": "Golpe de Escudo",
+              "description": "Escudo causa dano e atordoa por 2s",
+              "max_level": 5,
+              "cost_per_level": 1
+            }
+          },
+          "tier_2": {
+            "retribution": {
+              "name": "Retribuição",
+              "description": "Reflete 15% do dano recebido",
+              "max_level": 5,
+              "cost_per_level": 2,
+              "prerequisites": ["armor_expertise"]
+            }
+          },
+          "tier_3": {
+            "immovable_object": {
+              "name": "Objeto Imóvel",
+              "description": "Imune a knockback e stuns",
+              "max_level": 1,
+              "cost_per_level": 4,
+              "prerequisites": ["retribution", "shield_bash"]
+            }
+          }
+        }
+      }
+    },
+    "rogue_specializations": {
+      "assassin": {
+        "id": "assassin",
+        "name": "Assassino",
+        "description": "Especialização em eliminar alvos rapidamente com dano crítico",
+        "base_class_required": "rogue",
+        "level_required": 25,
+        "prerequisite_skills": ["stealth", "critical_strike"],
+        "stat_bonuses": {
+          "agility": 8,
+          "luck": 6,
+          "strength": 4,
+          "vitality": -3
+        },
+        "special_abilities": [
+          {
+            "id": "shadow_step",
+            "name": "Passo das Sombras",
+            "description": "Teleporta atrás do inimigo, próximo ataque é crítico garantido",
+            "type": "active",
+            "cooldown": 15,
+            "range": 200,
+            "effects": {
+              "guaranteed_critical": true,
+              "stealth_duration": 3
+            }
+          },
+          {
+            "id": "death_mark",
+            "name": "Marca da Morte",
+            "description": "Marca inimigo: próximos 3 ataques causam 25% mais dano",
+            "type": "active",
+            "cooldown": 30,
+            "duration": 20,
+            "stacks": 3
+          }
+        ],
+        "skill_tree": {
+          "tier_1": {
+            "lethality": {
+              "name": "Letalidade",
+              "description": "Aumenta chance crítica em 2% por nível",
+              "max_level": 10,
+              "cost_per_level": 1
+            },
+            "poison_blade": {
+              "name": "Lâmina Envenenada",
+              "description": "Ataques aplicam veneno (20 dano/s por 5s)",
+              "max_level": 5,
+              "cost_per_level": 1
+            }
+          },
+          "tier_2": {
+            "shadow_mastery": {
+              "name": "Maestria das Sombras",
+              "description": "Stealth dura 2s a mais por nível",
+              "max_level": 3,
+              "cost_per_level": 2,
+              "prerequisites": ["lethality"]
+            }
+          },
+          "tier_3": {
+            "execution": {
+              "name": "Execução",
+              "description": "Inimigos abaixo de 15% HP morrem instantaneamente",
+              "max_level": 1,
+              "cost_per_level": 5,
+              "prerequisites": ["shadow_mastery", "poison_blade"]
+            }
+          }
+        }
+      },
+      "shadow_dancer": {
+        "id": "shadow_dancer",
+        "name": "Dançarino das Sombras",
+        "description": "Especialização em mobilidade e controle de campo",
+        "base_class_required": "rogue",
+        "level_required": 25,
+        "prerequisite_skills": ["evasion", "shadow_manipulation"],
+        "stat_bonuses": {
+          "agility": 10,
+          "intelligence": 3,
+          "luck": 4,
+          "strength": -2
+        },
+        "special_abilities": [
+          {
+            "id": "shadow_clone",
+            "name": "Clone das Sombras",
+            "description": "Cria 3 clones que copiam ataques por 15s",
+            "type": "active",
+            "cooldown": 90,
+            "duration": 15,
+            "clone_damage": 35
+          },
+          {
+            "id": "phase_walk",
+            "name": "Caminhada Etérea",
+            "description": "Atravessa inimigos por 8s, causando dano ao passar",
+            "type": "active",
+            "cooldown": 60,
+            "duration": 8,
+            "pass_damage": 50
+          }
+        ]
+      }
+    },
+    "mage_specializations": {
+      "archmage": {
+        "id": "archmage",
+        "name": "Arquimago",
+        "description": "Mestre da magia elemental com foco em dano massivo",
+        "base_class_required": "mage",
+        "level_required": 25,
+        "prerequisite_skills": ["elemental_mastery", "mana_efficiency"],
+        "stat_bonuses": {
+          "intelligence": 10,
+          "willpower": 6,
+          "luck": 2,
+          "strength": -3,
+          "agility": -2
+        },
+        "special_abilities": [
+          {
+            "id": "meteor_storm",
+            "name": "Tempestade de Meteoros",
+            "description": "Chuva de meteoros em área grande por 8s",
+            "type": "channeled",
+            "cast_time": 3,
+            "duration": 8,
+            "cooldown": 120,
+            "area_radius": 300,
+            "meteor_damage": 200
+          },
+          {
+            "id": "elemental_fusion",
+            "name": "Fusão Elemental",
+            "description": "Combina elementos: Fogo+Gelo=Vapor, Raio+Terra=Cristal",
+            "type": "passive",
+            "fusion_damage_bonus": 150
+          }
+        ],
+        "skill_tree": {
+          "tier_1": {
+            "spell_power": {
+              "name": "Poder Mágico",
+              "description": "Aumenta dano mágico em 5% por nível",
+              "max_level": 10,
+              "cost_per_level": 1
+            },
+            "mana_overflow": {
+              "name": "Transbordamento de Mana",
+              "description": "Regenera 2% do mana máximo por segundo",
+              "max_level": 5,
+              "cost_per_level": 1
+            }
+          },
+          "tier_2": {
+            "spell_echo": {
+              "name": "Eco Mágico",
+              "description": "20% de chance de repetir última magia",
+              "max_level": 3,
+              "cost_per_level": 3,
+              "prerequisites": ["spell_power"]
+            }
+          },
+          "tier_3": {
+            "transcendence": {
+              "name": "Transcendência",
+              "description": "Magias custam HP em vez de mana por 30s",
+              "max_level": 1,
+              "cost_per_level": 5,
+              "prerequisites": ["spell_echo", "mana_overflow"]
+            }
+          }
+        }
+      },
+      "battle_mage": {
+        "id": "battle_mage",
+        "name": "Mago de Guerra",
+        "description": "Combina magia e combate corpo a corpo",
+        "base_class_required": "mage",
+        "level_required": 25,
+        "prerequisite_skills": ["weapon_enchantment", "combat_casting"],
+        "stat_bonuses": {
+          "intelligence": 6,
+          "strength": 6,
+          "agility": 3,
+          "vitality": 4
+        },
+        "special_abilities": [
+          {
+            "id": "spellsword_stance",
+            "name": "Postura do Gladio Mágico",
+            "description": "Ataques físicos aplicam efeitos elementais aleatórios",
+            "type": "toggle",
+            "mana_cost_per_second": 5,
+            "elemental_effects": ["burn", "freeze", "shock", "poison"]
+          },
+          {
+            "id": "mana_burst",
+            "name": "Explosão de Mana",
+            "description": "Converte mana atual em dano de área",
+            "type": "instant",
+            "cooldown": 45,
+            "conversion_rate": 2
+          }
+        ]
+      }
+    }
+  },
+  "prestige_evolution": {
+    "tier_2_classes": {
+      "warlord": {
+        "id": "warlord",
+        "name": "Senhor da Guerra",
+        "description": "Evolução final do Berserker - Domínio total do campo de batalha",
+        "evolves_from": "berserker",
+        "level_required": 50,
+        "unique_abilities": [
+          {
+            "id": "battlefield_command",
+            "name": "Comando do Campo de Batalha",
+            "description": "Aliados próximos ganham +25% dano e velocidade",
+            "type": "aura",
+            "radius": 250
+          }
+        ]
+      },
+      "chaos_warrior": {
+        "id": "chaos_warrior",
+        "name": "Guerreiro do Caos",
+        "description": "Evolução suprema - Poder do próprio caos",
+        "evolves_from": "berserker",
+        "level_required": 75,
+        "unique_abilities": [
+          {
+            "id": "chaos_incarnate",
+            "name": "Caos Encarnado",
+            "description": "Cada ataque tem efeito aleatório devastador",
+            "type": "passive",
+            "chaos_effects": ["time_slow", "mass_fear", "reality_tear"]
+          }
+        ]
+      },
+      "void_assassin": {
+        "id": "void_assassin",
+        "name": "Assassino do Vazio",
+        "description": "Evolução do Assassino - Manipulação do vazio",
+        "evolves_from": "assassin",
+        "level_required": 50,
+        "unique_abilities": [
+          {
+            "id": "void_strike",
+            "name": "Golpe do Vazio",
+            "description": "Ataque ignora defesas e causa dano real",
+            "type": "active",
+            "cooldown": 20,
+            "true_damage": true
+          }
+        ]
+      },
+      "archlich": {
+        "id": "archlich",
+        "name": "Arquilich",
+        "description": "Evolução do Arquimago - Transcendência da morte",
+        "evolves_from": "archmage",
+        "level_required": 50,
+        "unique_abilities": [
+          {
+            "id": "death_transcendence",
+            "name": "Transcendência da Morte",
+            "description": "Ao morrer, continua lutando como lich por 30s",
+            "type": "passive",
+            "lich_duration": 30,
+            "lich_power_bonus": 200
+          }
+        ]
+      }
+    }
+  },
+  "class_synergies": {
+    "warrior_mage": {
+      "name": "Paladino Arcano",
+      "description": "Dual class: Warrior + Mage",
+      "requirements": {
+        "warrior_level": 30,
+        "mage_level": 30
+      },
+      "bonuses": {
+        "spell_armor": 25,
+        "weapon_enchantment_auto": true
+      }
+    },
+    "rogue_mage": {
+      "name": "Assassino Sombrio",
+      "description": "Dual class: Rogue + Mage",
+      "requirements": {
+        "rogue_level": 30,
+        "mage_level": 30
+      },
+      "bonuses": {
+        "shadow_magic_mastery": true,
+        "stealth_casting": true
+      }
+    },
+    "warrior_rogue": {
+      "name": "Ranger de Elite",
+      "description": "Dual class: Warrior + Rogue",
+      "requirements": {
+        "warrior_level": 30,
+        "rogue_level": 30
+      },
+      "bonuses": {
+        "dual_wield_mastery": true,
+        "combat_reflexes": 50
+      }
+    }
+  },
+  "class_configurations": {
+    "specialization_cost": {
+      "skill_points_per_level": 2,
+      "base_skill_cost": 1,
+      "advanced_skill_cost": 3,
+      "mastery_skill_cost": 5
+    },
+    "evolution_requirements": {
+      "prestige_level": 25,
+      "specific_achievements": true,
+      "rare_materials": true
+    },
+    "balance_settings": {
+      "max_specializations": 2,
+      "respec_cost_multiplier": 1.5,
+      "cross_class_penalty": 0.8
+    }
+  }
+}

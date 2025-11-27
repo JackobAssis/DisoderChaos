@@ -1,0 +1,58 @@
+{
+  "max_active_pets": 1,
+  "global_xp_modifier": 1.0,
+  "pet_revival_enabled": true,
+  "auto_dismiss_in_pvp": true,
+  "summon_cooldown": 3.0,
+  "max_follow_distance": 200.0,
+  "ai_update_frequency": 0.2,
+  "follow_update_frequency": 0.1,
+  "input_settings": {
+    "pet_toggle_key": "KEY_P",
+    "pet_ability_1_key": "KEY_F1",
+    "pet_ability_2_key": "KEY_F2",
+    "pet_ability_3_key": "KEY_F3",
+    "pet_menu_key": "KEY_B"
+  },
+  "ui_settings": {
+    "show_pet_health_bar": true,
+    "show_pet_xp_bar": true,
+    "show_ability_cooldowns": true,
+    "pet_ui_position": "top_right",
+    "pet_icon_size": 48,
+    "ability_button_size": 40
+  },
+  "gameplay_settings": {
+    "pets_can_die": false,
+    "pet_death_penalty_xp": 0.1,
+    "auto_revive_pets": true,
+    "pets_share_player_buffs": true,
+    "allow_pet_pvp": false,
+    "pet_collision_enabled": true
+  },
+  "ai_settings": {
+    "aggressive_pet_auto_attack": true,
+    "support_pet_auto_heal": true,
+    "collector_pet_auto_collect": true,
+    "passive_pet_always_buff": true,
+    "pet_follow_through_doors": true,
+    "pet_teleport_if_too_far": true,
+    "max_teleport_distance": 500.0
+  },
+  "balance_settings": {
+    "xp_share_rate": 0.3,
+    "pet_stat_scaling_rate": 1.0,
+    "ability_cooldown_modifier": 1.0,
+    "pet_damage_modifier": 1.0,
+    "pet_healing_modifier": 1.0,
+    "pet_buff_modifier": 1.0
+  },
+  "accessibility_settings": {
+    "colorblind_friendly_ui": false,
+    "high_contrast_mode": false,
+    "large_ui_elements": false,
+    "audio_feedback_enabled": true,
+    "visual_feedback_enabled": true,
+    "simplified_pet_ai": false
+  }
+}

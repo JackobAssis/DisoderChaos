@@ -1,0 +1,502 @@
+{
+  "raid_system": {
+    "raid_types": {
+      "dungeon_crawl": {
+        "name": "Exploração de Masmorra",
+        "description": "Progressão linear através de salas interconectadas",
+        "min_players": 1,
+        "max_players": 5,
+        "difficulty_scaling": "linear",
+        "respawn_allowed": true,
+        "time_limit_minutes": 60,
+        "mechanics": {
+          "room_progression": true,
+          "key_collection": true,
+          "puzzle_solving": true,
+          "boss_encounters": true
+        }
+      },
+      "raid_instance": {
+        "name": "Instância de Raid",
+        "description": "Conteúdo desafiador para grupos grandes",
+        "min_players": 10,
+        "max_players": 25,
+        "difficulty_scaling": "exponential",
+        "respawn_allowed": false,
+        "time_limit_minutes": 180,
+        "mechanics": {
+          "boss_phases": true,
+          "coordinate_attacks": true,
+          "role_requirements": true,
+          "environmental_hazards": true,
+          "group_mechanics": true
+        }
+      },
+      "epic_raid": {
+        "name": "Raid Épico",
+        "description": "Conteúdo extremamente desafiador para grupos elite",
+        "min_players": 20,
+        "max_players": 40,
+        "difficulty_scaling": "extreme",
+        "respawn_allowed": false,
+        "time_limit_minutes": 300,
+        "mechanics": {
+          "multi_boss_encounters": true,
+          "complex_mechanics": true,
+          "strict_role_requirements": true,
+          "coordination_required": true,
+          "multiple_phases": true
+        }
+      },
+      "world_boss": {
+        "name": "Boss Mundial",
+        "description": "Eventos de boss que aparecem no mundo aberto",
+        "min_players": 5,
+        "max_players": 100,
+        "difficulty_scaling": "dynamic",
+        "respawn_allowed": true,
+        "time_limit_minutes": 45,
+        "mechanics": {
+          "public_participation": true,
+          "scaling_with_participants": true,
+          "territory_control": true,
+          "faction_cooperation": true
+        }
+      },
+      "mythic_plus": {
+        "name": "Mítico Plus",
+        "description": "Dungeons com dificuldade progressiva e modificadores",
+        "min_players": 5,
+        "max_players": 5,
+        "difficulty_scaling": "keystone",
+        "respawn_allowed": false,
+        "time_limit_minutes": 45,
+        "mechanics": {
+          "keystone_system": true,
+          "affixes": true,
+          "timer_challenge": true,
+          "escalating_difficulty": true
+        }
+      }
+    },
+    "difficulty_levels": {
+      "normal": {
+        "name": "Normal",
+        "damage_multiplier": 1.0,
+        "health_multiplier": 1.0,
+        "mechanic_complexity": "simple",
+        "loot_quality": "common",
+        "required_item_level": 0,
+        "level_requirement": 1
+      },
+      "hard": {
+        "name": "Difícil",
+        "damage_multiplier": 1.5,
+        "health_multiplier": 1.3,
+        "mechanic_complexity": "moderate",
+        "loot_quality": "rare",
+        "required_item_level": 50,
+        "level_requirement": 25
+      },
+      "expert": {
+        "name": "Especialista",
+        "damage_multiplier": 2.0,
+        "health_multiplier": 1.7,
+        "mechanic_complexity": "complex",
+        "loot_quality": "epic",
+        "required_item_level": 100,
+        "level_requirement": 50
+      },
+      "master": {
+        "name": "Mestre",
+        "damage_multiplier": 2.5,
+        "health_multiplier": 2.2,
+        "mechanic_complexity": "very_complex",
+        "loot_quality": "legendary",
+        "required_item_level": 150,
+        "level_requirement": 75
+      },
+      "mythic": {
+        "name": "Mítico",
+        "damage_multiplier": 3.0,
+        "health_multiplier": 3.0,
+        "mechanic_complexity": "extreme",
+        "loot_quality": "mythic",
+        "required_item_level": 200,
+        "level_requirement": 90
+      }
+    },
+    "raid_instances": {
+      "ancient_temple": {
+        "id": "ancient_temple",
+        "name": "Templo dos Antigos",
+        "description": "Templo milenar habitado por guardiões ancestrais",
+        "type": "dungeon_crawl",
+        "theme": "ancient_mystical",
+        "recommended_level": 30,
+        "rooms": 12,
+        "boss_encounters": 3,
+        "estimated_duration": 45,
+        "lore": "Um templo perdido onde antigos rituais ainda ecoam pelas pedras",
+        "bosses": [
+          {
+            "name": "Guardian Statue",
+            "room": 4,
+            "mechanics": ["stone_shield", "earthquake", "summon_minions"],
+            "health_base": 5000,
+            "special_drops": ["ancient_key", "stone_essence"]
+          },
+          {
+            "name": "High Priest Kethros",
+            "room": 8,
+            "mechanics": ["divine_wrath", "heal_immunity", "mind_control"],
+            "health_base": 8000,
+            "special_drops": ["priest_staff", "divine_scroll"]
+          },
+          {
+            "name": "Ancient Dragon Spirit",
+            "room": 12,
+            "mechanics": ["phase_shift", "elemental_breath", "time_distortion"],
+            "health_base": 15000,
+            "special_drops": ["dragon_scale_armor", "spirit_essence", "temporal_gem"]
+          }
+        ],
+        "environmental_hazards": [
+          "collapsing_ceiling",
+          "poison_darts",
+          "magical_barriers",
+          "teleportation_traps"
+        ]
+      },
+      "chaos_citadel": {
+        "id": "chaos_citadel",
+        "name": "Cidadela do Caos",
+        "description": "Fortaleza corrompida pelo poder do caos primordial",
+        "type": "raid_instance",
+        "theme": "chaotic_corruption",
+        "recommended_level": 60,
+        "rooms": 20,
+        "boss_encounters": 6,
+        "estimated_duration": 180,
+        "lore": "Uma vez um bastião da ordem, agora consumida pelo caos",
+        "bosses": [
+          {
+            "name": "Chaos Knight Commander",
+            "room": 5,
+            "mechanics": ["chaos_charge", "fear_aura", "weapon_enhancement"],
+            "health_base": 25000,
+            "phases": 2
+          },
+          {
+            "name": "Twin Sorcerers of Havoc",
+            "room": 8,
+            "mechanics": ["twin_link", "chaos_magic", "reality_tear", "spell_reflection"],
+            "health_base": 18000,
+            "phases": 3,
+            "special_mechanics": "must_kill_simultaneously"
+          },
+          {
+            "name": "Void Leviathan",
+            "room": 12,
+            "mechanics": ["void_tentacles", "dimensional_pull", "chaos_breath"],
+            "health_base": 35000,
+            "phases": 2
+          },
+          {
+            "name": "Chaos Avatar",
+            "room": 16,
+            "mechanics": ["form_shift", "reality_manipulation", "chaos_storm", "minion_spawn"],
+            "health_base": 45000,
+            "phases": 4
+          },
+          {
+            "name": "Lord of Disorder",
+            "room": 20,
+            "mechanics": ["chaos_incarnate", "dimension_shift", "time_manipulation", "ultimate_chaos"],
+            "health_base": 80000,
+            "phases": 5,
+            "enrage_timer": 600
+          }
+        ]
+      },
+      "world_tree_depths": {
+        "id": "world_tree_depths",
+        "name": "Profundezas da Árvore Mundial",
+        "description": "As raízes corrompidas da árvore que sustenta os mundos",
+        "type": "epic_raid",
+        "theme": "nature_corruption",
+        "recommended_level": 80,
+        "rooms": 30,
+        "boss_encounters": 8,
+        "estimated_duration": 300,
+        "lore": "O coração da árvore mundial está sendo corrompido por uma força antiga",
+        "unique_mechanics": {
+          "tree_phases": "raid_progresses_through_tree_layers",
+          "elemental_attunement": "players_must_attune_to_elements",
+          "corruption_resistance": "build_resistance_throughout_raid"
+        }
+      },
+      "elemental_convergence": {
+        "id": "elemental_convergence",
+        "name": "Convergência Elemental",
+        "description": "Local onde os planos elementais se encontram em conflito",
+        "type": "world_boss",
+        "theme": "elemental_chaos",
+        "recommended_level": 70,
+        "spawn_locations": ["fire_peaks", "water_caverns", "earth_gorge", "air_summit"],
+        "spawn_timer_hours": 12,
+        "max_participants": 100,
+        "scaling_mechanics": {
+          "health_per_player": 10000,
+          "damage_per_player": 50,
+          "new_mechanics_at_thresholds": [25, 50, 75, 100]
+        }
+      }
+    },
+    "boss_mechanics": {
+      "basic_mechanics": {
+        "enrage": {
+          "description": "Boss aumenta dano drasticamente após tempo limite",
+          "trigger": "time_based",
+          "effect": "damage_increase_200_percent"
+        },
+        "phase_transition": {
+          "description": "Boss muda comportamento em % de vida específicos",
+          "trigger": "health_percentage",
+          "thresholds": [75, 50, 25]
+        },
+        "add_spawning": {
+          "description": "Boss invoca criaturas auxiliares",
+          "trigger": "timed_or_health",
+          "add_types": ["melee_adds", "ranged_adds", "healer_adds"]
+        }
+      },
+      "advanced_mechanics": {
+        "positioning": {
+          "tank_and_spank": "tank holds boss in position",
+          "kiting": "boss must be moved constantly",
+          "spread_out": "players must maintain distance",
+          "stack_up": "players must group together",
+          "safe_zones": "players must reach safe areas"
+        },
+        "coordination": {
+          "interrupt_rotation": "players take turns interrupting spells",
+          "synchronized_actions": "all players must act simultaneously",
+          "role_swapping": "players change roles during fight",
+          "sacrifice_mechanics": "some players must sacrifice for others"
+        },
+        "environmental": {
+          "moving_platforms": "fight area changes during battle",
+          "hazardous_zones": "areas become dangerous over time",
+          "destructible_cover": "protection elements can be destroyed",
+          "interactive_elements": "players must use environment to win"
+        }
+      },
+      "mythic_mechanics": {
+        "perfect_execution": "any mistake leads to wipe",
+        "multi_dimensional": "fight happens in multiple planes",
+        "adaptive_ai": "boss learns and counters player strategies",
+        "resource_management": "limited resources for entire raid",
+        "cascading_failure": "mistakes compound exponentially"
+      }
+    },
+    "loot_system": {
+      "drop_tables": {
+        "normal": {
+          "currency_multiplier": 1.0,
+          "drop_rate_multiplier": 1.0,
+          "quality_distribution": {
+            "common": 60,
+            "uncommon": 30,
+            "rare": 10,
+            "epic": 0,
+            "legendary": 0
+          }
+        },
+        "hard": {
+          "currency_multiplier": 1.5,
+          "drop_rate_multiplier": 1.2,
+          "quality_distribution": {
+            "common": 30,
+            "uncommon": 40,
+            "rare": 25,
+            "epic": 5,
+            "legendary": 0
+          }
+        },
+        "expert": {
+          "currency_multiplier": 2.0,
+          "drop_rate_multiplier": 1.5,
+          "quality_distribution": {
+            "common": 10,
+            "uncommon": 30,
+            "rare": 40,
+            "epic": 18,
+            "legendary": 2
+          }
+        },
+        "master": {
+          "currency_multiplier": 3.0,
+          "drop_rate_multiplier": 2.0,
+          "quality_distribution": {
+            "common": 0,
+            "uncommon": 15,
+            "rare": 35,
+            "epic": 40,
+            "legendary": 10
+          }
+        },
+        "mythic": {
+          "currency_multiplier": 4.0,
+          "drop_rate_multiplier": 2.5,
+          "quality_distribution": {
+            "common": 0,
+            "uncommon": 0,
+            "rare": 20,
+            "epic": 50,
+            "legendary": 25,
+            "mythic": 5
+          }
+        }
+      },
+      "loot_distribution": {
+        "personal_loot": {
+          "description": "Cada jogador tem suas próprias chances de loot",
+          "advantages": ["no_loot_drama", "fair_distribution"],
+          "disadvantages": ["possible_duplicates", "no_trade"]
+        },
+        "group_loot": {
+          "description": "Loot é compartilhado e distribuído pelo grupo",
+          "distribution_methods": ["round_robin", "need_greed_pass", "dkp_system"],
+          "advantages": ["optimal_distribution", "social_aspect"],
+          "disadvantages": ["potential_drama", "requires_coordination"]
+        },
+        "master_looter": {
+          "description": "Líder do grupo distribui todo o loot",
+          "requirements": ["trusted_leader", "established_group"],
+          "advantages": ["strategic_distribution"],
+          "disadvantages": ["high_trust_requirement"]
+        }
+      },
+      "special_rewards": {
+        "achievement_unlocks": {
+          "first_clear": "unique_title_and_mount",
+          "speed_clear": "special_cosmetic_effect",
+          "no_death_clear": "legendary_weapon_upgrade",
+          "perfect_execution": "mythic_armor_set"
+        },
+        "progression_rewards": {
+          "boss_tokens": "currency_for_specific_gear",
+          "raid_essence": "upgrade_material_for_equipment",
+          "mastery_points": "permanent_character_improvements",
+          "prestige_currency": "exclusive_cosmetics_and_mounts"
+        }
+      }
+    },
+    "group_mechanics": {
+      "role_requirements": {
+        "tank": {
+          "min_required": 1,
+          "max_recommended": 3,
+          "responsibilities": ["threat_management", "positioning", "damage_mitigation"],
+          "scaling_with_group_size": true
+        },
+        "healer": {
+          "min_required": 1,
+          "max_recommended": 8,
+          "responsibilities": ["health_restoration", "dispelling", "buff_management"],
+          "healing_per_player_ratio": 0.2
+        },
+        "dps": {
+          "min_required": 3,
+          "max_recommended": 30,
+          "responsibilities": ["damage_dealing", "mechanics_execution", "add_control"],
+          "types": ["melee", "ranged", "magic"]
+        },
+        "support": {
+          "min_required": 0,
+          "max_recommended": 5,
+          "responsibilities": ["buffs", "debuffs", "utility", "coordination"],
+          "optional_but_beneficial": true
+        }
+      },
+      "communication_systems": {
+        "voice_chat_integration": true,
+        "raid_markers": ["skull", "cross", "square", "diamond", "triangle", "moon", "star", "circle"],
+        "quick_commands": ["attack", "retreat", "help", "ready", "wait"],
+        "automatic_callouts": ["boss_abilities", "mechanic_warnings", "phase_changes"]
+      },
+      "coordination_tools": {
+        "ready_check": "verify_all_players_prepared",
+        "role_assignments": "automatic_and_manual_role_assignment",
+        "strategy_sharing": "save_and_load_raid_strategies",
+        "performance_tracking": "damage_healing_threat_meters"
+      }
+    }
+  },
+  "instancing_system": {
+    "instance_creation": {
+      "personal_instances": "solo_or_small_group_content",
+      "group_instances": "parties_up_to_5_players",
+      "raid_instances": "large_groups_10_to_40_players",
+      "public_instances": "open_world_events",
+      "cross_server_instances": "players_from_different_servers"
+    },
+    "difficulty_scaling": {
+      "static_scaling": "fixed_difficulty_regardless_of_group",
+      "dynamic_scaling": "adjusts_based_on_group_composition",
+      "player_count_scaling": "scales_with_number_of_participants",
+      "average_level_scaling": "scales_with_group_average_level"
+    },
+    "persistence": {
+      "instance_lifetime": 4,
+      "save_progress": true,
+      "resume_support": true,
+      "reset_schedules": {
+        "daily_reset": "normal_dungeons",
+        "weekly_reset": "raid_instances",
+        "monthly_reset": "epic_content"
+      }
+    }
+  },
+  "progression_systems": {
+    "raid_achievements": {
+      "exploration": ["discover_all_rooms", "find_all_secrets"],
+      "combat": ["defeat_without_deaths", "speed_kills", "perfect_execution"],
+      "collection": ["collect_all_lore_items", "obtain_rare_drops"],
+      "mastery": ["complete_on_highest_difficulty", "solo_group_content"]
+    },
+    "raid_currencies": {
+      "valor_points": {
+        "source": "completing_any_raid_content",
+        "uses": ["upgrade_equipment", "purchase_consumables"],
+        "weekly_cap": 1000
+      },
+      "conquest_tokens": {
+        "source": "high_difficulty_raids_only",
+        "uses": ["legendary_equipment", "rare_upgrades"],
+        "no_cap": true
+      },
+      "prestige_essence": {
+        "source": "perfect_raid_completions",
+        "uses": ["mythic_upgrades", "cosmetic_rewards"],
+        "very_limited": true
+      }
+    },
+    "mastery_system": {
+      "raid_mastery_levels": {
+        "novice": "completed_first_raid",
+        "experienced": "completed_10_different_raids",
+        "veteran": "completed_25_raids_on_expert",
+        "master": "completed_50_raids_on_master",
+        "legend": "completed_100_raids_including_mythic"
+      },
+      "mastery_benefits": {
+        "increased_drop_rates": true,
+        "exclusive_access": "special_raid_versions",
+        "cosmetic_rewards": "titles_mounts_effects",
+        "mechanical_benefits": "reduced_cooldowns_increased_rewards"
+      }
+    }
+  }
+}

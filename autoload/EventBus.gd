@@ -64,6 +64,24 @@ signal ai_boss_phase_changed(boss, phase)
 signal ai_global_alert_triggered(level)
 signal ai_faction_relations_changed(faction_a, faction_b, relation)
 
+# Mount system events
+signal mount_summoned(entity: Entity, mount: Mount)
+signal mount_dismissed(entity: Entity, mount: Mount)
+signal mount_stamina_changed(entity: Entity, current: float, maximum: float)
+signal mount_skill_used(entity: Entity, skill_id: String)
+signal mount_unlocked(entity: Entity, mount: Mount)
+signal mount_dash_performed(entity: Entity, mount: Mount)
+signal mount_speed_changed(entity: Entity, old_speed: float, new_speed: float)
+
+# Pet system events
+signal pet_summoned(entity: Entity, pet: Pet)
+signal pet_dismissed(entity: Entity, pet: Pet)
+signal pet_level_up(entity: Entity, pet: Pet, new_level: int)
+signal pet_xp_gained(entity: Entity, pet: Pet, xp_amount: int)
+signal pet_unlocked(entity: Entity, pet: Pet)
+signal pet_ability_used(entity: Entity, pet: Pet, ability_id: String)
+signal pet_died(entity: Entity, pet: Pet)
+
 # Network events (for future multiplayer)
 signal player_connected(player_id)
 signal player_disconnected(player_id)

@@ -1,0 +1,423 @@
+{
+  "pets": [
+    {
+      "id": "wolf_companion",
+      "name": "Lobo Companheiro",
+      "type": "ataque_leve",
+      "rarity": "comum",
+      "description": "Um lobo leal que ataca inimigos próximos",
+      "iconPath": "res://ui/icons/pets/wolf_companion.png",
+      "modelPath": "res://models/pets/wolf_companion.tscn",
+      "unlocked": true,
+      "levelRequired": 1,
+      "maxLevel": 20,
+      "baseStats": {
+        "health": 80,
+        "attack": 15,
+        "defense": 10,
+        "speed": 120
+      },
+      "growthStats": {
+        "health": 8,
+        "attack": 2,
+        "defense": 1,
+        "speed": 3
+      },
+      "abilities": {
+        "passive": "pack_loyalty",
+        "active": "bite_attack",
+        "special": "howl_buff"
+      },
+      "followDistance": {
+        "min": 50,
+        "max": 150,
+        "preferred": 80
+      },
+      "aiConfig": {
+        "aggression": 0.7,
+        "loyalty": 0.9,
+        "independence": 0.3
+      }
+    },
+    {
+      "id": "healing_fairy",
+      "name": "Fada Curadora",
+      "type": "suporte",
+      "rarity": "incomum",
+      "description": "Uma fada mágica que cura o jogador automaticamente",
+      "iconPath": "res://ui/icons/pets/healing_fairy.png",
+      "modelPath": "res://models/pets/healing_fairy.tscn",
+      "unlocked": false,
+      "levelRequired": 5,
+      "maxLevel": 25,
+      "baseStats": {
+        "health": 40,
+        "mana": 100,
+        "healPower": 20,
+        "speed": 200
+      },
+      "growthStats": {
+        "health": 3,
+        "mana": 8,
+        "healPower": 3,
+        "speed": 2
+      },
+      "abilities": {
+        "passive": "auto_heal",
+        "active": "healing_burst",
+        "special": "mana_restore"
+      },
+      "followDistance": {
+        "min": 30,
+        "max": 100,
+        "preferred": 60
+      },
+      "aiConfig": {
+        "aggression": 0.1,
+        "loyalty": 1.0,
+        "independence": 0.2
+      }
+    },
+    {
+      "id": "treasure_goblin",
+      "name": "Goblin Caçador",
+      "type": "coleta_loot",
+      "rarity": "raro",
+      "description": "Um goblin esperto que coleta itens e moedas automaticamente",
+      "iconPath": "res://ui/icons/pets/treasure_goblin.png",
+      "modelPath": "res://models/pets/treasure_goblin.tscn",
+      "unlocked": false,
+      "levelRequired": 10,
+      "maxLevel": 30,
+      "baseStats": {
+        "health": 60,
+        "speed": 180,
+        "lootRadius": 100,
+        "carryCapacity": 20
+      },
+      "growthStats": {
+        "health": 4,
+        "speed": 4,
+        "lootRadius": 5,
+        "carryCapacity": 2
+      },
+      "abilities": {
+        "passive": "auto_loot",
+        "active": "treasure_sense",
+        "special": "gold_magnet"
+      },
+      "followDistance": {
+        "min": 40,
+        "max": 120,
+        "preferred": 70
+      },
+      "aiConfig": {
+        "aggression": 0.2,
+        "loyalty": 0.8,
+        "independence": 0.6
+      }
+    },
+    {
+      "id": "shadow_spirit",
+      "name": "Espírito Sombrio",
+      "type": "passivo",
+      "rarity": "épico",
+      "description": "Um espírito que fornece buffs permanentes de atributos",
+      "iconPath": "res://ui/icons/pets/shadow_spirit.png",
+      "modelPath": "res://models/pets/shadow_spirit.tscn",
+      "unlocked": false,
+      "levelRequired": 15,
+      "maxLevel": 35,
+      "baseStats": {
+        "health": 100,
+        "buffPower": 10,
+        "speed": 150
+      },
+      "growthStats": {
+        "health": 5,
+        "buffPower": 1,
+        "speed": 2
+      },
+      "abilities": {
+        "passive": "shadow_aura",
+        "active": "darkness_veil",
+        "special": "shadow_step"
+      },
+      "followDistance": {
+        "min": 20,
+        "max": 80,
+        "preferred": 50
+      },
+      "aiConfig": {
+        "aggression": 0.4,
+        "loyalty": 0.9,
+        "independence": 0.5
+      }
+    },
+    {
+      "id": "phoenix_chick",
+      "name": "Filhote de Fênix",
+      "type": "ataque_leve",
+      "rarity": "lendário",
+      "description": "Um jovem fênix com ataques de fogo devastadores",
+      "iconPath": "res://ui/icons/pets/phoenix_chick.png",
+      "modelPath": "res://models/pets/phoenix_chick.tscn",
+      "unlocked": false,
+      "levelRequired": 25,
+      "maxLevel": 50,
+      "baseStats": {
+        "health": 120,
+        "attack": 25,
+        "defense": 8,
+        "speed": 160,
+        "firePower": 20
+      },
+      "growthStats": {
+        "health": 10,
+        "attack": 3,
+        "defense": 1,
+        "speed": 4,
+        "firePower": 2
+      },
+      "abilities": {
+        "passive": "fire_immunity",
+        "active": "flame_breath",
+        "special": "phoenix_rebirth"
+      },
+      "followDistance": {
+        "min": 60,
+        "max": 140,
+        "preferred": 90
+      },
+      "aiConfig": {
+        "aggression": 0.8,
+        "loyalty": 0.9,
+        "independence": 0.4
+      }
+    },
+    {
+      "id": "crystal_golem",
+      "name": "Golem de Cristal",
+      "type": "passivo",
+      "rarity": "mítico",
+      "description": "Um golem cristalino que amplifica magias e fornece proteção",
+      "iconPath": "res://ui/icons/pets/crystal_golem.png",
+      "modelPath": "res://models/pets/crystal_golem.tscn",
+      "unlocked": false,
+      "levelRequired": 35,
+      "maxLevel": 60,
+      "baseStats": {
+        "health": 200,
+        "defense": 30,
+        "manaAmplify": 25,
+        "speed": 80
+      },
+      "growthStats": {
+        "health": 15,
+        "defense": 2,
+        "manaAmplify": 2,
+        "speed": 1
+      },
+      "abilities": {
+        "passive": "crystal_resonance",
+        "active": "mana_shield",
+        "special": "crystal_explosion"
+      },
+      "followDistance": {
+        "min": 80,
+        "max": 200,
+        "preferred": 120
+      },
+      "aiConfig": {
+        "aggression": 0.3,
+        "loyalty": 1.0,
+        "independence": 0.2
+      }
+    }
+  ],
+  "pet_abilities": {
+    "pack_loyalty": {
+      "name": "Lealdade da Matilha",
+      "description": "Aumenta ataque do jogador em 10% quando próximo",
+      "type": "passive_buff",
+      "effect": "player_attack_boost",
+      "value": 0.1,
+      "radius": 100
+    },
+    "bite_attack": {
+      "name": "Mordida",
+      "description": "Ataca o inimigo mais próximo",
+      "type": "active_attack",
+      "damage": 20,
+      "cooldown": 3.0,
+      "range": 50
+    },
+    "howl_buff": {
+      "name": "Uivo Motivador",
+      "description": "Aumenta velocidade do jogador temporariamente",
+      "type": "temporary_buff",
+      "effect": "player_speed_boost",
+      "value": 0.3,
+      "duration": 10.0,
+      "cooldown": 30.0
+    },
+    "auto_heal": {
+      "name": "Cura Automática",
+      "description": "Cura o jogador quando vida está baixa",
+      "type": "conditional_heal",
+      "healAmount": 15,
+      "triggerThreshold": 0.5,
+      "cooldown": 5.0
+    },
+    "healing_burst": {
+      "name": "Explosão Curativa",
+      "description": "Cura instantânea grande",
+      "type": "instant_heal",
+      "healAmount": 50,
+      "cooldown": 15.0
+    },
+    "mana_restore": {
+      "name": "Restaurar Mana",
+      "description": "Restaura mana do jogador",
+      "type": "mana_heal",
+      "manaAmount": 30,
+      "cooldown": 20.0
+    },
+    "auto_loot": {
+      "name": "Coleta Automática",
+      "description": "Coleta itens próximos automaticamente",
+      "type": "auto_collect",
+      "radius": 80,
+      "interval": 2.0
+    },
+    "treasure_sense": {
+      "name": "Detectar Tesouros",
+      "description": "Revela itens escondidos próximos",
+      "type": "detection",
+      "radius": 150,
+      "duration": 30.0,
+      "cooldown": 60.0
+    },
+    "gold_magnet": {
+      "name": "Ímã de Ouro",
+      "description": "Atrai moedas de longa distância",
+      "type": "attraction",
+      "radius": 200,
+      "duration": 15.0,
+      "cooldown": 45.0
+    },
+    "shadow_aura": {
+      "name": "Aura Sombria",
+      "description": "Aumenta stealth e velocidade crítica",
+      "type": "aura_buff",
+      "effects": {
+        "stealth": 0.2,
+        "critical_rate": 0.15
+      },
+      "radius": 120
+    },
+    "darkness_veil": {
+      "name": "Véu das Trevas",
+      "description": "Torna o jogador temporariamente invisível",
+      "type": "temporary_effect",
+      "effect": "invisibility",
+      "duration": 5.0,
+      "cooldown": 40.0
+    },
+    "shadow_step": {
+      "name": "Passo Sombrio",
+      "description": "Teleporta o jogador para frente",
+      "type": "teleport",
+      "distance": 150,
+      "cooldown": 25.0
+    },
+    "fire_immunity": {
+      "name": "Imunidade ao Fogo",
+      "description": "Jogador fica imune a dano de fogo",
+      "type": "immunity",
+      "element": "fire",
+      "reduction": 1.0
+    },
+    "flame_breath": {
+      "name": "Baforada de Fogo",
+      "description": "Ataque em cone de fogo",
+      "type": "area_attack",
+      "damage": 35,
+      "range": 100,
+      "angle": 60,
+      "cooldown": 8.0
+    },
+    "phoenix_rebirth": {
+      "name": "Renascimento da Fênix",
+      "description": "Revive o jogador com vida parcial",
+      "type": "revival",
+      "healthRestore": 0.5,
+      "cooldown": 300.0
+    },
+    "crystal_resonance": {
+      "name": "Ressonância Cristalina",
+      "description": "Amplifica poder mágico do jogador",
+      "type": "magic_amplify",
+      "multiplier": 1.3,
+      "radius": 100
+    },
+    "mana_shield": {
+      "name": "Escudo de Mana",
+      "description": "Absorve dano usando mana",
+      "type": "damage_shield",
+      "absorption": 0.5,
+      "duration": 20.0,
+      "cooldown": 60.0
+    },
+    "crystal_explosion": {
+      "name": "Explosão Cristalina",
+      "description": "Explosão que atordoa inimigos",
+      "type": "area_stun",
+      "damage": 40,
+      "radius": 120,
+      "stunDuration": 3.0,
+      "cooldown": 45.0
+    }
+  },
+  "pet_types": {
+    "ataque_leve": {
+      "description": "Pets que atacam inimigos automaticamente",
+      "behavior": "aggressive",
+      "primaryRole": "damage"
+    },
+    "suporte": {
+      "description": "Pets que curam e ajudam o jogador",
+      "behavior": "supportive",
+      "primaryRole": "heal"
+    },
+    "coleta_loot": {
+      "description": "Pets que coletam itens automaticamente",
+      "behavior": "collector",
+      "primaryRole": "utility"
+    },
+    "passivo": {
+      "description": "Pets que fornecem buffs permanentes",
+      "behavior": "passive",
+      "primaryRole": "buff"
+    }
+  },
+  "xp_table": [
+    0, 100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700, 
+    3250, 3850, 4500, 5200, 5950, 6750, 7600, 8500, 9450, 10450,
+    11500, 12600, 13750, 14950, 16200, 17500, 18850, 20250, 21700, 23200,
+    24750, 26350, 28000, 29700, 31450, 33250, 35100, 37000, 38950, 40950,
+    43000, 45100, 47250, 49450, 51700, 54000, 56350, 58750, 61200, 63700,
+    66250, 68850, 71500, 74200, 76950, 79750, 82600, 85500, 88450, 91450,
+    94500
+  ],
+  "global_config": {
+    "max_active_pets": 1,
+    "summon_cooldown": 3.0,
+    "follow_update_rate": 0.1,
+    "ai_update_rate": 0.2,
+    "xp_share_rate": 0.3,
+    "pet_death_penalty": 0.1,
+    "auto_dismiss_in_pvp": true,
+    "allow_pet_trading": false
+  }
+}

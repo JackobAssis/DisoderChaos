@@ -1,0 +1,48 @@
+{
+  "enable_pvp_restrictions": true,
+  "global_stamina_modifier": 1.0,
+  "global_speed_modifier": 1.0,
+  "enable_mount_combat": false,
+  "mount_fall_damage_reduction": 0.5,
+  "default_dash_cooldown": 3.0,
+  "stamina_recovery_rate": 1.0,
+  "input_settings": {
+    "mount_toggle_key": "KEY_M",
+    "mount_dash_key": "KEY_SHIFT",
+    "mount_skill_1_key": "KEY_1",
+    "mount_skill_2_key": "KEY_2",
+    "mount_skill_3_key": "KEY_3",
+    "mount_menu_key": "KEY_H"
+  },
+  "ui_settings": {
+    "show_stamina_bar": true,
+    "show_mount_icon": true,
+    "show_skill_buttons": true,
+    "stamina_bar_position": "bottom_left",
+    "mount_icon_size": 32,
+    "skill_button_size": 40
+  },
+  "gameplay_settings": {
+    "auto_dismiss_on_combat": false,
+    "auto_dismiss_on_damage": true,
+    "auto_dismiss_on_low_stamina": true,
+    "mount_speed_affects_fall_damage": true,
+    "allow_mount_in_dungeons": true,
+    "allow_mount_skills_in_pvp": false
+  },
+  "balance_settings": {
+    "stamina_drain_multiplier_running": 1.0,
+    "stamina_drain_multiplier_combat": 2.0,
+    "stamina_recovery_multiplier_idle": 1.0,
+    "stamina_recovery_multiplier_walking": 0.5,
+    "dash_stamina_cost_multiplier": 1.0,
+    "skill_cooldown_modifier": 1.0
+  },
+  "accessibility_settings": {
+    "colorblind_friendly_ui": false,
+    "high_contrast_mode": false,
+    "large_ui_elements": false,
+    "audio_feedback_enabled": true,
+    "visual_feedback_enabled": true
+  }
+}
