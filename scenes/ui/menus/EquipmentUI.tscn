@@ -1,0 +1,146 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj4k2x7l9m8vp"]
+
+[ext_resource type="Script" path="res://scripts/ui/menus/EquipmentUI.gd" id="1_equipment"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.1, 0.1, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.42, 0.21, 1)
+
+[node name="EquipmentUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_equipment")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -350.0
+offset_right = 500.0
+offset_bottom = 350.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="EquipmentContainer" type="VBoxContainer" parent="MainPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLabel" type="Label" parent="MainPanel/HBoxContainer/EquipmentContainer"]
+layout_mode = 2
+text = "EQUIPAMENTOS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MainPanel/HBoxContainer/EquipmentContainer"]
+layout_mode = 2
+
+[node name="EquipmentGrid" type="GridContainer" parent="MainPanel/HBoxContainer/EquipmentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="HelmetSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="ChestSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="CloakSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="WeaponSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="LegsSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="OffhandSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="Accessory1Slot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="BootsSlot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="Accessory2Slot" type="Panel" parent="MainPanel/HBoxContainer/EquipmentContainer/EquipmentGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+
+[node name="CharacterPreview" type="VBoxContainer" parent="MainPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PreviewLabel" type="Label" parent="MainPanel/HBoxContainer/CharacterPreview"]
+layout_mode = 2
+text = "PREVIEW 3D"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="MainPanel/HBoxContainer/CharacterPreview"]
+layout_mode = 2
+
+[node name="CharacterViewport" type="SubViewport" parent="MainPanel/HBoxContainer/CharacterPreview"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatsContainer" type="VBoxContainer" parent="MainPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatsLabel" type="Label" parent="MainPanel/HBoxContainer/StatsContainer"]
+layout_mode = 2
+text = "ATRIBUTOS"
+horizontal_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="MainPanel/HBoxContainer/StatsContainer"]
+layout_mode = 2
+
+[node name="StatsDisplay" type="RichTextLabel" parent="MainPanel/HBoxContainer/StatsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "ATK: 100
+DEF: 50
+HP: 1000
+MP: 200"
+
+[node name="CloseButton" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+text = "X"

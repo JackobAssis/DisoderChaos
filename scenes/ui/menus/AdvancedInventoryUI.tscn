@@ -1,0 +1,109 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk8u5hl3y8xhw"]
+
+[ext_resource type="Script" path="res://scripts/ui/menus/AdvancedInventoryUI.gd" id="1_inventory"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.1, 0.1, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.83, 1, 1)
+
+[node name="AdvancedInventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_inventory")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="HeaderContainer" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MainPanel/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "INVENTÁRIO"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="MainPanel/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="FilterContainer" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="FilterLabel" type="Label" parent="MainPanel/VBoxContainer/FilterContainer"]
+layout_mode = 2
+text = "Filtro:"
+
+[node name="CategoryFilter" type="OptionButton" parent="MainPanel/VBoxContainer/FilterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SearchLineEdit" type="LineEdit" parent="MainPanel/VBoxContainer/FilterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Buscar item..."
+
+[node name="SortButton" type="Button" parent="MainPanel/VBoxContainer/FilterContainer"]
+layout_mode = 2
+text = "Ordenar"
+
+[node name="InventoryContainer" type="ScrollContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryGrid" type="GridContainer" parent="MainPanel/VBoxContainer/InventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 10
+
+[node name="InfoContainer" type="HBoxContainer" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="WeightLabel" type="Label" parent="MainPanel/VBoxContainer/InfoContainer"]
+layout_mode = 2
+text = "Peso: 0/100"
+
+[node name="HSeparator2" type="HSeparator" parent="MainPanel/VBoxContainer/InfoContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldLabel" type="Label" parent="MainPanel/VBoxContainer/InfoContainer"]
+layout_mode = 2
+text = "Ouro: 0"
