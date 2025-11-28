@@ -27,7 +27,7 @@ enum MountRarity {
 }
 
 @export var id: String = ""
-@export var name: String = ""
+@export var mount_name: String = ""
 @export var type: MountType = MountType.TERRESTRE
 @export var rarity: MountRarity = MountRarity.COMUM
 @export var description: String = ""

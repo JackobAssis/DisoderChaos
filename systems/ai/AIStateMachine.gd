@@ -1,4 +1,18 @@
-﻿extends Node
+﻿extends RefCounted
+class_name AIStateMachine
+
+var states: Dictionary = {}
+var current_state: String = "idle"
+
+static func create_basic_enemy_fsm(entity):
+    var fsm = AIStateMachine.new()
+    fsm.states = {"idle": {}, "pursuit": {"max_pursuit_time": 30.0}}
+    return fsm
+
+func set_state(s: String):
+    if states.has(s):
+        current_state = s
+extends Node
 class_name AIStateMachine
 # AIStateMachine.gd - Finite State Machine for AI behavior
 # Manages state transitions and state-specific behavior

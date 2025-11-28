@@ -871,10 +871,6 @@ func apply_loaded_data(save_data: Dictionary) -> bool:
 		
 		print("[SaveManager] Save data applied successfully")
 		return true
-		
-	except:
-		print("[SaveManager] Error applying save data")
-		return false
 
 func apply_player_data(player_data: Dictionary) -> bool:
 # Apply player data to game state

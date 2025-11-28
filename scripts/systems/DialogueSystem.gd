@@ -820,14 +820,7 @@ func create_placeholder_portrait() -> ImageTexture:
 			print("[DialogueSystem] Tipo de nÃ³ desconhecido: ", node_type)
 			end_dialogue()
 
-func process_text_node(node_data: Dictionary) -> void:
-	var text = node_data.get("text", "...")
-	
-	# Process text with variables
-	text = process_text_variables(text)
-	
-	# Start typing effect
-	start_typing_text(text)
+## Duplicate definition of process_text_node removed (original exists earlier in file)
 	
 	# Set up choices or continue
 	if node_data.has("options"):

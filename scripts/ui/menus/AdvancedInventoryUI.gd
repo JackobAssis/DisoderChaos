@@ -31,7 +31,7 @@ extends Control
 @onready var item_stats: VBoxContainer = $Background/ItemInfoPanel/VBox/StatsContainer
 
 # Sistema de inventÃ¡rio
-var inventory_data: InventorySystem
+var inventory_data
 var slot_size: Vector2 = Vector2(64, 64)
 var grid_size: Vector2i = Vector2i(10, 8)  # 10x8 grid
 var inventory_slots: Array[InventorySlot] = []

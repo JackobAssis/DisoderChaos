@@ -584,19 +584,6 @@ func update_fog_of_war(player_pos: Vector2):
 	if fog_of_war:
 		fog_of_war.queue_redraw()
 
-func _draw_fog_of_war():
-# Draw fog of war overlay
-	if not fog_of_war:
-		return
-	
-	var cell_size = minimap_size / fog_resolution
-	
-	for x in range(fog_resolution):
-		for y in range(fog_resolution):
-			if not fog_grid[x][y]:  # Unexplored
-				var rect = Rect2(Vector2(x, y) * cell_size, cell_size)
-				fog_of_war.draw_rect(rect, fog_color)
-
 func update_icon_positions():
 # Update positions of all icons
 	if not player_node:

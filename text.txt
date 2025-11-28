@@ -1,31 +1,10 @@
 Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
 --- Debug adapter server started on port 6006 ---
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
+  ERROR: res://autoload/GameState.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://autoload/GameState.gd" with error "Parse error".
-  ERROR: Failed to create an autoload, script 'res://autoload/GameState.gd' is not compiling.
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://autoload/DataLoader.gd" with error "Parse error".
   ERROR: Failed to create an autoload, script 'res://autoload/DataLoader.gd' is not compiling.
-  ERROR: res://scripts/autoloads/GameDatabase.gd:160 - Parse Error: The function signature doesn't match the parent. Parent signature is "get_class() -> String".
-  ERROR: res://scripts/autoloads/GameDatabase.gd:160 - Parse Error: The method "get_class()" overrides a method from native class "Object". This won't be called by the engine and may not work as expected. (Warning treated as error.)
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/autoloads/GameDatabase.gd" with error "Parse error".
-  ERROR: Failed to create an autoload, script 'res://scripts/autoloads/GameDatabase.gd' is not compiling.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/ui/game_hud.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: res://scripts/ui/menus/AdvancedInventoryUI.gd:34 - Parse Error: Could not find type "InventorySystem" in the current scope.
   ERROR: res://scripts/ui/menus/AdvancedInventoryUI.gd:161 - Parse Error: Identifier "InventorySystem" not declared in the current scope.
@@ -34,26 +13,7 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: res://scripts/ui/menus/EquipmentUI.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: res://scripts/autoloads/UIManager.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/autoloads/UIManager.gd" with error "Parse error".
-  ERROR: Failed to create an autoload, script 'res://scripts/ui/themes/UIThemeManager.gd' does not inherit from 'Node'.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://scripts/systems/config_manager.gd:0 - Compile Error: Failed to compile depended scripts.
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/config_manager.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/systems/item_system.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/item_system.gd" with error "Parse error".
   WARNING: drivers/vulkan/rendering_device_driver_vulkan.cpp:3222 - The requested V-Sync mode Disabled is not available. Falling back to V-Sync mode Enabled.
@@ -109,58 +69,34 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: res://examples/PetSystemExample.gd:106 - Parse Error: Could not resolve external class member "get_active_pet".
   ERROR: res://examples/PetSystemExample.gd:126 - Parse Error: Could not resolve external class member "get_entity_pets".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://examples/PetSystemExample.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/entities/enemy_base.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/entities/enemy_base.gd" with error "Parse error".
   ERROR: res://scripts/entities/PlayerStats.gd:41 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
   ERROR: res://scripts/entities/EquipmentSystem.gd:48 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
   ERROR: res://scripts/entities/PlayerController.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/entities/PlayerController.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/systems/combat_system.gd:0 - Compile Error: Failed to compile depended scripts.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/entities/player_controller.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/entities/player_controller.gd" with error "Parse error".
   ERROR: res://scripts/save/SaveIntegration.gd:7 - Parse Error: Could not parse global class "SaveManager" from "res://scripts/save/SaveManager.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/save/SaveIntegration.gd" with error "Parse error".
-  ERROR: res://scripts/save/SaveManager.gd:852 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: res://scripts/save/SaveManager.gd:875 - Parse Error: Expected end of statement after expression, found ":" instead.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/save/SaveManager.gd" with error "Parse error".
   ERROR: res://scripts/save/SaveSystemTest.gd:23 - Parse Error: Could not parse global class "SaveManager" from "res://scripts/save/SaveManager.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/save/SaveSystemTest.gd" with error "Parse error".
-  ERROR: res://scripts/systems/DialogueSystem.gd:796 - Parse Error: Function "process_dialogue_node" has the same name as a previously declared function.
+  ERROR: res://scripts/systems/DialogueSystem.gd:823 - Parse Error: Function "process_text_node" has the same name as a previously declared function.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/DialogueSystem.gd" with error "Parse error".
   ERROR: res://scripts/systems/DungeonSystem.gd:33 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/DungeonSystem.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/systems/dungeon_controller.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/dungeon_controller.gd" with error "Parse error".
   ERROR: res://scripts/systems/LootSystem.gd:52 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/LootSystem.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/systems/loot_system.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/loot_system.gd" with error "Parse error".
   ERROR: res://scripts/systems/NPCSystem.gd:75 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
@@ -170,24 +106,14 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/NPCController.gd" with error "Parse error".
   ERROR: res://scripts/systems/PlayerProgression.gd:53 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/PlayerProgression.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/systems/pvp_zone_manager.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/pvp_zone_manager.gd" with error "Parse error".
   ERROR: res://scripts/systems/QuestSystem.gd:57 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
-  ERROR: res://scripts/systems/QuestSystem.gd:265 - Parse Error: Identifier "objectives" not declared in the current scope.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/QuestSystem.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/systems/quest_system.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/quest_system.gd" with error "Parse error".
-  ERROR: res://scripts/ui/hud/GameHUD.gd:1 - Parse Error: Class "GameHUD" hides a global script class.
   ERROR: res://scripts/ui/hud/GameHUD.gd:33 - Parse Error: Could not find type "Buff" in the current scope.
   ERROR: res://scripts/ui/hud/GameHUD.gd:34 - Parse Error: Could not find type "Debuff" in the current scope.
   ERROR: res://scripts/ui/hud/GameHUD.gd:190 - Parse Error: Could not find type "Buff" in the current scope.
@@ -204,16 +130,8 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud/MainHUD.gd" with error "Parse error".
   ERROR: res://scripts/ui/hud/Minimap.gd:587 - Parse Error: Function "_draw_fog_of_war" has the same name as a previously declared function.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud/Minimap.gd" with error "Parse error".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
   ERROR: res://systems/raids/RaidSystem.gd:30 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/ui/menus/BossFightUI.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/BossFightUI.gd" with error "Parse error".
   ERROR: res://scripts/ui/menus/CraftingUI.gd:54 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
@@ -222,18 +140,8 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: res://scripts/ui/menus/DialogueUI.gd:50 - Parse Error: Could not parse global class "DialogueSystem" from "res://scripts/systems/DialogueSystem.gd".
   ERROR: res://scripts/ui/menus/DialogueUI.gd:51 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/DialogueUI.gd" with error "Parse error".
-  ERROR: res://scripts/ui/menus/InventoryUI.gd:762 - Parse Error: Expected indented block after class declaration.
+  ERROR: res://scripts/ui/menus/InventoryUI.gd:778 - Parse Error: Variable "slot_normal" has the same name as a previously declared variable.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/InventoryUI.gd" with error "Parse error".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://scripts/ui/menus/MainMenu.gd:0 - Compile Error: Failed to compile depended scripts.
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/MainMenu.gd" with error "Parse error".
   ERROR: res://scripts/ui/menus/QuestJournal.gd:47 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/QuestJournal.gd" with error "Parse error".
   ERROR: res://scripts/ui/menus/ShopUI.gd:52 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
@@ -243,62 +151,16 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/ShopUI.gd" with error "Parse error".
   ERROR: res://scripts/ui/menus/SkillTreeUI.gd:48 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/SkillTreeUI.gd" with error "Parse error".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/ui/hud_controller.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud_controller.gd" with error "Parse error".
-  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:610 - Parse Error: Expected statement, found "else" instead.
   ERROR: res://scripts/ui/main_menu.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/main_menu.gd" with error "Parse error".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://scripts/ui/menu_settings.gd:0 - Compile Error: Failed to compile depended scripts.
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menu_settings.gd" with error "Parse error".
   ERROR: res://scripts/ui/UIManager.gd:721 - Parse Error: Function "close_all_menus" has the same name as a previously declared function.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/UIManager.gd" with error "Parse error".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://scripts/ui/xp_bar.gd:0 - Compile Error: Failed to compile depended scripts.
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/xp_bar.gd" with error "Parse error".
   ERROR: res://scripts/utils/game_utils.gd:116 - Parse Error: Expected expression after "==" operator.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/utils/game_utils.gd" with error "Parse error".
-  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
-  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
-  ERROR: res://scripts/world/world_test.gd:0 - Compile Error: Failed to compile depended scripts.
-  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/world/world_test.gd" with error "Parse error".
   ERROR: res://systems/ai/AIBehaviors.gd:26 - Parse Error: Identifier "AISelector" not declared in the current scope.
   ERROR: res://systems/ai/AIBehaviors.gd:29 - Parse Error: Identifier "AISequence" not declared in the current scope.
   ERROR: res://systems/ai/AIBehaviors.gd:30 - Parse Error: Identifier "AICondition" not declared in the current scope.
@@ -359,7 +221,7 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: res://systems/ai/AIBehaviors.gd:521 - Parse Error: Identifier "AIAction" not declared in the current scope.
   ERROR: res://systems/ai/AIBehaviors.gd:532 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIBehaviors.gd" with error "Parse error".
-  ERROR: res://systems/ai/AIBehaviorTree.gd:64 - Parse Error: Expected indented block after class declaration.
+  ERROR: res://systems/ai/AIBehaviorTree.gd:89 - Parse Error: Function "reset" has the same name as a previously declared function.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIBehaviorTree.gd" with error "Parse error".
   ERROR: res://systems/ai/AIController.gd:49 - Parse Error: Could not parse global class "AIBehaviorTree" from "res://systems/ai/AIBehaviorTree.gd".
   ERROR: res://systems/ai/AIController.gd:50 - Parse Error: Could not parse global class "AIStateMachine" from "res://systems/ai/AIStateMachine.gd".
@@ -474,7 +336,7 @@ Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzu
   ERROR: res://systems/ai/BossAI.gd:436 - Parse Error: Function "face_target()" not found in base self.
   ERROR: res://systems/ai/AIManager.gd:0 - Compile Error: Failed to compile depended scripts.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIManager.gd" with error "Parse error".
-  ERROR: res://systems/ai/AIStateMachine.gd:124 - Parse Error: Expected indented block after class declaration.
+  ERROR: res://systems/ai/AIStateMachine.gd:137 - Parse Error: Function "add_transition" has the same name as a previously declared function.
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIStateMachine.gd" with error "Parse error".
   ERROR: res://systems/classes/AdvancedClassSystem.gd:20 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
   ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/classes/AdvancedClassSystem.gd" with error "Parse error".

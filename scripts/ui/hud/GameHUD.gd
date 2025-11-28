@@ -30,8 +30,8 @@ var day_duration: float = 1440.0  # 24 horas em minutos
 
 # Cache de referÃªncias para performance
 var player_stats: PlayerStats
-var current_buffs: Array[Buff] = []
-var current_debuffs: Array[Debuff] = []
+var current_buffs: Array = []
+var current_debuffs: Array = []
 
 signal hotbar_slot_used(slot_index: int)
 signal chat_message_sent(message: String)
@@ -187,22 +187,22 @@ func animate_bar_change(bar: ProgressBar):
 	tween.tween_property(bar, "modulate", Color.WHITE * 1.5, 0.1)
 	tween.tween_property(bar, "modulate", Color.WHITE, 0.1)
 
-func _on_buff_added(buff: Buff):
+func _on_buff_added(buff):
 # Adiciona Ã­cone de buff
 	current_buffs.append(buff)
 	update_buffs_display()
 
-func _on_buff_removed(buff: Buff):
+func _on_buff_removed(buff):
 # Remove Ã­cone de buff
 	current_buffs.erase(buff)
 	update_buffs_display()
 
-func _on_debuff_added(debuff: Debuff):
+func _on_debuff_added(debuff):
 # Adiciona Ã­cone de debuff
 	current_debuffs.append(debuff)
 	update_debuffs_display()
 
-func _on_debuff_removed(debuff: Debuff):
+func _on_debuff_removed(debuff):
 # Remove Ã­cone de debuff
 	current_debuffs.erase(debuff)
 	update_debuffs_display()

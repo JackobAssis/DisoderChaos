@@ -40,7 +40,7 @@ var filter_rarity: OptionButton
 var neon_green: Color = Color(0.0, 1.0, 0.549, 1.0)
 var dark_bg: Color = Color(0.0, 0.1, 0.05, 0.95)
 var darker_bg: Color = Color(0.0, 0.05, 0.025, 0.98)
-var slot_normal: Color = Color(0.1, 0.15, 0.1, 0.8)
+## Duplicate slot_normal removed (original declared earlier)
 var slot_hover: Color = Color(0.0, 1.0, 0.549, 0.3)
 var slot_selected: Color = Color(0.0, 1.0, 0.549, 0.6)
 

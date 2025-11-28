@@ -272,18 +272,11 @@ func create_dungeon_info():
 	add_child(dungeon_info)
 
 func setup_animations():
-# Setup animation tweens
-	health_tween = Tween.new()
-	add_child(health_tween)
-	
-	stamina_tween = Tween.new()
-	add_child(stamina_tween)
-	
-	xp_tween = Tween.new()
-	add_child(xp_tween)
-	
-	notification_tween = Tween.new()
-	add_child(notification_tween)
+# Setup animation tweens (Godot 4 create_tween pattern)
+	health_tween = create_tween()
+	stamina_tween = create_tween()
+	xp_tween = create_tween()
+	notification_tween = create_tween()
 
 # Update Functions
 func update_health(current: int, maximum: int):

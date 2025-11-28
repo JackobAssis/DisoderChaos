@@ -607,9 +607,6 @@ func debug_validate_all_references():
 	
 	# Add more validation as needed
 	print("[DataLoader] âœ… Cross-reference validation complete")
-	else:
-		push_warning("Dungeon not found: " + dungeon_id)
-		return null
 
 func get_item(item_id: String):
 # Get item data by ID

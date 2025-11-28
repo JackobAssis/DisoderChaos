@@ -1,5 +1,5 @@
 # Sistema de Componente de Montaria - Disorder Chaos
-extends Component
+extends Node
 class_name MountComponent
 
 ## Componente ECS para gerenciar montarias de uma entidade
@@ -17,16 +17,14 @@ signal mount_dismissed(mount: Mount)
 var mount_cooldown_timer: float = 0.0
 var is_mount_input_enabled: bool = true
 
+var entity: Node
+
 func _ready():
-	super._ready()
-	component_name = "MountComponent"
+	entity = get_parent()
 
 func _process(delta):
-	# Atualizar cooldown
 	if mount_cooldown_timer > 0:
 		mount_cooldown_timer -= delta
-	
-	# Atualizar montaria atual
 	if current_mount and current_mount.is_mounted:
 		current_mount.update_mount(delta)
 
@@ -86,7 +84,7 @@ func summon_mount_direct(mount: Mount) -> bool:
 		return false
 	
 	if not mount.can_be_summoned(entity):
-		print("Cannot summon mount: ", mount.name)
+		print("Cannot summon mount: ", mount.mount_name)
 		return false
 	
 	# Dispensar montaria atual se houver
@@ -105,7 +103,7 @@ func summon_mount_direct(mount: Mount) -> bool:
 		# Conectar eventos da entidade
 		_connect_entity_events()
 		
-		print("Mount summoned: ", mount.name)
+		print("Mount summoned: ", mount.mount_name)
 		return true
 	
 	return false

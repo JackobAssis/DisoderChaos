@@ -20,22 +20,18 @@ signal active_pet_changed(old_pet: Pet, new_pet: Pet)
 var summon_cooldown_timer: float = 0.0
 var last_xp_share_time: float = 0.0
 
+var entity: Node
+
 func _ready():
-	super._ready()
-	component_name = "PetComponent"
+	entity = get_parent()
 	
 	# Conectar sinais do jogador para compartilhamento de XP
 	if entity.has_signal("xp_gained"):
 		entity.xp_gained.connect(_on_owner_xp_gained)
 
 func _process(delta):
-	super._process(delta)
-	
-	# Atualizar cooldown
 	if summon_cooldown_timer > 0:
 		summon_cooldown_timer -= delta
-	
-	# Atualizar pet ativo
 	if active_pet and active_pet.is_active:
 		active_pet.update_pet(delta)
 

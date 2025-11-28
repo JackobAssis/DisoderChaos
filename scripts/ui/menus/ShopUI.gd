@@ -31,7 +31,7 @@ var total_price_label: Label
 
 # Buyback system
 var buyback_panel: Panel
-var buyback_items_container: VBoxContainer
+var buyback_items_container: HBoxContainer
 
 # Current state
 var current_shop_data: Dictionary = {}
@@ -50,8 +50,8 @@ var gold_color: Color = Color(1.0, 0.84, 0.0, 1.0)
 @onready var game_state: GameState = get_node("/root/GameState")
 @onready var event_bus: EventBus = get_node("/root/EventBus")
 @onready var ui_manager: UIManager
-var inventory_system: InventorySystem
-var economy_system: EconomySystem
+var inventory_system
+var economy_system
 
 func _ready():
 	setup_shop_ui()

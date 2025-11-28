@@ -95,7 +95,7 @@ func get_name() -> String:
 	return name
 
 # Composite nodes
-class_name AISelector
+## Removed class_name (global stubs exist)
 extends AINode
 # Executes children in order until one succeeds
 
@@ -122,7 +122,7 @@ func reset():
 	current_child_index = 0
 	super.reset()
 
-class_name AISequence
+## Removed class_name (global stubs exist)
 extends AINode
 # Executes children in order, all must succeed
 
@@ -149,7 +149,7 @@ func reset():
 	current_child_index = 0
 	super.reset()
 
-class_name AIParallel
+## Removed class_name (global stubs exist)
 extends AINode
 # Executes all children simultaneously
 
@@ -190,7 +190,7 @@ func reset():
 	super.reset()
 
 # Decorator nodes
-class_name AIInverter
+## Removed class_name (global stubs exist or not required)
 extends AINode
 # Inverts the result of its child
 
@@ -208,7 +208,7 @@ func execute(delta: float) -> BehaviorResult:
 		BehaviorResult.RUNNING:
 			return BehaviorResult.RUNNING
 
-class_name AIRepeater
+## Removed class_name (global stubs exist or not required)
 extends AINode
 # Repeats its child a specified number of times
 
@@ -244,7 +244,7 @@ func reset():
 	current_repetition = 0
 	super.reset()
 
-class_name AITimer
+## Removed class_name (global stubs exist or not required)
 extends AINode
 # Runs child for a specified duration
 
@@ -279,7 +279,7 @@ func reset():
 	super.reset()
 
 # Leaf nodes
-class_name AICondition
+## Removed class_name (global stubs exist)
 extends AINode
 # Checks a condition
 
@@ -295,7 +295,7 @@ func execute(delta: float) -> BehaviorResult:
 	else:
 		return BehaviorResult.FAILURE
 
-class_name AIAction
+## Removed class_name (global stubs exist)
 extends AINode
 # Executes an action
 
@@ -337,7 +337,7 @@ func reset():
 	action_state = "idle"
 	super.reset()
 
-class_name AIWait
+## Removed class_name (global stubs exist or not required)
 extends AINode
 # Waits for a specified duration
 

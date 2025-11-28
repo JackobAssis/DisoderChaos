@@ -648,14 +648,7 @@ func close_top_ui():
 		elif top_ui == shop_ui:
 			close_shop()
 
-func close_all_menus():
-# Close all open menus
-	close_inventory()
-	close_quest_journal()
-	close_pause_menu()
-	close_crafting()
-	close_skill_tree()
-	close_shop()
+## Removed duplicate close_all_menus (detailed version kept later)
 
 # Event Handlers
 func _on_dialogue_show(dialogue_data: Dictionary):

@@ -26,6 +26,8 @@ UIManager="*res://scripts/autoloads/UIManager.gd"
 UIThemeManager="*res://scripts/ui/themes/UIThemeManager.gd"
 ConfigManager="*res://scripts/systems/config_manager.gd"
 ItemSystem="*res://scripts/systems/item_system.gd"
+InventorySystem="*res://scripts/systems/InventorySystem.gd"
+EconomySystem="*res://scripts/systems/EconomySystem.gd"
 
 [display]
 
