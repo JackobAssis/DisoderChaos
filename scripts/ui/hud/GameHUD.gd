@@ -1,4 +1,4 @@
-﻿class_name GameHUD
+﻿class_name GameHUDScript
 extends Control
 
 ## HUD Principal do jogo Disorder Chaos

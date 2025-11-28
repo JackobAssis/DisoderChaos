@@ -157,7 +157,7 @@ func get_mob(mob_id: String) -> Dictionary:
 # Retorna dados de um mob
 	return mobs.get(mob_id, {})
 
-func get_class(class_id: String) -> Dictionary:
+func get_character_class(class_id: String) -> Dictionary:
 # Retorna dados de uma classe
 	return classes.get(class_id, {})
 

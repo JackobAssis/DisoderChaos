@@ -793,11 +793,7 @@ func create_placeholder_portrait() -> ImageTexture:
 	texture.set_image(image)
 	return texture
 
-func process_dialogue_node(node_id: String) -> void:
-	if not current_tree.has("nodes") or not current_tree.nodes.has(node_id):
-		print("[DialogueSystem] ERRO: NÃ³ de diÃ¡logo nÃ£o encontrado: ", node_id)
-		end_dialogue()
-		return
+# Função process_dialogue_node duplicada removida - versão correta na linha 257
 	
 	var node_data = current_tree.nodes[node_id]
 	var node_type = node_data.get("type", "text")

@@ -759,14 +759,12 @@ func debug_populate_test_items():
 
 # InventorySlot Class Definition (removido class_name para evitar erro)
 # Use a classe separada em res://scripts/ui/inventory/InventorySlot.gd
-class InnerInventorySlot:
-extends Control
-
-signal slot_clicked(slot: InventorySlot)
-signal slot_hovered(slot: InventorySlot)
-signal slot_unhovered(slot: InventorySlot)
-signal drag_started(slot: InventorySlot)
-signal drag_ended(slot: InventorySlot, target: InventorySlot)
+class InnerInventorySlot extends Control:
+	signal slot_clicked(slot: InventorySlot)
+	signal slot_hovered(slot: InventorySlot)
+	signal slot_unhovered(slot: InventorySlot)
+	signal drag_started(slot: InventorySlot)
+	signal drag_ended(slot: InventorySlot, target: InventorySlot)
 
 var slot_index: int = 0
 var item_data: Dictionary = {}

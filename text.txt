@@ -1,0 +1,655 @@
+Godot Engine v4.5.1.stable.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://autoload/GameState.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://autoload/GameState.gd' is not compiling.
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://autoload/DataLoader.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://autoload/DataLoader.gd' is not compiling.
+  ERROR: res://scripts/autoloads/GameDatabase.gd:160 - Parse Error: The function signature doesn't match the parent. Parent signature is "get_class() -> String".
+  ERROR: res://scripts/autoloads/GameDatabase.gd:160 - Parse Error: The method "get_class()" overrides a method from native class "Object". This won't be called by the engine and may not work as expected. (Warning treated as error.)
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/autoloads/GameDatabase.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://scripts/autoloads/GameDatabase.gd' is not compiling.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/ui/game_hud.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/ui/menus/AdvancedInventoryUI.gd:34 - Parse Error: Could not find type "InventorySystem" in the current scope.
+  ERROR: res://scripts/ui/menus/AdvancedInventoryUI.gd:161 - Parse Error: Identifier "InventorySystem" not declared in the current scope.
+  ERROR: res://scripts/entities/EquipmentSystem.gd:48 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://scripts/entities/PlayerStats.gd:41 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://scripts/ui/menus/EquipmentUI.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://scripts/autoloads/UIManager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/autoloads/UIManager.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://scripts/ui/themes/UIThemeManager.gd' does not inherit from 'Node'.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/systems/config_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/config_manager.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/systems/item_system.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/item_system.gd" with error "Parse error".
+  WARNING: drivers/vulkan/rendering_device_driver_vulkan.cpp:3222 - The requested V-Sync mode Disabled is not available. Falling back to V-Sync mode Enabled.
+  ERROR: res://ui/mounts/MountUI.gd:20 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/mounts/MountUI.gd:21 - Parse Error: Could not parse global class "MountComponent" from "res://systems/mounts/MountComponent.gd".
+  ERROR: res://ui/mounts/MountUI.gd:57 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/mounts/MountUI.gd:266 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/mounts/MountUI.gd:271 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/mounts/MountUI.gd:276 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/mounts/MountUI.gd:294 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/mounts/MountUI.gd:299 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://ui/mounts/MountUI.gd" with error "Parse error".
+  ERROR: res://examples/MountSystemExample.gd:8 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/MountSystemExample.gd:8 - Parse Error: Preload file "res://entities/Player.tscn" does not exist.
+  ERROR: res://examples/MountSystemExample.gd:158 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/MountSystemExample.gd:163 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/MountSystemExample.gd:168 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/MountSystemExample.gd:174 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/MountSystemExample.gd:22 - Parse Error: Could not resolve external class member "register_entity".
+  ERROR: res://examples/MountSystemExample.gd:30 - Parse Error: Could not resolve class "MountComponent", because of a parser error.
+  ERROR: res://examples/MountSystemExample.gd:45 - Parse Error: Could not resolve external class member "unlock_mount".
+  ERROR: res://examples/MountSystemExample.gd:50 - Parse Error: Could not resolve external class member "summon_mount".
+  ERROR: res://examples/MountSystemExample.gd:55 - Parse Error: Could not resolve external class member "is_entity_mounted".
+  ERROR: res://examples/MountSystemExample.gd:60 - Parse Error: Could not resolve external class member "mount_dash".
+  ERROR: res://examples/MountSystemExample.gd:65 - Parse Error: Could not resolve external class member "dismiss_mount".
+  ERROR: res://examples/MountSystemExample.gd:70 - Parse Error: Could not resolve external class member "toggle_mount".
+  ERROR: res://examples/MountSystemExample.gd:85 - Parse Error: Could not resolve external class member "use_mount_skill".
+  ERROR: res://examples/MountSystemExample.gd:109 - Parse Error: Could not resolve external class member "get_current_mount".
+  ERROR: res://examples/MountSystemExample.gd:121 - Parse Error: Could not resolve external class member "get_entity_mounts".
+  ERROR: res://examples/MountSystemExample.gd:160 - Parse Error: Could not resolve external class member "name".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://examples/MountSystemExample.gd" with error "Parse error".
+  ERROR: res://ui/pets/PetUI.gd:29 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/pets/PetUI.gd:63 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/pets/PetUI.gd:331 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/pets/PetUI.gd:337 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/pets/PetUI.gd:343 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://ui/pets/PetUI.gd:349 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://ui/pets/PetUI.gd" with error "Parse error".
+  ERROR: res://examples/PetSystemExample.gd:8 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/PetSystemExample.gd:8 - Parse Error: Preload file "res://entities/Player.tscn" does not exist.
+  ERROR: res://examples/PetSystemExample.gd:165 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/PetSystemExample.gd:170 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/PetSystemExample.gd:175 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/PetSystemExample.gd:180 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://examples/PetSystemExample.gd:22 - Parse Error: Could not resolve external class member "register_entity".
+  ERROR: res://examples/PetSystemExample.gd:46 - Parse Error: Could not resolve external class member "unlock_pet".
+  ERROR: res://examples/PetSystemExample.gd:51 - Parse Error: Could not resolve external class member "summon_pet".
+  ERROR: res://examples/PetSystemExample.gd:56 - Parse Error: Could not resolve external class member "entity_has_active_pet".
+  ERROR: res://examples/PetSystemExample.gd:61 - Parse Error: Could not resolve external class member "give_pet_xp".
+  ERROR: res://examples/PetSystemExample.gd:66 - Parse Error: Could not resolve external class member "use_pet_ability".
+  ERROR: res://examples/PetSystemExample.gd:71 - Parse Error: Could not resolve external class member "dismiss_pet".
+  ERROR: res://examples/PetSystemExample.gd:81 - Parse Error: Could not resolve external class member "toggle_pet".
+  ERROR: res://examples/PetSystemExample.gd:106 - Parse Error: Could not resolve external class member "get_active_pet".
+  ERROR: res://examples/PetSystemExample.gd:126 - Parse Error: Could not resolve external class member "get_entity_pets".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://examples/PetSystemExample.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/entities/enemy_base.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/entities/enemy_base.gd" with error "Parse error".
+  ERROR: res://scripts/entities/PlayerStats.gd:41 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://scripts/entities/EquipmentSystem.gd:48 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/entities/PlayerController.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/entities/PlayerController.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/systems/combat_system.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/entities/player_controller.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/entities/player_controller.gd" with error "Parse error".
+  ERROR: res://scripts/save/SaveIntegration.gd:7 - Parse Error: Could not parse global class "SaveManager" from "res://scripts/save/SaveManager.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/save/SaveIntegration.gd" with error "Parse error".
+  ERROR: res://scripts/save/SaveManager.gd:852 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/save/SaveManager.gd" with error "Parse error".
+  ERROR: res://scripts/save/SaveSystemTest.gd:23 - Parse Error: Could not parse global class "SaveManager" from "res://scripts/save/SaveManager.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/save/SaveSystemTest.gd" with error "Parse error".
+  ERROR: res://scripts/systems/DialogueSystem.gd:796 - Parse Error: Function "process_dialogue_node" has the same name as a previously declared function.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/DialogueSystem.gd" with error "Parse error".
+  ERROR: res://scripts/systems/DungeonSystem.gd:33 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/DungeonSystem.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/systems/dungeon_controller.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/dungeon_controller.gd" with error "Parse error".
+  ERROR: res://scripts/systems/LootSystem.gd:52 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/LootSystem.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/systems/loot_system.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/loot_system.gd" with error "Parse error".
+  ERROR: res://scripts/systems/NPCSystem.gd:75 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://scripts/systems/NPCSystem.gd:308 - Parse Error: Could not parse global class "DialogueSystem" from "res://scripts/systems/DialogueSystem.gd".
+  ERROR: res://scripts/systems/NPCSystem.gd:315 - Parse Error: Could not resolve script "res://scripts/systems/DialogueSystem.gd".
+  ERROR: res://scripts/systems/NPCController.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/NPCController.gd" with error "Parse error".
+  ERROR: res://scripts/systems/PlayerProgression.gd:53 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/PlayerProgression.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/systems/pvp_zone_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/pvp_zone_manager.gd" with error "Parse error".
+  ERROR: res://scripts/systems/QuestSystem.gd:57 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://scripts/systems/QuestSystem.gd:265 - Parse Error: Identifier "objectives" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/QuestSystem.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/systems/quest_system.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/systems/quest_system.gd" with error "Parse error".
+  ERROR: res://scripts/ui/hud/GameHUD.gd:1 - Parse Error: Class "GameHUD" hides a global script class.
+  ERROR: res://scripts/ui/hud/GameHUD.gd:33 - Parse Error: Could not find type "Buff" in the current scope.
+  ERROR: res://scripts/ui/hud/GameHUD.gd:34 - Parse Error: Could not find type "Debuff" in the current scope.
+  ERROR: res://scripts/ui/hud/GameHUD.gd:190 - Parse Error: Could not find type "Buff" in the current scope.
+  ERROR: res://scripts/ui/hud/GameHUD.gd:195 - Parse Error: Could not find type "Buff" in the current scope.
+  ERROR: res://scripts/ui/hud/GameHUD.gd:200 - Parse Error: Could not find type "Debuff" in the current scope.
+  ERROR: res://scripts/ui/hud/GameHUD.gd:205 - Parse Error: Could not find type "Debuff" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud/GameHUD.gd" with error "Parse error".
+  ERROR: res://scripts/ui/hud/MainHUD.gd:27 - Parse Error: Could not find type "QuickSlot" in the current scope.
+  ERROR: res://scripts/ui/hud/MainHUD.gd:277 - Parse Error: Invalid argument for "add_child()" function: argument 1 should be "Node" but is "Tween".
+  ERROR: res://scripts/ui/hud/MainHUD.gd:280 - Parse Error: Invalid argument for "add_child()" function: argument 1 should be "Node" but is "Tween".
+  ERROR: res://scripts/ui/hud/MainHUD.gd:283 - Parse Error: Invalid argument for "add_child()" function: argument 1 should be "Node" but is "Tween".
+  ERROR: res://scripts/ui/hud/MainHUD.gd:286 - Parse Error: Invalid argument for "add_child()" function: argument 1 should be "Node" but is "Tween".
+  ERROR: res://scripts/ui/hud/MainHUD.gd:476 - Parse Error: Preload file "res://scripts/ui/hud/BuffIcon.gd" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud/MainHUD.gd" with error "Parse error".
+  ERROR: res://scripts/ui/hud/Minimap.gd:587 - Parse Error: Function "_draw_fog_of_war" has the same name as a previously declared function.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud/Minimap.gd" with error "Parse error".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://systems/raids/RaidSystem.gd:30 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/ui/menus/BossFightUI.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/BossFightUI.gd" with error "Parse error".
+  ERROR: res://scripts/ui/menus/CraftingUI.gd:54 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
+  ERROR: res://scripts/ui/menus/CraftingUI.gd:55 - Parse Error: Could not find type "CraftingSystem" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/CraftingUI.gd" with error "Parse error".
+  ERROR: res://scripts/ui/menus/DialogueUI.gd:50 - Parse Error: Could not parse global class "DialogueSystem" from "res://scripts/systems/DialogueSystem.gd".
+  ERROR: res://scripts/ui/menus/DialogueUI.gd:51 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/DialogueUI.gd" with error "Parse error".
+  ERROR: res://scripts/ui/menus/InventoryUI.gd:762 - Parse Error: Expected indented block after class declaration.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/InventoryUI.gd" with error "Parse error".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/ui/menus/MainMenu.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/MainMenu.gd" with error "Parse error".
+  ERROR: res://scripts/ui/menus/QuestJournal.gd:47 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/QuestJournal.gd" with error "Parse error".
+  ERROR: res://scripts/ui/menus/ShopUI.gd:52 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
+  ERROR: res://scripts/ui/menus/ShopUI.gd:53 - Parse Error: Could not find type "InventorySystem" in the current scope.
+  ERROR: res://scripts/ui/menus/ShopUI.gd:54 - Parse Error: Could not find type "EconomySystem" in the current scope.
+  ERROR: res://scripts/ui/menus/ShopUI.gd:350 - Parse Error: Value of type "HBoxContainer" cannot be assigned to a variable of type "VBoxContainer".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/ShopUI.gd" with error "Parse error".
+  ERROR: res://scripts/ui/menus/SkillTreeUI.gd:48 - Parse Error: Could not parse global class "UIManager" from "res://scripts/ui/UIManager.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menus/SkillTreeUI.gd" with error "Parse error".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://scripts/ui/hud_controller.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/hud_controller.gd" with error "Parse error".
+  ERROR: res://autoload/DataLoader.gd:524 - Parse Error: Function "is_fully_loaded" has the same name as a previously declared variable.
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/ui/main_menu.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/main_menu.gd" with error "Parse error".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/ui/menu_settings.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/menu_settings.gd" with error "Parse error".
+  ERROR: res://scripts/ui/UIManager.gd:721 - Parse Error: Function "close_all_menus" has the same name as a previously declared function.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/UIManager.gd" with error "Parse error".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/ui/xp_bar.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/ui/xp_bar.gd" with error "Parse error".
+  ERROR: res://scripts/utils/game_utils.gd:116 - Parse Error: Expected expression after "==" operator.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/utils/game_utils.gd" with error "Parse error".
+  ERROR: res://autoload/GameState.gd:269 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:271 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:315 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:316 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:320 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:321 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://autoload/GameState.gd:339 - Parse Error: Function "_init_save_manager()" not found in base self.
+  ERROR: res://autoload/GameState.gd:340 - Parse Error: Identifier "save_manager" not declared in the current scope.
+  ERROR: res://scripts/world/world_test.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://scripts/world/world_test.gd" with error "Parse error".
+  ERROR: res://systems/ai/AIBehaviors.gd:26 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:29 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:30 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:32 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:36 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:39 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:40 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:42 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:44 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:48 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:49 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:51 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:58 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:65 - Parse Error: Could not resolve external class member "behavior_tree".
+  ERROR: res://systems/ai/AIBehaviors.gd:69 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:76 - Parse Error: Could not resolve external class member "state_machine".
+  ERROR: res://systems/ai/AIBehaviors.gd:119 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:122 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:123 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:125 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:129 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:130 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:132 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:134 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:138 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:139 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:141 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:145 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:157 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:224 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:227 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:228 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:230 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:234 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:235 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:237 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:241 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:252 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:355 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:358 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:359 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:361 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:365 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:366 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:368 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:372 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:373 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:375 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:379 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:391 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:504 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:507 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:508 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:510 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:514 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:515 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:517 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:521 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:532 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIBehaviors.gd" with error "Parse error".
+  ERROR: res://systems/ai/AIBehaviorTree.gd:64 - Parse Error: Expected indented block after class declaration.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIBehaviorTree.gd" with error "Parse error".
+  ERROR: res://systems/ai/AIController.gd:49 - Parse Error: Could not parse global class "AIBehaviorTree" from "res://systems/ai/AIBehaviorTree.gd".
+  ERROR: res://systems/ai/AIController.gd:50 - Parse Error: Could not parse global class "AIStateMachine" from "res://systems/ai/AIStateMachine.gd".
+  ERROR: res://systems/ai/AIController.gd:51 - Parse Error: Could not find type "AITargetSelector" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:509 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:516 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:523 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:531 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:538 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:139 - Parse Error: Could not resolve class "AIBehaviorTree", because of a parser error.
+  ERROR: res://systems/ai/AIController.gd:150 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIController.gd:161 - Parse Error: Identifier "AITargetSelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:467 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:468 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:469 - Parse Error: Identifier "AIParallel" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:472 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:473 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:474 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:475 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:478 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:479 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:480 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:481 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:482 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:520 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIController.gd" with error "Parse error".
+  ERROR: res://systems/ai/AIController.gd:49 - Parse Error: Could not parse global class "AIBehaviorTree" from "res://systems/ai/AIBehaviorTree.gd".
+  ERROR: res://systems/ai/AIController.gd:50 - Parse Error: Could not parse global class "AIStateMachine" from "res://systems/ai/AIStateMachine.gd".
+  ERROR: res://systems/ai/AIController.gd:51 - Parse Error: Could not find type "AITargetSelector" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:509 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:516 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:523 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:531 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:538 - Parse Error: Could not find type "AINode" in the current scope.
+  ERROR: res://systems/ai/AIController.gd:139 - Parse Error: Could not resolve class "AIBehaviorTree", because of a parser error.
+  ERROR: res://systems/ai/AIController.gd:150 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIController.gd:161 - Parse Error: Identifier "AITargetSelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:467 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:468 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:469 - Parse Error: Identifier "AIParallel" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:472 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:473 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:474 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:475 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:478 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:479 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:480 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:481 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:482 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIController.gd:520 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:26 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:29 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:30 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:32 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:36 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:39 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:40 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:42 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:44 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:48 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:49 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:51 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:58 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:65 - Parse Error: Could not resolve external class member "behavior_tree".
+  ERROR: res://systems/ai/AIBehaviors.gd:69 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:76 - Parse Error: Could not resolve external class member "state_machine".
+  ERROR: res://systems/ai/AIBehaviors.gd:119 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:122 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:123 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:125 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:129 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:130 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:132 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:134 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:138 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:139 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:141 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:145 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:157 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:224 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:227 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:228 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:230 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:234 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:235 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:237 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:241 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:252 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:355 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:358 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:359 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:361 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:365 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:366 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:368 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:372 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:373 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:375 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:379 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:391 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/AIBehaviors.gd:504 - Parse Error: Identifier "AISelector" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:507 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:508 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:510 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:514 - Parse Error: Identifier "AISequence" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:515 - Parse Error: Identifier "AICondition" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:517 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:521 - Parse Error: Identifier "AIAction" not declared in the current scope.
+  ERROR: res://systems/ai/AIBehaviors.gd:532 - Parse Error: Could not resolve class "AIStateMachine", because of a parser error.
+  ERROR: res://systems/ai/BossAI.gd:1 - Parse Error: Could not resolve class "AIController".
+  ERROR: res://systems/ai/BossAI.gd:1 - Parse Error: Could not resolve class "AIController".
+  ERROR: res://systems/ai/BossAI.gd:436 - Parse Error: Function "face_target()" not found in base self.
+  ERROR: res://systems/ai/AIManager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIManager.gd" with error "Parse error".
+  ERROR: res://systems/ai/AIStateMachine.gd:124 - Parse Error: Expected indented block after class declaration.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/ai/AIStateMachine.gd" with error "Parse error".
+  ERROR: res://systems/classes/AdvancedClassSystem.gd:20 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/classes/AdvancedClassSystem.gd" with error "Parse error".
+  ERROR: res://systems/guilds/GuildSystem.gd:28 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/guilds/GuildSystem.gd" with error "Parse error".
+  ERROR: res://systems/mounts/Mount.gd:30 - Parse Error: Member "name" redefined (original in native class 'Node')
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/mounts/Mount.gd" with error "Parse error".
+  ERROR: res://systems/mounts/MountComponent.gd:2 - Parse Error: Could not find base class "Component".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/mounts/MountComponent.gd" with error "Parse error".
+  ERROR: res://systems/mounts/MountInputSystem.gd:63 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:76 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:82 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:105 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:123 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:148 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:162 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:186 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:202 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:207 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:228 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:241 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:268 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:25 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://systems/mounts/MountInputSystem.gd:26 - Parse Error: Identifier "system_name" not declared in the current scope.
+  ERROR: res://systems/mounts/MountInputSystem.gd:36 - Parse Error: Cannot call the parent class' virtual function "_process()" because it hasn't been defined.
+  ERROR: res://systems/mounts/MountInputSystem.gd:329 - Parse Error: Cannot call the parent class' virtual function "_exit_tree()" because it hasn't been defined.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/mounts/MountInputSystem.gd" with error "Parse error".
+  ERROR: res://systems/mounts/MountManager.gd:102 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:123 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:138 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:144 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:150 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:156 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:162 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:168 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:174 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:180 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:186 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:273 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:284 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:291 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:297 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:307 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountManager.gd:114 - Parse Error: Could not resolve external class member "add_entity".
+  ERROR: res://systems/mounts/MountManager.gd:117 - Parse Error: Could not resolve external class member "add_entity".
+  ERROR: res://systems/mounts/MountManager.gd:129 - Parse Error: Could not resolve external class member "remove_entity".
+  ERROR: res://systems/mounts/MountManager.gd:132 - Parse Error: Could not resolve external class member "remove_entity".
+  ERROR: res://systems/mounts/MountManager.gd:140 - Parse Error: Could not resolve external class member "summon_mount_for_entity".
+  ERROR: res://systems/mounts/MountManager.gd:146 - Parse Error: Could not resolve external class member "dismiss_mount_for_entity".
+  ERROR: res://systems/mounts/MountManager.gd:152 - Parse Error: Could not resolve external class member "toggle_mount_for_entity".
+  ERROR: res://systems/mounts/MountManager.gd:158 - Parse Error: Could not resolve external class member "dash_for_entity".
+  ERROR: res://systems/mounts/MountManager.gd:164 - Parse Error: Could not resolve external class member "use_mount_skill_for_entity".
+  ERROR: res://systems/mounts/MountManager.gd:170 - Parse Error: Could not resolve external class member "unlock_mount_for_entity".
+  ERROR: res://systems/mounts/MountManager.gd:176 - Parse Error: Could not resolve external class member "get_entity_mounts".
+  ERROR: res://systems/mounts/MountManager.gd:182 - Parse Error: Could not resolve external class member "get_entity_current_mount".
+  ERROR: res://systems/mounts/MountManager.gd:188 - Parse Error: Could not resolve external class member "is_entity_mounted".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/mounts/MountManager.gd" with error "Parse error".
+  ERROR: res://systems/mounts/MountSystem.gd:41 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:62 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:74 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:98 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:106 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:114 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:122 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:130 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:138 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:159 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:166 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:173 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:180 - Parse Error: Could not parse global class "MountComponent" from "res://systems/mounts/MountComponent.gd".
+  ERROR: res://systems/mounts/MountSystem.gd:187 - Parse Error: Could not parse global class "MountComponent" from "res://systems/mounts/MountComponent.gd".
+  ERROR: res://systems/mounts/MountSystem.gd:194 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:210 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:210 - Parse Error: Could not parse global class "MountComponent" from "res://systems/mounts/MountComponent.gd".
+  ERROR: res://systems/mounts/MountSystem.gd:245 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:251 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:259 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:267 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:273 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:279 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:292 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:325 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:14 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://systems/mounts/MountSystem.gd:15 - Parse Error: Identifier "system_name" not declared in the current scope.
+  ERROR: res://systems/mounts/MountSystem.gd:29 - Parse Error: Cannot call the parent class' virtual function "_process()" because it hasn't been defined.
+  ERROR: res://systems/mounts/MountSystem.gd:252 - Parse Error: Could not resolve external class member "name".
+  ERROR: res://systems/mounts/MountSystem.gd:356 - Parse Error: Cannot call the parent class' virtual function "_exit_tree()" because it hasn't been defined.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/mounts/MountSystem.gd" with error "Parse error".
+  ERROR: res://systems/pets/Pet.gd:63 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/Pet.gd:106 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/Pet.gd:119 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/pets/Pet.gd" with error "Parse error".
+  ERROR: res://systems/pets/PetComponent.gd:24 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://systems/pets/PetComponent.gd:25 - Parse Error: Identifier "component_name" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:28 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:29 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:32 - Parse Error: Cannot call the parent class' virtual function "_process()" because it hasn't been defined.
+  ERROR: res://systems/pets/PetComponent.gd:98 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:98 - Parse Error: Could not resolve external class member "can_be_summoned".
+  ERROR: res://systems/pets/PetComponent.gd:107 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:107 - Parse Error: Could not resolve external class member "summon".
+  ERROR: res://systems/pets/PetComponent.gd:198 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:283 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:286 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:290 - Parse Error: Identifier "entity" not declared in the current scope.
+  ERROR: res://systems/pets/PetComponent.gd:417 - Parse Error: Cannot call the parent class' virtual function "_exit_tree()" because it hasn't been defined.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/pets/PetComponent.gd" with error "Parse error".
+  ERROR: res://systems/pets/PetManager.gd:93 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:111 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:123 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:129 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:135 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:141 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:147 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:153 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:159 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:165 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:171 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:315 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:326 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:333 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:345 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetManager.gd:105 - Parse Error: Could not resolve external class member "add_entity".
+  ERROR: res://systems/pets/PetManager.gd:117 - Parse Error: Could not resolve external class member "remove_entity".
+  ERROR: res://systems/pets/PetManager.gd:125 - Parse Error: Could not resolve external class member "summon_pet_for_entity".
+  ERROR: res://systems/pets/PetManager.gd:131 - Parse Error: Could not resolve external class member "dismiss_pet_for_entity".
+  ERROR: res://systems/pets/PetManager.gd:137 - Parse Error: Could not resolve external class member "toggle_pet_for_entity".
+  ERROR: res://systems/pets/PetManager.gd:143 - Parse Error: Could not resolve external class member "use_pet_ability_for_entity".
+  ERROR: res://systems/pets/PetManager.gd:149 - Parse Error: Could not resolve external class member "unlock_pet_for_entity".
+  ERROR: res://systems/pets/PetManager.gd:156 - Parse Error: Could not resolve external class member "give_pet_xp_to_entity".
+  ERROR: res://systems/pets/PetManager.gd:161 - Parse Error: Could not resolve external class member "get_entity_pets".
+  ERROR: res://systems/pets/PetManager.gd:167 - Parse Error: Could not resolve external class member "get_entity_active_pet".
+  ERROR: res://systems/pets/PetManager.gd:173 - Parse Error: Could not resolve external class member "entity_has_active_pet".
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/pets/PetManager.gd" with error "Parse error".
+  ERROR: res://systems/pets/PetSystem.gd:45 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:66 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:77 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:91 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:99 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:107 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:115 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:123 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:131 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:137 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:144 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:151 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:170 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:190 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:206 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:216 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:227 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:235 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:240 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:255 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:268 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:319 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:337 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:342 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:348 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:351 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:360 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:371 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:429 - Parse Error: Could not find type "Entity" in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:16 - Parse Error: Cannot call the parent class' virtual function "_ready()" because it hasn't been defined.
+  ERROR: res://systems/pets/PetSystem.gd:17 - Parse Error: Identifier "system_name" not declared in the current scope.
+  ERROR: res://systems/pets/PetSystem.gd:33 - Parse Error: Cannot call the parent class' virtual function "_process()" because it hasn't been defined.
+  ERROR: res://systems/pets/PetSystem.gd:346 - Parse Error: Invalid operands "String" and "Pet.PetType" for "+" operator.
+  ERROR: res://systems/pets/PetSystem.gd:453 - Parse Error: Cannot call the parent class' virtual function "_exit_tree()" because it hasn't been defined.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/pets/PetSystem.gd" with error "Parse error".
+  ERROR: res://systems/pvp/PvPSystem.gd:31 - Parse Error: Could not parse singleton "DataLoader" from "res://autoload/DataLoader.gd".
+  ERROR: res://systems/pvp/PvPSystem.gd:686 - Parse Error: Function "_get_player_team()" not found in base self.
+  ERROR: res://systems/pvp/PvPSystem.gd:690 - Parse Error: Function "_calculate_player_performance()" not found in base self.
+  ERROR: res://systems/pvp/PvPSystem.gd:693 - Parse Error: Function "_is_ranked_mode()" not found in base self.
+  ERROR: res://systems/pvp/PvPSystem.gd:697 - Parse Error: Function "_award_match_rewards()" not found in base self.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://systems/pvp/PvPSystem.gd" with error "Parse error".
+  ERROR: res://ui/menus/SaveLoadUI.gd:27 - Parse Error: Preload file "res://ui/components/SaveSlot.tscn" does not exist.
+  ERROR: modules/gdscript/gdscript.cpp:3041 - Failed to load script "res://ui/menus/SaveLoadUI.gd" with error "Parse error".
+--- GDScript language server started on port 6005 ---

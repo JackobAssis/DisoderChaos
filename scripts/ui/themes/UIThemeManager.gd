@@ -1,5 +1,5 @@
 ﻿class_name UIThemeManagerResource
-extends Resource
+extends Node
 
 ## Gerenciador de temas para UI dark fantasy/tecnolÃ³gica
 ## Centraliza todas as cores, fontes e estilos do jogo

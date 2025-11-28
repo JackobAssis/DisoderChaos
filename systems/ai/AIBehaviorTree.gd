@@ -61,13 +61,11 @@ func reset():
 	is_running = false
 
 # Base AINode class (removido class_name para evitar erro)
-class AINode:
-extends RefCounted
-
-var name: String = ""
-var parent = null  # AINode
-var children: Array = []
-var blackboard: Dictionary = {}
+class AINode extends RefCounted:
+	var name: String = ""
+	var parent = null  # AINode
+	var children: Array = []
+	var blackboard: Dictionary = {}
 
 func _init(node_name: String = ""):
 	name = node_name

@@ -121,13 +121,11 @@ func resume():
 	is_active = true
 
 # Base AIState class (removido class_name para evitar erro)
-class AIState:
-extends RefCounted
-
-var state_name: String = ""
-var state_machine = null  # AIStateMachine
-var transitions: Dictionary = {}
-var entry_time: float = 0.0
+class AIState extends RefCounted:
+	var state_name: String = ""
+	var state_machine = null  # AIStateMachine
+	var transitions: Dictionary = {}
+	var entry_time: float = 0.0
 
 func _init(name: String):
 	state_name = name

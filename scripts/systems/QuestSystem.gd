@@ -262,10 +262,10 @@ func update_quest_objective(objective_type: int, target_data: Dictionary, quest_
 		var quest_data = active_quests[q_id].data
 		var objectives = quest_data.get("objectives", [])
 	
-	for objective in objectives:
-		if matches_objective(objective, objective_type, target_data):
-			var objective_id = objective.get("id", "")
-			update_objective_progress(quest_id, objective_id, objective, target_data)
+		for objective in objectives:
+			if matches_objective(objective, objective_type, target_data):
+				var objective_id = objective.get("id", "")
+				update_objective_progress(q_id, objective_id, objective, target_data)
 
 func matches_objective(objective: Dictionary, objective_type: ObjectiveType, target_data: Dictionary) -> bool:
 # Check if target matches objective

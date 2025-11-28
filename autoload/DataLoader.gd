@@ -22,7 +22,7 @@ var lore = {}
 # Data loading status
 var loading_status = {}
 var load_errors = {}
-var is_fully_loaded = false
+var _all_data_loaded = false
 
 # Data file paths with required fields validation
 var data_schemas = {
@@ -125,9 +125,9 @@ func load_all_data():
 			successful_loads += 1
 	
 	# Final status report
-	is_fully_loaded = (successful_loads == total_loads)
+	_all_data_loaded = (successful_loads == total_loads)
 	
-	if is_fully_loaded:
+	if _all_data_loaded:
 		print("[DataLoader] âœ… ALL DATA LOADED SUCCESSFULLY (%d/%d)" % [successful_loads, total_loads])
 		all_data_loaded.emit()
 	else:
@@ -517,6 +517,7 @@ func get_lore_data(lore_type: String):
 		return null
 
 # UTILITY METHODS
+
 func is_data_loaded(data_type: String) -> bool:
 # Check if specific data type is loaded successfully
 	return loading_status.get(data_type, "pending") == "success"

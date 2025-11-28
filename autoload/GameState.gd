@@ -266,7 +266,8 @@ func save_game(slot: int = 0, use_compression: bool = true) -> bool:
 
 func load_game(slot: int = 0) -> bool:
 # Load game state using SaveManager
-	_init_save_manager()
+	var save_manager = load("res://scripts/save/SaveManager.gd").new()
+	add_child(save_manager)
 	
 	var result = save_manager.load_game(slot)
 	if not result.success:
@@ -312,12 +313,14 @@ func load_game(slot: int = 0) -> bool:
 
 func get_save_slots() -> Array:
 # Get information about all save slots
-	_init_save_manager()
+	var save_manager = load("res://scripts/save/SaveManager.gd").new()
+	add_child(save_manager)
 	return save_manager.get_save_slots()
 
 func delete_save(slot: int) -> bool:
 # Delete a save file
-	_init_save_manager()
+	var save_manager = load("res://scripts/save/SaveManager.gd").new()
+	add_child(save_manager)
 	var result = save_manager.delete_save(slot)
 	if result:
 		print("[GameState] Save slot ", slot, " deleted")
@@ -336,7 +339,8 @@ func auto_save() -> bool:
 
 func backup_save(slot: int) -> bool:
 # Create backup of save file
-	_init_save_manager()
+	var save_manager = load("res://scripts/save/SaveManager.gd").new()
+	add_child(save_manager)
 	return save_manager.backup_save_file(slot)
 
 # Signal handlers

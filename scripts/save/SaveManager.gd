@@ -849,14 +849,13 @@ func apply_loaded_data(save_data: Dictionary) -> bool:
 # Apply loaded save data to game systems
 	print("[SaveManager] Applying loaded save data...")
 	
-	try:
-		# Apply player data
-		if not apply_player_data(save_data.get("player_data", {})):
-			return false
-		
-		# Apply world data
-		if not apply_world_data(save_data.get("world_data", {})):
-			return false
+	# Apply player data
+	if not apply_player_data(save_data.get("player_data", {})):
+		return false
+	
+	# Apply world data
+	if not apply_world_data(save_data.get("world_data", {})):
+		return false
 		
 		# Apply progress data
 		if not apply_progress_data(save_data.get("progress_data", {})):
