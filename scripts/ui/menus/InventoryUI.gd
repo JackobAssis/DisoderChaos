@@ -757,8 +757,9 @@ func debug_populate_test_items():
 	for i in range(min(test_items.size(), inventory_slots.size())):
 		inventory_slots[i].set_item(test_items[i])
 
-# InventorySlot Class Definition
-class_name InventorySlot
+# InventorySlot Class Definition (removido class_name para evitar erro)
+# Use a classe separada em res://scripts/ui/inventory/InventorySlot.gd
+class InnerInventorySlot:
 extends Control
 
 signal slot_clicked(slot: InventorySlot)

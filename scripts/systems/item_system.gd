@@ -1,5 +1,5 @@
 ﻿extends Node
-class_name ItemSystem
+class_name ItemSystemScript
 # item_system.gd - Advanced item management and usage system
 
 # Item type handlers

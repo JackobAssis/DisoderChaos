@@ -110,7 +110,7 @@ func _setup_menu_systems(main_scene: Node):
 
 func _setup_popup_system(main_scene: Node):
 	# PopupManager sempre no topo
-	popup_manager = _find_or_create_ui(main_scene, "PopupManager", null)
+	popup_manager = _find_or_create_ui(main_scene, "PopupManager", "")
 	if not popup_manager:
 		popup_manager = preload("res://scripts/ui/popups/PopupManager.gd").new()
 		popup_manager.name = "PopupManager"

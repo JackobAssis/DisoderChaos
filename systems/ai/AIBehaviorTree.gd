@@ -60,12 +60,12 @@ func reset():
 	current_execution_path.clear()
 	is_running = false
 
-# Base AINode class
-class_name AINode
+# Base AINode class (removido class_name para evitar erro)
+class AINode:
 extends RefCounted
 
 var name: String = ""
-var parent: AINode = null
+var parent = null  # AINode
 var children: Array = []
 var blackboard: Dictionary = {}
 

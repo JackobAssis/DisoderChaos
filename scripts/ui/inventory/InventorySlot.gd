@@ -8,7 +8,7 @@ extends Control
 @onready var quantity_label: Label
 @onready var rarity_border: ColorRect
 
-var position: Vector2i
+var slot_position: Vector2i
 var item_data: Dictionary = {}
 var is_dragging: bool = false
 var drag_threshold: float = 5.0

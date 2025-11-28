@@ -552,8 +552,8 @@ func load_dungeon_pois(dungeon_id: String):
 		if poi_id != "":
 			add_poi_icon(poi_id, position, type)
 
-func update_minimap():
-# Update minimap display
+func update_minimap_display():
+# Update minimap display (renomeado para evitar duplicação)
 	if not player_node or not minimap_camera:
 		return
 	

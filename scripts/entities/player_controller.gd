@@ -630,14 +630,7 @@ func equip_armor(item_id: String):
 # - Skill tree progression system
 # - Advanced equipment system with set bonuses
 
-# Item usage system
-func use_quick_item():
-# Use the currently selected quick item
-	if GameState.player_data.has("quick_item"):
-		var item_id = GameState.player_data.quick_item
-		if item_id and item_id != "":
-			use_item_by_id(item_id)
-
+# Item usage system (função use_quick_item já existe na linha 292)
 func use_quick_item_slot(slot: int):
 # Use item from specific quick slot
 	if GameState.player_data.has("quick_items"):

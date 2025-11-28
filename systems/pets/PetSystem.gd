@@ -1,13 +1,13 @@
 ﻿# Sistema de Pets - Disorder Chaos
-extends System
+extends Node
 class_name PetSystem
 
-## Sistema ECS responsÃ¡vel por gerenciar a lÃ³gica dos pets
+## Sistema ECS responsável por gerenciar a lógica dos pets
 ## Processa todas as entidades com PetComponent
 
 signal pet_system_ready()
 
-var pet_entities: Array[Entity] = []
+var pet_entities: Array = []
 var global_pet_cooldown: float = 0.0
 var ai_update_rate: float = 0.2
 var follow_update_rate: float = 0.1

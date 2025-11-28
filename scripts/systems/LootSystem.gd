@@ -1,6 +1,6 @@
 ﻿extends Node
 
-class_name LootSystem
+class_name LootSystemScript
 
 signal loot_generated(loot_table: Array)
 signal item_dropped(item_id: String, position: Vector2)

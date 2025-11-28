@@ -1,5 +1,5 @@
 # Sistema de Montarias - Disorder Chaos
-extends System
+extends Node
 class_name MountSystem
 
 ## Sistema ECS responsável por gerenciar a lógica das montarias
@@ -7,7 +7,7 @@ class_name MountSystem
 
 signal mount_system_ready()
 
-var mount_entities: Array[Entity] = []
+var mount_entities: Array = []
 var global_mount_cooldown: float = 0.0
 
 func _ready():

@@ -1,12 +1,12 @@
 # Sistema de Montarias - Disorder Chaos
-extends Resource
+extends Node
 class_name Mount
 
 ## Classe base para todas as montarias do jogo
 ## Representa uma montaria com suas propriedades, habilidades e mecânicas
 
-signal mount_summoned(mount: Mount)
-signal mount_dismissed(mount: Mount)
+signal mount_summoned(mount)
+signal mount_dismissed(mount)
 signal stamina_changed(current: float, maximum: float)
 signal skill_used(skill_id: String)
 

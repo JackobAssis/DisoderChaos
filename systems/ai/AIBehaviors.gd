@@ -366,7 +366,7 @@ static func setup_elite_behavior_tree(ai: AIController):
 	combo_attack.add_child(AICondition.new("can_combo", 
 		func(): return can_execute_combo(ai)))
 	combo_attack.add_child(AIAction.new("execute_combo", 
-		func(): return execute_combo_attack(ai)))
+		func(): return await execute_combo_attack(ai)))
 	
 	# Area control
 	var area_control = AISequence.new("area_control")

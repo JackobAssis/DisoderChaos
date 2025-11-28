@@ -165,8 +165,9 @@ func format_save_slot_text(save_data: Dictionary) -> String:
 
 func format_play_time(seconds: float) -> String:
 	# Format play time for display
-	var hours = int(seconds / 3600)
-	var minutes = int((seconds % 3600) / 60)
+	var total_seconds = int(seconds)
+	var hours = total_seconds / 3600
+	var minutes = (total_seconds % 3600) / 60
 	
 	if hours > 0:
 		return "%dh %dm" % [hours, minutes]

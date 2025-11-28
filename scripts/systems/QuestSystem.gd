@@ -1,6 +1,6 @@
 ﻿extends Node
 
-class_name QuestSystem
+class_name QuestSystemScript
 
 signal quest_started(quest_id: String)
 signal quest_completed(quest_id: String)
@@ -247,16 +247,20 @@ func consume_quest_requirements(quest_data: Dictionary):
 			var count = item_requirement.get("count", 1)
 			game_state.remove_item_from_inventory(item_id, count)
 
-func update_quest_objective(quest_id: String, objective_type: ObjectiveType, target_data: Dictionary):
+func update_quest_objective(objective_type: int, target_data: Dictionary, quest_id: String = ""):
 # Update quest objective progress
-	if not active_quests.has(quest_id):
-		return
+	# Se quest_id não fornecido, atualizar todas as quests ativas
+	var quests_to_check = [quest_id] if quest_id != "" else active_quests.keys()
 	
-	if not objective_progress.has(quest_id):
-		return
-	
-	var quest_data = active_quests[quest_id].data
-	var objectives = quest_data.get("objectives", [])
+	for q_id in quests_to_check:
+		if not active_quests.has(q_id):
+			continue
+		
+		if not objective_progress.has(q_id):
+			continue
+		
+		var quest_data = active_quests[q_id].data
+		var objectives = quest_data.get("objectives", [])
 	
 	for objective in objectives:
 		if matches_objective(objective, objective_type, target_data):

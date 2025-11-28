@@ -394,8 +394,8 @@ func show_menu():
 	tween.parallel().tween_property(self, "modulate", Color.WHITE, 0.3)
 	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.3)
 
-func hide():
-# Esconde menu com animaÃ§Ã£o
+func close():
+# Esconde menu com animaÃ§Ã£o (renomeado de hide)
 	var tween = create_tween()
 	tween.parallel().tween_property(self, "modulate", Color.TRANSPARENT, 0.2)
 	tween.parallel().tween_property(self, "scale", Vector2(0.8, 0.8), 0.2)

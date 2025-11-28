@@ -66,18 +66,18 @@ func initialize():
 	
 	print("[EquipmentSystem] %d equipment slots initialized" % equipped_items.size())
 
-func equip_item(item_id: String, slot: EquipmentSlot = -1) -> bool:
+func equip_item(item_id: String, slot: int = -1) -> bool:
 # Equip an item to appropriate slot
 	var item_data = data_loader.get_item(item_id)
 	if not item_data:
-		print("[EquipmentSystem] âŒ Item not found: %s" % item_id)
+		print("[EquipmentSystem] âŒ Item not found: %s" % item_id)
 		return false
 	
 	# Determine slot if not specified
 	if slot == -1:
 		slot = determine_item_slot(item_data)
 		if slot == -1:
-			print("[EquipmentSystem] âŒ Cannot determine slot for item: %s" % item_id)
+			print("[EquipmentSystem] âŒ Cannot determine slot for item: %s" % item_id)
 			return false
 	
 	# Check if item can be equipped in this slot
@@ -107,7 +107,7 @@ func equip_item(item_id: String, slot: EquipmentSlot = -1) -> bool:
 	print("[EquipmentSystem] âœ… Equipped %s to %s" % [item_data.name, slot_name])
 	return true
 
-func unequip_item_from_slot(slot: EquipmentSlot) -> Dictionary:
+func unequip_item_from_slot(slot: int) -> Dictionary:
 # Unequip item from slot and return item data
 	var slot_name = slot_names[slot]
 	var current_item = equipped_items[slot_name]
@@ -131,7 +131,7 @@ func unequip_item_from_slot(slot: EquipmentSlot) -> Dictionary:
 	print("[EquipmentSystem] Unequipped %s from %s" % [item_data.name, slot_name])
 	return item_data
 
-func determine_item_slot(item_data: Dictionary) -> EquipmentSlot:
+func determine_item_slot(item_data: Dictionary) -> int:
 # Determine appropriate slot for item based on type
 	var item_type = item_data.get("type", "")
 	var subtype = item_data.get("subtype", "")
@@ -176,7 +176,7 @@ func determine_item_slot(item_data: Dictionary) -> EquipmentSlot:
 	
 	return -1  # No appropriate slot found
 
-func can_equip_in_slot(item_data: Dictionary, slot: EquipmentSlot) -> bool:
+func can_equip_in_slot(item_data: Dictionary, slot: int) -> bool:
 # Check if item can be equipped in specific slot
 	var item_type = item_data.get("type", "")
 	var subtype = item_data.get("subtype", "")
@@ -338,7 +338,7 @@ func apply_set_bonuses(completed_sets: Array):
 		print("[EquipmentSystem] Set bonus active: %s" % set_name)
 
 # Durability system (placeholder)
-func damage_equipment(damage_amount: int, slot: EquipmentSlot = -1):
+func damage_equipment(damage_amount: int, slot: int = -1):
 # Damage equipment durability
 	# If no slot specified, damage random piece
 	if slot == -1:

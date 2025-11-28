@@ -523,7 +523,10 @@ func is_data_loaded(data_type: String) -> bool:
 
 func is_fully_loaded() -> bool:
 # Check if all data is loaded successfully
-	return is_fully_loaded
+	for status in loading_status.values():
+		if status != "success":
+			return false
+	return true
 
 func get_loading_status() -> Dictionary:
 # Get loading status of all data types

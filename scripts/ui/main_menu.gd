@@ -163,7 +163,7 @@ func populate_class_options():
 # Populate class selection dropdown
 	var classes = DataLoader.get_all_classes()
 	for class_id in classes:
-		var class_data = DataLoader.get_class(class_id)
+		var class_data = DataLoader.get_character_class(class_id)
 		if class_data:
 			class_option.add_item(class_data.name)
 			class_option.set_item_metadata(class_option.get_item_count() - 1, class_id)

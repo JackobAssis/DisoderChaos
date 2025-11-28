@@ -1,13 +1,13 @@
 # Sistema de Componente de Pets - Disorder Chaos
-extends Component
+extends Node
 class_name PetComponent
 
 ## Componente ECS para gerenciar pets de uma entidade
 ## Permite apenas 1 pet ativo por vez, controla XP e habilidades
 
-signal pet_summoned(pet: Pet)
-signal pet_dismissed(pet: Pet)
-signal pet_level_up(pet: Pet, new_level: int)
+signal pet_summoned(pet)
+signal pet_dismissed(pet)
+signal pet_level_up(pet, new_level: int)
 signal pet_xp_gained(pet: Pet, amount: int)
 signal active_pet_changed(old_pet: Pet, new_pet: Pet)
 

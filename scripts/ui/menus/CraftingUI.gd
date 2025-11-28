@@ -726,11 +726,11 @@ func _input(event):
 		if ui_manager:
 			ui_manager.close_crafting()
 
-func show():
-# Show crafting UI
+func open():
+# Show crafting UI (renomeado de show)
 	super.show()
 	load_recipes()
 
-func hide():
-# Hide crafting UI
+func close():
+# Hide crafting UI (renomeado de hide)
 	super.hide()

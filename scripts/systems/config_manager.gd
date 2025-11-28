@@ -1,5 +1,5 @@
 ﻿extends Node
-class_name ConfigManager
+class_name ConfigManagerScript
 # config_manager.gd - Comprehensive configuration management system
 
 # Configuration file path

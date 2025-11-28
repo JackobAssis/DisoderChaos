@@ -433,12 +433,10 @@ func unlock_exit():
 	# Show notification
 	EventBus.show_notification("Exit portal activated!", "success")
 
-func _on_exit_area_entered(body):
-# Handle player entering exit area
-	if body.name == "Player" and exit_unlocked:
-		initiate_dungeon_transition()
-	elif body.name == "Player" and not exit_unlocked:
-		EventBus.show_notification("Exit is locked. Defeat more enemies!", "warning")
+func _on_exit_area_entered_duplicate_removed():
+	# Esta função foi removida por duplicação
+	# Versão correta está na linha 332
+	pass
 
 func initiate_dungeon_transition():
 # Start transition to next dungeon or world map

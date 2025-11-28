@@ -180,7 +180,7 @@ func set_mount_input_enabled(enabled: bool):
 	is_mount_input_enabled = enabled
 
 ## Verifica se input está habilitado
-func is_mount_input_enabled() -> bool:
+func get_mount_input_enabled() -> bool:
 	return is_mount_input_enabled
 
 ## Conecta sinais da montaria

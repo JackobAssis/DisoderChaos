@@ -415,8 +415,8 @@ func setup_connections():
 		event_bus.connect("quest_objective_completed", _on_objective_completed)
 		event_bus.connect("quest_progress_updated", _on_progress_updated)
 
-func show():
-# Show quest journal
+func open():
+# Show quest journal (renomeado de show)
 	super.show()
 	refresh_quest_lists()
 
@@ -425,9 +425,14 @@ func refresh_quest_lists():
 	if not quest_system:
 		return
 	
-	refresh_tab_quests("ACTIVE", quest_system.get_active_quests())
-	refresh_tab_quests("COMPLETED", quest_system.get_completed_quests())
-	refresh_tab_quests("FAILED", quest_system.get_failed_quests())
+	var active_quests = quest_system.get_active_quests()
+	var completed_quests = quest_system.get_completed_quests()
+	var failed_quests = quest_system.get_failed_quests()
+	
+	# Converter Dictionary para Array se necessário
+	refresh_tab_quests("ACTIVE", active_quests.values() if active_quests is Dictionary else active_quests)
+	refresh_tab_quests("COMPLETED", completed_quests.values() if completed_quests is Dictionary else completed_quests)
+	refresh_tab_quests("FAILED", failed_quests.values() if failed_quests is Dictionary else failed_quests)
 
 func refresh_tab_quests(tab_name: String, quests: Array):
 # Refresh quests in a specific tab

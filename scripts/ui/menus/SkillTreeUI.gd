@@ -661,8 +661,8 @@ func _input(event):
 		if ui_manager:
 			ui_manager.close_skill_tree()
 
-func show():
-# Show skill tree UI
+func open():
+# Show skill tree UI (renomeado de show)
 	super.show()
 	load_skill_data()
 	update_skill_points_display()

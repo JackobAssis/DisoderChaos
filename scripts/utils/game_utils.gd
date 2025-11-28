@@ -102,14 +102,14 @@ static func load_json_file(file_path: String) -> Dictionary:
 	return json.data
 
 # Node utilities
-static func find_child_by_class(parent: Node, class_name: String) -> Node:
+static func find_child_by_class(parent: Node, class_name_arg: String) -> Node:
 # Find first child node of specific class
 	for child in parent.get_children():
-		if child.get_script() and child.get_script().get_global_name() == class_name:
+		if child.get_script() and child.get_script().get_global_name() == class_name_arg:
 			return child
 	return null
 
-static func find_all_children_by_class(parent: Node, class_name: String) -> Array:
+static func find_all_children_by_class(parent: Node, class_name_arg: String) -> Array:
 # Find all child nodes of specific class
 	var found_nodes = []
 	for child in parent.get_children():

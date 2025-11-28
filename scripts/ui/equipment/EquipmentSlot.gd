@@ -300,8 +300,8 @@ func show_item_context_menu():
 	# - Reparar
 	pass
 
-func get_tooltip_text() -> String:
-# Retorna texto para tooltip
+func _get_tooltip_text() -> String:
+# Retorna texto para tooltip (renomeado para não sobrescrever método nativo)
 	if not has_item():
 		return get_slot_description()
 	

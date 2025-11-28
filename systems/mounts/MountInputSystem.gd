@@ -1,13 +1,13 @@
 # Sistema de Input para Montarias - Disorder Chaos
-extends System
+extends Node
 class_name MountInputSystem
 
 ## Sistema ECS responsável por capturar e processar input relacionado a montarias
 ## Detecta comandos de montar/desmontar, dash e uso de skills
 
-signal mount_input_detected(entity: Entity, action: String, data: Dictionary)
+signal mount_input_detected(entity, action: String, data: Dictionary)
 
-var input_entities: Array[Entity] = []
+var input_entities: Array = []
 
 # Configurações de input
 @export var mount_toggle_action: String = "mount_toggle"

@@ -1,6 +1,6 @@
 ﻿extends CharacterBody2D
 
-class_name PlayerController
+class_name PlayerControllerScript
 
 signal health_changed(new_health: int, max_health: int)
 signal stamina_changed(new_stamina: float, max_stamina: float)

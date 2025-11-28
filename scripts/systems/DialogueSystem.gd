@@ -746,7 +746,7 @@ func debug_list_available_dialogues(npc_id: String = "") -> Array:
 func setup_connections():
 	continue_button.pressed.connect(_on_continue_pressed)
 
-func start_dialogue(npc_id: String, dialogue_tree: Dictionary) -> void:
+func start_dialogue_tree(npc_id: String, dialogue_tree: Dictionary) -> void:
 	if active_dialogue:
 		end_dialogue()
 	

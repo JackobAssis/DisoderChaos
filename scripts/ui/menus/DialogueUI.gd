@@ -322,22 +322,17 @@ func setup_connections():
 
 func setup_animations():
 # Setup animation systems
-	text_tween = Tween.new()
-	add_child(text_tween)
-	
-	choice_tween = Tween.new()
-	add_child(choice_tween)
-	
-	panel_tween = Tween.new()
-	add_child(panel_tween)
+	text_tween = create_tween()
+	choice_tween = create_tween()
+	panel_tween = create_tween()
 
-func show():
-# Show dialogue UI with animation
+func open():
+# Show dialogue UI with animation (renomeado de show)
 	super.show()
 	animate_show()
 
-func hide():
-# Hide dialogue UI with animation
+func close():
+# Hide dialogue UI with animation (renomeado de hide)
 	animate_hide()
 
 func animate_show():

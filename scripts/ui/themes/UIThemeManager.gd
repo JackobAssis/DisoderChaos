@@ -1,4 +1,4 @@
-﻿class_name UIThemeManager
+﻿class_name UIThemeManagerResource
 extends Resource
 
 ## Gerenciador de temas para UI dark fantasy/tecnolÃ³gica

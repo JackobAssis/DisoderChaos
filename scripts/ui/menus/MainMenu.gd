@@ -66,7 +66,7 @@ func create_background():
 	var pattern_texture = create_tech_pattern()
 	if pattern_texture:
 		gradient_style.texture = pattern_texture
-		gradient_style.texture_mode = StyleBoxTexture.TEXTURE_MODE_TILE
+		gradient_style.texture_mode = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
 	
 	background_panel.add_theme_stylebox_override("panel", gradient_style)
 
@@ -292,11 +292,8 @@ func create_particle_texture() -> ImageTexture:
 
 func setup_animations():
 # Setup menu animations
-	menu_tween = Tween.new()
-	add_child(menu_tween)
-	
-	glow_tween = Tween.new()
-	add_child(glow_tween)
+	menu_tween = create_tween()
+	glow_tween = create_tween()
 	
 	# Start title glow animation
 	start_title_glow_animation()

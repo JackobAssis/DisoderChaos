@@ -61,7 +61,7 @@ func create_new_player(race_id: String, class_id: String, name: String = "Hero")
 	print("[GameState] Creating new player: ", name)
 	
 	var race_data = DataLoader.get_race(race_id)
-	var class_data = DataLoader.get_class(class_id)
+	var class_data = DataLoader.get_character_class(class_id)
 	
 	if not race_data or not class_data:
 		push_error("Invalid race or class ID")
@@ -201,18 +201,11 @@ func get_current_dungeon_data():
 # Get data for current dungeon
 	return DataLoader.get_dungeon(current_dungeon_id)
 
-# Save/Load functions using SaveManager
-var save_manager: SaveManager
-
-func _init_save_manager():
-# Initialize the SaveManager if not already done
-	if not save_manager:
-		save_manager = preload("res://scripts/save/SaveManager.gd").new()
-		add_child(save_manager)
-
+# Save/Load functions
 func save_game(slot: int = 0, use_compression: bool = true) -> bool:
-# Save current game state using SaveManager
-	_init_save_manager()
+# Save current game state to file
+	var save_manager = load("res://scripts/save/SaveManager.gd").new()
+	add_child(save_manager)
 	
 	# Prepare comprehensive save data
 	var save_data = {
